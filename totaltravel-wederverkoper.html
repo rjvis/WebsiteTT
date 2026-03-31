@@ -123,6 +123,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 
 /* CHECKBOX TILES */
 .check-group{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.radio-group-3col{grid-template-columns:1fr 1fr 1fr;}
 .check-option{display:flex;align-items:center;gap:10px;background:var(--ivory-2);border:1px solid var(--border-md);padding:10px 13px;border-radius:var(--radius);cursor:pointer;transition:var(--transition);font-size:13px;color:var(--text-3);user-select:none;}
 .check-option:hover{border-color:var(--sienna-lt);color:var(--text-2);background:var(--ivory-3);}
 .check-option.selected{border-color:var(--sienna);background:rgba(160,82,45,0.07);color:var(--sienna);}
@@ -203,21 +204,131 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 .card-corner.tr{top:14px;right:14px;}
 .card-corner svg{width:36px;height:36px;}
 
-/* RESPONSIVE */
-@media(max-width:660px){
-  .nav{padding:0 18px;}
-  .form-step{padding:28px 22px 24px;}
-  .form-nav{padding:20px 22px 28px;}
-  .form-grid{grid-template-columns:1fr;}
+/* ── RESPONSIVE ── */
+
+/* Tablet: 768px and below */
+@media(max-width:768px){
+  .page{padding:96px 16px 60px;}
+  .page-header{margin-bottom:40px;}
+  .page-h1{font-size:clamp(28px,6vw,40px);}
+  .page-sub{font-size:14px;}
+  .b2b-strip{padding:14px 18px;gap:10px;}
+  .b2b-strip-text{font-size:12px;}
+  .progress-wrap{margin-bottom:32px;padding:0 4px;}
+  .step-label{font-size:9px;letter-spacing:.04em;}
+  .form-card{border-radius:4px;}
+  .form-step{padding:32px 32px 28px;}
+  .form-nav{padding:20px 32px 28px;}
+  .form-grid{gap:14px 18px;}
   .form-grid.cols-3{grid-template-columns:1fr 1fr;}
-  .radio-group,.check-group{grid-template-columns:1fr 1fr;}
-  .step-label{display:none;}
-  .b2b-strip{flex-direction:column;gap:8px;}
-  .success-wrap{padding:48px 22px;}
+  .radio-group{gap:7px;}
+  .check-group{gap:7px;}
+  .counter-val{font-size:18px;}
+  .success-wrap{padding:56px 32px;}
+  .success-h2{font-size:28px;}
+  .success-details{padding:16px 20px;}
+  .cert-row{gap:6px;}
+  .form-footer-note{font-size:11px;}
 }
-@media(max-width:420px){
-  .check-group,.radio-group{grid-template-columns:1fr;}
+
+/* Mobile: 560px and below */
+@media(max-width:560px){
+  .nav{padding:0 16px;height:56px;}
+  .nav-logo{font-size:14px;letter-spacing:.1em;}
+  .nav-badge{font-size:8px;padding:2px 6px;}
+  .nav-back .nav-back-text{display:none;}
+  .page{padding:80px 12px 48px;}
+  .page-header{margin-bottom:28px;}
+  .page-eyebrow{font-size:9px;}
+  .page-h1{font-size:clamp(24px,7vw,34px);margin-bottom:12px;}
+  .page-sub{font-size:13px;line-height:1.65;}
+
+  /* B2B strip */
+  .b2b-strip{flex-direction:column;gap:8px;padding:12px 14px;margin-bottom:20px;}
+  .b2b-strip-icon{display:none;}
+  .b2b-strip-text{font-size:12px;}
+
+  /* Progress */
+  .progress-wrap{margin-bottom:24px;padding:0 2px;}
+  .step-circle{width:24px;height:24px;font-size:10px;}
+  .step-label{display:none;}
+  .progress-step:not(:last-child)::after{top:12px;left:calc(50% + 13px);right:calc(-50% + 13px);}
+
+  /* Card */
+  .form-card{border-left:none;border-right:none;border-radius:0;box-shadow:none;margin-left:-12px;margin-right:-12px;width:calc(100% + 24px);}
+  .card-corner{display:none;}
+  .form-step{padding:22px 18px 18px;}
+  .step-title{font-size:20px;}
+  .step-num{font-size:9px;}
+  .step-desc{font-size:12px;}
+  .step-header{margin-bottom:22px;padding-bottom:16px;}
+
+  /* Grids */
+  .form-grid{grid-template-columns:1fr;gap:12px;}
   .form-grid.cols-3{grid-template-columns:1fr;}
+  .field-full{grid-column:1;}
+
+  /* Radios: all 1 col on mobile */
+  .radio-group,.radio-group-3col{grid-template-columns:1fr;gap:6px;}
+
+  /* Checkboxes: 2 col */
+  .check-group{grid-template-columns:1fr 1fr;gap:6px;}
+
+  /* Tiles */
+  .radio-option,.check-option{padding:9px 11px;font-size:12px;gap:8px;}
+  .radio-dot,.check-box{width:14px;height:14px;}
+  .radio-option.selected .radio-dot::after{width:5px;height:5px;}
+
+  /* Inputs */
+  .field label{font-size:10px;}
+  .field input,.field select,.field textarea{font-size:14px;padding:10px 12px;}
+  .field-hint,.field-error{font-size:10px;}
+
+  /* Budget */
+  .budget-display{font-size:18px;}
+  .range-labels{font-size:10px;}
+
+  /* Counter */
+  .counter-btn{width:28px;height:28px;font-size:14px;}
+  .counter-val{font-size:18px;min-width:30px;}
+
+  /* Section title */
+  .form-section-title{font-size:9px;margin:20px 0 10px;}
+
+  /* Privacy */
+  .privacy-row{padding:12px 13px;gap:10px;}
+  .priv-text{font-size:12px;}
+  .priv-box{width:16px;height:16px;}
+
+  /* Nav buttons */
+  .form-nav{padding:14px 18px 22px;gap:6px;}
+  .btn-prev{padding:10px 14px;font-size:10px;}
+  .btn-next{padding:10px 16px;font-size:10px;gap:6px;}
+  .step-count{font-size:10px;}
+
+  /* Success */
+  .success-wrap{padding:32px 18px;}
+  .success-h2{font-size:22px;}
+  .success-p{font-size:13px;}
+  .success-details{padding:12px 14px;margin-bottom:22px;}
+  .success-detail-row{font-size:12px;flex-direction:column;gap:2px;padding:8px 0;}
+  .success-detail-row span:last-child{font-weight:500;color:var(--text-2);}
+  .btn-home{font-size:10px;padding:11px 18px;}
+
+  /* Footer */
+  .form-footer-note{font-size:11px;padding:0 4px;}
+  .cert-row{gap:5px;margin-top:14px;}
+  .cert-tag{font-size:9px;padding:3px 7px;}
+}
+
+/* Tiny phones: 360px */
+@media(max-width:360px){
+  .check-group{grid-template-columns:1fr;}
+  .form-step{padding:18px 14px 14px;}
+  .form-nav{padding:12px 14px 18px;}
+  .page-h1{font-size:22px;}
+  .btn-prev,.btn-next{padding:9px 12px;}
+  .b2b-strip{padding:10px 12px;}
 }
 </style>
 </head>
@@ -235,7 +346,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
   </div>
   <a href="index.html" class="nav-back">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-    Terug naar website
+    <span class="nav-back-text">Terug naar website</span>
   </a>
 </nav>
 
@@ -252,7 +363,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
     </div>
     <div class="b2b-strip-text">
-      <strong>Uitsluitend voor wederverkopers.</strong> Beschikt u nog niet over een wederverkopersaccount? Neem dan eerst contact op via <a href="mailto:info@totaltravel.nl" style="color:var(--sienna)">info@totaltravel.nl</a> of <a href="tel:+31786817579" style="color:var(--sienna)">+31 78 681 75 79</a>. Offertes worden altijd verstuurd naar het opgegeven zakelijk e-mailadres.
+      <strong>Uitsluitend voor wederverkopers.</strong> Beschikt u nog niet over een wederverkopersaccount? Neem dan eerst contact op via <a href="/cdn-cgi/l/email-protection#51383f373e11253e25303d25233027343d7f3f3d" style="color:var(--sienna)"><span class="__cf_email__" data-cfemail="f39a9d959cb3879c87929f87819285969fdd9d9f">[email&#160;protected]</span></a> of <a href="tel:+31786817579" style="color:var(--sienna)">+31 78 681 75 79</a>. Offertes worden altijd verstuurd naar het opgegeven zakelijk e-mailadres.
     </div>
   </div>
 
@@ -370,7 +481,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
       <div class="form-grid">
         <div class="field field-full">
           <label>Type reis <span class="req">*</span></label>
-          <div class="radio-group" id="grp-reisType" style="grid-template-columns:1fr 1fr 1fr">
+          <div class="radio-group radio-group-3col" id="grp-reisType">
             <label class="radio-option"><input type="radio" name="reisType" value="Vakantiereis / leisure"><div class="radio-dot"></div>Vakantiereis / leisure</label>
             <label class="radio-option"><input type="radio" name="reisType" value="Incentive / bedrijfsreis"><div class="radio-dot"></div>Incentive / bedrijfsreis</label>
             <label class="radio-option"><input type="radio" name="reisType" value="Golfreis"><div class="radio-dot"></div>Golfreis</label>
@@ -415,7 +526,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 
         <div class="field field-full">
           <label>Datumflexibiliteit</label>
-          <div class="radio-group" id="grp-flex" style="grid-template-columns:1fr 1fr 1fr">
+          <div class="radio-group radio-group-3col" id="grp-flex">
             <label class="radio-option"><input type="radio" name="reisFlexibel" value="Exact (vaste datum)"><div class="radio-dot"></div>Exact (vaste datum)</label>
             <label class="radio-option"><input type="radio" name="reisFlexibel" value="± 3 dagen"><div class="radio-dot"></div>± 3 dagen</label>
             <label class="radio-option"><input type="radio" name="reisFlexibel" value="Volledig flexibel"><div class="radio-dot"></div>Volledig flexibel</label>
@@ -490,7 +601,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
         </div>
         <div class="field field-full">
           <label>Samenstelling reisgroep</label>
-          <div class="radio-group" id="grp-gezelschap" style="grid-template-columns:1fr 1fr 1fr">
+          <div class="radio-group radio-group-3col" id="grp-gezelschap">
             <label class="radio-option"><input type="radio" name="gezelschap" value="Particulier(en)"><div class="radio-dot"></div>Particulier(en)</label>
             <label class="radio-option"><input type="radio" name="gezelschap" value="Familie"><div class="radio-dot"></div>Familie</label>
             <label class="radio-option"><input type="radio" name="gezelschap" value="Vriendengroep"><div class="radio-dot"></div>Vriendengroep</label>
@@ -617,7 +728,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 
         <div class="field field-full">
           <label>Gids / reisbegeleiding gewenst?</label>
-          <div class="radio-group" id="grp-gids" style="grid-template-columns:1fr 1fr 1fr">
+          <div class="radio-group radio-group-3col" id="grp-gids">
             <label class="radio-option"><input type="radio" name="gids" value="Ja, Nederlandstalige gids"><div class="radio-dot"></div>Ja, Nederlandstalig</label>
             <label class="radio-option"><input type="radio" name="gids" value="Ja, lokale gids ter plaatse"><div class="radio-dot"></div>Ja, lokale gids</label>
             <label class="radio-option"><input type="radio" name="gids" value="Nee"><div class="radio-dot"></div>Nee</label>
@@ -626,7 +737,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 
         <div class="field field-full">
           <label>Reisverzekering opnemen in offerte?</label>
-          <div class="radio-group" id="grp-verzekering" style="grid-template-columns:1fr 1fr 1fr">
+          <div class="radio-group radio-group-3col" id="grp-verzekering">
             <label class="radio-option"><input type="radio" name="verzekering" value="Ja, graag opnemen"><div class="radio-dot"></div>Ja, graag opnemen</label>
             <label class="radio-option"><input type="radio" name="verzekering" value="Nee, klant regelt zelf"><div class="radio-dot"></div>Nee, klant regelt zelf</label>
             <label class="radio-option"><input type="radio" name="verzekering" value="Optioneel weergeven"><div class="radio-dot"></div>Optioneel weergeven</label>
@@ -695,14 +806,14 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 
   <p class="form-footer-note" style="margin-top:28px">
     Exclusief voor gecertificeerde wederverkopers. Vragen over uw wederverkopersaccount?<br>
-    Bel <a href="tel:+31786817579">+31 78 681 75 79</a> of mail <a href="mailto:info@totaltravel.nl">info@totaltravel.nl</a>
+    Bel <a href="tel:+31786817579">+31 78 681 75 79</a> of mail <a href="/cdn-cgi/l/email-protection#c7aea9a1a887b3a8b3a6abb3b5a6b1a2abe9a9ab"><span class="__cf_email__" data-cfemail="f69f989099b6829982979a82849780939ad8989a">[email&#160;protected]</span></a>
   </p>
   <div class="cert-row">
     <span class="cert-tag">ANVR</span><span class="cert-tag">SGR</span><span class="cert-tag">SGRZ</span><span class="cert-tag">IATA</span><span class="cert-tag">Calamiteitenfonds</span>
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 var currentStep = 1;
 var counts = { volwassenen: 2, kinderen: 0 };
 
@@ -968,14 +1079,4 @@ function showSuccess(d) {
     row('Bedrijf', d.bedrijfsnaam),
     row('Referentie', d.referentie || 'Niet opgegeven'),
     row('Type reis', d.reisType),
-    row('Bestemming', d.bestemming),
-    row('Vertrekdatum', d.vertrekdatum),
-    row('Reisgezelschap', d.aantalVolwassenen + (d.aantalKinderen > 0 ? ' + ' + d.aantalKinderen + ' kind(eren)' : '') + ' persoon/personen'),
-    row('Urgentie', d.urgentie)
-  ].join('');
-  document.getElementById('successWrap').classList.add('visible');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-</script>
-</body>
-</html>
+    row('Bestemming', d.bestemming)

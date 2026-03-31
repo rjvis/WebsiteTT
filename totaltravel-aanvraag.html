@@ -37,7 +37,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 
 /* NAV */
 .nav{position:fixed;top:0;left:0;right:0;z-index:100;height:62px;padding:0 40px;display:flex;align-items:center;justify-content:space-between;background:rgba(250,247,242,0.93);backdrop-filter:blur(14px);border-bottom:1px solid var(--border-md);}
-.nav-logo{font-family:'DM Sans',system-ui,sans-serif;font-size:20px;font-weight:500;letter-spacing:.20em;text-transform:uppercase;color:var(--text);text-decoration:none;}
+.nav-logo{font-family:var(--pf);font-size:16px;font-weight:500;letter-spacing:.14em;color:var(--text);text-decoration:none;}
 .nav-logo .dot{color:var(--sienna);}
 .nav-back{font-family:var(--dm);font-size:11px;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);text-decoration:none;display:flex;align-items:center;gap:7px;transition:var(--transition);}
 .nav-back:hover{color:var(--sienna);}
@@ -114,6 +114,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 
 /* CHECKBOX TILES */
 .check-group{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.radio-group-3col{grid-template-columns:1fr 1fr 1fr;}
 .check-option{display:flex;align-items:center;gap:10px;background:var(--ivory-2);border:1px solid var(--border-md);padding:10px 13px;border-radius:var(--radius);cursor:pointer;transition:var(--transition);font-size:13px;color:var(--text-3);user-select:none;}
 .check-option:hover{border-color:var(--sienna-lt);color:var(--text-2);background:var(--ivory-3);}
 .check-option.selected{border-color:var(--sienna);background:rgba(160,82,45,0.07);color:var(--sienna);}
@@ -188,19 +189,117 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 .card-corner.tr{top:14px;right:14px;}
 .card-corner svg{width:36px;height:36px;}
 
-/* RESPONSIVE */
-@media(max-width:660px){
-  .nav{padding:0 18px;}
-  .form-step{padding:28px 22px 24px;}
-  .form-nav{padding:20px 22px 28px;}
-  .form-grid{grid-template-columns:1fr;}
-  .radio-group,.check-group{grid-template-columns:1fr 1fr;}
-  .step-label{display:none;}
-  .success-wrap{padding:48px 22px;}
+/* ── RESPONSIVE ── */
+
+/* Tablet: 768px and below */
+@media(max-width:768px){
+  .page{padding:96px 16px 60px;}
+  .page-header{margin-bottom:40px;}
+  .page-h1{font-size:clamp(28px,6vw,40px);}
+  .page-sub{font-size:14px;}
+  .progress-wrap{margin-bottom:32px;padding:0 4px;}
+  .step-label{font-size:9px;letter-spacing:.04em;}
+  .form-card{border-radius:4px;}
+  .form-step{padding:32px 32px 28px;}
+  .form-nav{padding:20px 32px 28px;}
+  .form-grid{gap:14px 18px;}
+  .radio-group{gap:7px;}
+  .check-group{gap:7px;}
+  .success-wrap{padding:56px 32px;}
+  .success-h2{font-size:28px;}
+  .success-details{padding:16px 20px;}
+  .cert-row{gap:6px;}
+  .form-footer-note{font-size:11px;}
 }
-@media(max-width:420px){
+
+/* Mobile: 560px and below — full single column */
+@media(max-width:560px){
+  .nav{padding:0 16px;height:56px;}
+  .nav-logo{font-size:14px;letter-spacing:.1em;}
+  .nav-back span{display:none;}
+  .page{padding:80px 12px 48px;}
+  .page-header{margin-bottom:32px;}
+  .page-eyebrow{font-size:9px;}
+  .page-h1{font-size:clamp(26px,7vw,36px);margin-bottom:12px;}
+  .page-sub{font-size:13px;line-height:1.65;}
+
+  /* Progress: shrink labels completely, tighten circles */
+  .progress-wrap{margin-bottom:28px;padding:0 2px;}
+  .step-circle{width:24px;height:24px;font-size:10px;}
+  .step-label{display:none;}
+  .progress-step:not(:last-child)::after{top:12px;left:calc(50% + 13px);right:calc(-50% + 13px);}
+
+  /* Card */
+  .form-card{border-left:none;border-right:none;border-radius:0;box-shadow:none;margin-left:-12px;margin-right:-12px;width:calc(100% + 24px);}
+  .card-corner{display:none;}
+  .form-step{padding:24px 20px 20px;}
+  .step-title{font-size:20px;}
+  .step-num{font-size:9px;}
+  .step-desc{font-size:12px;}
+  .step-header{margin-bottom:24px;padding-bottom:18px;}
+
+  /* Grids: all single column */
+  .form-grid{grid-template-columns:1fr;gap:12px;}
+  .form-grid.cols-3{grid-template-columns:1fr;}
+  .field-full{grid-column:1;}
+
+  /* Radios: 1 column */
+  .radio-group{grid-template-columns:1fr;gap:6px;}
+  .radio-group-3col{grid-template-columns:1fr;}
+
+  /* Checkboxes: 2 columns on mobile (labels are short enough) */
+  .check-group{grid-template-columns:1fr 1fr;gap:6px;}
+
+  /* Tiles: tighter padding */
+  .radio-option,.check-option{padding:9px 11px;font-size:12px;gap:8px;}
+  .radio-dot,.check-box{width:14px;height:14px;}
+  .radio-option.selected .radio-dot::after{width:5px;height:5px;}
+
+  /* Inputs */
+  .field label{font-size:10px;}
+  .field input,.field select,.field textarea{font-size:14px;padding:10px 12px;}
+  .field-hint,.field-error{font-size:10px;}
+
+  /* Budget */
+  .budget-display{font-size:18px;}
+  .range-labels{font-size:10px;}
+
+  /* Section title */
+  .form-section-title{font-size:9px;margin:22px 0 10px;}
+
+  /* Privacy */
+  .privacy-row{padding:12px 13px;gap:10px;}
+  .priv-text{font-size:12px;}
+  .priv-box{width:16px;height:16px;}
+
+  /* Nav buttons */
+  .form-nav{padding:16px 20px 24px;gap:8px;}
+  .btn-prev{padding:10px 16px;font-size:10px;}
+  .btn-next{padding:10px 18px;font-size:10px;gap:6px;}
+  .step-count{font-size:10px;}
+
+  /* Success */
+  .success-wrap{padding:36px 20px;}
+  .success-h2{font-size:24px;}
+  .success-p{font-size:13px;}
+  .success-details{padding:14px 16px;margin-bottom:24px;}
+  .success-detail-row{font-size:12px;flex-direction:column;gap:2px;padding:8px 0;}
+  .success-detail-row span:last-child{font-weight:500;color:var(--text-2);}
+  .btn-home{font-size:10px;padding:11px 20px;}
+
+  /* Footer */
+  .form-footer-note{font-size:11px;padding:0 4px;}
+  .cert-row{gap:5px;margin-top:14px;}
+  .cert-tag{font-size:9px;padding:3px 8px;}
+}
+
+/* Tiny phones: 360px and below */
+@media(max-width:360px){
   .check-group{grid-template-columns:1fr;}
-  .radio-group{grid-template-columns:1fr;}
+  .form-step{padding:20px 16px 16px;}
+  .form-nav{padding:14px 16px 20px;}
+  .page-h1{font-size:24px;}
+  .btn-prev,.btn-next{padding:9px 14px;}
 }
 </style>
 </head>
@@ -212,10 +311,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 </div>
 
 <nav class="nav">
-  <a href="TotalTravel_Website.html" class="nav-logo">TOTAL <span class="dot">&middot;</span> TRAVEL</a>
-  <a href="TotalTravel_Website.html" class="nav-back">
+  <a href="index.html" class="nav-logo">TOTAL <span class="dot">&middot;</span> TRAVEL</a>
+  <a href="index.html" class="nav-back">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-    Terug naar website
+    <span>Terug naar website</span>
   </a>
 </nav>
 
@@ -276,7 +375,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
         </div>
         <div class="field field-full">
           <label>Reisduur flexibiliteit</label>
-          <div class="radio-group" id="grp-flex" style="grid-template-columns:1fr 1fr 1fr">
+          <div class="radio-group radio-group-3col" id="grp-flex">
             <label class="radio-option"><input type="radio" name="reisFlexibel" value="Exact"><div class="radio-dot"></div>Exact</label>
             <label class="radio-option"><input type="radio" name="reisFlexibel" value="± 2 dagen flexibel"><div class="radio-dot"></div>± 2 dagen flexibel</label>
             <label class="radio-option"><input type="radio" name="reisFlexibel" value="Volledig flexibel"><div class="radio-dot"></div>Volledig flexibel</label>
@@ -510,7 +609,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 
   <p class="form-footer-note" style="margin-top:28px">
     Uw aanvraag is volledig vrijblijvend. Total Travel is gecertificeerd door ANVR, SGR en IATA.<br>
-    Vragen? Bel <a href="tel:+31786817579">+31 78 681 75 79</a> of mail <a href="/cdn-cgi/l/email-protection#1e777078715e6a716a7f726a6c7f687b72307072"><span class="__cf_email__" data-cfemail="ea83848c85aa9e859e8b869e988b9c8f86c48486">[email&#160;protected]</span></a>
+    Vragen? Bel <a href="tel:+31786817579">+31 78 681 75 79</a> of mail <a href="/cdn-cgi/l/email-protection#731a1d151c33071c07121f07011205161f5d1d1f"><span class="__cf_email__" data-cfemail="365f58505976425942575a42445740535a18585a">[email&#160;protected]</span></a>
   </p>
   <div class="cert-row">
     <span class="cert-tag">ANVR</span><span class="cert-tag">SGR</span><span class="cert-tag">SGRZ</span><span class="cert-tag">IATA</span><span class="cert-tag">Calamiteitenfonds</span>

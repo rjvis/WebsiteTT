@@ -228,10 +228,31 @@ footer{background:var(--t);padding:80px 48px 48px}
 }
 
 .topbar-inner{width:100%;max-width:1280px;padding:0 48px;display:flex;align-items:center;justify-content:space-between}
+
+/* Nav 3-koloms: links(hamburger+logo) | center(links) | rechts(cta) */
 .nav-inner{width:100%;max-width:1280px;padding:0 48px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
-.nav-logo-wrap{display:flex;align-items:center}
+.nav-left{display:flex;align-items:center;gap:16px}
 .nav-center{display:flex;align-items:center;justify-content:center}
 .nav-right{display:flex;align-items:center;justify-content:flex-end;gap:20px}
+
+/* Mobiele hamburger — standaard verborgen op desktop */
+.nav-hamburger-mob{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.nav-hamburger-mob span{width:22px;height:1.5px;background:var(--t);transition:.3s;display:block}
+
+/* CTA knop verbergen op mobiel */
+.nav-cta-hide-mobile{background:var(--s)!important;color:var(--w)!important;padding:9px 22px;font-size:10px!important;text-decoration:none;transition:background .2s!important}
+.nav-cta-hide-mobile:hover{background:var(--sdk)!important}
+
+/* Responsief */
+@media(max-width:900px){
+  .topbar{display:none}
+  .nav-hamburger-mob{display:flex}
+  .nav-center{display:none}
+  .nav-cta-hide-mobile{display:none!important}
+  .nav-inner{grid-template-columns:auto 1fr;gap:0}
+  .nav-right{display:none}
+}
+
 .has-dropdown{position:relative}
 .nav-link-drop{display:flex;align-items:center;gap:5px}
 .nav-arrow{font-size:8px;transition:transform .2s;display:inline-block}
