@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Total Travel — Maatwerk zonder omwegen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="totaltravel.css">
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-close" onclick="toggleNav()">&#10005;</button>
+  <a href="#bestemmingen" onclick="toggleNav()">Bestemmingen</a>
+  <a href="#themas" onclick="toggleNav()">Thema's</a>
+  <a href="#inspiratie" onclick="toggleNav()">Inspiratie</a>
+  <a href="#vliegtickets" onclick="toggleNav()">Vliegtickets groepen</a>
+  <a href="#over" onclick="toggleNav()">Over ons</a>
+  <a href="#contact" class="btn-primary" onclick="toggleNav()" style="font-family:var(--dm);font-size:11px">Aanvragen</a>
+</div>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-left">
+      <a href="totaltravel-aanvraag.html" class="topbar-btn outline" style="text-decoration:none">Reis aanvragen</a>
+      <button class="topbar-btn outline">Abonneer op nieuwsbrief</button>
+    </div>
+    <div class="topbar-right">
+      <a href="#over" class="topbar-item">Over ons</a>
+      <div class="topbar-divider"></div>
+      <a href="tel:+31786817579" class="topbar-item">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.17 1.18 2 2 0 012.14 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+        +31 78 681 75 79
+      </a>
+      <div class="topbar-divider"></div>
+      <a href="mailto:info@totaltravel.nl" class="topbar-item hide-mobile">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        &#105;&#110;&#102;&#111;&#64;&#116;&#111;&#116;&#97;&#108;&#116;&#114;&#97;&#118;&#101;&#108;&#46;&#110;&#108;
+      </a>
+    </div>
+  </div>
+</div>
+
+<nav id="nav">
+  <div class="nav-inner"><div class="nav-logo-wrap"><div class="nav-logo">TOTAL <span class="dot">&middot;</span> TRAVEL</div></div><div class="nav-center">
+  <ul class="nav-links">
+    <li class="has-dropdown"><a href="#bestemmingen" class="nav-link-drop">Bestemmingen <span class="nav-arrow">&#9660;</span></a><div class="dest-dropdown"><div class="dd-inner dest-inner"><div class="dest-continents"><button class="dest-continent-btn active" onmouseenter="showContinent('afrika',this)">Afrika<span class="cnt-count">1</span></button><button class="dest-continent-btn" onmouseenter="showContinent('azie',this)">Azi&euml;<span class="cnt-count">2</span></button><button class="dest-continent-btn empty">Europa</button><button class="dest-continent-btn" onmouseenter="showContinent('midden-oosten',this)">Midden-Oosten<span class="cnt-count">6</span></button><button class="dest-continent-btn empty">Noord-Amerika</button><button class="dest-continent-btn empty">Oceani&euml;</button><button class="dest-continent-btn empty">Zuid-Amerika</button></div><div class="dest-panels"><div class="dest-panel active" id="panel-afrika"><div class="dest-panel-label">Afrika &mdash; 1 bestemming</div><div class="dest-cards cols3"><div class="dest-card"><div class="dest-marokko dest-card-inner"></div><div class="dest-card-overlay"></div><div class="dest-card-name"><span class="dest-pin">&#9679;</span><span class="dest-name">Marokko</span></div></div></div></div><div class="dest-panel" id="panel-azie"><div class="dest-panel-label">Azi&euml; &mdash; 2 bestemmingen</div><div class="dest-cards cols3"><div class="dest-card"><div class="dest-japan dest-card-inner"></div><div class="dest-card-overlay"></div><div class="dest-card-name"><span class="dest-pin">&#9679;</span><span class="dest-name">Japan</span></div></div><div class="dest-card"><div class="dest-thailand dest-card-inner"></div><div class="dest-card-overlay"></div><div class="dest-card-name"><span class="dest-pin">&#9679;</span><span class="dest-name">Thailand</span></div></div></div></div><div class="dest-panel" id="panel-midden-oosten"><div class="dest-panel-label">Midden-Oosten &mdash; 6 bestemmingen</div><div class="dest-cards"><div class="dest-card"><div class="dest-bahrein dest-card-inner"></div><div class="dest-card-overlay"></div><div class="dest-card-name"><span class="dest-pin">&#9679;</span><span class="dest-name">Bahrein</span></div></div><div class="dest-card"><div class="dest-jordanie dest-card-inner"></div><div class="dest-card-overlay"></div><div class="dest-card-name"><span class="dest-pin">&#9679;</span><span class="dest-name">Jordani&euml;</span></div></div><div class="dest-card"><div class="dest-oman dest-card-inner"></div><div class="dest-card-overlay"></div><div class="dest-card-name"><span class="dest-pin">&#9679;</span><span class="dest-name">Oman</span></div></div><div class="dest-card"><div class="dest-qatar dest-card-inner"></div><div class="dest-card-overlay"></div><div class="dest-card-name"><span class="dest-pin">&#9679;</span><span class="dest-name">Qatar</span></div></div><div class="dest-card"><div class="dest-saudi dest-card-inner"></div><div class="dest-card-overlay"></div><div class="dest-card-name"><span class="dest-pin">&#9679;</span><span class="dest-name">Saudi-Arabi&euml;</span></div></div><div class="dest-card"><div class="dest-vae dest-card-inner"></div><div class="dest-card-overlay"></div><div class="dest-card-name"><span class="dest-pin">&#9679;</span><span class="dest-name">Ver. Arabische Emiraten</span></div></div></div></div></div></div></div></li>
+    <li class="has-dropdown"><a href="#themas" class="nav-link-drop">Thema's <span class="nav-arrow">&#9660;</span></a><div class="thema-dropdown"><div class="dd-inner thema-inner"><div class="thema-dropdown-label">Thema's &mdash; 7 categorie&euml;n</div><div class="thema-cards"><div class="thema-card"><div class="thema-cruise thema-card-inner"></div><div class="thema-card-overlay"></div><div class="thema-card-name"><svg class="thema-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20M6 20V10l6-7 6 7v10"/><path d="M12 3v17"/></svg><span class="thema-label">Cruises</span></div></div><div class="thema-card"><div class="thema-f1 thema-card-inner"></div><div class="thema-card-overlay"></div><div class="thema-card-name"><svg class="thema-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="17" r="3"/></svg><span class="thema-label">Formule 1 reizen</span></div></div><div class="thema-card"><div class="thema-golf thema-card-inner"></div><div class="thema-card-overlay"></div><div class="thema-card-name"><svg class="thema-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 000 7H14a3.5 3.5 0 010 7H6"/></svg><span class="thema-label">Golfreizen</span></div></div><div class="thema-card"><div class="thema-incentives thema-card-inner"></div><div class="thema-card-overlay"></div><div class="thema-card-name"><svg class="thema-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg><span class="thema-label">Incentives</span></div></div><div class="thema-card"><div class="thema-stedentrip thema-card-inner"></div><div class="thema-card-overlay"></div><div class="thema-card-name"><svg class="thema-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><path d="M3 6h18M3 18h18M7 6v12M12 6v12M17 6v12"/></svg><span class="thema-label">Stedentrips</span></div></div><div class="thema-card"><div class="thema-vakantie thema-card-inner"></div><div class="thema-card-overlay"></div><div class="thema-card-name"><svg class="thema-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg><span class="thema-label">Vakantiereizen</span></div></div><div class="thema-card"><div class="thema-voetbal thema-card-inner"></div><div class="thema-card-overlay"></div><div class="thema-card-name"><svg class="thema-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 18l-6.2 4.3 2.4-7.4L2 10.4h7.6z"/></svg><span class="thema-label">Voetbalreizen</span></div></div></div></div></div></li>
+    <li><a href="#inspiratie">Inspiratie</a></li>
+    <li><a href="#vliegtickets">Vliegtickets groepen</a></li>
+  </ul>
+</div><div class="nav-right"><a href="totaltravel-aanvraag.html" class="nav-cta">Reis aanvragen</a><div class="nav-hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div></div></div></nav>
+
+<section class="hero hero-on-video" id="top">
+  <div class="hero-video-wrap"><video autoplay muted loop playsinline preload="none"><source src="Media/hero-video.mp4" type="video/mp4"></video></div>
+  <div class="hero-bg-shape"></div>
+  <div class="hero-bg-line"></div>
+  <div class="hero-rule"></div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-eyebrow reveal">Specialist in maatwerkreizen</div>
+      <h1 class="hero-h1 reveal" style="transition-delay:.1s">Elke reis<br><em>uniek.</em></h1>
+      <div class="hero-tagline reveal" style="transition-delay:.2s">Maatwerk zonder omwegen</div>
+      <p class="hero-body reveal" style="transition-delay:.3s">Van een exclusieve golfvakantie tot de ultieme Formule 1-beleving &mdash; Total Travel regelt elk detail. Persoonlijk advies, onbegrensde mogelijkheden, 25 jaar expertise.</p>
+      <div class="hero-actions reveal" style="transition-delay:.4s">
+        <a href="totaltravel-aanvraag.html" class="btn-primary">Reis aanvragen</a>
+        <a href="#diensten" class="btn-ghost">Ons aanbod</a>
+      </div>
+    </div>
+    <div class="hero-right reveal" style="transition-delay:.25s">
+      <div class="hero-stat-row">
+        <div><div class="hero-stat-num">25+</div><div class="hero-stat-lbl">Jaar ervaring</div></div>
+        <div><div class="hero-stat-num">100%</div><div class="hero-stat-lbl">Op maat</div></div>
+        <div><div class="hero-stat-num">100+</div><div class="hero-stat-lbl">Bestemmingen</div></div>
+      </div>
+      <div class="hero-monogram"><span>TT</span></div>
+    </div>
+  </div>
+  <div class="scroll-hint"><div class="scroll-hint-line"></div><span>Scroll</span></div>
+</section>
+
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Vakantiereizen</span><span class="marquee-item">Incentives</span><span class="marquee-item">Golfreizen</span><span class="marquee-item">Cruises</span><span class="marquee-item">Formule 1</span><span class="marquee-item">Vliegtickets groepen</span><span class="marquee-item">Vakantiereizen</span><span class="marquee-item">Incentives</span><span class="marquee-item">Golfreizen</span><span class="marquee-item">Cruises</span><span class="marquee-item">Formule 1</span><span class="marquee-item">Vliegtickets groepen</span>
+  </div>
+</div>
+
+<section>
+  <div class="portfolio-wrap">
+    <div class="portfolio-inner">
+      <div class="section-label reveal">Portfolio</div>
+      <h2 class="section-h2 reveal" style="transition-delay:.1s;margin-bottom:40px">Ons aanbod in<br><em>beeld</em></h2>
+      <div class="portfolio-grid">
+        <div class="portfolio-tile reveal" style="transition-delay:.0s"><img src="Media/vakantie.jpg" alt="Vakantiereizen" loading="lazy"><div class="portfolio-overlay"><div class="portfolio-cat">Leisure</div><div class="portfolio-naam">Vakantiereizen</div></div><div class="portfolio-arrow">&#8594;</div></div>
+        <div class="portfolio-tile reveal" style="transition-delay:.08s"><img src="Media/incentives.jpg" alt="Incentives" loading="lazy"><div class="portfolio-overlay"><div class="portfolio-cat">Business</div><div class="portfolio-naam">Incentives</div></div><div class="portfolio-arrow">&#8594;</div></div>
+        <div class="portfolio-tile reveal" style="transition-delay:.16s"><img src="Media/golf.jpg" alt="Golfreizen" loading="lazy"><div class="portfolio-overlay"><div class="portfolio-cat">Sport</div><div class="portfolio-naam">Golfreizen</div></div><div class="portfolio-arrow">&#8594;</div></div>
+        <div class="portfolio-tile reveal" style="transition-delay:.0s"><img src="Media/cruise.jpg" alt="Cruises" loading="lazy"><div class="portfolio-overlay"><div class="portfolio-cat">Zee</div><div class="portfolio-naam">Cruises</div></div><div class="portfolio-arrow">&#8594;</div></div>
+        <div class="portfolio-tile reveal" style="transition-delay:.08s"><img src="Media/formule1.jpg" alt="Formule 1" loading="lazy"><div class="portfolio-overlay"><div class="portfolio-cat">Sport</div><div class="portfolio-naam">Formule 1</div></div><div class="portfolio-arrow">&#8594;</div></div>
+        <div class="portfolio-tile reveal" style="transition-delay:.16s"><img src="Media/vliegtickets.jpg" alt="Vliegtickets groepen" loading="lazy"><div class="portfolio-overlay"><div class="portfolio-cat">Groepen</div><div class="portfolio-naam">Vliegtickets groepen</div></div><div class="portfolio-arrow">&#8594;</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="over">
+  <div class="over-wrap">
+    <div class="over-inner">
+      <div>
+        <div class="over-label reveal">Over Total Travel</div>
+        <h2 class="over-h2 reveal" style="transition-delay:.1s">Persoonlijk advies,<br><em>onbegrensde</em><br>mogelijkheden</h2>
+        <p class="over-body reveal" style="transition-delay:.2s">Total Travel is een onafhankelijke reisspecialist gevestigd in Hendrik-Ido-Ambacht. Al meer dan 25 jaar verzorgen wij volledig op maat gemaakte reizen voor particulieren en zakelijke klanten.</p>
+        <div class="over-kenmerken reveal" style="transition-delay:.3s">
+          <div class="kenmerk"><div class="kenmerk-dot"></div><div class="kenmerk-tekst"><strong>Volledig onafhankelijk</strong> &mdash; geen binding met tour operators of luchtvaartmaatschappijen.</div></div>
+          <div class="kenmerk"><div class="kenmerk-dot"></div><div class="kenmerk-tekst"><strong>Gecertificeerd</strong> &mdash; ANVR, SGR, SGRZ, IATA en Calamiteitenfonds.</div></div>
+          <div class="kenmerk"><div class="kenmerk-dot"></div><div class="kenmerk-tekst"><strong>24/7 bereikbaar</strong> &mdash; ook tijdens uw reis staat ons team voor u klaar.</div></div>
+        </div>
+      </div>
+      <div class="over-rechts reveal-right">
+        <blockquote class="over-quote">&ldquo;Uw reis begint met een gesprek &mdash; en eindigt met een herinnering voor het leven.&rdquo;</blockquote>
+        <div class="over-cijfers">
+          <div class="cijfer-item"><div class="cijfer-num">25+</div><div class="cijfer-lbl">Jaar ervaring</div></div>
+          <div class="cijfer-item"><div class="cijfer-num">100+</div><div class="cijfer-lbl">Bestemmingen</div></div>
+          <div class="cijfer-item"><div class="cijfer-num">100%</div><div class="cijfer-lbl">Op maat</div></div>
+          <div class="cijfer-item"><div class="cijfer-num">5&#9733;</div><div class="cijfer-lbl">Klanttevredenheid</div></div>
+        </div>
+        <div class="cert-rij">
+          <span class="cert-tag">ANVR</span><span class="cert-tag">SGR</span><span class="cert-tag">SGRZ</span><span class="cert-tag">IATA</span><span class="cert-tag">Calamiteitenfonds</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section id="werkwijze">
+  <div class="werkwijze-wrap">
+    <div class="werkwijze-inner">
+      <div>
+        <div class="section-label reveal">Werkwijze</div>
+        <h2 class="section-h2 reveal" style="transition-delay:.1s;margin-bottom:0">Zo werkt<br><em>maatwerk</em></h2>
+      </div>
+      <div class="werkwijze-rechts">
+        <div class="stap reveal"><div class="stap-num">01</div><div class="stap-content"><div class="stap-titel">Kennismakingsgesprek</div><p class="stap-tekst">We luisteren naar uw wensen, reisgezelschap, tijdsframe en budget. Geen formulier, maar een echt gesprek &mdash; telefonisch, per mail of op ons kantoor.</p></div></div>
+        <div class="stap reveal" style="transition-delay:.1s"><div class="stap-num">02</div><div class="stap-content"><div class="stap-titel">Persoonlijk voorstel</div><p class="stap-tekst">Op basis van uw wensen stellen wij een volledig uitgewerkt reisvoorstel op &mdash; inclusief accommodatie, vluchten, transfers en activiteiten.</p></div></div>
+        <div class="stap reveal" style="transition-delay:.2s"><div class="stap-num">03</div><div class="stap-content"><div class="stap-titel">Verfijning op maat</div><p class="stap-tekst">We passen het voorstel aan totdat het perfect is. Geen haast, geen standaardpakketten &mdash; uw reis, uw keuzes.</p></div></div>
+        <div class="stap reveal" style="transition-delay:.3s"><div class="stap-num">04</div><div class="stap-content"><div class="stap-titel">Zorgeloos op reis</div><p class="stap-tekst">Wij regelen alle boekingen en reisdocumenten. Onderweg staat ons team altijd voor u klaar &mdash; 24/7, ook in geval van onverwachte situaties.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="quotes-wrap">
+    <div class="quotes-inner">
+      <div class="section-label reveal">Ervaringen</div>
+      <h2 class="section-h2 reveal" style="transition-delay:.1s;margin-bottom:0">Wat onze reizigers<br><em>zeggen</em></h2>
+      <div class="quotes-grid">
+        <div class="quote-card reveal">
+          <div class="quote-sterren"><div class="ster"></div><div class="ster"></div><div class="ster"></div><div class="ster"></div><div class="ster"></div></div>
+          <p class="quote-tekst">&ldquo;Total Travel heeft ons incentive-programma voor 40 medewerkers tot in de puntjes verzorgd. Elk detail klopte. De groep was onder de indruk.&rdquo;</p>
+          <div class="quote-persoon">Martijn de Vos</div><div class="quote-functie">HR-directeur, logistiek bedrijf</div>
+        </div>
+        <div class="quote-card reveal" style="transition-delay:.1s">
+          <div class="quote-sterren"><div class="ster"></div><div class="ster"></div><div class="ster"></div><div class="ster"></div><div class="ster"></div></div>
+          <p class="quote-tekst">&ldquo;De golfvakantie naar Portugal was precies wat we zochten &mdash; van het eerste contact tot de terugvlucht liep alles op rolletjes.&rdquo;</p>
+          <div class="quote-persoon">Familie Vermeulen</div><div class="quote-functie">Vaste klant sinds 2018</div>
+        </div>
+        <div class="quote-card reveal" style="transition-delay:.2s">
+          <div class="quote-sterren"><div class="ster"></div><div class="ster"></div><div class="ster"></div><div class="ster"></div><div class="ster"></div></div>
+          <p class="quote-tekst">&ldquo;F1 Monaco via Total Travel &mdash; wat een ervaring. Hospitality in de pitlane, de beste plekken, alles geregeld. Dit boek je nergens anders.&rdquo;</p>
+          <div class="quote-persoon">Peter Janssen</div><div class="quote-functie">Formule 1-liefhebber, Amsterdam</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="cta-wrap">
+    <div class="cta-inner">
+      <div>
+        <h2 class="cta-h2 reveal">Klaar voor uw<br>volgende <em>avontuur?</em></h2>
+        <p class="cta-sub reveal" style="transition-delay:.1s">Vertel ons waar u naartoe wilt en wij zorgen voor de rest. Geen verplichtingen, geen standaardpakketten &mdash; alleen uw reis, op uw maat.</p>
+      </div>
+      <div class="cta-rechts reveal" style="transition-delay:.2s">
+        <a href="totaltravel-aanvraag.html" class="btn-wit">Reis aanvragen</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-wordmark">TOTAL <span class="dot">&middot;</span> TRAVEL</div>
+      <div class="footer-tagline">Maatwerk zonder omwegen</div>
+      <p class="footer-body">Onafhankelijke reisspecialist voor volledig op maat gemaakte vakanties, incentives, sport- en groepsreizen. Gevestigd in Hendrik-Ido-Ambacht, actief wereldwijd.</p>
+      <div class="footer-certs-wrap">
+        <span class="footer-cert">ANVR</span><span class="footer-cert">SGR</span><span class="footer-cert">SGRZ</span><span class="footer-cert">IATA</span><span class="footer-cert">Calamiteitenfonds</span>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Aanbod</div>
+      <ul class="footer-links">
+        <li><a href="#">Vakantiereizen</a></li><li><a href="#">Incentives</a></li><li><a href="#">Golfreizen</a></li><li><a href="#">Cruises</a></li><li><a href="#">Formule 1</a></li><li><a href="#">Vliegtickets groepen</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Informatie</div>
+      <ul class="footer-links">
+        <li><a href="#">Over ons</a></li><li><a href="#">Werkwijze</a></li><li><a href="#">Ervaringen</a></li><li><a href="#">Actueel</a></li><li><a href="#">Reisadvies</a></li><li><a href="#">Algemene voorwaarden</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <div class="footer-contact-item">+31 78 681 75 79</div>
+      <div class="footer-contact-item" style="margin-top:6px"><a href="mailto:info@totaltravel.nl">&#105;&#110;&#102;&#111;&#64;&#116;&#111;&#116;&#97;&#108;&#116;&#114;&#97;&#118;&#101;&#108;&#46;&#110;&#108;</a></div>
+      <div class="footer-contact-item" style="margin-top:6px"><a href="https://totaltravel.nl">totaltravel.nl</a></div>
+      <div class="footer-contact-item" style="margin-top:16px;font-size:12px;line-height:1.7">Schrijversstraat 10<br>3363 EB Hendrik-Ido-Ambacht</div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">&#169; 2026 Total Travel. Alle rechten voorbehouden.</span>
+    <span class="footer-copy">KvK 12345678 &middot; BTW NL123456789B01</span>
+  </div>
+</footer>
+
+<script>
+var cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+document.addEventListener('mousemove',function(e){cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px';ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';});
+var nav=document.getElementById('nav'),topbar=document.querySelector('.topbar');
+window.addEventListener('scroll',function(){
+  var s=window.scrollY>40;
+  nav.classList.toggle('scrolled',s);
+  if(s){topbar.style.transform='translateY(-100%)';topbar.style.transition='transform .3s ease';nav.style.top='0';}
+  else{topbar.style.transform='';nav.style.top='34px';}
+});
+var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.12,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(function(el){obs.observe(el);});
+
+function showContinent(id, btn) {
+  document.querySelectorAll('.dest-panel').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.dest-continent-btn:not(.empty)').forEach(function(b){b.classList.remove('active');});
+  var panel = document.getElementById('panel-' + id);
+  if (panel) panel.classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+function toggleNav(){document.getElementById('mobileNav').classList.toggle('open');}
+</script>
+</body>
+</html>
