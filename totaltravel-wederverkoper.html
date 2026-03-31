@@ -827,7 +827,8 @@ function changeCount(type, delta) {
 /* ── Radio buttons ── */
 document.querySelectorAll('.radio-group').forEach(function(grp) {
   grp.querySelectorAll('.radio-option').forEach(function(opt) {
-    opt.addEventListener('click', function() {
+    opt.addEventListener('click', function(e) {
+      e.preventDefault();
       grp.querySelectorAll('.radio-option').forEach(function(o){ o.classList.remove('selected'); });
       this.classList.add('selected');
       var inp = this.querySelector('input[type="radio"]');
