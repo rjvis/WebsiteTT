@@ -3,350 +3,374 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Marokko — Total Travel</title>
+<title>Marokko — Maatwerk reizen — Total Travel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
+/* ── CSS VARIABELEN ── */
+:root{
   --s:#A0522D;--sdk:#7A3E21;--slt:#C4784A;
-  --z:#C4A882;--zlt:#DDD0BC;
-  --i:#F5F0E8;--iw:#EDE5D8;
+  --z:#C4A882;--zlt:#DDD0BC;--zdm:#B09068;
+  --i:#F5F0E8;--iw:#EDE5D8;--ic:#E8DDD0;
   --t:#2D1F14;--e:#1A1410;--w:#FAF8F4;
-  --dim:#8A7060;--sub:#5A4030;
+  --sub:#5A4030;--dim:#8A7060;
   --pf:'Cormorant Garamond',Georgia,serif;
   --dm:'DM Sans',system-ui,sans-serif;
   --ease:cubic-bezier(.25,.46,.45,.94);
-
-  /* Marokko sfeer-kleuren */
-  --m1:#B5470A; /* gebakken aarde */
-  --m2:#D4832E; /* soukaarde */
-  --m3:#E8B86D; /* zandduinen */
-  --m4:#2C6B5A; /* palmbladeren */
-  --m5:#1B3A6B; /* nacht / Sahara */
-  --m6:#7A1E3C; /* rozen / Marrakech */
+  /* Marokko sfeer */
+  --m1:#B5470A;--m2:#D4832E;--m3:#E8B86D;
+  --m4:#2C6B5A;--m5:#1B3A6B;--m6:#7A1E3C;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;font-size:16px}
-body{font-family:var(--dm);background:var(--e);color:var(--w);overflow-x:hidden;cursor:none}
+html{scroll-behavior:smooth}
+body{font-family:var(--dm);background:var(--w);color:var(--t);overflow-x:hidden;cursor:none}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
 
-/* ── CURSOR ─────────────────────────────────────────────────────────── */
-.cursor{width:8px;height:8px;background:var(--m3);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s,opacity .2s;mix-blend-mode:difference}
-.cursor-trail{width:40px;height:40px;border:1px solid rgba(212,131,46,.4);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .4s var(--ease),opacity .3s}
+/* ── CURSOR ── */
+.cursor{width:8px;height:8px;background:var(--m2);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .12s,opacity .2s;mix-blend-mode:multiply}
+.cursor-trail{width:36px;height:36px;border:1px solid rgba(212,131,46,.5);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .4s var(--ease),opacity .3s}
 
-/* ── NAV ─────────────────────────────────────────────────────────────── */
-.nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:transparent;transition:background .4s,backdrop-filter .4s}
-.nav.scrolled{background:rgba(26,20,16,.88);backdrop-filter:blur(16px)}
-.nav-logo{font-family:var(--dm);font-size:14px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--w);text-decoration:none}
+/* ── NAV ── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;transition:background .4s,backdrop-filter .4s;background:transparent}
+.nav.scrolled{background:rgba(26,20,16,.9);backdrop-filter:blur(16px)}
+.nav-logo{font-family:var(--dm);font-size:14px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--w);text-decoration:none;transition:color .2s}
 .nav-logo .dot{color:var(--s)}
 .nav-right{display:flex;align-items:center;gap:24px}
 .nav-back{font-size:11px;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:rgba(250,248,244,.6);text-decoration:none;transition:color .2s;display:flex;align-items:center;gap:8px}
 .nav-back:hover{color:var(--m3)}
 .nav-back svg{transition:transform .2s}
 .nav-back:hover svg{transform:translateX(-3px)}
-.nav-cta{font-family:var(--dm);font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;background:var(--s);color:var(--w);padding:9px 22px;text-decoration:none;transition:background .2s}
+.nav-cta{font-family:var(--dm);font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;background:var(--s);color:var(--w)!important;padding:9px 22px;transition:background .2s}
 .nav-cta:hover{background:var(--sdk)}
 
-/* ── HERO ────────────────────────────────────────────────────────────── */
+/* ── HERO ── */
 .hero{height:100vh;position:relative;overflow:hidden;display:flex;align-items:flex-end}
-.hero-bg{position:absolute;inset:0;z-index:0}
-.hero-bg-gradient{
-  position:absolute;inset:0;z-index:1;
-  background:
-    radial-gradient(ellipse 80% 60% at 30% 60%, rgba(181,71,10,.35) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 80% at 80% 30%, rgba(27,58,107,.4) 0%, transparent 60%),
-    linear-gradient(to bottom, rgba(26,20,16,.2) 0%, rgba(26,20,16,.7) 70%, rgba(26,20,16,.95) 100%);
-}
-/* Animated sand/heat shimmer */
-.hero-shimmer{
-  position:absolute;inset:0;z-index:2;opacity:.06;
-  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size:200px;
-  animation:shimmer 8s linear infinite;
-}
-@keyframes shimmer{to{background-position:200px 200px}}
-
-/* Grote achtergrond-foto simulatie met CSS gradient landschap */
+.hero-bg{position:absolute;inset:0}
 .hero-landscape{
-  position:absolute;inset:0;z-index:0;
-  background:
-    /* zon */
-    radial-gradient(circle 120px at 65% 25%, rgba(255,220,100,.8) 0%, rgba(255,160,60,.4) 30%, transparent 70%),
-    /* lucht verloop */
-    linear-gradient(170deg, #0a1628 0%, #1B3A6B 25%, #6B3515 55%, #B5470A 70%, #E8B86D 85%, #D4832E 100%),
-    /* duin silhouet voorgrond */
-    radial-gradient(ellipse 120% 30% at 50% 110%, #2D1F14 40%, transparent 70%);
-}
-/* Moskee silhouet als SVG overlay */
-.hero-silhouette{
-  position:absolute;bottom:0;left:0;right:0;z-index:3;
-  height:45%;opacity:.9;
-  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 400' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%231A1410' d='M0 400h1440V220l-60-10-20-80-20 80-60 10V180l-8-2-4-40-4 40-8 2v40l-100-15V180l-10-5-5-50-5 50-10 5v70l-80-10V200l-10-8-6-60-6 60-10 8v40l-80-5v-60l-15-5-8-80-8 80-15 5v80H700v-90l-20-10-10-100-10 100-20 10v90h-60v-70l-12-8-6-70-6 70-12 8v70h-80v-50l-8-5-4-40-4 40-8 5v50h-60V200l-15-10-8-90-8 90-15 10v120H300v-80l-10-5-5-50-5 50-10 5v80H200v-60l-8-5-4-40-4 40-8 5v60H100V250l-5-3-3-30-3 30-5 3v150H0z'/%3E%3C/svg%3E") no-repeat bottom;
-  background-size:100% 100%;
-}
-/* Palmen silhouet */
-.hero-palms{
-  position:absolute;bottom:0;left:0;z-index:4;
-  width:280px;height:60%;opacity:.85;
-  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 280 300' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%231A1410' d='M40 300V120c0 0-30-10-35-40 10 5 25 10 35 5-5-15-20-25-30-30 15 0 30 10 40 20-10-20-15-45-10-60 10 25 15 45 20 60 5-20 5-40 15-55-5 30 0 50 10 65 10-15 20-35 35-40-10 15-20 35-20 55 15-5 30-15 40-15-15 10-25 25-30 45V300H40z M120 300V150c0 0-25-8-28-35 8 4 20 8 28 4-4-12-15-20-24-25 12 0 24 8 32 16-8-16-12-36-8-50 8 20 12 36 16 50 4-16 4-32 12-44-4 24 0 40 8 52 8-12 16-28 28-32-8 12-16 28-16 44 12-4 24-12 32-12-12 8-20 20-24 36V300H120z M200 300V130c0 0-20-6-22-28 6 3 16 6 22 3-3-10-12-16-19-20 10 0 19 6 26 13-6-13-10-29-6-40 6 16 10 29 13 40 3-13 3-26 10-35-3 19 0 32 6 42 6-10 13-22 22-26-6 10-13 22-13 35 10-3 19-10 26-10-10 6-16 16-19 29V300H200z'/%3E%3C/svg%3E") no-repeat bottom left;
-  background-size:100% 100%;
-}
-
-.hero-content{position:relative;z-index:10;padding:0 80px 80px;max-width:1280px;margin:0 auto;width:100%}
-.hero-eyebrow{font-size:10px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--m3);margin-bottom:20px;display:flex;align-items:center;gap:16px}
-.hero-eyebrow::before{content:'';width:40px;height:1px;background:var(--m3)}
-.hero-h1{font-family:var(--pf);font-size:clamp(72px,9vw,140px);font-weight:300;line-height:.9;color:var(--w);letter-spacing:-.02em;margin-bottom:20px}
-.hero-h1 em{font-style:italic;color:var(--m3)}
-.hero-sub{font-family:var(--pf);font-size:clamp(18px,2vw,24px);font-style:italic;font-weight:300;color:rgba(250,248,244,.65);margin-bottom:48px;max-width:500px;line-height:1.5}
-.hero-actions{display:flex;gap:16px;flex-wrap:wrap}
-.btn-hero-primary{display:inline-flex;align-items:center;gap:10px;background:var(--s);color:var(--w);font-family:var(--dm);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:16px 32px;text-decoration:none;transition:background .2s,gap .2s}
-.btn-hero-primary:hover{background:var(--sdk);gap:16px}
-.btn-hero-ghost{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(212,131,46,.5);color:var(--m3);font-family:var(--dm);font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:16px 32px;text-decoration:none;transition:border-color .2s,gap .2s,color .2s}
-.btn-hero-ghost:hover{border-color:var(--m3);color:var(--w);gap:16px}
-
-/* Hero scroll indicator */
-.hero-scroll{position:absolute;bottom:32px;right:48px;z-index:10;display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(250,248,244,.4);font-size:9px;letter-spacing:.2em;text-transform:uppercase;font-weight:500}
-.hero-scroll-line{width:1px;height:48px;background:linear-gradient(to bottom,rgba(212,131,46,.6),transparent);animation:scrollpulse 2s ease-in-out infinite}
-@keyframes scrollpulse{0%,100%{transform:scaleY(1);opacity:.6}50%{transform:scaleY(.4);opacity:1}}
-
-/* Hero stats */
-.hero-stats{display:flex;gap:48px;margin-bottom:40px}
-.hero-stat{border-left:1px solid rgba(212,131,46,.3);padding-left:20px}
-.hero-stat-num{font-family:var(--pf);font-size:36px;font-weight:300;color:var(--m3);line-height:1}
-.hero-stat-lbl{font-size:10px;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:rgba(250,248,244,.45);margin-top:4px}
-
-/* ── CHAPTER LABELS ──────────────────────────────────────────────────── */
-.chapter{position:relative}
-.chapter-label{
-  position:absolute;top:48px;left:48px;
-  font-size:9px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;
-  color:rgba(212,131,46,.5);
-  writing-mode:vertical-rl;transform:rotate(180deg);
-  z-index:10;
-}
-
-/* ── SECTION: ZIN VOOR ZIN ──────────────────────────────────────────── */
-/* De grote "beleving" sectie — horizontaal scrollend gevoel */
-.senses{background:var(--e);padding:0}
-.senses-intro{max-width:1280px;margin:0 auto;padding:120px 80px 80px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end}
-.senses-label{font-size:10px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--s);margin-bottom:20px;display:flex;align-items:center;gap:12px}
-.senses-label::before{content:'';width:32px;height:1px;background:var(--s)}
-.senses-h2{font-family:var(--pf);font-size:clamp(40px,5vw,72px);font-weight:300;line-height:1;color:var(--w);margin-bottom:0}
-.senses-h2 em{font-style:italic;color:var(--m3)}
-.senses-body{font-size:16px;font-weight:300;line-height:1.9;color:rgba(250,248,244,.55);align-self:end}
-
-/* De zintuig-blokken */
-.sense-blocks{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:rgba(212,131,46,.08)}
-.sense-block{
-  position:relative;overflow:hidden;
-  min-height:420px;
-  display:flex;flex-direction:column;justify-content:flex-end;
-  padding:48px;
-  cursor:pointer;
-  transition:flex .6s var(--ease);
-}
-.sense-block-bg{position:absolute;inset:0;z-index:0;transition:transform .6s var(--ease)}
-.sense-block:hover .sense-block-bg{transform:scale(1.04)}
-.sense-block-overlay{
-  position:absolute;inset:0;z-index:1;
-  background:linear-gradient(to top,rgba(26,20,16,.92) 0%,rgba(26,20,16,.3) 50%,transparent 100%);
-  transition:opacity .4s;
-}
-.sense-block:hover .sense-block-overlay{opacity:.7}
-.sense-block-content{position:relative;z-index:2}
-.sense-icon{font-size:32px;margin-bottom:16px;display:block;transition:transform .3s}
-.sense-block:hover .sense-icon{transform:scale(1.2) rotate(-5deg)}
-.sense-num{font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(212,131,46,.5);margin-bottom:8px}
-.sense-title{font-family:var(--pf);font-size:clamp(24px,2.5vw,38px);font-weight:300;color:var(--w);line-height:1.1;margin-bottom:12px}
-.sense-title em{font-style:italic;color:var(--m3)}
-.sense-text{font-size:14px;font-weight:300;line-height:1.7;color:rgba(250,248,244,.55);max-height:0;overflow:hidden;transition:max-height .5s var(--ease),opacity .4s}
-.sense-text.expanded,.sense-block:hover .sense-text{max-height:200px;opacity:1}
-.sense-cta{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--m3);text-decoration:none;margin-top:16px;opacity:0;transform:translateY(8px);transition:opacity .3s,transform .3s}
-.sense-block:hover .sense-cta{opacity:1;transform:translateY(0)}
-
-/* Sense block achtergronden — kleur-paletten per zintuig */
-.sense-1 .sense-block-bg{background:linear-gradient(135deg,#6B3515 0%,#B5470A 40%,#E8B86D 100%)} /* Geur: souks */
-.sense-2 .sense-block-bg{background:linear-gradient(135deg,#1B3A6B 0%,#2C6B5A 50%,#4A9B7A 100%)} /* Kleur: atlas */
-.sense-3 .sense-block-bg{background:linear-gradient(135deg,#2D1F14 0%,#7A4A20 40%,#D4832E 100%)} /* Smaak: tajine */
-.sense-4 .sense-block-bg{background:linear-gradient(135deg,#7A1E3C 0%,#B5470A 50%,#E8B86D 100%)} /* Aanraking: hamam */
-.sense-5 .sense-block-bg{background:linear-gradient(135deg,#0A1628 0%,#1B3A6B 40%,#2C6B5A 100%)} /* Zien: Sahara */
-.sense-6 .sense-block-bg{background:linear-gradient(135deg,#4A2D0A 0%,#A0522D 50%,#C4A882 100%)} /* Geluid: muziek */
-
-/* ── SECTION: STREKEN ────────────────────────────────────────────────── */
-.regions{background:var(--iw);padding:120px 0}
-.regions-inner{max-width:1280px;margin:0 auto;padding:0 80px}
-.section-label{font-size:10px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--s);margin-bottom:20px;display:flex;align-items:center;gap:12px}
-.section-label::before{content:'';width:32px;height:1px;background:var(--s)}
-.section-h2{font-family:var(--pf);font-size:clamp(36px,4vw,60px);font-weight:300;color:var(--t);line-height:1.1;margin-bottom:64px}
-.section-h2 em{font-style:italic;color:var(--s)}
-
-.regions-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--zlt);margin-bottom:2px}
-.regions-grid-2{display:grid;grid-template-columns:2fr 1fr;gap:2px;background:var(--zlt)}
-.region-card{position:relative;overflow:hidden;cursor:pointer;background:var(--w)}
-.region-card:first-child{min-height:480px}
-.region-card:not(:first-child){min-height:320px}
-.regions-grid-2 .region-card:first-child{min-height:360px}
-.regions-grid-2 .region-card:last-child{min-height:360px}
-.region-bg{position:absolute;inset:0;transition:transform .6s var(--ease)}
-.region-card:hover .region-bg{transform:scale(1.05)}
-.region-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,20,16,.85) 0%,rgba(26,20,16,.15) 60%,transparent 100%)}
-.region-content{position:absolute;bottom:0;left:0;right:0;padding:32px;z-index:2}
-.region-tag{font-size:9px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--m3);margin-bottom:8px}
-.region-name{font-family:var(--pf);font-size:clamp(22px,2.5vw,36px);font-weight:300;color:var(--w);line-height:1.1;margin-bottom:8px}
-.region-desc{font-size:13px;font-weight:300;line-height:1.6;color:rgba(250,248,244,.6);max-height:0;overflow:hidden;transition:max-height .5s var(--ease)}
-.region-card:hover .region-desc{max-height:120px}
-.region-arrow{position:absolute;top:24px;right:24px;width:36px;height:36px;border:1px solid rgba(212,131,46,.3);display:flex;align-items:center;justify-content:center;color:var(--m3);font-size:14px;opacity:0;transform:translate(4px,-4px);transition:opacity .25s,transform .25s}
-.region-card:hover .region-arrow{opacity:1;transform:translate(0,0)}
-/* Region colors */
-.region-marrakech .region-bg{background:linear-gradient(135deg,#7A1E3C 0%,#B5470A 60%,#E8B86D 100%)}
-.region-fes .region-bg{background:linear-gradient(135deg,#4A2D0A 0%,#A0522D 60%,#C4A882 100%)}
-.region-sahara .region-bg{background:linear-gradient(135deg,#0A1628 0%,#B5470A 50%,#E8B86D 100%)}
-.region-atlas .region-bg{background:linear-gradient(135deg,#1B3A6B 0%,#2C6B5A 60%,#4A9B7A 100%)}
-.region-kust .region-bg{background:linear-gradient(135deg,#2C6B5A 0%,#1B3A6B 60%,#4A9B7A 100%)}
-
-/* ── SECTION: DE IDEALE REIS ─────────────────────────────────────────── */
-.journey{background:var(--e);padding:120px 0;position:relative;overflow:hidden}
-.journey::before{
-  content:'رحلة';
-  position:absolute;right:-20px;top:50%;transform:translateY(-50%);
-  font-family:serif;font-size:400px;font-weight:900;
-  color:rgba(212,131,46,.04);line-height:1;
-  pointer-events:none;user-select:none;
-}
-.journey-inner{max-width:1280px;margin:0 auto;padding:0 80px;display:grid;grid-template-columns:1fr 1fr;gap:120px;align-items:start}
-.journey-left{}
-.journey-right{padding-top:80px}
-
-/* Tijdlijn */
-.timeline{display:flex;flex-direction:column;gap:0}
-.tl-item{display:flex;gap:32px;padding-bottom:48px;position:relative}
-.tl-item:last-child{padding-bottom:0}
-.tl-item::before{content:'';position:absolute;left:15px;top:32px;bottom:0;width:1px;background:linear-gradient(to bottom,rgba(160,82,45,.4),transparent)}
-.tl-item:last-child::before{display:none}
-.tl-dot{width:30px;height:30px;border-radius:50%;border:1px solid var(--s);background:var(--e);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;font-weight:600;color:var(--s);position:relative;z-index:1;transition:background .2s,color .2s}
-.tl-item:hover .tl-dot{background:var(--s);color:var(--w)}
-.tl-body{}
-.tl-day{font-size:9px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(212,131,46,.5);margin-bottom:6px}
-.tl-title{font-family:var(--pf);font-size:22px;font-weight:300;color:var(--w);margin-bottom:8px;line-height:1.2}
-.tl-title em{font-style:italic;color:var(--m3)}
-.tl-text{font-size:13px;font-weight:300;line-height:1.75;color:rgba(250,248,244,.5)}
-.tl-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.tl-tag{font-size:9px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(212,131,46,.6);border:1px solid rgba(212,131,46,.2);padding:3px 10px}
-
-/* Beste reistijd — compact widget */
-.reistijd-widget{background:rgba(212,131,46,.06);border:1px solid rgba(212,131,46,.15);padding:32px;margin-bottom:32px}
-.rw-label{font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--s);margin-bottom:20px}
-.rw-months{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-bottom:16px}
-.rw-month{text-align:center;padding:8px 4px;border-radius:3px}
-.rw-month-name{font-size:9px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:rgba(250,248,244,.4);margin-bottom:4px}
-.rw-month-bar{height:20px;border-radius:2px;background:rgba(212,131,46,.15)}
-.rw-month.hot .rw-month-bar{background:var(--m1)}
-.rw-month.warm .rw-month-bar{background:var(--m2)}
-.rw-month.ideal .rw-month-bar{background:var(--m3)}
-.rw-month.mild .rw-month-bar{background:rgba(212,131,46,.3)}
-.rw-month.hot .rw-month-name,.rw-month.warm .rw-month-name,.rw-month.ideal .rw-month-name{color:rgba(250,248,244,.7)}
-.rw-legend{display:flex;gap:16px;flex-wrap:wrap}
-.rw-legend-item{display:flex;align-items:center;gap:6px;font-size:10px;font-weight:300;color:rgba(250,248,244,.45)}
-.rw-legend-dot{width:8px;height:8px;border-radius:50%}
-
-/* Praktisch */
-.praktisch{display:flex;flex-direction:column;gap:16px}
-.prak-item{display:flex;align-items:flex-start;gap:16px;padding:20px;background:rgba(212,131,46,.05);border:1px solid rgba(212,131,46,.1)}
-.prak-icon{width:36px;height:36px;background:rgba(160,82,45,.15);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
-.prak-title{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--m3);margin-bottom:4px}
-.prak-text{font-size:13px;font-weight:300;line-height:1.6;color:rgba(250,248,244,.5)}
-
-/* ── SECTION: VERHALEN ───────────────────────────────────────────────── */
-.stories{background:var(--iw);padding:120px 0}
-.stories-inner{max-width:1280px;margin:0 auto;padding:0 80px}
-.stories-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px;margin-top:64px}
-.story-card{background:var(--w);overflow:hidden;cursor:pointer;transition:transform .3s var(--ease)}
-.story-card:hover{transform:translateY(-8px)}
-.story-thumb{height:220px;position:relative;overflow:hidden}
-.story-thumb-bg{position:absolute;inset:0;transition:transform .5s var(--ease)}
-.story-card:hover .story-thumb-bg{transform:scale(1.05)}
-.story-t1 .story-thumb-bg{background:linear-gradient(135deg,#7A1E3C,#B5470A,#E8B86D)}
-.story-t2 .story-thumb-bg{background:linear-gradient(135deg,#0A1628,#B5470A,#E8B86D)}
-.story-t3 .story-thumb-bg{background:linear-gradient(135deg,#4A2D0A,#A0522D,#C4A882)}
-.story-thumb-label{position:absolute;bottom:16px;left:16px;font-size:9px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--m3);background:rgba(26,20,16,.7);padding:4px 10px}
-.story-body{padding:28px}
-.story-tag{font-size:9px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--s);margin-bottom:10px}
-.story-title{font-family:var(--pf);font-size:20px;font-weight:400;color:var(--t);line-height:1.3;margin-bottom:10px}
-.story-excerpt{font-size:13px;font-weight:300;line-height:1.7;color:var(--dim)}
-.story-link{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--s);text-decoration:none;margin-top:16px;transition:gap .2s}
-.story-link:hover{gap:10px}
-
-/* ── CTA SECTIE ──────────────────────────────────────────────────────── */
-.cta-section{position:relative;overflow:hidden;padding:160px 0}
-.cta-bg{
   position:absolute;inset:0;
   background:
-    radial-gradient(ellipse 70% 60% at 30% 50%, rgba(181,71,10,.5) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 70% at 80% 40%, rgba(27,58,107,.4) 0%, transparent 60%),
-    var(--e);
+    radial-gradient(circle 140px at 65% 22%, rgba(255,230,120,.9) 0%, rgba(255,160,50,.5) 25%, transparent 65%),
+    linear-gradient(170deg,#061020 0%,#0d2444 15%,#1B3A6B 28%,#5B2A0A 50%,#B5470A 65%,#E8B86D 80%,#D4832E 100%),
+    radial-gradient(ellipse 120% 28% at 50% 108%,#1A1410 50%,transparent 70%);
 }
-/* Decoratief Arabisch patroon */
-.cta-pattern{
-  position:absolute;inset:0;opacity:.04;
-  background:
-    repeating-linear-gradient(45deg, rgba(212,131,46,1) 0, rgba(212,131,46,1) 1px, transparent 0, transparent 50%),
-    repeating-linear-gradient(-45deg, rgba(212,131,46,1) 0, rgba(212,131,46,1) 1px, transparent 0, transparent 50%);
-  background-size:40px 40px;
+.hero-shimmer{position:absolute;inset:0;z-index:1;opacity:.05;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") 0 0/200px;animation:shimmer 10s linear infinite}
+@keyframes shimmer{to{background-position:200px 200px}}
+.hero-silhouette{position:absolute;bottom:0;left:0;right:0;z-index:2;height:50%;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 420' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%231A1410' d='M0 420h1440V230l-55-8-18-75-18 75-55 8V195l-7-2-4-38-4 38-7 2v35l-95-12V195l-9-4-5-48-5 48-9 4v68l-75-8V210l-9-6-5-56-5 56-9 6v38l-75-4V195l-14-4-7-75-7 75-14 4v83H690V200l-18-8-9-95-9 95-18 8v78h-55V210l-11-7-6-65-6 65-11 7v68h-75V220l-7-4-4-38-4 38-7 4v48h-55V200l-14-8-7-85-7 85-14 8v118H280V245l-9-4-5-48-5 48-9 4v75H195V255l-7-4-4-38-4 38-7 4v65H105V265l-5-3-3-28-3 28-5 3v155H0z'/%3E%3C/svg%3E") no-repeat bottom/100% 100%}
+.hero-palms{position:absolute;bottom:0;left:0;z-index:3;width:320px;height:65%;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 320 340' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%231A1410' d='M45 340V135c0 0-32-11-38-44 11 5 27 11 38 5-5-16-22-27-32-33 16 0 32 11 43 22-11-22-16-48-11-64 11 26 16 48 22 64 5-22 5-43 16-59-5 32 0 54 11 70 11-16 22-38 38-43-11 16-22 38-22 59 16-5 32-16 43-16-16 11-27 27-32 48V340H45z M135 340V160c0 0-27-9-30-38 9 4 22 9 30 4-4-13-16-22-26-27 13 0 26 9 35 17-9-17-13-39-9-52 9 22 13 39 17 52 4-17 4-35 13-48-4 26 0 43 9 57 9-13 17-30 30-35-9 13-17 30-17 48 13-4 26-13 35-13-13 9-22 22-26 39V340H135z M220 340V142c0 0-22-7-24-31 7 4 17 7 24 3-3-10-13-17-20-22 10 0 20 7 28 14-7-14-10-31-7-42 7 17 10 31 14 42 3-14 3-28 10-38-3 21 0 28 7 38 7-10 14-24 24-28-7 10-14 24-14 38 10-3 21-10 28-10-10 7-17 14-21 31V340H220z'/%3E%3C/svg%3E") no-repeat bottom left/100% 100%}
+.hero-overlay{position:absolute;inset:0;z-index:4;background:linear-gradient(to bottom,rgba(26,20,16,.15) 0%,rgba(26,20,16,.5) 65%,rgba(26,20,16,.95) 100%)}
+
+.hero-content{position:relative;z-index:10;padding:0 80px 80px;max-width:1280px;margin:0 auto;width:100%}
+.hero-eyebrow{font-size:10px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--m3);margin-bottom:16px;display:flex;align-items:center;gap:16px;opacity:0;animation:fadeUp .8s var(--ease) .3s forwards}
+.hero-eyebrow::before{content:'';width:40px;height:1px;background:var(--m3)}
+.hero-h1{font-family:var(--pf);font-size:clamp(80px,10vw,150px);font-weight:300;line-height:.88;color:var(--w);letter-spacing:-.02em;margin-bottom:16px;opacity:0;animation:fadeUp .9s var(--ease) .45s forwards}
+.hero-h1 em{font-style:italic;color:var(--m3)}
+.hero-sub{font-family:var(--pf);font-size:clamp(17px,2vw,22px);font-style:italic;font-weight:300;color:rgba(250,248,244,.6);margin-bottom:40px;max-width:480px;line-height:1.55;opacity:0;animation:fadeUp .8s var(--ease) .6s forwards}
+.hero-stats{display:flex;gap:44px;margin-bottom:40px;opacity:0;animation:fadeUp .8s var(--ease) .7s forwards}
+.hero-stat{border-left:1px solid rgba(212,131,46,.35);padding-left:18px}
+.hero-stat-num{font-family:var(--pf);font-size:34px;font-weight:300;color:var(--m3);line-height:1}
+.hero-stat-lbl{font-size:10px;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:rgba(250,248,244,.4);margin-top:4px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:fadeUp .8s var(--ease) .8s forwards}
+.btn-primary{display:inline-flex;align-items:center;gap:10px;background:var(--s);color:var(--w);font-family:var(--dm);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:15px 30px;transition:background .2s,gap .2s}
+.btn-primary:hover{background:var(--sdk);gap:16px}
+.btn-ghost-light{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(212,131,46,.5);color:var(--m3);font-family:var(--dm);font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:15px 30px;transition:border-color .2s,color .2s,gap .2s}
+.btn-ghost-light:hover{border-color:var(--m3);color:var(--w);gap:16px}
+.btn-ghost-dark{display:inline-flex;align-items:center;gap:10px;border:1.5px solid var(--s);color:var(--s);font-family:var(--dm);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:15px 30px;transition:background .2s,color .2s,gap .2s}
+.btn-ghost-dark:hover{background:var(--s);color:var(--w);gap:16px}
+.hero-scroll{position:absolute;bottom:32px;right:48px;z-index:10;display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(250,248,244,.35);font-size:9px;letter-spacing:.2em;text-transform:uppercase}
+.hero-scroll-line{width:1px;height:44px;background:linear-gradient(to bottom,rgba(212,131,46,.5),transparent);animation:scrollpulse 2s ease-in-out infinite}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes scrollpulse{0%,100%{opacity:.5;transform:scaleY(1)}50%{opacity:1;transform:scaleY(.4)}}
+
+/* ── INTRO STRIP ── */
+.intro-strip{background:var(--s);padding:20px 0;overflow:hidden}
+.intro-strip-track{display:flex;gap:0;animation:marquee 30s linear infinite;white-space:nowrap}
+.intro-strip-item{font-family:var(--pf);font-style:italic;font-size:15px;color:rgba(250,248,244,.75);padding:0 48px;display:flex;align-items:center;gap:48px;flex-shrink:0}
+.intro-strip-item::after{content:'✦';color:rgba(250,248,244,.3);font-style:normal}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+/* ── INTRO SECTIE — licht ── */
+.intro{background:var(--w);padding:100px 0}
+.intro-inner{max-width:1280px;margin:0 auto;padding:0 80px;display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center}
+.section-label{font-size:10px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--s);margin-bottom:18px;display:flex;align-items:center;gap:12px}
+.section-label::before{content:'';width:28px;height:1.5px;background:var(--s)}
+.section-h2{font-family:var(--pf);font-size:clamp(36px,4.5vw,64px);font-weight:300;line-height:1.05;color:var(--t);margin-bottom:28px}
+.section-h2 em{font-style:italic;color:var(--s)}
+.body-text{font-size:15px;font-weight:300;line-height:1.9;color:var(--sub)}
+.body-text p+p{margin-top:16px}
+
+/* Intro foto collage */
+.intro-visual{position:relative;height:520px}
+.intro-photo-a{
+  position:absolute;top:0;right:0;width:72%;height:70%;
+  border-radius:2px;overflow:hidden;
+  background:linear-gradient(135deg,#7A1E3C 0%,#B5470A 40%,#E8B86D 80%,#F5D08A 100%);
 }
+.intro-photo-b{
+  position:absolute;bottom:0;left:0;width:55%;height:55%;
+  border-radius:2px;overflow:hidden;
+  background:linear-gradient(135deg,#0A1628 0%,#1B3A6B 40%,#2C6B5A 70%,#4A9B7A 100%);
+}
+.intro-photo-c{
+  position:absolute;bottom:60px;right:5%;width:28%;height:36%;
+  border-radius:2px;overflow:hidden;
+  background:linear-gradient(135deg,#4A2D0A 0%,#A0522D 50%,#C4A882 100%);
+}
+.photo-label{position:absolute;bottom:14px;left:14px;font-size:9px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(250,248,244,.85);background:rgba(26,20,16,.5);padding:4px 10px;backdrop-filter:blur(4px)}
+/* Foto placeholder decoraties */
+.intro-photo-a::before{content:'🕌';position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);font-size:64px;opacity:.5}
+.intro-photo-b::before{content:'⭐';position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);font-size:48px;opacity:.5}
+.intro-photo-c::before{content:'🫖';position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);font-size:36px;opacity:.5}
+.intro-photo-a::after,.intro-photo-b::after,.intro-photo-c::after{
+  content:'Vervang door eigen foto';
+  position:absolute;bottom:8px;right:10px;
+  font-size:8px;font-weight:400;letter-spacing:.05em;
+  color:rgba(255,255,255,.3);font-style:italic;
+}
+.intro-tag{display:inline-flex;align-items:center;gap:8px;background:var(--i);border:1px solid var(--zlt);padding:8px 16px;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--sub);margin-top:32px}
+
+/* ── ZINTUIGEN SECTIE — halflicht ── */
+.senses{background:var(--iw);padding:100px 0}
+.senses-inner{max-width:1280px;margin:0 auto;padding:0 80px}
+.senses-head{display:grid;grid-template-columns:1fr 1fr;gap:80px;margin-bottom:64px;align-items:end}
+.senses-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--zlt)}
+.sense-card{background:var(--w);padding:40px 36px;position:relative;overflow:hidden;cursor:pointer;transition:background .3s}
+.sense-card::before{content:'';position:absolute;bottom:0;left:0;width:100%;height:3px;background:var(--s);transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease)}
+.sense-card:hover{background:var(--i)}
+.sense-card:hover::before{transform:scaleX(1)}
+.sense-card-icon{font-size:36px;margin-bottom:20px;display:block;transition:transform .3s}
+.sense-card:hover .sense-card-icon{transform:scale(1.15) rotate(-5deg)}
+.sense-card-num{font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--z);margin-bottom:8px}
+.sense-card-title{font-family:var(--pf);font-size:22px;font-weight:400;color:var(--t);line-height:1.2;margin-bottom:12px}
+.sense-card-title em{font-style:italic;color:var(--s)}
+.sense-card-text{font-size:13.5px;font-weight:300;line-height:1.75;color:var(--sub)}
+.sense-card-link{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--s);margin-top:16px;opacity:0;transform:translateY(6px);transition:opacity .25s,transform .25s}
+.sense-card:hover .sense-card-link{opacity:1;transform:translateY(0)}
+
+/* ── KONINGSSTEDEN — donkere sectie met foto-kaarten ── */
+.cities{background:var(--t);padding:100px 0;position:relative;overflow:hidden}
+.cities::before{content:'المدن الملكية';position:absolute;right:-30px;top:50%;transform:translateY(-50%);font-family:serif;font-size:280px;font-weight:900;color:rgba(212,131,46,.03);line-height:1;pointer-events:none;user-select:none}
+.cities-inner{max-width:1280px;margin:0 auto;padding:0 80px}
+.cities-head{display:grid;grid-template-columns:1fr 1fr;gap:80px;margin-bottom:64px;align-items:end}
+.cities-head-body{font-size:15px;font-weight:300;line-height:1.85;color:rgba(250,248,244,.5)}
+.cities-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:rgba(212,131,46,.08)}
+
+.city-card{
+  background:var(--e);
+  position:relative;overflow:hidden;
+  cursor:pointer;
+  display:flex;flex-direction:column;
+}
+/* Grote visuele foto-ruimte */
+.city-photo{
+  height:320px;position:relative;overflow:hidden;
+  transition:height .5s var(--ease);
+}
+.city-card:hover .city-photo{height:350px}
+.city-photo-bg{
+  position:absolute;inset:0;
+  transition:transform .6s var(--ease);
+}
+.city-card:hover .city-photo-bg{transform:scale(1.06)}
+.city-photo-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,transparent 30%,rgba(26,20,16,.7) 100%);
+}
+/* Unieke kleurpalet per stad */
+.city-marrakech .city-photo-bg{
+  background:linear-gradient(160deg,#7A1E3C 0%,#B5470A 35%,#E8B86D 65%,#D4832E 100%);
+}
+.city-fes .city-photo-bg{
+  background:linear-gradient(160deg,#4A2D0A 0%,#8B5E2A 30%,#C4A882 60%,#E8D4B0 100%);
+}
+.city-meknes .city-photo-bg{
+  background:linear-gradient(160deg,#1B3A6B 0%,#2C5A8B 30%,#6B8FB5 60%,#A0C0D8 100%);
+}
+.city-rabat .city-photo-bg{
+  background:linear-gradient(160deg,#1B5A3C 0%,#2C8B5A 30%,#5AB58B 60%,#9ADBB5 100%);
+}
+/* Decoratief icoon in foto */
+.city-photo-icon{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  font-size:56px;opacity:.4;
+  transition:opacity .3s,transform .3s;
+}
+.city-card:hover .city-photo-icon{opacity:.6;transform:translate(-50%,-55%)}
+/* Stad naam over de foto */
+.city-photo-name{
+  position:absolute;bottom:16px;left:20px;
+  font-family:var(--pf);font-size:28px;font-weight:300;
+  color:var(--w);line-height:1;
+}
+.city-photo-tag{
+  position:absolute;top:16px;left:20px;
+  font-size:9px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
+  color:rgba(250,248,244,.7);background:rgba(26,20,16,.4);
+  padding:4px 10px;backdrop-filter:blur(4px);
+}
+/* Content onder de foto */
+.city-content{padding:28px;flex:1;display:flex;flex-direction:column}
+.city-desc{font-size:13.5px;font-weight:300;line-height:1.75;color:rgba(250,248,244,.55);flex:1;margin-bottom:20px}
+.city-highlights{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.city-hl{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:300;color:rgba(250,248,244,.45)}
+.city-hl::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--s);flex-shrink:0}
+.city-cta{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--m3);border-top:1px solid rgba(212,131,46,.15);padding-top:16px;margin-top:auto;transition:gap .2s}
+.city-card:hover .city-cta{gap:10px}
+
+/* ── KAART VAN MAROKKO — licht ── */
+.map-section{background:var(--w);padding:100px 0}
+.map-inner{max-width:1280px;margin:0 auto;padding:0 80px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+/* SVG kaart van Marokko */
+.morocco-map{width:100%;max-width:520px}
+.map-region{fill:var(--ic);stroke:var(--iw);stroke-width:2;cursor:pointer;transition:fill .3s}
+.map-region:hover,.map-region.active{fill:var(--s)}
+.map-dot{fill:var(--s);cursor:pointer;transition:r .2s}
+.map-dot:hover{r:8}
+.map-city-label{font-family:var(--dm);font-size:11px;fill:var(--t);font-weight:500;pointer-events:none}
+.map-points{display:flex;flex-direction:column;gap:16px}
+.map-point{display:flex;align-items:flex-start;gap:16px;padding:16px;border-left:3px solid transparent;cursor:pointer;transition:border-color .2s,background .2s}
+.map-point:hover,.map-point.active{border-left-color:var(--s);background:var(--i)}
+.map-point-dot{width:10px;height:10px;border-radius:50%;background:var(--zlt);flex-shrink:0;margin-top:4px;transition:background .2s}
+.map-point.active .map-point-dot,.map-point:hover .map-point-dot{background:var(--s)}
+.map-point-title{font-family:var(--pf);font-size:18px;font-weight:400;color:var(--t);margin-bottom:4px}
+.map-point-desc{font-size:13px;font-weight:300;line-height:1.6;color:var(--dim)}
+
+/* ── TIJDLIJN — ivoor ── */
+.journey{background:var(--i);padding:100px 0}
+.journey-inner{max-width:1280px;margin:0 auto;padding:0 80px;display:grid;grid-template-columns:5fr 4fr;gap:100px;align-items:start}
+.journey-label-big{font-family:var(--pf);font-size:clamp(36px,4vw,56px);font-weight:300;color:var(--t);line-height:1.05;margin-bottom:48px}
+.journey-label-big em{font-style:italic;color:var(--s)}
+.timeline{display:flex;flex-direction:column;gap:0}
+.tl-item{display:flex;gap:28px;padding-bottom:40px;position:relative;cursor:pointer}
+.tl-item:last-child{padding-bottom:0}
+.tl-item::before{content:'';position:absolute;left:14px;top:30px;bottom:0;width:1px;background:linear-gradient(to bottom,var(--zlt),transparent)}
+.tl-item:last-child::before{display:none}
+.tl-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--zlt);background:var(--i);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;font-weight:600;color:var(--dim);position:relative;z-index:1;transition:all .2s}
+.tl-item:hover .tl-dot{border-color:var(--s);background:var(--s);color:var(--w)}
+.tl-body{}
+.tl-day{font-size:9px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--s);margin-bottom:5px;opacity:.7}
+.tl-title{font-family:var(--pf);font-size:20px;font-weight:400;color:var(--t);margin-bottom:8px;line-height:1.2}
+.tl-title em{font-style:italic;color:var(--s)}
+.tl-text{font-size:13px;font-weight:300;line-height:1.75;color:var(--sub)}
+.tl-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.tl-tag{font-size:9px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--sub);border:1px solid var(--zlt);padding:3px 9px}
+
+/* Reistijd + praktisch */
+.journey-right-content{display:flex;flex-direction:column;gap:24px}
+.rw-widget{background:var(--w);border:1px solid var(--zlt);padding:28px}
+.rw-title{font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--s);margin-bottom:18px}
+.rw-months{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-bottom:14px}
+.rw-month{text-align:center}
+.rw-month-name{font-size:8px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:var(--dim);margin-bottom:4px}
+.rw-month-bar{height:18px;border-radius:2px;background:var(--ic)}
+.rw-month.ideal .rw-month-bar{background:var(--s)}
+.rw-month.warm .rw-month-bar{background:var(--m2)}
+.rw-month.hot .rw-month-bar{background:var(--m1)}
+.rw-month.mild .rw-month-bar{background:var(--zlt)}
+.rw-month.ideal .rw-month-name,.rw-month.warm .rw-month-name{color:var(--sub)}
+.rw-legend{display:flex;gap:14px;flex-wrap:wrap}
+.rw-legend-item{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:300;color:var(--dim)}
+.rw-legend-dot{width:8px;height:8px;border-radius:50%}
+
+.prak-items{background:var(--w);border:1px solid var(--zlt);overflow:hidden}
+.prak-item{display:flex;align-items:flex-start;gap:14px;padding:18px 22px;border-bottom:1px solid var(--ic)}
+.prak-item:last-child{border-bottom:none}
+.prak-icon{font-size:20px;flex-shrink:0}
+.prak-title{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--t);margin-bottom:3px}
+.prak-text{font-size:12.5px;font-weight:300;line-height:1.6;color:var(--sub)}
+
+/* ── VERHALEN / REISTYPES ── */
+.stories{background:var(--iw);padding:100px 0}
+.stories-inner{max-width:1280px;margin:0 auto;padding:0 80px}
+.stories-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--zlt);margin-top:56px}
+.story-card{background:var(--w);overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:transform .3s var(--ease)}
+.story-card:hover{transform:translateY(-6px)}
+.story-visual{height:200px;position:relative;overflow:hidden}
+.story-bg{position:absolute;inset:0;transition:transform .5s var(--ease)}
+.story-card:hover .story-bg{transform:scale(1.05)}
+.story-v1 .story-bg{background:linear-gradient(135deg,#7A1E3C,#B5470A,#E8B86D)}
+.story-v2 .story-bg{background:linear-gradient(135deg,#061020,#1B3A6B,#4A9B7A)}
+.story-v3 .story-bg{background:linear-gradient(135deg,#4A2D0A,#A0522D,#C4A882)}
+.story-visual-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:48px;opacity:.45}
+.story-visual-tag{position:absolute;bottom:14px;left:14px;font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--m3);background:rgba(26,20,16,.65);padding:3px 9px}
+.story-content{padding:28px;flex:1;display:flex;flex-direction:column}
+.story-type{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--s);margin-bottom:10px}
+.story-title{font-family:var(--pf);font-size:20px;font-weight:400;color:var(--t);line-height:1.3;margin-bottom:10px}
+.story-excerpt{font-size:13px;font-weight:300;line-height:1.7;color:var(--dim);flex:1}
+.story-link{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--s);margin-top:16px;transition:gap .2s}
+.story-link:hover{gap:10px}
+
+/* ── CTA SECTIE ── */
+.cta-section{background:var(--t);padding:120px 0;position:relative;overflow:hidden}
+.cta-pattern{position:absolute;inset:0;opacity:.03;background:repeating-linear-gradient(45deg,rgba(212,131,46,1) 0,rgba(212,131,46,1) 1px,transparent 0,transparent 50%),repeating-linear-gradient(-45deg,rgba(212,131,46,1) 0,rgba(212,131,46,1) 1px,transparent 0,transparent 50%);background-size:36px 36px}
+.cta-glow{position:absolute;left:30%;top:50%;transform:translate(-50%,-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(181,71,10,.18) 0%,transparent 70%);pointer-events:none}
 .cta-inner{max-width:900px;margin:0 auto;padding:0 80px;text-align:center;position:relative;z-index:1}
-.cta-eyebrow{font-size:10px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--m3);margin-bottom:24px}
-.cta-h2{font-family:var(--pf);font-size:clamp(44px,6vw,80px);font-weight:300;color:var(--w);line-height:1;margin-bottom:20px}
+.cta-eyebrow{font-size:10px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--m3);margin-bottom:20px}
+.cta-h2{font-family:var(--pf);font-size:clamp(44px,6vw,80px);font-weight:300;color:var(--w);line-height:1;margin-bottom:16px}
 .cta-h2 em{font-style:italic;color:var(--m3)}
-.cta-sub{font-family:var(--pf);font-style:italic;font-size:18px;font-weight:300;color:rgba(250,248,244,.5);margin-bottom:56px;line-height:1.6}
-.cta-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
-
-/* Twee opties CTA kaarten */
-.cta-cards{display:grid;grid-template-columns:1fr 1fr;gap:2px;max-width:800px;margin:0 auto 56px;background:rgba(212,131,46,.1)}
-.cta-card{padding:40px;background:rgba(26,20,16,.6);backdrop-filter:blur(8px);text-align:left;transition:background .2s;cursor:pointer;text-decoration:none;display:block}
+.cta-sub{font-family:var(--pf);font-style:italic;font-size:18px;font-weight:300;color:rgba(250,248,244,.45);margin-bottom:56px;line-height:1.6}
+.cta-cards{display:grid;grid-template-columns:1fr 1fr;gap:2px;max-width:740px;margin:0 auto 48px;background:rgba(212,131,46,.08)}
+.cta-card{padding:36px;background:rgba(26,20,16,.5);backdrop-filter:blur(8px);text-align:left;transition:background .2s;display:block}
 .cta-card:hover{background:rgba(160,82,45,.15)}
-.cta-card-icon{font-size:28px;margin-bottom:16px}
-.cta-card-title{font-family:var(--pf);font-size:22px;font-weight:300;color:var(--w);margin-bottom:8px}
-.cta-card-desc{font-size:13px;font-weight:300;line-height:1.6;color:rgba(250,248,244,.5);margin-bottom:20px}
-.cta-card-link{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--m3);display:flex;align-items:center;gap:8px;transition:gap .2s}
-.cta-card:hover .cta-card-link{gap:12px}
-
-/* Phone block */
-.cta-phone{font-family:var(--pf);font-size:clamp(28px,4vw,48px);font-weight:300;color:var(--w);text-decoration:none;display:inline-flex;align-items:center;gap:16px;margin-bottom:12px;transition:color .2s}
+.cta-card-icon{font-size:26px;margin-bottom:14px}
+.cta-card-title{font-family:var(--pf);font-size:20px;font-weight:300;color:var(--w);margin-bottom:8px}
+.cta-card-desc{font-size:13px;font-weight:300;line-height:1.6;color:rgba(250,248,244,.45);margin-bottom:18px}
+.cta-card-link{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--m3);display:flex;align-items:center;gap:7px;transition:gap .2s}
+.cta-card:hover .cta-card-link{gap:11px}
+.cta-phone-block{text-align:center}
+.cta-phone{font-family:var(--pf);font-size:clamp(28px,4vw,46px);font-weight:300;color:var(--w);display:inline-flex;align-items:center;gap:14px;margin-bottom:10px;transition:color .2s}
 .cta-phone:hover{color:var(--m3)}
-.cta-phone-lbl{font-size:12px;font-weight:300;color:rgba(250,248,244,.4);letter-spacing:.05em}
+.cta-phone-meta{font-size:11px;font-weight:300;color:rgba(250,248,244,.35);letter-spacing:.05em;margin-bottom:16px}
+.cta-certs{font-size:10px;font-weight:300;color:rgba(250,248,244,.25);letter-spacing:.1em}
 
-/* ── FOOTER MINI ─────────────────────────────────────────────────────── */
-.page-footer{background:var(--t);padding:48px 80px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px}
-.page-footer-logo{font-family:var(--dm);font-size:14px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--w);text-decoration:none}
-.page-footer-logo .dot{color:var(--s)}
-.page-footer-links{display:flex;gap:32px;flex-wrap:wrap}
-.page-footer-links a{font-size:11px;font-weight:300;color:rgba(250,248,244,.4);text-decoration:none;letter-spacing:.05em;transition:color .2s}
-.page-footer-links a:hover{color:rgba(250,248,244,.8)}
-.page-footer-copy{font-size:11px;font-weight:300;color:rgba(250,248,244,.25)}
-
-/* ── REVEAL ANIMATIES ────────────────────────────────────────────────── */
-.reveal{opacity:0;transform:translateY(40px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
 .reveal.visible{opacity:1;transform:translateY(0)}
-.reveal-left{opacity:0;transform:translateX(-40px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal-left{opacity:0;transform:translateX(-32px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
 .reveal-left.visible{opacity:1;transform:translateX(0)}
+.reveal-right{opacity:0;transform:translateX(32px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal-right.visible{opacity:1;transform:translateX(0)}
 
-/* ── RESPONSIVE ──────────────────────────────────────────────────────── */
+/* ── FOOTER CSS (van website) ── */
+footer{background:var(--t);padding:80px 48px 48px}
+.footer-top{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:64px;margin-bottom:64px}
+.footer-wordmark{font-family:var(--dm);font-size:18px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--i);margin-bottom:8px}
+.footer-wordmark .dot{color:rgba(245,240,232,.3)}
+.footer-tagline{font-family:var(--pf);font-style:italic;font-size:13px;color:var(--z);margin-bottom:24px}
+.footer-body{font-size:13px;font-weight:300;line-height:1.75;color:rgba(245,240,232,.45);margin-bottom:28px}
+.footer-certs-wrap{display:flex;gap:6px;flex-wrap:wrap}
+.footer-cert{font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,232,.4);border:1px solid rgba(196,168,130,.15);padding:3px 8px}
+.footer-col-title{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--z);margin-bottom:20px}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-links a{font-size:13px;font-weight:300;color:rgba(245,240,232,.45);transition:color .2s}
+.footer-links a:hover{color:rgba(245,240,232,.85)}
+.footer-contact-item{font-size:13px;font-weight:300;color:rgba(245,240,232,.45);line-height:1.8}
+.footer-contact-item a{color:inherit;transition:color .2s}
+.footer-contact-item a:hover{color:rgba(245,240,232,.85)}
+.footer-bottom{max-width:1280px;margin:0 auto;padding-top:32px;border-top:1px solid rgba(196,168,130,.1);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-copy{font-size:11px;color:rgba(245,240,232,.28);letter-spacing:.05em}
+
+/* ── RESPONSIVE ── */
 @media(max-width:1024px){
-  .hero-content,.senses-intro,.regions-inner,.journey-inner,.stories-inner,.cta-inner,.page-footer{padding-left:40px;padding-right:40px}
-  .hero-content{padding-bottom:60px}
-  .sense-blocks,.regions-grid{grid-template-columns:1fr}
-  .regions-grid-2{grid-template-columns:1fr}
-  .journey-inner{grid-template-columns:1fr;gap:60px}
+  .hero-content,.intro-inner,.senses-inner,.cities-inner,.map-inner,.journey-inner,.stories-inner,.cta-inner{padding-left:40px;padding-right:40px}
+  .intro-inner,.senses-head,.cities-head,.map-inner,.journey-inner{grid-template-columns:1fr;gap:48px}
+  .cities-grid{grid-template-columns:1fr 1fr}
   .stories-grid{grid-template-columns:1fr 1fr}
-  .hero-stats{gap:24px}
+  .cta-cards{grid-template-columns:1fr}
+  footer{padding:60px 40px 40px}
+  .footer-top{grid-template-columns:1fr 1fr;gap:40px}
 }
 @media(max-width:768px){
-  .hero-content,.senses-intro,.regions-inner,.journey-inner,.stories-inner,.cta-inner{padding-left:24px;padding-right:24px}
+  .hero-content,.intro-inner,.senses-inner,.cities-inner,.map-inner,.journey-inner,.stories-inner,.cta-inner{padding-left:24px;padding-right:24px}
   .nav{padding:0 24px}
-  .senses-intro{grid-template-columns:1fr;gap:32px}
-  .stories-grid,.cta-cards{grid-template-columns:1fr}
-  .page-footer{padding:40px 24px;flex-direction:column;align-items:flex-start;gap:20px}
-  .hero-stats{flex-direction:column;gap:16px}
+  .cities-grid{grid-template-columns:1fr}
+  .stories-grid{grid-template-columns:1fr}
+  .hero-stats{flex-direction:column;gap:14px}
   .hero-actions{flex-direction:column}
+  .intro-visual{height:300px}
+  footer{padding:48px 24px 32px}
+  .footer-top{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -367,266 +391,314 @@ body{font-family:var(--dm);background:var(--e);color:var(--w);overflow-x:hidden;
   </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero" id="top">
+<!-- HERO (donker — sfeervol) -->
+<section class="hero">
   <div class="hero-bg">
     <div class="hero-landscape"></div>
     <div class="hero-shimmer"></div>
-    <div class="hero-bg-gradient"></div>
+    <div class="hero-overlay"></div>
     <div class="hero-silhouette"></div>
     <div class="hero-palms"></div>
   </div>
-
   <div class="hero-content" style="width:100%">
-    <div class="hero-eyebrow reveal">Afrika &middot; Noord-Afrika &middot; Marokko</div>
-    <h1 class="hero-h1 reveal" style="transition-delay:.1s">
-      Ma<em>rok</em><br>ko
-    </h1>
-    <p class="hero-sub reveal" style="transition-delay:.2s">
-      Waar de geur van rozenwater en de stilte van de Sahara<br>
-      u voor altijd veranderen.
-    </p>
-    <div class="hero-stats reveal" style="transition-delay:.25s">
-      <div class="hero-stat">
-        <div class="hero-stat-num">4</div>
-        <div class="hero-stat-lbl">Keizerlijke steden</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num">3.000</div>
-        <div class="hero-stat-lbl">km Sahara</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num">4.167</div>
-        <div class="hero-stat-lbl">m Jebel Toubkal</div>
-      </div>
+    <div class="hero-eyebrow">Afrika &middot; Noord-Afrika &middot; Marokko</div>
+    <h1 class="hero-h1">Ma<em>rok</em><br>ko</h1>
+    <p class="hero-sub">Waar geur, kleur en stilte samenkomen in&nbsp;één van de meest betoverende landen ter wereld.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-num">4</div><div class="hero-stat-lbl">Keizerlijke steden</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">3.000+</div><div class="hero-stat-lbl">km Sahara-rand</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">4.167</div><div class="hero-stat-lbl">m Jebel Toubkal</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">3,5 u</div><div class="hero-stat-lbl">Vliegduur vanuit NL</div></div>
     </div>
-    <div class="hero-actions reveal" style="transition-delay:.35s">
-      <a href="totaltravel-aanvraag.html" class="btn-hero-primary">
+    <div class="hero-actions">
+      <a href="totaltravel-aanvraag.html" class="btn-primary">
         Mijn Marokko-reis aanvragen
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
-      <a href="#beleving" class="btn-hero-ghost">
+      <a href="#ontdek" class="btn-ghost-light">
         Ontdek het land
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
       </a>
     </div>
   </div>
-  <div class="hero-scroll">
-    <div class="hero-scroll-line"></div>
-    <span>Scroll</span>
-  </div>
+  <div class="hero-scroll"><div class="hero-scroll-line"></div><span>Scroll</span></div>
 </section>
 
-<!-- BELEVING: 6 ZINTUIGEN -->
-<section class="senses" id="beleving">
-  <div class="senses-intro">
+<!-- MARQUEE STRIP -->
+<div class="intro-strip">
+  <div class="intro-strip-track">
+    <span class="intro-strip-item">Marrakech</span>
+    <span class="intro-strip-item">Sahara-duinen</span>
+    <span class="intro-strip-item">Fès Medina</span>
+    <span class="intro-strip-item">Atlas-gebergte</span>
+    <span class="intro-strip-item">Hammam &amp; Riad</span>
+    <span class="intro-strip-item">Chefchaouen</span>
+    <span class="intro-strip-item">Essaouira</span>
+    <span class="intro-strip-item">Marokko op maat</span>
+    <span class="intro-strip-item">Marrakech</span>
+    <span class="intro-strip-item">Sahara-duinen</span>
+    <span class="intro-strip-item">Fès Medina</span>
+    <span class="intro-strip-item">Atlas-gebergte</span>
+    <span class="intro-strip-item">Hammam &amp; Riad</span>
+    <span class="intro-strip-item">Chefchaouen</span>
+    <span class="intro-strip-item">Essaouira</span>
+    <span class="intro-strip-item">Marokko op maat</span>
+  </div>
+</div>
+
+<!-- INTRO — licht, met foto-collage -->
+<section class="intro" id="ontdek">
+  <div class="intro-inner">
     <div>
-      <div class="senses-label reveal">De beleving</div>
-      <h2 class="senses-h2 reveal" style="transition-delay:.1s">
-        Marokko<br>voelt u<br><em>van binnen</em>
-      </h2>
-    </div>
-    <p class="senses-body reveal" style="transition-delay:.2s">
-      Marokko is geen bestemming — het is een totaalervaring. 
-      Elk zintuig wordt hier aangesproken op een manier die u nergens 
-      anders zult vinden. Wij ontwerpen uw reis zo dat u de échte diepte 
-      van dit land ervaart, ver voorbij de gebaande toeristenpaden.
-    </p>
-  </div>
-
-  <div class="sense-blocks">
-    <div class="sense-block sense-1 reveal">
-      <div class="sense-block-bg"></div>
-      <div class="sense-block-overlay"></div>
-      <div class="sense-block-content">
-        <span class="sense-icon">🌹</span>
-        <div class="sense-num">01 — Geur</div>
-        <div class="sense-title">De souks van<br><em>Marrakech</em></div>
-        <div class="sense-text">Kaneel, komijn, rozenwater en versgelooid leer. In de medina van Marrakech vertelt elke steeg een ander verhaal via geuren die u nooit meer vergeet. Wij brengen u naar de ambachtslieden die hun vak al eeuwen uitoefenen.</div>
-        <a href="totaltravel-aanvraag.html" class="sense-cta">Ontdek Marrakech <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <div class="section-label reveal">Het land</div>
+      <h2 class="section-h2 reveal" style="transition-delay:.1s">Een land dat<br>u <em>nooit</em> meer<br>loslaat</h2>
+      <div class="body-text reveal" style="transition-delay:.2s">
+        <p>Marokko is geen bestemming die u afvinkt op een lijstje. Het is een land dat u onderdompelt in kleur, geur en gastvrijheid op een manier die nergens anders ter wereld hetzelfde aanvoelt.</p>
+        <p>Van de levendige medina's van de keizerlijke steden tot de absolute stilte van de Sahara, van de besneeuwde toppen van de Atlas tot de azuurblauwe kust van Essaouira — Marokko is een wereld op zichzelf.</p>
+        <p>Total Travel ontwerpt uw Marokko-reis volledig op maat. Geen groepsreis, geen standaardpakket. Uw tempo, uw interesses, uw herinneringen.</p>
       </div>
+      <a href="totaltravel-aanvraag.html" class="intro-tag reveal" style="transition-delay:.3s">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        Vraag uw persoonlijke Marokko-reis aan
+      </a>
     </div>
-
-    <div class="sense-block sense-2 reveal" style="transition-delay:.08s">
-      <div class="sense-block-bg"></div>
-      <div class="sense-block-overlay"></div>
-      <div class="sense-block-content">
-        <span class="sense-icon">🎨</span>
-        <div class="sense-num">02 — Kleur</div>
-        <div class="sense-title">Tausend<br><em>kleuren</em></div>
-        <div class="sense-text">Blauw als het Chefchaouen-blauw in de Rif-bergen. Oker als de Atlas-aarde. Azuurblauw als de Atlantische kust. Marokko is een levend kleurenpalet — uw persoonlijke fotoreis door een land van contrasten.</div>
-        <a href="totaltravel-aanvraag.html" class="sense-cta">Plan uw fotorondreis <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    <div class="intro-visual reveal-right" style="transition-delay:.15s">
+      <div class="intro-photo-a">
+        <div class="photo-label">Djemaa el-Fnaa · Marrakech</div>
       </div>
-    </div>
-
-    <div class="sense-block sense-3 reveal" style="transition-delay:.04s">
-      <div class="sense-block-bg"></div>
-      <div class="sense-block-overlay"></div>
-      <div class="sense-block-content">
-        <span class="sense-icon">🍵</span>
-        <div class="sense-num">03 — Smaak</div>
-        <div class="sense-title">Tajine &amp;<br><em>Thé à la menthe</em></div>
-        <div class="sense-text">Langzaam gegaarde tajine met abrikoos en amandel. Bastilla met kip en kaneel. Muntthee die drie keer wordt ingeschonken. Wij regelen exclusieve dinners bij families thuis — échte Marokkaanse gastvrijheid.</div>
-        <a href="totaltravel-aanvraag.html" class="sense-cta">Culinaire rondreis <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <div class="intro-photo-b">
+        <div class="photo-label">Sahara · Erg Chebbi</div>
       </div>
-    </div>
-
-    <div class="sense-block sense-4 reveal" style="transition-delay:.12s">
-      <div class="sense-block-bg"></div>
-      <div class="sense-block-overlay"></div>
-      <div class="sense-block-content">
-        <span class="sense-icon">🛁</span>
-        <div class="sense-num">04 — Aanraking</div>
-        <div class="sense-title">De rituelen<br><em>van de Hamam</em></div>
-        <div class="sense-text">Een traditionele hammam is geen luxe — het is cultuur. Zwart zeep, kessa-handschoen, argan-olie. In de beste riads van Fès en Marrakech zorgen wij voor een hammam-ervaring die u totaal ontspant en reinigt.</div>
-        <a href="totaltravel-aanvraag.html" class="sense-cta">Wellness &amp; wellbeing <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      </div>
-    </div>
-
-    <div class="sense-block sense-5 reveal">
-      <div class="sense-block-bg"></div>
-      <div class="sense-block-overlay"></div>
-      <div class="sense-block-content">
-        <span class="sense-icon">⭐</span>
-        <div class="sense-num">05 — Zien</div>
-        <div class="sense-title">Sterrenhemel<br><em>boven de Sahara</em></div>
-        <div class="sense-text">Geen lichtpollutie. Geen geluid. Alleen u, de koele woestijnnacht en miljarden sterren. Slaap in een luxe kamelenkamp in de Erg Chebbi, word wakker bij zonsopgang over de duinen. Een ervaring die u nooit meer loslaat.</div>
-        <a href="totaltravel-aanvraag.html" class="sense-cta">Sahara-expeditie <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      </div>
-    </div>
-
-    <div class="sense-block sense-6 reveal" style="transition-delay:.08s">
-      <div class="sense-block-bg"></div>
-      <div class="sense-block-overlay"></div>
-      <div class="sense-block-content">
-        <span class="sense-icon">🎵</span>
-        <div class="sense-num">06 — Geluid</div>
-        <div class="sense-title">Gnaoua &amp;<br><em>de Azan</em></div>
-        <div class="sense-text">De ritmische trance van Gnaoua-muziek in de Djemaa el-Fnaa. De roep tot gebed bij zonsondergang. Het gekabbel van een fontein in een stille riad-tuin. Marokko heeft een soundtrack die u meedraagt naar huis.</div>
-        <a href="totaltravel-aanvraag.html" class="sense-cta">Cultuur &amp; muziek <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <div class="intro-photo-c">
+        <div class="photo-label">Riad</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- STREKEN / REGIO'S -->
-<section class="regions">
-  <div class="regions-inner">
-    <div class="section-label reveal">De streken</div>
-    <h2 class="section-h2 reveal" style="transition-delay:.1s">Vijf werelden,<br><em>één land</em></h2>
-
-    <div class="regions-grid">
-      <div class="region-card region-marrakech reveal">
-        <div class="region-bg"></div>
-        <div class="region-overlay"></div>
-        <div class="region-content">
-          <div class="region-tag">Keizerlijke stad</div>
-          <div class="region-name">Marrakech</div>
-          <div class="region-desc">De Rode Stad die nooit slaapt. Djemaa el-Fnaa, de souks, de Majorelle-tuinen, verborgen riads met zwembaden en daktuin-restaurants. De perfecte eerste of laatste nacht van elke Marokko-reis.</div>
-        </div>
-        <div class="region-arrow">&#8599;</div>
+<!-- ZINTUIGEN — halflicht -->
+<section class="senses" id="beleving">
+  <div class="senses-inner">
+    <div class="senses-head">
+      <div>
+        <div class="section-label reveal">De beleving</div>
+        <h2 class="section-h2 reveal" style="transition-delay:.1s">Marokko spreekt<br>elk zintuig<br><em>aan</em></h2>
       </div>
-      <div class="region-card region-fes reveal" style="transition-delay:.08s">
-        <div class="region-bg"></div>
-        <div class="region-overlay"></div>
-        <div class="region-content">
-          <div class="region-tag">UNESCO &middot; Medina</div>
-          <div class="region-name">Fès</div>
-          <div class="region-desc">De oudste universiteitsstad ter wereld. De leerlooierijen van Chouara, de Al-Qarawiyyin-moskee. Fès is Marokko's intellectuele hart.</div>
-        </div>
-        <div class="region-arrow">&#8599;</div>
-      </div>
-      <div class="region-card region-atlas reveal" style="transition-delay:.16s">
-        <div class="region-bg"></div>
-        <div class="region-overlay"></div>
-        <div class="region-content">
-          <div class="region-tag">Natuur &middot; Wandelen</div>
-          <div class="region-name">Atlas</div>
-          <div class="region-desc">Berberdorpen op 2.000 meter hoogte, watervallen, saffraan-velden. De Atlas verbindt Marrakech met de Sahara via een van de mooiste rijroutes van Afrika.</div>
-        </div>
-        <div class="region-arrow">&#8599;</div>
-      </div>
-    </div>
-    <div class="regions-grid-2" style="margin-top:2px">
-      <div class="region-card region-sahara reveal">
-        <div class="region-bg"></div>
-        <div class="region-overlay"></div>
-        <div class="region-content">
-          <div class="region-tag">Woestijn &middot; Erg Chebbi</div>
-          <div class="region-name">De Sahara</div>
-          <div class="region-desc">Duinen van 150 meter hoog die bij zonsopgang goud en bij zonsondergang oranje kleuren. Een kamelentocht, een nacht in een luxe camp, een zonsopgang — de hoogtepunten van elke Marokko-rondreis.</div>
-        </div>
-        <div class="region-arrow">&#8599;</div>
-      </div>
-      <div class="region-card region-kust reveal" style="transition-delay:.08s">
-        <div class="region-bg"></div>
-        <div class="region-overlay"></div>
-        <div class="region-content">
-          <div class="region-tag">Kust &middot; Surf &middot; Vis</div>
-          <div class="region-name">Agadir &amp; Essaouira</div>
-          <div class="region-desc">Atlantische kust met 300 dagen zon, verse zeevruchten en de charmante kuststad Essaouira — de windstad van Marokko.</div>
-        </div>
-        <div class="region-arrow">&#8599;</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- DE IDEALE REIS / TIJDLIJN -->
-<section class="journey">
-  <div class="journey-inner">
-    <div class="journey-left">
-      <div class="section-label reveal" style="--s:#C4784A">Onze klassieker</div>
-      <h2 class="section-h2 reveal" style="transition-delay:.1s;color:var(--w)">De grote<br><em style="color:var(--m3)">Marokko-rondreis</em></h2>
-      <p class="reveal" style="transition-delay:.2s;font-size:15px;font-weight:300;line-height:1.85;color:rgba(250,248,244,.5);margin-bottom:48px">
-        Een reis van 10 tot 14 dagen die de essentie van Marokko vat. 
-        Van de levendige medina's tot de stille woestijn. 
-        Volledig op maat — uw tempo, uw interesses, uw verhaal.
+      <p class="reveal" style="transition-delay:.2s;font-size:15px;font-weight:300;line-height:1.85;color:var(--sub);align-self:end">
+        Wij ontwerpen uw reis zo dat u de échte diepte van dit land ervaart. Ver voorbij de gebaande toeristenpaden, maar altijd met het comfort en de ontzorging van Total Travel.
       </p>
+    </div>
+    <div class="senses-grid">
+      <div class="sense-card reveal">
+        <span class="sense-card-icon">🌹</span>
+        <div class="sense-card-num">01</div>
+        <div class="sense-card-title">De souks van <em>Marrakech</em></div>
+        <div class="sense-card-text">Kaneel, komijn, rozenwater en versgelooid leer. Elke steeg in de medina vertelt een ander verhaal via geuren die u nooit meer vergeet. Wij brengen u naar de ambachtslieden die hun vak al eeuwen uitoefenen.</div>
+        <a href="totaltravel-aanvraag.html" class="sense-card-link">Ontdek Marrakech <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="sense-card reveal" style="transition-delay:.07s">
+        <span class="sense-card-icon">⭐</span>
+        <div class="sense-card-num">02</div>
+        <div class="sense-card-title">Sterren boven de <em>Sahara</em></div>
+        <div class="sense-card-text">Geen lichtpollutie, geen geluid. Alleen u en miljarden sterren boven de Erg Chebbi-duinen. Slaap in een luxe desert camp, word wakker bij zonsopgang. Een ervaring die u nooit meer loslaat.</div>
+        <a href="totaltravel-aanvraag.html" class="sense-card-link">Sahara-expeditie <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="sense-card reveal" style="transition-delay:.14s">
+        <span class="sense-card-icon">🍵</span>
+        <div class="sense-card-num">03</div>
+        <div class="sense-card-title">Tajine &amp; <em>Thé à la menthe</em></div>
+        <div class="sense-card-text">Langzaam gegaarde tajine, bastilla met kip en kaneel, muntthee die drie keer wordt ingeschonken. Wij regelen exclusieve diners bij families thuis — de échte Marokkaanse gastvrijheid.</div>
+        <a href="totaltravel-aanvraag.html" class="sense-card-link">Culinaire rondreis <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="sense-card reveal">
+        <span class="sense-card-icon">🛁</span>
+        <div class="sense-card-num">04</div>
+        <div class="sense-card-title">De rituelen van de <em>Hammam</em></div>
+        <div class="sense-card-text">Zwart zeep, kessa-handschoen, argan-olie. In de beste riads van Fès en Marrakech zorgen wij voor een hammam-ervaring die u totaal ontspant en u doet begrijpen waarom dit een eeuwenoud ritueel is.</div>
+        <a href="totaltravel-aanvraag.html" class="sense-card-link">Wellness &amp; riad <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="sense-card reveal" style="transition-delay:.07s">
+        <span class="sense-card-icon">🎨</span>
+        <div class="sense-card-num">05</div>
+        <div class="sense-card-title">Blauw van <em>Chefchaouen</em></div>
+        <div class="sense-card-text">Azuurblauw, kobalt, hemelsblauw — elke muur in Chefchaouen is een andere tint. De Blauwe Stad in de Rif-bergen is een fotografisch paradijs dat u in geen enkel ander land zo vindt.</div>
+        <a href="totaltravel-aanvraag.html" class="sense-card-link">Fotoreis Marokko <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="sense-card reveal" style="transition-delay:.14s">
+        <span class="sense-card-icon">🎵</span>
+        <div class="sense-card-num">06</div>
+        <div class="sense-card-title">Gnaoua &amp; <em>de Azan</em></div>
+        <div class="sense-card-text">De ritmische trance van Gnaoua-muziek in de Djemaa el-Fnaa. De roep tot gebed bij zonsondergang. Het gekabbel van een fontein in een stille riad-tuin. Marokko heeft een soundtrack die u meedraagt naar huis.</div>
+        <a href="totaltravel-aanvraag.html" class="sense-card-link">Cultuur &amp; muziek <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIER KONINGSSTEDEN — donker met grote foto-kaarten -->
+<section class="cities" id="steden">
+  <div class="cities-inner">
+    <div class="cities-head">
+      <div>
+        <div class="section-label reveal" style="--s:#C4784A">De Koningssteden</div>
+        <h2 class="section-h2 reveal" style="transition-delay:.1s;color:var(--w)">Vier steden,<br><em style="color:var(--m3)">vier eeuwen</em><br><span style="color:var(--w)">geschiedenis</span></h2>
+      </div>
+      <p class="cities-head-body reveal" style="transition-delay:.2s;align-self:end">
+        De vier Koningssteden van Marokko — Marrakech, Fès, Meknès en Rabat — vormen het kloppende hart van een duizendjarige beschaving. Elk heeft haar eigen karakter, haar eigen sfeer, haar eigen verhalen. Geen Marokko-reis is compleet zonder ze.
+      </p>
+    </div>
+
+    <div class="cities-grid">
+      <!-- Marrakech -->
+      <div class="city-card city-marrakech reveal">
+        <div class="city-photo">
+          <div class="city-photo-bg"></div>
+          <div class="city-photo-overlay"></div>
+          <div class="city-photo-icon">🕌</div>
+          <div class="city-photo-tag">Koningsstad</div>
+          <div class="city-photo-name">Marrakech</div>
+        </div>
+        <div class="city-content">
+          <div class="city-desc">
+            De Rode Stad die nooit slaapt. Marrakech is het bruisende hart van Marokko — een stad die alle zintuigen aanvalt en betovert. De Djemaa el-Fnaa, het grootste plein ter wereld, is bij zonsondergang een spektakel dat u nergens anders zult zien.
+          </div>
+          <div class="city-highlights">
+            <div class="city-hl">Djemaa el-Fnaa plein &amp; souks</div>
+            <div class="city-hl">Jardin Majorelle &amp; Yves Saint Laurent Museum</div>
+            <div class="city-hl">Paleis Bahia &amp; El Badi</div>
+            <div class="city-hl">Riads in de historische medina</div>
+            <div class="city-hl">Dagtocht Atlas &amp; Ouzoud-watervallen</div>
+          </div>
+          <a href="totaltravel-aanvraag.html" class="city-cta">Marrakech plannen <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </div>
+
+      <!-- Fès -->
+      <div class="city-card city-fes reveal" style="transition-delay:.08s">
+        <div class="city-photo">
+          <div class="city-photo-bg"></div>
+          <div class="city-photo-overlay"></div>
+          <div class="city-photo-icon">📜</div>
+          <div class="city-photo-tag">UNESCO Werelderfgoed</div>
+          <div class="city-photo-name">Fès</div>
+        </div>
+        <div class="city-content">
+          <div class="city-desc">
+            Fès is Marokko's intellectuele en spirituele ziel. De grootste autovrije stad ter wereld en thuis van de oudste universiteit op aarde (859 n.C.). De leerlooierijen van Chouara zijn een van de meest fotogenieke plekken van Afrika.
+          </div>
+          <div class="city-highlights">
+            <div class="city-hl">Leerlooierijen Chouara &amp; Sidi Moussa</div>
+            <div class="city-hl">Al-Qarawiyyin — oudste universiteit ter wereld</div>
+            <div class="city-hl">Al-Attarine &amp; Bou Inania Madrasa</div>
+            <div class="city-hl">Privé-kookles in een riyadh</div>
+            <div class="city-hl">9.400 steegjes — elke dag nieuwe ontdekkingen</div>
+          </div>
+          <a href="totaltravel-aanvraag.html" class="city-cta">Fès ontdekken <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </div>
+
+      <!-- Meknès -->
+      <div class="city-card city-meknes reveal" style="transition-delay:.16s">
+        <div class="city-photo">
+          <div class="city-photo-bg"></div>
+          <div class="city-photo-overlay"></div>
+          <div class="city-photo-icon">🏛️</div>
+          <div class="city-photo-tag">De verborgen stad</div>
+          <div class="city-photo-name">Meknès</div>
+        </div>
+        <div class="city-content">
+          <div class="city-desc">
+            Meknès wordt vaak overgeslagen, maar is één van de meest indrukwekkende steden van Marokko. Gebouwd door sultan Moulay Ismail in de 17e eeuw als de 'Versailles van Marokko', met imposante poorten en 25 km stadsomwalling.
+          </div>
+          <div class="city-highlights">
+            <div class="city-hl">Bab Mansour — mooiste poort van Marokko</div>
+            <div class="city-hl">Mausoleum Moulay Ismail</div>
+            <div class="city-hl">Heri es-Souani — koninklijke graansilo's</div>
+            <div class="city-hl">Volubilis — Romeinse ruïnes op 30 km</div>
+            <div class="city-hl">Rustigste koningsstad — minder toeristen</div>
+          </div>
+          <a href="totaltravel-aanvraag.html" class="city-cta">Meknès bezoeken <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </div>
+
+      <!-- Rabat -->
+      <div class="city-card city-rabat reveal" style="transition-delay:.24s">
+        <div class="city-photo">
+          <div class="city-photo-bg"></div>
+          <div class="city-photo-overlay"></div>
+          <div class="city-photo-icon">🌊</div>
+          <div class="city-photo-tag">Hoofdstad</div>
+          <div class="city-photo-name">Rabat</div>
+        </div>
+        <div class="city-content">
+          <div class="city-desc">
+            Rabat, de kosmopolitische hoofdstad aan de Atlantische kust, combineert een UNESCO-erkende historische medina met een moderne, mondaine sfeer. De Kasbah van de Udayas, hoog boven de oceaan, is een van de mooiste uitzichtpunten van het land.
+          </div>
+          <div class="city-highlights">
+            <div class="city-hl">Kasbah des Oudaias &amp; Atlantische kust</div>
+            <div class="city-hl">Mausoleum Mohammed V</div>
+            <div class="city-hl">Hassan-toren — onvoltooide 12e-eeuwse moskee</div>
+            <div class="city-hl">Chellah — Romeinse &amp; islamitische ruïnes</div>
+            <div class="city-hl">Moderne musea &amp; galeries</div>
+          </div>
+          <a href="totaltravel-aanvraag.html" class="city-cta">Rabat verkennen <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIJDLIJN + REISTIJD — ivoor/licht -->
+<section class="journey" id="rondreis">
+  <div class="journey-inner">
+    <div>
+      <div class="section-label reveal">Onze klassieker</div>
+      <div class="journey-label-big reveal" style="transition-delay:.1s">De grote<br><em>Marokko-<br>rondreis</em></div>
+      <p class="body-text reveal" style="transition-delay:.2s;margin-bottom:44px">Een reis van 10 tot 14 dagen die de essentie van Marokko vat. Van de levendige medina's tot de absolute stilte van de Sahara. Volledig op maat — uw tempo, uw interesses, uw verhaal.</p>
       <div class="timeline">
         <div class="tl-item reveal" style="transition-delay:.1s">
           <div class="tl-dot">1</div>
           <div class="tl-body">
             <div class="tl-day">Dag 1 – 3</div>
             <div class="tl-title"><em>Aankomst</em> Marrakech</div>
-            <div class="tl-text">Check-in in uw geselecteerde riad in de medina. Avondwandeling door de souks, diner op het dak met uitzicht over de minaret. Dag 2: Majorelle-tuinen, paleis Bahia, hammam-ritueel. Dag 3: dagtocht naar de Ouzoud-watervallen.</div>
-            <div class="tl-tags"><span class="tl-tag">Riad</span><span class="tl-tag">Souk</span><span class="tl-tag">Hammam</span></div>
+            <div class="tl-text">Inchecken in uw geselecteerde riad in de medina. Avondwandeling door de souks, diner op het dak. Dag 2: Majorelle, hammam-ritueel. Dag 3: dagtocht Ouzoud-watervallen.</div>
+            <div class="tl-tags"><span class="tl-tag">Riad</span><span class="tl-tag">Souks</span><span class="tl-tag">Hammam</span></div>
           </div>
         </div>
-        <div class="tl-item reveal" style="transition-delay:.2s">
+        <div class="tl-item reveal" style="transition-delay:.18s">
           <div class="tl-dot">2</div>
           <div class="tl-body">
             <div class="tl-day">Dag 4 – 5</div>
             <div class="tl-title">Door de <em>Atlas</em> naar Ouarzazate</div>
-            <div class="tl-text">Rijden over de Tizi n'Tichka pas (2.260 m) met stoppen bij Berberdorpen en argan-coöperaties. Overnachting in een kasbah bij Ouarzazate — de 'Hollywood van Afrika'.</div>
-            <div class="tl-tags"><span class="tl-tag">Rijroute</span><span class="tl-tag">Kasbah</span><span class="tl-tag">Berbers</span></div>
+            <div class="tl-text">Over de Tizi n'Tichka pas (2.260 m) via Berberdorpen en argan-coöperaties. Overnachting in een kasbah bij Ouarzazate — de 'Hollywood van Afrika'.</div>
+            <div class="tl-tags"><span class="tl-tag">Atlas</span><span class="tl-tag">Kasbah</span><span class="tl-tag">Berbers</span></div>
           </div>
         </div>
-        <div class="tl-item reveal" style="transition-delay:.3s">
+        <div class="tl-item reveal" style="transition-delay:.26s">
           <div class="tl-dot">3</div>
           <div class="tl-body">
             <div class="tl-day">Dag 6 – 7</div>
             <div class="tl-title">De <em>Sahara</em></div>
-            <div class="tl-text">Via de Draa-vallei en de dadelpalmen naar Merzouga en de Erg Chebbi-duinen. Kamelentocht bij zonsondergang. Nacht in een luxe desert camp onder de sterren. Zonsopgang boven de duinen.</div>
+            <div class="tl-text">Via de Draa-vallei naar Merzouga en de Erg Chebbi-duinen. Kamelentocht bij zonsondergang. Nacht in een luxe desert camp. Zonsopgang boven de duinen.</div>
             <div class="tl-tags"><span class="tl-tag">Woestijn</span><span class="tl-tag">Kameel</span><span class="tl-tag">Sterren</span></div>
           </div>
         </div>
-        <div class="tl-item reveal" style="transition-delay:.4s">
+        <div class="tl-item reveal" style="transition-delay:.34s">
           <div class="tl-dot">4</div>
           <div class="tl-body">
             <div class="tl-day">Dag 8 – 10</div>
-            <div class="tl-title"><em>Fès</em> — de eeuwige stad</div>
-            <div class="tl-text">Via Midelt en Ifrane naar Fès. Twee volle dagen voor de medina: de leerlooierijen, de Al-Attarine madrasa, een privé-kookcursus. Overnachting in een historische riad vlakbij de Bou Inania-madrasa.</div>
-            <div class="tl-tags"><span class="tl-tag">Medina</span><span class="tl-tag">Leerlooierij</span><span class="tl-tag">Kookles</span></div>
+            <div class="tl-title"><em>Fès</em> &amp; Meknès</div>
+            <div class="tl-text">Via Midelt en Ifrane. Leerlooierijen, Al-Attarine madrasa, privé-kookcursus. Dag 10: Meknès en Bab Mansour. Optioneel: Volubilis (Romeinse ruïnes).</div>
+            <div class="tl-tags"><span class="tl-tag">Medina</span><span class="tl-tag">Kookles</span><span class="tl-tag">Volubilis</span></div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="journey-right">
-      <!-- Beste reistijd widget -->
-      <div class="reistijd-widget reveal">
-        <div class="rw-label">Beste reistijd voor Marokko</div>
+    <div class="journey-right-content">
+      <!-- Reistijd widget -->
+      <div class="rw-widget reveal">
+        <div class="rw-title">Beste reistijd voor Marokko</div>
         <div class="rw-months">
           <div class="rw-month mild"><div class="rw-month-name">Jan</div><div class="rw-month-bar"></div></div>
           <div class="rw-month mild"><div class="rw-month-name">Feb</div><div class="rw-month-bar"></div></div>
@@ -642,183 +714,185 @@ body{font-family:var(--dm);background:var(--e);color:var(--w);overflow-x:hidden;
           <div class="rw-month mild"><div class="rw-month-name">Dec</div><div class="rw-month-bar"></div></div>
         </div>
         <div class="rw-legend">
-          <div class="rw-legend-item"><div class="rw-legend-dot" style="background:var(--m3)"></div>Ideaal</div>
+          <div class="rw-legend-item"><div class="rw-legend-dot" style="background:var(--s)"></div>Ideaal</div>
           <div class="rw-legend-item"><div class="rw-legend-dot" style="background:var(--m2)"></div>Warm</div>
           <div class="rw-legend-item"><div class="rw-legend-dot" style="background:var(--m1)"></div>Heet</div>
-          <div class="rw-legend-item"><div class="rw-legend-dot" style="background:rgba(212,131,46,.3)"></div>Mild</div>
+          <div class="rw-legend-item"><div class="rw-legend-dot" style="background:var(--zlt)"></div>Mild</div>
         </div>
       </div>
 
       <!-- Praktisch -->
-      <div class="praktisch reveal" style="transition-delay:.1s">
+      <div class="prak-items reveal" style="transition-delay:.1s">
         <div class="prak-item">
           <div class="prak-icon">✈️</div>
-          <div>
-            <div class="prak-title">Vluchtduur</div>
-            <div class="prak-text">± 3,5 uur vanuit Amsterdam of Rotterdam. Directe vluchten naar Marrakech, Casablanca, Agadir en Fès. Wij regelen groepsvluchten en privécharters.</div>
-          </div>
+          <div><div class="prak-title">Vluchtduur</div><div class="prak-text">±&nbsp;3,5 uur vanuit Amsterdam/Rotterdam. Direct naar Marrakech, Casablanca, Agadir &amp; Fès. Wij regelen groepsvluchten &amp; privécharters.</div></div>
         </div>
         <div class="prak-item">
           <div class="prak-icon">🏨</div>
-          <div>
-            <div class="prak-title">Verblijf</div>
-            <div class="prak-text">Van boutique-riads in de medina tot luxe desert camps en kasbah-hotels in de Atlas. Wij selecteren uitsluitend accommodaties die wij persoonlijk kennen.</div>
-          </div>
+          <div><div class="prak-title">Verblijf</div><div class="prak-text">Van boutique-riads in de medina tot luxe desert camps &amp; kasbah-hotels. Wij selecteren uitsluitend accommodaties die wij persoonlijk kennen.</div></div>
         </div>
         <div class="prak-item">
-          <div class="prak-icon">🗺️</div>
-          <div>
-            <div class="prak-title">Reisduur</div>
-            <div class="prak-text">Minimaal 7 nachten voor een goede indruk. Voor de complete rondreis adviseren wij 10–14 nachten. Marokko beloont wie de tijd neemt.</div>
-          </div>
+          <div class="prak-icon">🗓️</div>
+          <div><div class="prak-title">Reisduur</div><div class="prak-text">Minimaal 7 nachten voor een goede indruk. Voor de complete rondreis adviseren wij 10–14 nachten. Marokko beloont wie de tijd neemt.</div></div>
         </div>
         <div class="prak-item">
           <div class="prak-icon">💳</div>
-          <div>
-            <div class="prak-title">Budget</div>
-            <div class="prak-text">Onze Marokko-reizen starten vanaf €1.800 p.p. voor 8 dagen all-in (excl. vluchten). Luxe varianten met privécharter, paleis-riads en exclusieve ervaringen op aanvraag.</div>
-          </div>
+          <div><div class="prak-title">Budget</div><div class="prak-text">Marokko-reizen vanaf €1.800 p.p. (8 dagen, excl. vluchten). Luxe varianten met privécharter &amp; exclusieve riads op aanvraag.</div></div>
         </div>
+      </div>
+
+      <div class="reveal" style="transition-delay:.2s">
+        <a href="totaltravel-aanvraag.html" class="btn-primary" style="width:100%;justify-content:center">
+          Deze rondreis op maat aanvragen
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- VERHALEN / INSPIRATIE -->
-<section class="stories">
+<!-- REISVERHALEN — halflicht -->
+<section class="stories" id="verhalen">
   <div class="stories-inner">
     <div class="section-label reveal">Reisverhalen</div>
     <h2 class="section-h2 reveal" style="transition-delay:.1s">Anderen gingen<br>u <em>voor</em></h2>
     <div class="stories-grid">
-      <div class="story-card story-t1 reveal">
-        <div class="story-thumb">
-          <div class="story-thumb-bg"></div>
-          <div class="story-thumb-label">Gezinsvakantie</div>
+      <div class="story-card story-v1 reveal">
+        <div class="story-visual">
+          <div class="story-bg"></div>
+          <div class="story-visual-icon">👨‍👩‍👧‍👦</div>
+          <div class="story-visual-tag">Gezinsvakantie &middot; 12 dagen</div>
         </div>
-        <div class="story-body">
-          <div class="story-tag">Familie &middot; 12 dagen</div>
-          <div class="story-title">"De kinderen willen nooit meer ergens anders heen"</div>
-          <div class="story-excerpt">Familie Van der Berg reisde met drie kinderen van 8, 11 en 14 jaar. Van soukworkshops in Fès tot kamelrijden bij de Sahara — elk kind had zijn eigen hoogtepunt.</div>
-          <a href="totaltravel-aanvraag.html" class="story-link">Vraag soortgelijke reis aan <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <div class="story-content">
+          <div class="story-type">Familie</div>
+          <div class="story-title">"De kinderen willen nergens anders meer heen"</div>
+          <div class="story-excerpt">Familie Van den Berg reisde met drie kinderen. Van soukworkshops in Fès tot kamelrijden bij de Sahara — elk kind had zijn eigen hoogtepunt. Wij regelden alles, inclusief kindvriendelijke riads.</div>
+          <a href="totaltravel-aanvraag.html" class="story-link">Vraag soortgelijke reis aan <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
         </div>
       </div>
-      <div class="story-card story-t2 reveal" style="transition-delay:.1s">
-        <div class="story-thumb">
-          <div class="story-thumb-bg"></div>
-          <div class="story-thumb-label">Bruiloftsreis</div>
+      <div class="story-card story-v2 reveal" style="transition-delay:.1s">
+        <div class="story-visual">
+          <div class="story-bg"></div>
+          <div class="story-visual-icon">💍</div>
+          <div class="story-visual-tag">Huwelijksreis &middot; 10 dagen</div>
         </div>
-        <div class="story-body">
-          <div class="story-tag">Koppel &middot; 10 dagen</div>
+        <div class="story-content">
+          <div class="story-type">Koppel</div>
           <div class="story-title">"Onze huwelijksreis was een droom die werkelijkheid werd"</div>
-          <div class="story-excerpt">Riad exclusief geboekt, privé-diner in de Jardin Majorelle, zonsondergang over de Sahara. Total Travel regelde elk detail tot de verse rozen op het bed.</div>
-          <a href="totaltravel-aanvraag.html" class="story-link">Plan uw huwelijksreis <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          <div class="story-excerpt">Riad exclusief geboekt, privédiner in de Jardin Majorelle, zonsondergang over de Sahara. Total Travel regelde elk detail — tot de verse rozen op het bed toe.</div>
+          <a href="totaltravel-aanvraag.html" class="story-link">Plan uw huwelijksreis <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
         </div>
       </div>
-      <div class="story-card story-t3 reveal" style="transition-delay:.2s">
-        <div class="story-thumb">
-          <div class="story-thumb-bg"></div>
-          <div class="story-thumb-label">Groepsreis</div>
+      <div class="story-card story-v3 reveal" style="transition-delay:.2s">
+        <div class="story-visual">
+          <div class="story-bg"></div>
+          <div class="story-visual-icon">🏢</div>
+          <div class="story-visual-tag">Incentive &middot; 12 personen &middot; 8 dagen</div>
         </div>
-        <div class="story-body">
-          <div class="story-tag">Groep 12 personen &middot; 8 dagen</div>
-          <div class="story-title">"Ons bedrijfsuitje was een incentive die iedereen bijbleef"</div>
-          <div class="story-excerpt">Cookingclass in Fès, privé-riad in Marrakech, teambuilding-kamelenrace in de Sahara. Marokko als incentive-bestemming is onverslaanbaar.</div>
-          <a href="totaltravel-aanvraag.html" class="story-link">Incentive aanvragen <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <div class="story-content">
+          <div class="story-type">Groep &amp; Incentive</div>
+          <div class="story-title">"Een incentive die iedereen bijbleef"</div>
+          <div class="story-excerpt">Kookles in Fès, privé-riad in Marrakech, teambuilding-kamelenrace. Marokko als incentive-bestemming is onverslaanbaar — betaalbaar luxe met een wow-factor die niemand verwacht.</div>
+          <a href="totaltravel-aanvraag.html" class="story-link">Incentive aanvragen <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- GROTE CTA -->
+<!-- GROTE CTA — donker -->
 <section class="cta-section" id="aanvragen">
-  <div class="cta-bg"></div>
   <div class="cta-pattern"></div>
+  <div class="cta-glow"></div>
   <div class="cta-inner">
     <div class="cta-eyebrow reveal">Uw Marokko-reis</div>
-    <h2 class="cta-h2 reveal" style="transition-delay:.1s">
-      Klaar om<br>Marokko te<br><em>voelen?</em>
-    </h2>
-    <p class="cta-sub reveal" style="transition-delay:.2s">
-      Vertel ons uw droom. Wij ontwerpen de reis<br>die u nooit meer vergeet.
-    </p>
+    <h2 class="cta-h2 reveal" style="transition-delay:.1s">Klaar om<br>Marokko te<br><em>voelen?</em></h2>
+    <p class="cta-sub reveal" style="transition-delay:.2s">Vertel ons uw droom. Wij ontwerpen de reis die u nooit meer vergeet.</p>
 
     <div class="cta-cards reveal" style="transition-delay:.25s">
       <a href="totaltravel-aanvraag.html" class="cta-card">
         <div class="cta-card-icon">✍️</div>
         <div class="cta-card-title">Reis aanvragen</div>
-        <div class="cta-card-desc">Vul ons aanvraagformulier in met uw wensen, reisgezelschap en budget. Wij nemen binnen 48 uur persoonlijk contact op.</div>
-        <div class="cta-card-link">Formulier invullen <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        <div class="cta-card-desc">Vul ons aanvraagformulier in met uw wensen, gezelschap en budget. Wij nemen binnen 48 uur persoonlijk contact op.</div>
+        <div class="cta-card-link">Formulier invullen <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
       </a>
       <a href="tel:+31786817579" class="cta-card">
         <div class="cta-card-icon">📞</div>
         <div class="cta-card-title">Direct advies</div>
-        <div class="cta-card-desc">Liever even sparren over de mogelijkheden? Bel ons gerust — onze Marokko-specialist staat klaar voor een vrijblijvend gesprek.</div>
-        <div class="cta-card-link">Bel ons nu <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        <div class="cta-card-desc">Liever even sparren? Bel ons — onze Marokko-specialist staat klaar voor een vrijblijvend gesprek over uw wensen en mogelijkheden.</div>
+        <div class="cta-card-link">Bel ons nu <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
       </a>
     </div>
 
-    <div class="reveal" style="transition-delay:.3s;text-align:center">
+    <div class="cta-phone-block reveal" style="transition-delay:.3s">
       <a href="tel:+31786817579" class="cta-phone">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.17 1.18 2 2 0 012.14 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.17 1.18 2 2 0 012.14 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
         +31 78 681 75 79
       </a>
-      <div class="cta-phone-lbl">Ma – Vr &middot; 09:00 – 17:30 &middot; Za op afspraak</div>
-      <div style="margin-top:16px;font-size:11px;font-weight:300;color:rgba(250,248,244,.3)">
-        ANVR &middot; SGR &middot; SGRZ &middot; IATA &middot; Calamiteitenfonds
-      </div>
+      <div class="cta-phone-meta">Maandag t/m vrijdag 09:00–17:30 &middot; Zaterdag op afspraak</div>
+      <div class="cta-certs">ANVR &middot; SGR &middot; SGRZ &middot; IATA &middot; Calamiteitenfonds</div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER MINI -->
-<footer class="page-footer">
-  <a href="TotalTravel_Website.html" class="page-footer-logo">TOTAL <span class="dot">&middot;</span> TRAVEL</a>
-  <div class="page-footer-links">
-    <a href="TotalTravel_Website.html">Terug naar website</a>
-    <a href="totaltravel-aanvraag.html">Reis aanvragen</a>
-    <a href="tel:+31786817579">+31 78 681 75 79</a>
-    <a href="mailto:info@totaltravel.nl">info@totaltravel.nl</a>
+<!-- FOOTER VAN WEBSITE -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-wordmark">TOTAL <span class="dot">&middot;</span> TRAVEL</div>
+      <div class="footer-tagline">Maatwerk zonder omwegen</div>
+      <p class="footer-body">Onafhankelijke reisspecialist voor volledig op maat gemaakte vakanties, incentives, sport- en groepsreizen. Gevestigd in Hendrik-Ido-Ambacht, actief wereldwijd.</p>
+      <div class="footer-certs-wrap">
+        <span class="footer-cert">ANVR</span><span class="footer-cert">SGR</span><span class="footer-cert">SGRZ</span><span class="footer-cert">IATA</span><span class="footer-cert">Calamiteitenfonds</span>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Aanbod</div>
+      <ul class="footer-links">
+        <li><a href="#">Vakantiereizen</a></li><li><a href="#">Incentives</a></li><li><a href="#">Golfreizen</a></li><li><a href="#">Cruises</a></li><li><a href="#">Formule 1</a></li><li><a href="#">Vliegtickets groepen</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Informatie</div>
+      <ul class="footer-links">
+        <li><a href="#">Over ons</a></li><li><a href="#">Werkwijze</a></li><li><a href="#">Ervaringen</a></li><li><a href="#">Actueel</a></li><li><a href="#">Reisadvies</a></li><li><a href="#">Algemene voorwaarden</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <div class="footer-contact-item">+31 78 681 75 79</div>
+      <div class="footer-contact-item" style="margin-top:6px"><a href="/cdn-cgi/l/email-protection#86efe8e0e9c6f2e9f2e7eaf2f4e7f0e3eaa8e8ea">&#105;&#110;&#102;&#111;&#64;&#116;&#111;&#116;&#97;&#108;&#116;&#114;&#97;&#118;&#101;&#108;&#46;&#110;&#108;</a></div>
+      <div class="footer-contact-item" style="margin-top:6px"><a href="https://totaltravel.nl">totaltravel.nl</a></div>
+      <div class="footer-contact-item" style="margin-top:16px;font-size:12px;line-height:1.7">Schrijversstraat 10<br>3363 EB Hendrik-Ido-Ambacht</div>
+    </div>
   </div>
-  <div class="page-footer-copy">&#169; 2026 Total Travel</div>
+  <div class="footer-bottom">
+    <span class="footer-copy">&#169; 2026 Total Travel. Alle rechten voorbehouden.</span>
+    <span class="footer-copy">KvK 12345678 &middot; BTW NL123456789B01</span>
+  </div>
 </footer>
 
 <script>
 // Cursor
-var cur = document.getElementById('cursor'), tr = document.getElementById('trail');
-document.addEventListener('mousemove', function(e){
-  cur.style.left = e.clientX+'px'; cur.style.top = e.clientY+'px';
-  setTimeout(function(){ tr.style.left = e.clientX+'px'; tr.style.top = e.clientY+'px'; }, 80);
+var cur=document.getElementById('cursor'),tr=document.getElementById('trail');
+document.addEventListener('mousemove',function(e){
+  cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';
+  setTimeout(function(){tr.style.left=e.clientX+'px';tr.style.top=e.clientY+'px';},80);
 });
-document.querySelectorAll('a,button,.sense-block,.region-card,.story-card,.cta-card').forEach(function(el){
-  el.addEventListener('mouseenter', function(){
-    cur.style.transform = 'translate(-50%,-50%) scale(2.5)';
-    cur.style.opacity = '.5';
-    tr.style.transform = 'translate(-50%,-50%) scale(1.5)';
-  });
-  el.addEventListener('mouseleave', function(){
-    cur.style.transform = 'translate(-50%,-50%) scale(1)';
-    cur.style.opacity = '1';
-    tr.style.transform = 'translate(-50%,-50%) scale(1)';
-  });
+document.querySelectorAll('a,button,.sense-card,.city-card,.story-card,.cta-card').forEach(function(el){
+  el.addEventListener('mouseenter',function(){cur.style.transform='translate(-50%,-50%) scale(2.5)';cur.style.opacity='.4';});
+  el.addEventListener('mouseleave',function(){cur.style.transform='translate(-50%,-50%) scale(1)';cur.style.opacity='1';});
 });
 
 // Nav scroll
-var nav = document.getElementById('nav');
-window.addEventListener('scroll', function(){
-  nav.classList.toggle('scrolled', window.scrollY > 80);
-});
+var nav=document.getElementById('nav');
+window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>80);});
 
-// Reveal on scroll
-var obs = new IntersectionObserver(function(entries){
-  entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('visible'); });
-}, {threshold:0.1, rootMargin:'0px 0px -40px 0px'});
-document.querySelectorAll('.reveal,.reveal-left').forEach(function(el){ obs.observe(el); });
-
-// Hero auto-reveal
-setTimeout(function(){
-  document.querySelectorAll('.hero .reveal').forEach(function(el){ el.classList.add('visible'); });
-}, 200);
+// Reveal
+var obs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(function(el){obs.observe(el);});
 </script>
 </body>
 </html>
