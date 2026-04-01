@@ -234,8 +234,25 @@ footer{background:var(--t);padding:80px 48px 48px}
 .nav-right{display:flex;align-items:center;justify-content:flex-end;gap:20px}
 .nav-hamburger-mob{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
 .nav-hamburger-mob span{width:22px;height:1.5px;background:var(--t);transition:.3s;display:block}
-.nav-cta-hide-mobile{background:var(--s)!important;color:var(--w)!important;padding:9px 22px;font-size:10px!important;text-decoration:none;transition:background .2s!important}
+
+/* Reis aanvragen knop — zelfde grootte als topbar knoppen maar sienna stijl */
+.nav-cta-hide-mobile{
+  background:var(--s)!important;
+  color:var(--w)!important;
+  padding:9px 22px!important;
+  font-family:var(--dm);
+  font-size:10px!important;
+  font-weight:600;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  text-decoration:none;
+  display:inline-block;
+  white-space:nowrap;
+  transition:background .2s!important;
+  line-height:1;
+}
 .nav-cta-hide-mobile:hover{background:var(--sdk)!important}
+
 @media(max-width:900px){
   .topbar{display:none}
   .nav-hamburger-mob{display:flex}

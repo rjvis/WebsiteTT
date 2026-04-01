@@ -7,41 +7,30 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
 <style>
-:root {
-  --sienna:      #a0522d;
-  --sienna-mid:  #c47a4a;
-  --sienna-lt:   #d9956a;
-  --gold:        #b8996a;
-  --gold-lt:     #cdb48e;
-  --ivory:       #f8f3eb;
-  --ivory-2:     #f2ead8;
-  --ivory-3:     #ebe0ca;
-  --ivory-4:     #e0d2b8;
-  --cream:       #faf7f2;
-  --text:        #2c1f0e;
-  --text-2:      #5a3e28;
-  --text-3:      #8a6d52;
-  --text-4:      #b09070;
-  --border:      rgba(160,82,45,0.14);
-  --border-md:   rgba(160,82,45,0.25);
-  --border-str:  rgba(160,82,45,0.40);
-  --radius:      4px;
-  --dm:          'DM Sans', sans-serif;
-  --pf:          'Playfair Display', Georgia, serif;
-  --transition:  all .2s cubic-bezier(.4,0,.2,1);
+:root{
+  --sienna:#a0522d;--sienna-mid:#c47a4a;--sienna-lt:#d9956a;
+  --gold:#b8996a;--gold-lt:#cdb48e;
+  --ivory:#f8f3eb;--ivory-2:#f2ead8;--ivory-3:#ebe0ca;--ivory-4:#e0d2b8;
+  --cream:#faf7f2;
+  --text:#2c1f0e;--text-2:#5a3e28;--text-3:#8a6d52;--text-4:#b09070;
+  --border:rgba(160,82,45,0.14);--border-md:rgba(160,82,45,0.25);--border-str:rgba(160,82,45,0.40);
+  --radius:4px;--dm:'DM Sans',sans-serif;--pf:'Playfair Display',Georgia,serif;
+  --ease:cubic-bezier(.4,0,.2,1);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{background:var(--cream);color:var(--text);font-family:var(--dm);font-size:15px;line-height:1.6;min-height:100vh;overflow-x:hidden;}
-body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(160,82,45,0.05) 0%,transparent 70%),radial-gradient(ellipse 50% 60% at 100% 100%,rgba(184,153,106,0.06) 0%,transparent 60%);}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(160,82,45,.05) 0%,transparent 70%),
+             radial-gradient(ellipse 50% 60% at 100% 100%,rgba(184,153,106,.06) 0%,transparent 60%);}
 
 /* NAV */
-.nav{position:fixed;top:0;left:0;right:0;z-index:100;height:62px;padding:0 40px;display:flex;align-items:center;justify-content:space-between;background:rgba(250,247,242,0.93);backdrop-filter:blur(14px);border-bottom:1px solid var(--border-md);}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;height:62px;padding:0 40px;display:flex;align-items:center;justify-content:space-between;background:rgba(250,247,242,.93);backdrop-filter:blur(14px);border-bottom:1px solid var(--border-md);}
 .nav-logo{font-family:var(--pf);font-size:16px;font-weight:500;letter-spacing:.14em;color:var(--text);text-decoration:none;}
 .nav-logo .dot{color:var(--sienna);}
-.nav-back{font-family:var(--dm);font-size:11px;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);text-decoration:none;display:flex;align-items:center;gap:7px;transition:var(--transition);}
+.nav-back{font-size:11px;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);text-decoration:none;display:flex;align-items:center;gap:7px;transition:color .2s var(--ease);}
 .nav-back:hover{color:var(--sienna);}
-.nav-back svg{transition:var(--transition);}
+.nav-back svg{transition:transform .2s var(--ease);}
 .nav-back:hover svg{transform:translateX(-3px);}
 
 /* PAGE */
@@ -49,336 +38,280 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 
 /* HEADER */
 .page-header{text-align:center;max-width:600px;margin:0 auto 56px;}
-.page-eyebrow{font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--sienna);margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:12px;}
-.page-eyebrow::before,.page-eyebrow::after{content:'';width:28px;height:1px;background:var(--sienna-lt);opacity:.6;}
-.page-h1{font-family:var(--pf);font-size:clamp(36px,5vw,54px);font-weight:400;line-height:1.12;color:var(--text);margin-bottom:18px;}
+.eyebrow{font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--sienna);margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:12px;}
+.eyebrow::before,.eyebrow::after{content:'';width:28px;height:1px;background:var(--sienna-lt);opacity:.6;}
+.page-h1{font-family:var(--pf);font-size:clamp(32px,5vw,52px);font-weight:400;line-height:1.12;color:var(--text);margin-bottom:18px;}
 .page-h1 em{font-style:italic;color:var(--sienna-mid);}
 .page-sub{font-size:15px;color:var(--text-3);line-height:1.75;font-weight:300;}
 
 /* PROGRESS */
-.progress-wrap{max-width:720px;width:100%;margin:0 auto 44px;}
-.progress-steps{display:flex;align-items:flex-start;}
-.progress-step{display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;position:relative;cursor:default;}
-.progress-step:not(:last-child)::after{content:'';position:absolute;top:14px;left:calc(50% + 16px);right:calc(-50% + 16px);height:1px;background:var(--border-md);transition:background .35s;}
-.progress-step.done:not(:last-child)::after{background:var(--sienna-lt);}
-.step-circle{width:28px;height:28px;border-radius:50%;border:1px solid var(--border-str);background:var(--ivory-2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--text-3);transition:var(--transition);position:relative;z-index:1;}
-.progress-step.active .step-circle{background:var(--sienna);border-color:var(--sienna);color:#fff;}
-.progress-step.done .step-circle{background:var(--ivory-3);border-color:var(--sienna-lt);color:var(--sienna);}
-.step-label{font-size:10px;letter-spacing:.06em;color:var(--text-4);text-transform:uppercase;font-weight:400;text-align:center;white-space:nowrap;transition:var(--transition);}
-.progress-step.active .step-label{color:var(--sienna);}
-.progress-step.done .step-label{color:var(--text-3);}
+.prog-wrap{max-width:720px;width:100%;margin:0 auto 44px;}
+.prog-steps{display:flex;align-items:flex-start;}
+.prog-step{display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;position:relative;}
+.prog-step:not(:last-child)::after{content:'';position:absolute;top:14px;left:calc(50% + 16px);right:calc(-50% + 16px);height:1px;background:var(--border-md);transition:background .35s;}
+.prog-step.done:not(:last-child)::after{background:var(--sienna-lt);}
+.prog-circle{width:28px;height:28px;border-radius:50%;border:1px solid var(--border-str);background:var(--ivory-2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--text-3);transition:all .2s var(--ease);position:relative;z-index:1;}
+.prog-step.active .prog-circle{background:var(--sienna);border-color:var(--sienna);color:#fff;}
+.prog-step.done .prog-circle{background:var(--ivory-3);border-color:var(--sienna-lt);color:var(--sienna);}
+.prog-label{font-size:10px;letter-spacing:.06em;color:var(--text-4);text-transform:uppercase;font-weight:400;text-align:center;white-space:nowrap;transition:color .2s;}
+.prog-step.active .prog-label{color:var(--sienna);}
+.prog-step.done .prog-label{color:var(--text-3);}
 
-/* FORM CARD */
-.form-card{background:var(--ivory);border:1px solid var(--border-md);max-width:740px;width:100%;margin:0 auto;position:relative;overflow:hidden;box-shadow:0 2px 24px rgba(90,40,10,0.06);}
-.form-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 0%,var(--sienna-lt) 40%,var(--gold) 60%,transparent 100%);opacity:.6;}
-
-/* STEP */
-.form-step{display:none;padding:44px 50px 36px;animation:fadeUp .28s ease;}
-.form-step.active{display:block;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
-.step-header{margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid var(--border);}
-.step-num{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--sienna-mid);font-weight:500;margin-bottom:6px;}
-.step-title{font-family:var(--pf);font-size:24px;font-weight:400;color:var(--text);line-height:1.25;}
-.step-title em{font-style:italic;color:var(--sienna-mid);}
-
-/* GRID */
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 24px;}
-.form-grid.cols-1{grid-template-columns:1fr;}
-.field-full{grid-column:1/-1;}
-
-/* FIELD */
-.field{display:flex;flex-direction:column;gap:7px;}
-.field label{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text-2);}
-.field label .req{color:var(--sienna);margin-left:2px;}
-.field input,.field select,.field textarea{background:#fff;border:1px solid var(--border-md);color:var(--text);font-family:var(--dm);font-size:14px;font-weight:300;padding:11px 14px;border-radius:var(--radius);outline:none;transition:var(--transition);appearance:none;-webkit-appearance:none;width:100%;}
-.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%238a6d52' stroke-width='1.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:34px;cursor:pointer;}
-.field select option{color:var(--text);background:#fff;}
-.field textarea{resize:vertical;min-height:100px;line-height:1.6;}
-.field input::placeholder,.field textarea::placeholder{color:var(--text-4);font-weight:300;}
-.field input:hover,.field select:hover,.field textarea:hover{border-color:var(--border-str);}
-.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--sienna-mid);box-shadow:0 0 0 3px rgba(160,82,45,0.1);background:#fff;}
-.field input.error,.field select.error,.field textarea.error{border-color:#c0392b;box-shadow:0 0 0 3px rgba(192,57,43,0.08);}
-.field-hint{font-size:11px;color:var(--text-4);font-weight:300;}
-.field-error{font-size:11px;color:#b52a1a;display:none;}
-.field-error.visible{display:block;}
-
-/* RADIO */
-.radio-group{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.radio-option{display:flex;align-items:center;gap:10px;background:var(--ivory-2);border:1px solid var(--border-md);padding:10px 13px;border-radius:var(--radius);cursor:pointer;transition:var(--transition);font-size:13px;color:var(--text-3);user-select:none;}
-.radio-option:hover{border-color:var(--sienna-lt);color:var(--text-2);background:var(--ivory-3);}
-.radio-option.selected{border-color:var(--sienna);background:rgba(160,82,45,0.07);color:var(--sienna);}
-.radio-option input[type="radio"]{display:none;}
-.radio-dot{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--border-str);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:var(--transition);}
-.radio-option.selected .radio-dot{border-color:var(--sienna);background:var(--sienna);}
-.radio-option.selected .radio-dot::after{content:'';width:6px;height:6px;border-radius:50%;background:#fff;}
-
-/* CHECKBOX TILES */
-.check-group{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
-.radio-group-3col{grid-template-columns:1fr 1fr 1fr;}
-.check-option{display:flex;align-items:center;gap:10px;background:var(--ivory-2);border:1px solid var(--border-md);padding:10px 13px;border-radius:var(--radius);cursor:pointer;transition:var(--transition);font-size:13px;color:var(--text-3);user-select:none;}
-.check-option:hover{border-color:var(--sienna-lt);color:var(--text-2);background:var(--ivory-3);}
-.check-option.selected{border-color:var(--sienna);background:rgba(160,82,45,0.07);color:var(--sienna);}
-.check-option input[type="checkbox"]{display:none;}
-.check-box{width:16px;height:16px;border-radius:2px;border:1.5px solid var(--border-str);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:var(--transition);}
-.check-option.selected .check-box{border-color:var(--sienna);background:var(--sienna);}
-.check-option.selected .check-box::after{content:'';display:block;width:4px;height:7px;border:2px solid #fff;border-top:none;border-left:none;transform:rotate(45deg) translateY(-1px);}
-
-/* PRIVACY ROW */
-.privacy-row{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;background:var(--ivory-2);border:1px solid var(--border-md);border-radius:var(--radius);cursor:pointer;transition:var(--transition);}
-.privacy-row:hover{border-color:var(--sienna-lt);}
-.privacy-row.priv-checked{border-color:var(--sienna);background:rgba(160,82,45,0.06);}
-.privacy-row input[type="checkbox"]{position:absolute;opacity:0;pointer-events:none;}
-.priv-box{width:18px;height:18px;border-radius:3px;border:1.5px solid var(--border-str);flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:2px;transition:var(--transition);background:#fff;}
-.privacy-row.priv-checked .priv-box{border-color:var(--sienna);background:var(--sienna);}
-.privacy-row.priv-checked .priv-box::after{content:'';display:block;width:5px;height:9px;border:2px solid #fff;border-top:none;border-left:none;transform:rotate(45deg) translateY(-1px);}
-.priv-text{font-size:13px;color:var(--text-2);line-height:1.6;font-weight:300;}
-.priv-text a{color:var(--sienna);text-decoration:underline;}
-
-/* SECTION TITLE */
-.form-section-title{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--sienna);font-weight:500;margin:28px 0 14px;display:flex;align-items:center;gap:10px;}
-.form-section-title::after{content:'';flex:1;height:1px;background:var(--border);}
-
-/* BUDGET */
-.budget-display{font-family:var(--pf);font-size:22px;color:var(--sienna-mid);font-style:italic;margin-bottom:14px;display:block;}
-.range-track{-webkit-appearance:none;appearance:none;width:100%;height:3px;background:var(--ivory-3);border-radius:2px;outline:none;border:none;padding:0;}
-.range-track::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--sienna);cursor:pointer;border:3px solid #fff;box-shadow:0 1px 4px rgba(160,82,45,0.25);transition:transform .15s;}
-.range-track::-webkit-slider-thumb:hover{transform:scale(1.15);}
-.range-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--text-4);margin-top:8px;}
-
-/* NAV BUTTONS */
-.form-nav{display:flex;justify-content:space-between;align-items:center;padding:24px 50px 36px;border-top:1px solid var(--border);background:var(--ivory-2);}
-.btn-prev{font-family:var(--dm);font-size:11px;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);background:transparent;border:1px solid var(--border-md);padding:11px 22px;cursor:pointer;transition:var(--transition);border-radius:var(--radius);}
-.btn-prev:hover{color:var(--text);border-color:var(--border-str);}
-.btn-next{font-family:var(--dm);font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--sienna);border:none;padding:12px 28px;cursor:pointer;transition:var(--transition);border-radius:var(--radius);display:flex;align-items:center;gap:8px;}
-.btn-next:hover{background:var(--text-2);transform:translateY(-1px);}
-.btn-next:active{transform:translateY(0);}
-.btn-next svg{transition:var(--transition);}
-.btn-next:hover svg{transform:translateX(3px);}
-.step-count{font-size:11px;color:var(--text-4);letter-spacing:.08em;}
-
-/* SUCCESS */
-.success-wrap{display:none;text-align:center;padding:72px 50px;animation:fadeUp .35s ease;}
-.success-wrap.visible{display:block;}
-.success-icon{width:68px;height:68px;border-radius:50%;background:rgba(160,82,45,0.1);border:1px solid var(--sienna-lt);display:flex;align-items:center;justify-content:center;margin:0 auto 28px;color:var(--sienna);}
-.success-h2{font-family:var(--pf);font-size:34px;font-weight:400;color:var(--text);margin-bottom:14px;}
-.success-h2 em{font-style:italic;color:var(--sienna-mid);}
-.success-p{font-size:15px;color:var(--text-3);line-height:1.75;font-weight:300;max-width:420px;margin:0 auto 36px;}
-.success-details{background:var(--ivory-2);border:1px solid var(--border-md);padding:20px 28px;max-width:460px;margin:0 auto 36px;text-align:left;border-radius:var(--radius);}
-.success-detail-row{display:flex;justify-content:space-between;font-size:13px;padding:7px 0;border-bottom:1px solid var(--border);}
-.success-detail-row:last-child{border-bottom:none;}
-.success-detail-row span:first-child{color:var(--text-3);}
-.success-detail-row span:last-child{color:var(--text);font-weight:400;}
-.btn-home{display:inline-flex;align-items:center;gap:8px;background:var(--sienna);color:#fff;font-family:var(--dm);font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:13px 26px;border-radius:var(--radius);text-decoration:none;transition:var(--transition);}
-.btn-home:hover{background:var(--text-2);}
-
-/* LOADING */
-.loading-overlay{display:none;position:fixed;inset:0;background:rgba(250,247,242,0.78);backdrop-filter:blur(4px);z-index:200;align-items:center;justify-content:center;flex-direction:column;gap:18px;}
-.loading-overlay.visible{display:flex;}
-.loading-spinner{width:36px;height:36px;border:2px solid var(--border-md);border-top-color:var(--sienna);border-radius:50%;animation:spin .8s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg);}}
-.loading-text{font-size:12px;color:var(--text-3);letter-spacing:.1em;text-transform:uppercase;}
-
-/* FOOTER */
-.form-footer-note{text-align:center;margin-top:28px;font-size:12px;color:var(--text-4);font-weight:300;line-height:1.8;max-width:480px;margin-left:auto;margin-right:auto;}
-.form-footer-note a{color:var(--sienna);text-decoration:none;border-bottom:1px solid rgba(160,82,45,0.3);transition:var(--transition);}
-.form-footer-note a:hover{border-bottom-color:var(--sienna);}
-.cert-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:20px;}
-.cert-tag{font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--border-md);color:var(--text-3);border-radius:2px;}
+/* CARD */
+.form-card{background:var(--ivory);border:1px solid var(--border-md);max-width:740px;width:100%;margin:0 auto;position:relative;overflow:hidden;box-shadow:0 2px 24px rgba(90,40,10,.06);}
+.form-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--sienna-lt) 40%,var(--gold) 60%,transparent);opacity:.6;}
 .card-corner{position:absolute;opacity:.2;}
 .card-corner.tl{top:14px;left:14px;}
 .card-corner.tr{top:14px;right:14px;}
 .card-corner svg{width:36px;height:36px;}
 
-/* ── RESPONSIVE ── */
+/* STEPS */
+.f-step{display:none;padding:44px 50px 36px;animation:fadeUp .28s ease;}
+.f-step.active{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.step-hdr{margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid var(--border);}
+.step-num{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--sienna-mid);font-weight:500;margin-bottom:6px;}
+.step-title{font-family:var(--pf);font-size:24px;font-weight:400;color:var(--text);line-height:1.25;}
+.step-title em{font-style:italic;color:var(--sienna-mid);}
 
-/* Tablet: 768px and below */
+/* GRID */
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px 24px;}
+.fgrid.c1{grid-template-columns:1fr;}
+.ff{grid-column:1/-1;}
+
+/* FIELD */
+.field{display:flex;flex-direction:column;gap:7px;}
+.field label{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text-2);}
+.req{color:var(--sienna);margin-left:2px;}
+.field input,.field select,.field textarea{background:#fff;border:1px solid var(--border-md);color:var(--text);font-family:var(--dm);font-size:14px;font-weight:300;padding:11px 14px;border-radius:var(--radius);outline:none;transition:border-color .2s,box-shadow .2s;-webkit-appearance:none;width:100%;}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%238a6d52' stroke-width='1.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:34px;cursor:pointer;}
+.field select option{color:var(--text);background:#fff;}
+.field textarea{resize:vertical;min-height:100px;line-height:1.6;}
+.field input::placeholder,.field textarea::placeholder{color:var(--text-4);font-weight:300;}
+.field input:hover,.field select:hover,.field textarea:hover{border-color:var(--border-str);}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--sienna-mid);box-shadow:0 0 0 3px rgba(160,82,45,.1);}
+.field input.err,.field select.err,.field textarea.err{border-color:#c0392b;box-shadow:0 0 0 3px rgba(192,57,43,.08);}
+.hint{font-size:11px;color:var(--text-4);font-weight:300;}
+.errmsg{font-size:11px;color:#b52a1a;display:none;}
+.errmsg.show{display:block;}
+
+/* RADIO TILES */
+.rgroup{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.rgroup.c3{grid-template-columns:1fr 1fr 1fr;}
+.rtile{display:flex;align-items:center;gap:10px;background:var(--ivory-2);border:1px solid var(--border-md);padding:10px 13px;border-radius:var(--radius);cursor:pointer;font-size:13px;color:var(--text-3);user-select:none;transition:border-color .15s,background .15s,color .15s;}
+.rtile:hover{border-color:var(--sienna-lt);color:var(--text-2);background:var(--ivory-3);}
+.rtile.on{border-color:var(--sienna);background:rgba(160,82,45,.07);color:var(--sienna);}
+.rdot{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--border-str);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:border-color .15s,background .15s;}
+.rtile.on .rdot{border-color:var(--sienna);background:var(--sienna);}
+.rtile.on .rdot::after{content:'';width:6px;height:6px;border-radius:50%;background:#fff;}
+
+/* CHECK TILES */
+.cgroup{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.ctile{display:flex;align-items:center;gap:10px;background:var(--ivory-2);border:1px solid var(--border-md);padding:10px 13px;border-radius:var(--radius);cursor:pointer;font-size:13px;color:var(--text-3);user-select:none;transition:border-color .15s,background .15s,color .15s;}
+.ctile:hover{border-color:var(--sienna-lt);color:var(--text-2);background:var(--ivory-3);}
+.ctile.on{border-color:var(--sienna);background:rgba(160,82,45,.07);color:var(--sienna);}
+.cbox{width:16px;height:16px;border-radius:2px;border:1.5px solid var(--border-str);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:border-color .15s,background .15s;}
+.ctile.on .cbox{border-color:var(--sienna);background:var(--sienna);}
+.ctile.on .cbox::after{content:'';display:block;width:4px;height:7px;border:2px solid #fff;border-top:none;border-left:none;transform:rotate(45deg) translateY(-1px);}
+
+/* PRIVACY */
+.prow{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;background:var(--ivory-2);border:1px solid var(--border-md);border-radius:var(--radius);cursor:pointer;transition:border-color .15s,background .15s;}
+.prow:hover{border-color:var(--sienna-lt);}
+.prow.on{border-color:var(--sienna);background:rgba(160,82,45,.06);}
+.pbox{width:18px;height:18px;border-radius:3px;border:1.5px solid var(--border-str);flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:2px;background:#fff;transition:border-color .15s,background .15s;}
+.prow.on .pbox{border-color:var(--sienna);background:var(--sienna);}
+.prow.on .pbox::after{content:'';display:block;width:5px;height:9px;border:2px solid #fff;border-top:none;border-left:none;transform:rotate(45deg) translateY(-1px);}
+.ptext{font-size:13px;color:var(--text-2);line-height:1.6;font-weight:300;}
+.ptext a{color:var(--sienna);text-decoration:underline;}
+
+/* SECTION TITLE */
+.stitle{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--sienna);font-weight:500;margin:28px 0 14px;display:flex;align-items:center;gap:10px;}
+.stitle::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* BUDGET */
+.budgetval{font-family:var(--pf);font-size:22px;color:var(--sienna-mid);font-style:italic;margin-bottom:14px;display:block;}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;background:var(--ivory-3);border-radius:2px;outline:none;border:none;padding:0;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--sienna);cursor:pointer;border:3px solid #fff;box-shadow:0 1px 4px rgba(160,82,45,.25);}
+.rlabels{display:flex;justify-content:space-between;font-size:11px;color:var(--text-4);margin-top:8px;}
+
+/* FORM NAV */
+.fnav{display:flex;justify-content:space-between;align-items:center;padding:24px 50px 36px;border-top:1px solid var(--border);background:var(--ivory-2);}
+.btn-prev{font-size:11px;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);background:transparent;border:1px solid var(--border-md);padding:11px 22px;cursor:pointer;transition:color .2s,border-color .2s;border-radius:var(--radius);}
+.btn-prev:hover{color:var(--text);border-color:var(--border-str);}
+.btn-next{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--sienna);border:none;padding:12px 28px;cursor:pointer;transition:background .2s,transform .15s;border-radius:var(--radius);display:flex;align-items:center;gap:8px;}
+.btn-next:hover{background:var(--text-2);}
+.stepcnt{font-size:11px;color:var(--text-4);letter-spacing:.08em;}
+
+/* SUCCESS */
+.success{display:none;text-align:center;padding:72px 50px;}
+.success.show{display:block;animation:fadeUp .35s ease;}
+.sicon{width:68px;height:68px;border-radius:50%;background:rgba(160,82,45,.1);border:1px solid var(--sienna-lt);display:flex;align-items:center;justify-content:center;margin:0 auto 28px;color:var(--sienna);}
+.sh2{font-family:var(--pf);font-size:34px;font-weight:400;color:var(--text);margin-bottom:14px;}
+.sh2 em{font-style:italic;color:var(--sienna-mid);}
+.sp{font-size:15px;color:var(--text-3);line-height:1.75;font-weight:300;max-width:420px;margin:0 auto 36px;}
+.sdetails{background:var(--ivory-2);border:1px solid var(--border-md);padding:20px 28px;max-width:460px;margin:0 auto 36px;text-align:left;border-radius:var(--radius);}
+.srow{display:flex;justify-content:space-between;font-size:13px;padding:7px 0;border-bottom:1px solid var(--border);}
+.srow:last-child{border-bottom:none;}
+.srow span:first-child{color:var(--text-3);}
+.srow span:last-child{color:var(--text);font-weight:400;}
+.btn-home{display:inline-flex;align-items:center;gap:8px;background:var(--sienna);color:#fff;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:13px 26px;border-radius:var(--radius);text-decoration:none;transition:background .2s;}
+.btn-home:hover{background:var(--text-2);}
+
+/* LOADING */
+.overlay{display:none;position:fixed;inset:0;background:rgba(250,247,242,.8);backdrop-filter:blur(4px);z-index:200;align-items:center;justify-content:center;flex-direction:column;gap:18px;}
+.overlay.show{display:flex;}
+.spinner{width:36px;height:36px;border:2px solid var(--border-md);border-top-color:var(--sienna);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.spin-txt{font-size:12px;color:var(--text-3);letter-spacing:.1em;text-transform:uppercase;}
+
+/* FOOTER NOTE */
+.footnote{text-align:center;margin:28px auto 0;font-size:12px;color:var(--text-4);font-weight:300;line-height:1.8;max-width:480px;}
+.footnote a{color:var(--sienna);text-decoration:none;border-bottom:1px solid rgba(160,82,45,.3);}
+.footnote a:hover{border-bottom-color:var(--sienna);}
+.certs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:20px;}
+.ctag{font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--border-md);color:var(--text-3);border-radius:2px;}
+
+/* ── RESPONSIVE ── */
 @media(max-width:768px){
   .page{padding:96px 16px 60px;}
   .page-header{margin-bottom:40px;}
-  .page-h1{font-size:clamp(28px,6vw,40px);}
-  .page-sub{font-size:14px;}
-  .progress-wrap{margin-bottom:32px;padding:0 4px;}
-  .step-label{font-size:9px;letter-spacing:.04em;}
-  .form-card{border-radius:4px;}
-  .form-step{padding:32px 32px 28px;}
-  .form-nav{padding:20px 32px 28px;}
-  .form-grid{gap:14px 18px;}
-  .radio-group{gap:7px;}
-  .check-group{gap:7px;}
-  .success-wrap{padding:56px 32px;}
-  .success-h2{font-size:28px;}
-  .success-details{padding:16px 20px;}
-  .cert-row{gap:6px;}
-  .form-footer-note{font-size:11px;}
+  .f-step{padding:32px 32px 28px;}
+  .fnav{padding:20px 32px 28px;}
+  .fgrid{gap:14px 18px;}
+  .rgroup.c3{grid-template-columns:1fr 1fr;}
+  .success{padding:56px 32px;}
 }
-
-/* Mobile: 560px and below — full single column */
 @media(max-width:560px){
   .nav{padding:0 16px;height:56px;}
-  .nav-logo{font-size:14px;letter-spacing:.1em;}
-  .nav-back span{display:none;}
+  .nav-logo{font-size:14px;}
+  .nav-back-txt{display:none;}
   .page{padding:80px 12px 48px;}
   .page-header{margin-bottom:32px;}
-  .page-eyebrow{font-size:9px;}
-  .page-h1{font-size:clamp(26px,7vw,36px);margin-bottom:12px;}
-  .page-sub{font-size:13px;line-height:1.65;}
-
-  /* Progress: shrink labels completely, tighten circles */
-  .progress-wrap{margin-bottom:28px;padding:0 2px;}
-  .step-circle{width:24px;height:24px;font-size:10px;}
-  .step-label{display:none;}
-  .progress-step:not(:last-child)::after{top:12px;left:calc(50% + 13px);right:calc(-50% + 13px);}
-
-  /* Card */
-  .form-card{border-left:none;border-right:none;border-radius:0;box-shadow:none;margin-left:-12px;margin-right:-12px;width:calc(100% + 24px);}
+  .page-h1{font-size:clamp(26px,7vw,36px);}
+  .page-sub{font-size:13px;}
+  .prog-wrap{margin-bottom:28px;}
+  .prog-circle{width:24px;height:24px;font-size:10px;}
+  .prog-step:not(:last-child)::after{top:12px;left:calc(50% + 13px);right:calc(-50% + 13px);}
+  .prog-label{display:none;}
+  .form-card{margin-left:-12px;margin-right:-12px;width:calc(100% + 24px);border-left:none;border-right:none;border-radius:0;box-shadow:none;}
   .card-corner{display:none;}
-  .form-step{padding:24px 20px 20px;}
+  .f-step{padding:22px 18px 18px;}
   .step-title{font-size:20px;}
-  .step-num{font-size:9px;}
-  .step-desc{font-size:12px;}
-  .step-header{margin-bottom:24px;padding-bottom:18px;}
-
-  /* Grids: all single column */
-  .form-grid{grid-template-columns:1fr;gap:12px;}
-  .form-grid.cols-3{grid-template-columns:1fr;}
-  .field-full{grid-column:1;}
-
-  /* Radios: 1 column */
-  .radio-group{grid-template-columns:1fr;gap:6px;}
-  .radio-group-3col{grid-template-columns:1fr;}
-
-  /* Checkboxes: 2 columns on mobile (labels are short enough) */
-  .check-group{grid-template-columns:1fr 1fr;gap:6px;}
-
-  /* Tiles: tighter padding */
-  .radio-option,.check-option{padding:9px 11px;font-size:12px;gap:8px;}
-  .radio-dot,.check-box{width:14px;height:14px;}
-  .radio-option.selected .radio-dot::after{width:5px;height:5px;}
-
-  /* Inputs */
+  .step-hdr{margin-bottom:22px;padding-bottom:16px;}
+  .fgrid{grid-template-columns:1fr;gap:12px;}
+  .fgrid.c3{grid-template-columns:1fr;}
+  .ff{grid-column:1;}
+  .rgroup{grid-template-columns:1fr;gap:6px;}
+  .rgroup.c3{grid-template-columns:1fr;}
+  .cgroup{grid-template-columns:1fr 1fr;gap:6px;}
+  .rtile,.ctile{padding:9px 11px;font-size:12px;gap:8px;}
+  .rdot,.cbox{width:14px;height:14px;}
   .field label{font-size:10px;}
   .field input,.field select,.field textarea{font-size:14px;padding:10px 12px;}
-  .field-hint,.field-error{font-size:10px;}
-
-  /* Budget */
-  .budget-display{font-size:18px;}
-  .range-labels{font-size:10px;}
-
-  /* Section title */
-  .form-section-title{font-size:9px;margin:22px 0 10px;}
-
-  /* Privacy */
-  .privacy-row{padding:12px 13px;gap:10px;}
-  .priv-text{font-size:12px;}
-  .priv-box{width:16px;height:16px;}
-
-  /* Nav buttons */
-  .form-nav{padding:16px 20px 24px;gap:8px;}
-  .btn-prev{padding:10px 16px;font-size:10px;}
-  .btn-next{padding:10px 18px;font-size:10px;gap:6px;}
-  .step-count{font-size:10px;}
-
-  /* Success */
-  .success-wrap{padding:36px 20px;}
-  .success-h2{font-size:24px;}
-  .success-p{font-size:13px;}
-  .success-details{padding:14px 16px;margin-bottom:24px;}
-  .success-detail-row{font-size:12px;flex-direction:column;gap:2px;padding:8px 0;}
-  .success-detail-row span:last-child{font-weight:500;color:var(--text-2);}
-  .btn-home{font-size:10px;padding:11px 20px;}
-
-  /* Footer */
-  .form-footer-note{font-size:11px;padding:0 4px;}
-  .cert-row{gap:5px;margin-top:14px;}
-  .cert-tag{font-size:9px;padding:3px 8px;}
+  .hint,.errmsg{font-size:10px;}
+  .budgetval{font-size:18px;}
+  .rlabels{font-size:10px;}
+  .stitle{font-size:9px;margin:20px 0 10px;}
+  .prow{padding:12px 13px;gap:10px;}
+  .ptext{font-size:12px;}
+  .fnav{padding:14px 18px 22px;flex-wrap:wrap;gap:8px;}
+  .btn-prev{padding:10px 14px;font-size:10px;}
+  .btn-next{padding:10px 16px;font-size:10px;gap:6px;}
+  .stepcnt{font-size:10px;}
+  .success{padding:32px 18px;}
+  .sh2{font-size:24px;}
+  .sp{font-size:13px;}
+  .sdetails{padding:14px 16px;}
+  .srow{font-size:12px;flex-direction:column;gap:2px;padding:8px 0;}
+  .btn-home{font-size:10px;padding:11px 18px;}
+  .footnote{font-size:11px;}
+  .ctag{font-size:9px;padding:3px 8px;}
 }
-
-/* Tiny phones: 360px and below */
 @media(max-width:360px){
-  .check-group{grid-template-columns:1fr;}
-  .form-step{padding:20px 16px 16px;}
-  .form-nav{padding:14px 16px 20px;}
-  .page-h1{font-size:24px;}
-  .btn-prev,.btn-next{padding:9px 14px;}
+  .cgroup{grid-template-columns:1fr;}
+  .f-step{padding:18px 14px 14px;}
+  .fnav{padding:12px 14px 18px;}
+  .page-h1{font-size:22px;}
 }
 </style>
 </head>
 <body>
 
-<div class="loading-overlay" id="loadingOverlay">
-  <div class="loading-spinner"></div>
-  <div class="loading-text">Aanvraag verzenden…</div>
-</div>
+<div class="overlay" id="overlay"><div class="spinner"></div><div class="spin-txt">Aanvraag verzenden…</div></div>
 
 <nav class="nav">
   <a href="index.html" class="nav-logo">TOTAL <span class="dot">&middot;</span> TRAVEL</a>
   <a href="index.html" class="nav-back">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-    <span>Terug naar website</span>
+    <span class="nav-back-txt">Terug naar website</span>
   </a>
 </nav>
 
 <div class="page">
   <div class="page-header">
-    <div class="page-eyebrow">Reisaanvraag</div>
+    <div class="eyebrow">Reisaanvraag</div>
     <h1 class="page-h1">Uw reis begint<br><em>hier</em></h1>
     <p class="page-sub">Vertel ons over uw droomreis. Wij stellen binnen 48 uur een persoonlijk voorstel op &mdash; geheel vrijblijvend.</p>
   </div>
 
-  <div class="progress-wrap">
-    <div class="progress-steps" id="progressSteps">
-      <div class="progress-step active" data-step="1"><div class="step-circle">1</div><div class="step-label">Reis</div></div>
-      <div class="progress-step" data-step="2"><div class="step-circle">2</div><div class="step-label">Reisgezelschap</div></div>
-      <div class="progress-step" data-step="3"><div class="step-circle">3</div><div class="step-label">Wensen</div></div>
-      <div class="progress-step" data-step="4"><div class="step-circle">4</div><div class="step-label">Contact</div></div>
+  <div class="prog-wrap">
+    <div class="prog-steps" id="progSteps">
+      <div class="prog-step active" data-step="1"><div class="prog-circle">1</div><div class="prog-label">Reis</div></div>
+      <div class="prog-step" data-step="2"><div class="prog-circle">2</div><div class="prog-label">Reisgezelschap</div></div>
+      <div class="prog-step" data-step="3"><div class="prog-circle">3</div><div class="prog-label">Wensen</div></div>
+      <div class="prog-step" data-step="4"><div class="prog-circle">4</div><div class="prog-label">Contact</div></div>
     </div>
   </div>
 
-  <div class="form-card" id="formCard">
-    <div class="card-corner tl"><svg viewBox="0 0 36 36" fill="none"><path d="M0 36 L0 0 L36 0" stroke="#a0522d" stroke-width="1"/></svg></div>
-    <div class="card-corner tr"><svg viewBox="0 0 36 36" fill="none"><path d="M0 0 L36 0 L36 36" stroke="#a0522d" stroke-width="1"/></svg></div>
+  <div class="form-card">
+    <div class="card-corner tl"><svg viewBox="0 0 36 36" fill="none"><path d="M0 36L0 0L36 0" stroke="#a0522d" stroke-width="1"/></svg></div>
+    <div class="card-corner tr"><svg viewBox="0 0 36 36" fill="none"><path d="M0 0L36 0L36 36" stroke="#a0522d" stroke-width="1"/></svg></div>
 
     <!-- STAP 1 -->
-    <div class="form-step active" id="step1">
-      <div class="step-header">
+    <div class="f-step active" id="step1">
+      <div class="step-hdr">
         <div class="step-num">Stap 01 &mdash; 04</div>
         <div class="step-title">Reisdetails &amp; <em>bestemming</em></div>
       </div>
-      <div class="form-grid">
-        <div class="field field-full">
+      <div class="fgrid">
+        <div class="field ff">
           <label>Type reis <span class="req">*</span></label>
-          <div class="radio-group" id="grp-reisType">
-            <label class="radio-option"><input type="radio" name="reisType" value="Vakantiereis"><div class="radio-dot"></div>Vakantiereis</label>
-            <label class="radio-option"><input type="radio" name="reisType" value="Incentive / groepsreis"><div class="radio-dot"></div>Incentive / groepsreis</label>
-            <label class="radio-option"><input type="radio" name="reisType" value="Golfreis"><div class="radio-dot"></div>Golfreis</label>
-            <label class="radio-option"><input type="radio" name="reisType" value="Cruise"><div class="radio-dot"></div>Cruise</label>
-            <label class="radio-option"><input type="radio" name="reisType" value="Formule 1 reis"><div class="radio-dot"></div>Formule 1 reis</label>
-            <label class="radio-option"><input type="radio" name="reisType" value="Vliegtickets groepen"><div class="radio-dot"></div>Vliegtickets groepen</label>
+          <div class="rgroup" id="rg-reisType">
+            <div class="rtile" data-val="Vakantiereis"><div class="rdot"></div>Vakantiereis</div>
+            <div class="rtile" data-val="Incentive / groepsreis"><div class="rdot"></div>Incentive / groepsreis</div>
+            <div class="rtile" data-val="Golfreis"><div class="rdot"></div>Golfreis</div>
+            <div class="rtile" data-val="Cruise"><div class="rdot"></div>Cruise</div>
+            <div class="rtile" data-val="Formule 1 reis"><div class="rdot"></div>Formule 1 reis</div>
+            <div class="rtile" data-val="Vliegtickets groepen"><div class="rdot"></div>Vliegtickets groepen</div>
           </div>
-          <div class="field-error" id="err-reisType">Kies een type reis</div>
+          <div class="errmsg" id="e-reisType">Kies een type reis</div>
         </div>
-        <div class="field field-full">
+        <div class="field ff" id="incentiveVeld" style="display:none">
+          <label>Bedrijfsnaam</label>
+          <input type="text" id="bedrijfsnaam" placeholder="Naam van uw organisatie">
+        </div>
+        <div class="field ff">
           <label>Bestemming(en) <span class="req">*</span></label>
           <input type="text" id="bestemming" placeholder="bijv. Japan, Oman, Dubai of een regio…">
-          <div class="field-hint">Nog geen specifieke bestemming? Geef uw voorkeur in sfeer of regio op.</div>
-          <div class="field-error" id="err-bestemming">Vul een bestemming of regio in</div>
+          <div class="hint">Nog geen specifieke bestemming? Geef uw voorkeur in sfeer of regio op.</div>
+          <div class="errmsg" id="e-bestemming">Vul een bestemming of regio in</div>
         </div>
         <div class="field">
-          <label>Gewenste vertrekdatum <span class="req">*</span></label>
+          <label>Vertrekdatum <span class="req">*</span></label>
           <input type="date" id="vertrekdatum">
-          <div class="field-error" id="err-vertrekdatum">Kies een vertrekdatum</div>
+          <div class="errmsg" id="e-vertrekdatum">Kies een vertrekdatum</div>
         </div>
         <div class="field">
-          <label>Gewenste retourdatum <span class="req">*</span></label>
+          <label>Retourdatum <span class="req">*</span></label>
           <input type="date" id="retourdatum">
-          <div class="field-error" id="err-retourdatum">Kies een retourdatum</div>
+          <div class="errmsg" id="e-retourdatum">Kies een retourdatum</div>
         </div>
-        <div class="field field-full">
-          <label>Reisduur flexibiliteit</label>
-          <div class="radio-group radio-group-3col" id="grp-flex">
-            <label class="radio-option"><input type="radio" name="reisFlexibel" value="Exact"><div class="radio-dot"></div>Exact</label>
-            <label class="radio-option"><input type="radio" name="reisFlexibel" value="± 2 dagen flexibel"><div class="radio-dot"></div>± 2 dagen flexibel</label>
-            <label class="radio-option"><input type="radio" name="reisFlexibel" value="Volledig flexibel"><div class="radio-dot"></div>Volledig flexibel</label>
+        <div class="field ff">
+          <label>Datumflexibiliteit</label>
+          <div class="rgroup c3" id="rg-flex">
+            <div class="rtile" data-val="Exact"><div class="rdot"></div>Exact</div>
+            <div class="rtile" data-val="± 2 dagen flexibel"><div class="rdot"></div>± 2 dagen flexibel</div>
+            <div class="rtile" data-val="Volledig flexibel"><div class="rdot"></div>Volledig flexibel</div>
           </div>
         </div>
         <div class="field">
@@ -386,9 +319,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
           <input type="text" id="vertrekplaats" placeholder="bijv. Amsterdam Schiphol">
         </div>
         <div class="field">
-          <label>Voorkeur vluchtstijl</label>
+          <label>Vluchtvoorkeur</label>
           <select id="vluchtstijl">
-            <option value="" disabled selected>Selecteer een optie</option>
+            <option value="">Selecteer een optie</option>
             <option>Directe vlucht (voorkeur)</option>
             <option>Tussenstop acceptabel</option>
             <option>Geen voorkeur</option>
@@ -399,20 +332,20 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
     </div>
 
     <!-- STAP 2 -->
-    <div class="form-step" id="step2">
-      <div class="step-header">
+    <div class="f-step" id="step2">
+      <div class="step-hdr">
         <div class="step-num">Stap 02 &mdash; 04</div>
         <div class="step-title">Reisgezelschap &amp; <em>samenstelling</em></div>
       </div>
-      <div class="form-grid">
+      <div class="fgrid">
         <div class="field">
           <label>Aantal volwassenen <span class="req">*</span></label>
           <select id="aantalVolwassenen">
-            <option value="" disabled selected>Selecteer</option>
+            <option value="">Selecteer</option>
             <option>1</option><option>2</option><option>3</option><option>4</option>
             <option>5</option><option>6</option><option>7</option><option>8</option><option>9 of meer</option>
           </select>
-          <div class="field-error" id="err-aantalVolwassenen">Kies het aantal volwassenen</div>
+          <div class="errmsg" id="e-aantalVolwassenen">Kies het aantal volwassenen</div>
         </div>
         <div class="field">
           <label>Aantal kinderen</label>
@@ -421,70 +354,65 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
             <option>1</option><option>2</option><option>3</option><option>4 of meer</option>
           </select>
         </div>
-        <div class="field field-full">
+        <div class="field ff">
           <label>Leeftijden kinderen</label>
           <input type="text" id="leeftijdenKinderen" placeholder="bijv. 4, 8 en 12 jaar">
-          <div class="field-hint">Relevant voor kinderprijzen, faciliteiten en activiteiten</div>
+          <div class="hint">Relevant voor kinderprijzen, faciliteiten en activiteiten</div>
         </div>
-        <div class="field field-full">
+        <div class="field ff">
           <label>Type reisgezelschap</label>
-          <div class="radio-group" id="grp-gezelschap">
-            <label class="radio-option"><input type="radio" name="gezelschap" value="Solo"><div class="radio-dot"></div>Solo</label>
-            <label class="radio-option"><input type="radio" name="gezelschap" value="Koppel"><div class="radio-dot"></div>Koppel</label>
-            <label class="radio-option"><input type="radio" name="gezelschap" value="Familie"><div class="radio-dot"></div>Familie</label>
-            <label class="radio-option"><input type="radio" name="gezelschap" value="Vriendengroep"><div class="radio-dot"></div>Vriendengroep</label>
+          <div class="rgroup" id="rg-gezelschap">
+            <div class="rtile" data-val="Solo"><div class="rdot"></div>Solo</div>
+            <div class="rtile" data-val="Koppel"><div class="rdot"></div>Koppel</div>
+            <div class="rtile" data-val="Familie"><div class="rdot"></div>Familie</div>
+            <div class="rtile" data-val="Vriendengroep"><div class="rdot"></div>Vriendengroep</div>
           </div>
         </div>
-        <div class="field field-full" id="incentiveVeld" style="display:none">
-          <label>Bedrijfsnaam (voor zakelijke reizen)</label>
-          <input type="text" id="bedrijfsnaam" placeholder="Naam van uw organisatie">
-        </div>
       </div>
-      <div class="form-section-title">Budget</div>
-      <div class="form-grid cols-1">
+      <div class="stitle">Budget</div>
+      <div class="fgrid c1">
         <div class="field">
           <label>Indicatief budget per persoon (excl. vluchten)</label>
-          <span class="budget-display" id="budgetDisplay">€ 2.000 p.p.</span>
-          <input type="range" class="range-track" id="budgetSlider" min="500" max="15000" step="250" value="2000">
-          <div class="range-labels"><span>€ 500</span><span>€ 5.000</span><span>€ 10.000</span><span>€ 15.000+</span></div>
+          <span class="budgetval" id="budgetVal">€ 2.000 p.p.</span>
+          <input type="range" id="budgetSlider" min="500" max="15000" step="250" value="2000">
+          <div class="rlabels"><span>€ 500</span><span>€ 5.000</span><span>€ 10.000</span><span>€ 15.000+</span></div>
         </div>
         <div class="field">
           <label>Totaalbudget gehele reis</label>
-          <input type="text" id="totaalbudget" placeholder="bijv. € 10.000 of 'nader te bepalen'">
-          <div class="field-hint">Optioneel — helpt ons het beste aanbod te selecteren</div>
+          <input type="text" id="totaalbudget" placeholder="bijv. € 10.000 of nader te bepalen">
+          <div class="hint">Optioneel — helpt ons het beste aanbod te selecteren</div>
         </div>
       </div>
     </div>
 
     <!-- STAP 3 -->
-    <div class="form-step" id="step3">
-      <div class="step-header">
+    <div class="f-step" id="step3">
+      <div class="step-hdr">
         <div class="step-num">Stap 03 &mdash; 04</div>
         <div class="step-title">Wensen &amp; <em>voorkeuren</em></div>
       </div>
-      <div class="form-grid">
+      <div class="fgrid">
         <div class="field">
-          <label>Accommodatievoorkeur</label>
+          <label>Accommodatiecategorie</label>
           <select id="accommodatie">
-            <option value="" disabled selected>Selecteer een categorie</option>
+            <option value="">Selecteer</option>
             <option>3-sterren hotel</option><option>4-sterren hotel</option>
             <option>5-sterren / luxe resort</option><option>Boutique / design hotel</option>
-            <option>Eco lodge / glamping</option><option>Cruise (incl. accommodatie)</option>
-            <option>Geen voorkeur</option>
+            <option>Eco lodge / glamping</option><option>Cruise (incl. accommodatie)</option><option>Geen voorkeur</option>
           </select>
         </div>
         <div class="field">
           <label>Kamertype</label>
           <select id="kamertype">
-            <option value="" disabled selected>Selecteer</option>
+            <option value="">Selecteer</option>
             <option>Standaard kamer</option><option>Superieur kamer</option>
             <option>Suite</option><option>Verbonden kamers (gezin)</option><option>Geen voorkeur</option>
           </select>
         </div>
         <div class="field">
-          <label>Reisarrangement</label>
+          <label>Arrangement</label>
           <select id="arrangement">
-            <option value="" disabled selected>Selecteer</option>
+            <option value="">Selecteer</option>
             <option>Logies only</option><option>Logies + ontbijt</option>
             <option>Half board</option><option>All inclusive</option>
             <option>Compleet (excursies incl.)</option><option>Geen voorkeur</option>
@@ -493,73 +421,73 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
         <div class="field">
           <label>Vervoer ter plaatse</label>
           <select id="vervoer">
-            <option value="" disabled selected>Selecteer</option>
+            <option value="">Selecteer</option>
             <option>Privétransfers</option><option>Huurauto</option>
             <option>Begeleide rondrit</option><option>Openbaar vervoer</option>
             <option>Combinatie</option><option>Geen voorkeur</option>
           </select>
         </div>
-        <div class="field field-full">
+        <div class="field ff">
           <label>Gewenste activiteiten &amp; ervaringen</label>
-          <div class="check-group" id="grp-activiteiten">
-            <label class="check-option"><input type="checkbox" name="activiteiten" value="Cultuur &amp; historie"><div class="check-box"></div>Cultuur &amp; historie</label>
-            <label class="check-option"><input type="checkbox" name="activiteiten" value="Natuur &amp; wildlife"><div class="check-box"></div>Natuur &amp; wildlife</label>
-            <label class="check-option"><input type="checkbox" name="activiteiten" value="Golf"><div class="check-box"></div>Golf</label>
-            <label class="check-option"><input type="checkbox" name="activiteiten" value="Eten &amp; drinken"><div class="check-box"></div>Eten &amp; drinken</label>
-            <label class="check-option"><input type="checkbox" name="activiteiten" value="Wellness &amp; spa"><div class="check-box"></div>Wellness &amp; spa</label>
-            <label class="check-option"><input type="checkbox" name="activiteiten" value="Watersport"><div class="check-box"></div>Watersport</label>
-            <label class="check-option"><input type="checkbox" name="activiteiten" value="Sport &amp; avontuur"><div class="check-box"></div>Sport &amp; avontuur</label>
-            <label class="check-option"><input type="checkbox" name="activiteiten" value="Shopping"><div class="check-box"></div>Shopping</label>
-            <label class="check-option"><input type="checkbox" name="activiteiten" value="Formule 1 / motorsport"><div class="check-box"></div>F1 / motorsport</label>
+          <div class="cgroup" id="cg-activiteiten">
+            <div class="ctile" data-val="Cultuur &amp; historie"><div class="cbox"></div>Cultuur &amp; historie</div>
+            <div class="ctile" data-val="Natuur &amp; wildlife"><div class="cbox"></div>Natuur &amp; wildlife</div>
+            <div class="ctile" data-val="Golf"><div class="cbox"></div>Golf</div>
+            <div class="ctile" data-val="Eten &amp; drinken"><div class="cbox"></div>Eten &amp; drinken</div>
+            <div class="ctile" data-val="Wellness &amp; spa"><div class="cbox"></div>Wellness &amp; spa</div>
+            <div class="ctile" data-val="Watersport"><div class="cbox"></div>Watersport</div>
+            <div class="ctile" data-val="Sport &amp; avontuur"><div class="cbox"></div>Sport &amp; avontuur</div>
+            <div class="ctile" data-val="Shopping"><div class="cbox"></div>Shopping</div>
+            <div class="ctile" data-val="Formule 1 / motorsport"><div class="cbox"></div>F1 / motorsport</div>
           </div>
         </div>
-        <div class="field field-full">
+        <div class="field ff">
           <label>Bijzondere wensen of dieetwensen</label>
           <input type="text" id="bijzondereWensen" placeholder="bijv. vegetarisch, rolstoeltoegankelijk, jubileum…">
         </div>
-        <div class="field field-full">
+        <div class="field ff">
           <label>Vorige reizen &amp; ervaringen (optioneel)</label>
-          <textarea id="vorigeReizen" placeholder="Eerder via Total Travel gereisd, of wilt u vertellen wat u elders heeft beleefd?"></textarea>
+          <textarea id="vorigeReizen" placeholder="Eerder via Total Travel gereisd? Of vertel wat u elders heeft beleefd — helpt ons een beter voorstel te doen."></textarea>
         </div>
-        <div class="field field-full">
-          <label>Aanvullende opmerkingen of vragen</label>
+        <div class="field ff">
+          <label>Aanvullende opmerkingen</label>
           <textarea id="opmerkingen" placeholder="Alles wat verder relevant is voor uw ideale reis…"></textarea>
         </div>
       </div>
     </div>
 
     <!-- STAP 4 -->
-    <div class="form-step" id="step4">
-      <div class="step-header">
+    <div class="f-step" id="step4">
+      <div class="step-hdr">
         <div class="step-num">Stap 04 &mdash; 04</div>
         <div class="step-title">Uw <em>contactgegevens</em></div>
       </div>
-      <div class="form-grid">
+      <div class="fgrid">
         <div class="field">
           <label>Voornaam <span class="req">*</span></label>
           <input type="text" id="voornaam" placeholder="Jan">
-          <div class="field-error" id="err-voornaam">Vul uw voornaam in</div>
+          <div class="errmsg" id="e-voornaam">Vul uw voornaam in</div>
         </div>
         <div class="field">
           <label>Achternaam <span class="req">*</span></label>
           <input type="text" id="achternaam" placeholder="de Vries">
-          <div class="field-error" id="err-achternaam">Vul uw achternaam in</div>
+          <div class="errmsg" id="e-achternaam">Vul uw achternaam in</div>
         </div>
-        <div class="field field-full">
+        <div class="field ff">
           <label>E-mailadres <span class="req">*</span></label>
           <input type="email" id="email" placeholder="uw@email.nl">
-          <div class="field-hint">Hierop ontvangt u de bevestiging en de offerte</div>
-          <div class="field-error" id="err-email">Vul een geldig e-mailadres in</div>
+          <div class="hint">Hierop ontvangt u de bevestiging en de offerte</div>
+          <div class="errmsg" id="e-email">Vul een geldig e-mailadres in</div>
         </div>
         <div class="field">
           <label>Telefoonnummer <span class="req">*</span></label>
           <input type="tel" id="telefoon" placeholder="+31 6 12 34 56 78">
-          <div class="field-error" id="err-telefoon">Vul uw telefoonnummer in</div>
+          <div class="errmsg" id="e-telefoon">Vul uw telefoonnummer in</div>
         </div>
         <div class="field">
           <label>Voorkeur voor contact</label>
           <select id="contactVoorkeur">
-            <option value="" disabled selected>Selecteer</option>
+            <option value="">Selecteer</option>
             <option>E-mail</option><option>Telefoon (ochtend)</option>
             <option>Telefoon (middag)</option><option>Telefoon (avond)</option><option>WhatsApp</option>
           </select>
@@ -568,246 +496,294 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
           <label>Woonplaats</label>
           <input type="text" id="woonplaats" placeholder="bijv. Rotterdam">
         </div>
-        <div class="field field-full">
+        <div class="field ff">
           <label>Hoe heeft u ons gevonden?</label>
           <select id="gevonden">
-            <option value="" disabled selected>Selecteer een optie</option>
+            <option value="">Selecteer een optie</option>
             <option>Google / zoekmachine</option><option>Aanbeveling van bekende</option>
             <option>Social media</option><option>Terugkerende klant</option>
             <option>ANVR / branchevereniging</option><option>Anders</option>
           </select>
         </div>
-        <div class="field field-full">
-          <label style="font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text-2)">Privacyverklaring <span class="req">*</span></label>
-          <div class="privacy-row" id="privacyRow" onclick="togglePrivacy(event)">
-            <input type="checkbox" id="privacyAkkoord" tabindex="-1">
-            <div class="priv-box" id="privBox"></div>
-            <span class="priv-text">Ik ga akkoord met de <a href="#" onclick="event.stopPropagation();return false">privacyverklaring</a> van Total Travel. Mijn gegevens worden uitsluitend gebruikt voor het verwerken van deze reisaanvraag.</span>
+        <div class="field ff">
+          <label style="text-transform:none;letter-spacing:0;font-size:12px;color:var(--text-3);font-weight:400">Privacyverklaring <span class="req">*</span></label>
+          <div class="prow" id="privRow">
+            <div class="pbox" id="privBox"></div>
+            <span class="ptext">Ik ga akkoord met de <a href="#" id="privLink">privacyverklaring</a> van Total Travel. Mijn gegevens worden uitsluitend gebruikt voor het verwerken van deze reisaanvraag.</span>
           </div>
-          <div class="field-error" id="err-privacy">Bevestig de privacyverklaring om door te gaan</div>
+          <div class="errmsg" id="e-privacy">Bevestig de privacyverklaring om door te gaan</div>
         </div>
       </div>
     </div>
 
     <!-- SUCCESS -->
-    <div class="success-wrap" id="successWrap">
-      <div class="success-icon">
-        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-      </div>
-      <h2 class="success-h2">Aanvraag <em>ontvangen</em></h2>
-      <p class="success-p">Bedankt voor uw aanvraag. Ons team neemt binnen 48 uur persoonlijk contact met u op om uw droomreis te bespreken.</p>
-      <div class="success-details" id="successDetails"></div>
+    <div class="success" id="successWrap">
+      <div class="sicon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <h2 class="sh2">Aanvraag <em>ontvangen</em></h2>
+      <p class="sp">Bedankt voor uw aanvraag. Ons team neemt binnen 48 uur persoonlijk contact met u op om uw droomreis te bespreken.</p>
+      <div class="sdetails" id="sdetails"></div>
       <a href="index.html" class="btn-home">Terug naar Total Travel <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
     </div>
 
-    <div class="form-nav" id="formNav">
-      <button class="btn-prev" id="btnPrev" onclick="prevStep()" style="visibility:hidden">&#8592; Vorige</button>
-      <span class="step-count" id="stepCount">Stap 1 van 4</span>
-      <button class="btn-next" id="btnNext" onclick="nextStep()">Volgende <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+    <div class="fnav" id="formNav">
+      <button class="btn-prev" id="btnPrev">&#8592; Vorige</button>
+      <span class="stepcnt" id="stepcnt">Stap 1 van 4</span>
+      <button class="btn-next" id="btnNext">Volgende <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
     </div>
   </div>
 
-  <p class="form-footer-note" style="margin-top:28px">
-    Uw aanvraag is volledig vrijblijvend. Total Travel is gecertificeerd door ANVR, SGR en IATA.<br>
-    Vragen? Bel <a href="tel:+31786817579">+31 78 681 75 79</a> of mail <a href="/cdn-cgi/l/email-protection#731a1d151c33071c07121f07011205161f5d1d1f"><span class="__cf_email__" data-cfemail="365f58505976425942575a42445740535a18585a">[email&#160;protected]</span></a>
-  </p>
-  <div class="cert-row">
-    <span class="cert-tag">ANVR</span><span class="cert-tag">SGR</span><span class="cert-tag">SGRZ</span><span class="cert-tag">IATA</span><span class="cert-tag">Calamiteitenfonds</span>
-  </div>
+  <p class="footnote">Uw aanvraag is volledig vrijblijvend. Total Travel is gecertificeerd door ANVR, SGR en IATA.<br>Vragen? Bel <a href="tel:+31786817579">+31 78 681 75 79</a> of mail <a href="mailto:info@totaltravel.nl">info@totaltravel.nl</a></p>
+  <div class="certs"><span class="ctag">ANVR</span><span class="ctag">SGR</span><span class="ctag">SGRZ</span><span class="ctag">IATA</span><span class="ctag">Calamiteitenfonds</span></div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-var currentStep = 1;
+<script>
+(function() {
+  'use strict';
 
-/* ── Radio buttons ── */
-document.querySelectorAll('.radio-group').forEach(function(grp) {
-  grp.querySelectorAll('.radio-option').forEach(function(opt) {
-    opt.addEventListener('click', function(e) {
-      e.preventDefault();
-      grp.querySelectorAll('.radio-option').forEach(function(o){ o.classList.remove('selected'); });
-      this.classList.add('selected');
-      var inp = this.querySelector('input[type="radio"]');
-      if (inp) {
-        inp.checked = true;
-        if (inp.name === 'reisType') {
-          document.getElementById('incentiveVeld').style.display =
-            inp.value === 'Incentive / groepsreis' ? 'block' : 'none';
+  var step = 1;
+  var privChecked = false;
+
+  /* ── Helpers ── */
+  function el(id) { return document.getElementById(id); }
+  function val(id) { var e = el(id); return e ? e.value.trim() : ''; }
+  function show(id) { el(id).classList.add('show'); }
+  function hide(id) { el(id).classList.remove('show'); }
+  function showEl(id) { el(id).style.display = 'block'; }
+  function hideEl(id) { el(id).style.display = 'none'; }
+
+  /* ── Radio groups ── */
+  // Store selected values per group
+  var radioVals = {};
+
+  document.querySelectorAll('.rgroup').forEach(function(grp) {
+    grp.querySelectorAll('.rtile').forEach(function(tile) {
+      tile.addEventListener('click', function() {
+        var groupId = grp.id;
+        // deselect all in group
+        grp.querySelectorAll('.rtile').forEach(function(t) { t.classList.remove('on'); });
+        // select clicked
+        tile.classList.add('on');
+        radioVals[groupId] = tile.getAttribute('data-val');
+
+        // conditional logic
+        if (groupId === 'rg-reisType') {
+          if (radioVals[groupId] === 'Incentive / groepsreis') {
+            showEl('incentiveVeld');
+          } else {
+            hideEl('incentiveVeld');
+          }
+          // clear error
+          el('e-reisType').classList.remove('show');
         }
-      }
+      });
     });
   });
-});
 
-/* ── Checkboxes ── */
-document.querySelectorAll('.check-option').forEach(function(opt) {
-  opt.addEventListener('click', function(e) {
-    e.preventDefault();
-    var inp = this.querySelector('input[type="checkbox"]');
-    if (!inp) return;
-    inp.checked = !inp.checked;
-    this.classList.toggle('selected', inp.checked);
+  function getRadio(groupId) {
+    return radioVals[groupId] || '';
+  }
+
+  /* ── Checkbox groups ── */
+  document.querySelectorAll('.ctile').forEach(function(tile) {
+    tile.addEventListener('click', function() {
+      tile.classList.toggle('on');
+    });
   });
-});
 
-/* ── Privacy toggle ── */
-function togglePrivacy(e) {
-  if (e && e.target && e.target.tagName === 'A') return;
-  var inp = document.getElementById('privacyAkkoord');
-  var row = document.getElementById('privacyRow');
-  inp.checked = !inp.checked;
-  row.classList.toggle('priv-checked', inp.checked);
-  if (inp.checked) document.getElementById('err-privacy').classList.remove('visible');
-}
+  function getChecks(groupId) {
+    var vals = [];
+    document.querySelectorAll('#' + groupId + ' .ctile.on').forEach(function(t) {
+      vals.push(t.getAttribute('data-val'));
+    });
+    return vals.join(', ');
+  }
 
-/* ── Budget slider ── */
-var slider = document.getElementById('budgetSlider');
-var budgetDisplay = document.getElementById('budgetDisplay');
-function formatBudget(v) {
-  v = parseInt(v);
-  if (v >= 15000) return '€\u00A015.000+ p.p.';
-  return '€\u00A0' + v.toLocaleString('nl-NL') + ' p.p.';
-}
-slider.addEventListener('input', function() { budgetDisplay.textContent = formatBudget(this.value); });
-
-/* ── Validation ── */
-function validateStep(step) {
-  var ok = true;
-  function setErr(id, bad) {
-    var err = document.getElementById('err-'+id);
-    var inp = document.getElementById(id);
-    if (err) err.classList.toggle('visible', bad);
-    if (inp) inp.classList.toggle('error', bad);
-    if (bad) ok = false;
-  }
-  if (step === 1) {
-    var hasRT = !!document.querySelector('input[name="reisType"]:checked');
-    document.getElementById('err-reisType').classList.toggle('visible', !hasRT);
-    if (!hasRT) ok = false;
-    setErr('bestemming',   !document.getElementById('bestemming').value.trim());
-    setErr('vertrekdatum', !document.getElementById('vertrekdatum').value);
-    setErr('retourdatum',  !document.getElementById('retourdatum').value);
-  }
-  if (step === 2) {
-    setErr('aantalVolwassenen', !document.getElementById('aantalVolwassenen').value);
-  }
-  if (step === 4) {
-    setErr('voornaam',  !document.getElementById('voornaam').value.trim());
-    setErr('achternaam', !document.getElementById('achternaam').value.trim());
-    var em = document.getElementById('email').value.trim();
-    setErr('email', !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em));
-    setErr('telefoon', !document.getElementById('telefoon').value.trim());
-    var priv = document.getElementById('privacyAkkoord').checked;
-    document.getElementById('err-privacy').classList.toggle('visible', !priv);
-    if (!priv) ok = false;
-  }
-  return ok;
-}
-
-/* ── Navigation ── */
-function goToStep(n) {
-  document.querySelectorAll('.form-step').forEach(function(s){ s.classList.remove('active'); });
-  document.getElementById('step'+n).classList.add('active');
-  document.querySelectorAll('.progress-step').forEach(function(s) {
-    var sn = parseInt(s.getAttribute('data-step'));
-    s.classList.remove('active','done');
-    if (sn === n) s.classList.add('active');
-    else if (sn < n) s.classList.add('done');
+  /* ── Privacy ── */
+  el('privRow').addEventListener('click', function(e) {
+    if (e.target === el('privLink') || (e.target.tagName === 'A')) return;
+    privChecked = !privChecked;
+    el('privRow').classList.toggle('on', privChecked);
+    if (privChecked) el('e-privacy').classList.remove('show');
   });
-  document.getElementById('btnPrev').style.visibility = n===1 ? 'hidden' : 'visible';
-  document.getElementById('stepCount').textContent = 'Stap '+n+' van 4';
-  var btn = document.getElementById('btnNext');
-  btn.innerHTML = n===4
-    ? 'Aanvraag versturen <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2L15 22 11 13 2 9z"/></svg>'
-    : 'Volgende <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
-  currentStep = n;
-  window.scrollTo({top:0, behavior:'smooth'});
-}
-function nextStep() { if (!validateStep(currentStep)) return; if (currentStep<4) goToStep(currentStep+1); else submitForm(); }
-function prevStep()  { if (currentStep>1) goToStep(currentStep-1); }
+  el('privLink').addEventListener('click', function(e) { e.preventDefault(); });
 
-/* ── Data collection ── */
-function collectData() {
-  function v(id){ var e=document.getElementById(id); return e?e.value.trim():''; }
-  function radio(nm){ var c=document.querySelector('input[name="'+nm+'"]:checked'); return c?c.value:''; }
-  function checks(nm){ return Array.from(document.querySelectorAll('input[name="'+nm+'"]:checked')).map(function(c){return c.value;}).join(', '); }
-  return {
-    reisType:radio('reisType'), bestemming:v('bestemming'),
-    vertrekdatum:v('vertrekdatum'), retourdatum:v('retourdatum'),
-    reisFlexibel:radio('reisFlexibel'), vertrekplaats:v('vertrekplaats'), vluchtstijl:v('vluchtstijl'),
-    aantalVolwassenen:v('aantalVolwassenen'), aantalKinderen:v('aantalKinderen'), leeftijdenKinderen:v('leeftijdenKinderen'),
-    gezelschap:radio('gezelschap'), bedrijfsnaam:v('bedrijfsnaam'),
-    budgetPerPersoon:formatBudget(slider.value), totaalbudget:v('totaalbudget'),
-    accommodatie:v('accommodatie'), kamertype:v('kamertype'), arrangement:v('arrangement'), vervoer:v('vervoer'),
-    activiteiten:checks('activiteiten'), bijzondereWensen:v('bijzondereWensen'),
-    vorigeReizen:v('vorigeReizen'), opmerkingen:v('opmerkingen'),
-    voornaam:v('voornaam'), achternaam:v('achternaam'), email:v('email'), telefoon:v('telefoon'),
-    contactVoorkeur:v('contactVoorkeur'), woonplaats:v('woonplaats'), gevonden:v('gevonden')
-  };
-}
+  /* ── Budget slider ── */
+  function fmtBudget(v) {
+    v = parseInt(v, 10);
+    return v >= 15000 ? '\u20AC\u00A015.000+ p.p.' : '\u20AC\u00A0' + v.toLocaleString('nl-NL') + ' p.p.';
+  }
+  el('budgetSlider').addEventListener('input', function() {
+    el('budgetVal').textContent = fmtBudget(this.value);
+  });
 
-function buildEmailBody(d) {
-  var dt = new Date().toLocaleDateString('nl-NL',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  return ['NIEUWE REISAANVRAAG — TOTAL TRAVEL','Ingediend op: '+dt,'',
-    '── REISDETAILS ─────────────────────────────',
-    'Type reis:       '+(d.reisType||'—'),'Bestemming:      '+(d.bestemming||'—'),
-    'Vertrekdatum:    '+(d.vertrekdatum||'—'),'Retourdatum:     '+(d.retourdatum||'—'),
-    'Flexibiliteit:   '+(d.reisFlexibel||'—'),'Vertrekplaats:   '+(d.vertrekplaats||'—'),'Vluchtvoorkeur:  '+(d.vluchtstijl||'—'),'',
-    '── REISGEZELSCHAP ──────────────────────────',
-    'Volwassenen:     '+(d.aantalVolwassenen||'—'),'Kinderen:        '+(d.aantalKinderen||'0'),
-    'Leeftijden:      '+(d.leeftijdenKinderen||'—'),'Gezelschap:      '+(d.gezelschap||'—'),'Bedrijf:         '+(d.bedrijfsnaam||'—'),'',
-    '── BUDGET ──────────────────────────────────',
-    'Budget p.p.:     '+(d.budgetPerPersoon||'—'),'Totaalbudget:    '+(d.totaalbudget||'—'),'',
-    '── WENSEN & VOORKEUREN ─────────────────────',
-    'Accommodatie:    '+(d.accommodatie||'—'),'Kamertype:       '+(d.kamertype||'—'),
-    'Arrangement:     '+(d.arrangement||'—'),'Vervoer:         '+(d.vervoer||'—'),
-    'Activiteiten:    '+(d.activiteiten||'—'),'Bijz. wensen:    '+(d.bijzondereWensen||'—'),'',
-    'Vorige reizen:',(d.vorigeReizen||'—'),'','Opmerkingen:',(d.opmerkingen||'—'),'',
-    '── CONTACTGEGEVENS ─────────────────────────',
-    'Naam:            '+d.voornaam+' '+d.achternaam,'E-mail:          '+d.email,'Telefoon:        '+d.telefoon,
-    'Contactvork.:    '+(d.contactVoorkeur||'—'),'Woonplaats:      '+(d.woonplaats||'—'),'Gevonden via:    '+(d.gevonden||'—'),'',
-    '────────────────────────────────────────────','Verzonden via totaltravel.nl aanvraagformulier'
-  ].join('\n');
-}
+  /* ── Navigation buttons ── */
+  el('btnPrev').addEventListener('click', function() {
+    if (step > 1) setStep(step - 1);
+  });
+  el('btnNext').addEventListener('click', function() {
+    if (!validate(step)) return;
+    if (step < 4) setStep(step + 1);
+    else submitForm();
+  });
 
-function buildConfirmationBody(d) {
-  return ['Beste '+d.voornaam+',','',
-    'Hartelijk dank voor uw reisaanvraag bij Total Travel!','',
-    'Wij hebben uw aanvraag in goede orde ontvangen en nemen binnen 48 uur persoonlijk contact met u op.','',
-    '── Samenvatting van uw aanvraag ────────────','',
-    'Type reis:       '+(d.reisType||'—'),'Bestemming:      '+(d.bestemming||'—'),
-    'Vertrekdatum:    '+(d.vertrekdatum||'—'),'Retourdatum:     '+(d.retourdatum||'—'),
-    'Reisgezelschap:  '+(d.aantalVolwassenen||'—')+' volwassene(n)'+(d.aantalKinderen&&d.aantalKinderen!=='0'?', '+d.aantalKinderen+' kind(eren)':''),
-    'Budget p.p.:     '+(d.budgetPerPersoon||'—'),'',
-    '────────────────────────────────────────────','',
-    'Vragen? Neem gerust contact op:','',
-    '  Telefoon:  +31 78 681 75 79','  E-mail:    info@totaltravel.nl','  Website:   www.totaltravel.nl','',
-    'Met vriendelijke groet,','','Het team van Total Travel',
-    'Schrijversstraat 10 | 3363 EB Hendrik-Ido-Ambacht','',
-    'ANVR · SGR · SGRZ · IATA · Calamiteitenfonds'
-  ].join('\n');
-}
+  /* ── Validation ── */
+  function validate(s) {
+    var ok = true;
 
-function submitForm() {
-  if (!validateStep(4)) return;
-  var d = collectData();
-  document.getElementById('loadingOverlay').classList.add('visible');
-  setTimeout(function() {
-    document.getElementById('loadingOverlay').classList.remove('visible');
-    var s1 = encodeURIComponent('Nieuwe reisaanvraag: '+d.bestemming+' — '+d.voornaam+' '+d.achternaam);
-    window.location.href = 'mailto:info@totaltravel.nl?subject='+s1+'&body='+encodeURIComponent(buildEmailBody(d));
+    function chk(errId, inputId, bad) {
+      el(errId).classList.toggle('show', bad);
+      if (inputId) el(inputId).classList.toggle('err', bad);
+      if (bad) ok = false;
+    }
+
+    if (s === 1) {
+      var noType = !getRadio('rg-reisType');
+      el('e-reisType').classList.toggle('show', noType);
+      if (noType) ok = false;
+      chk('e-bestemming',   'bestemming',   !val('bestemming'));
+      chk('e-vertrekdatum', 'vertrekdatum', !val('vertrekdatum'));
+      chk('e-retourdatum',  'retourdatum',  !val('retourdatum'));
+    }
+    if (s === 2) {
+      chk('e-aantalVolwassenen', 'aantalVolwassenen', !val('aantalVolwassenen'));
+    }
+    if (s === 4) {
+      chk('e-voornaam',  'voornaam',  !val('voornaam'));
+      chk('e-achternaam','achternaam',!val('achternaam'));
+      var em = val('email');
+      chk('e-email', 'email', !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em));
+      chk('e-telefoon','telefoon',!val('telefoon'));
+      el('e-privacy').classList.toggle('show', !privChecked);
+      if (!privChecked) ok = false;
+    }
+    return ok;
+  }
+
+  /* ── Step navigation ── */
+  function setStep(n) {
+    document.querySelectorAll('.f-step').forEach(function(s) { s.classList.remove('active'); });
+    el('step' + n).classList.add('active');
+
+    document.querySelectorAll('.prog-step').forEach(function(s) {
+      var sn = parseInt(s.getAttribute('data-step'), 10);
+      s.classList.remove('active', 'done');
+      if (sn === n) s.classList.add('active');
+      else if (sn < n) s.classList.add('done');
+    });
+
+    el('btnPrev').style.visibility = n === 1 ? 'hidden' : 'visible';
+    el('stepcnt').textContent = 'Stap ' + n + ' van 4';
+    el('btnNext').innerHTML = n === 4
+      ? 'Aanvraag versturen <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2L15 22 11 13 2 9z"/></svg>'
+      : 'Volgende <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+    step = n;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* ── Collect & submit ── */
+  function collectData() {
+    return {
+      reisType: getRadio('rg-reisType'),
+      bestemming: val('bestemming'),
+      vertrekdatum: val('vertrekdatum'),
+      retourdatum: val('retourdatum'),
+      reisFlexibel: getRadio('rg-flex'),
+      vertrekplaats: val('vertrekplaats'),
+      vluchtstijl: val('vluchtstijl'),
+      aantalVolwassenen: val('aantalVolwassenen'),
+      aantalKinderen: val('aantalKinderen'),
+      leeftijdenKinderen: val('leeftijdenKinderen'),
+      gezelschap: getRadio('rg-gezelschap'),
+      bedrijfsnaam: val('bedrijfsnaam'),
+      budgetPerPersoon: fmtBudget(el('budgetSlider').value),
+      totaalbudget: val('totaalbudget'),
+      accommodatie: val('accommodatie'),
+      kamertype: val('kamertype'),
+      arrangement: val('arrangement'),
+      vervoer: val('vervoer'),
+      activiteiten: getChecks('cg-activiteiten'),
+      bijzondereWensen: val('bijzondereWensen'),
+      vorigeReizen: val('vorigeReizen'),
+      opmerkingen: val('opmerkingen'),
+      voornaam: val('voornaam'),
+      achternaam: val('achternaam'),
+      email: val('email'),
+      telefoon: val('telefoon'),
+      contactVoorkeur: val('contactVoorkeur'),
+      woonplaats: val('woonplaats'),
+      gevonden: val('gevonden')
+    };
+  }
+
+  function buildBody(d) {
+    var dt = new Date().toLocaleDateString('nl-NL', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+    return [
+      'NIEUWE REISAANVRAAG \u2014 TOTAL TRAVEL', 'Ingediend op: ' + dt, '',
+      '\u2500\u2500 REISDETAILS', 'Type reis: ' + (d.reisType||'\u2014'), 'Bestemming: ' + (d.bestemming||'\u2014'),
+      'Vertrekdatum: ' + (d.vertrekdatum||'\u2014'), 'Retourdatum: ' + (d.retourdatum||'\u2014'),
+      'Flexibiliteit: ' + (d.reisFlexibel||'\u2014'), 'Vertrekplaats: ' + (d.vertrekplaats||'\u2014'), 'Vluchtvoorkeur: ' + (d.vluchtstijl||'\u2014'), '',
+      '\u2500\u2500 REISGEZELSCHAP', 'Volwassenen: ' + (d.aantalVolwassenen||'\u2014'), 'Kinderen: ' + (d.aantalKinderen||'0'),
+      'Leeftijden: ' + (d.leeftijdenKinderen||'\u2014'), 'Gezelschap: ' + (d.gezelschap||'\u2014'), 'Bedrijf: ' + (d.bedrijfsnaam||'\u2014'), '',
+      '\u2500\u2500 BUDGET', 'Budget p.p.: ' + (d.budgetPerPersoon||'\u2014'), 'Totaalbudget: ' + (d.totaalbudget||'\u2014'), '',
+      '\u2500\u2500 WENSEN', 'Accommodatie: ' + (d.accommodatie||'\u2014'), 'Kamertype: ' + (d.kamertype||'\u2014'),
+      'Arrangement: ' + (d.arrangement||'\u2014'), 'Vervoer: ' + (d.vervoer||'\u2014'), 'Activiteiten: ' + (d.activiteiten||'\u2014'),
+      'Bijz. wensen: ' + (d.bijzondereWensen||'\u2014'), '', 'Vorige reizen:', d.vorigeReizen||'\u2014', '', 'Opmerkingen:', d.opmerkingen||'\u2014', '',
+      '\u2500\u2500 CONTACTGEGEVENS', 'Naam: ' + d.voornaam + ' ' + d.achternaam, 'E-mail: ' + d.email,
+      'Telefoon: ' + d.telefoon, 'Contactvoorkeur: ' + (d.contactVoorkeur||'\u2014'),
+      'Woonplaats: ' + (d.woonplaats||'\u2014'), 'Gevonden via: ' + (d.gevonden||'\u2014'), '',
+      'Verzonden via totaltravel.nl aanvraagformulier'
+    ].join('\n');
+  }
+
+  function buildConfirm(d) {
+    return [
+      'Beste ' + d.voornaam + ',', '',
+      'Hartelijk dank voor uw reisaanvraag bij Total Travel!', '',
+      'Wij nemen binnen 48 uur persoonlijk contact met u op.', '',
+      'Samenvatting:', 'Type reis: ' + (d.reisType||'\u2014'), 'Bestemming: ' + (d.bestemming||'\u2014'),
+      'Vertrekdatum: ' + (d.vertrekdatum||'\u2014'), 'Retourdatum: ' + (d.retourdatum||'\u2014'),
+      'Budget p.p.: ' + (d.budgetPerPersoon||'\u2014'), '',
+      'Met vriendelijke groet, Total Travel', 'T: +31 78 681 75 79 | info@totaltravel.nl'
+    ].join('\n');
+  }
+
+  function submitForm() {
+    var d = collectData();
+    el('overlay').classList.add('show');
     setTimeout(function() {
-      window.open('mailto:'+d.email+'?subject='+encodeURIComponent('Bevestiging reisaanvraag — Total Travel')+'&body='+encodeURIComponent(buildConfirmationBody(d)),'_blank');
-    }, 700);
-    showSuccess(d);
-  }, 1100);
-}
+      el('overlay').classList.remove('show');
+      var s = encodeURIComponent('Reisaanvraag: ' + d.bestemming + ' \u2014 ' + d.voornaam + ' ' + d.achternaam);
+      window.location.href = 'mailto:info@totaltravel.nl?subject=' + s + '&body=' + encodeURIComponent(buildBody(d));
+      setTimeout(function() {
+        window.open('mailto:' + d.email + '?subject=' + encodeURIComponent('Bevestiging reisaanvraag \u2014 Total Travel') + '&body=' + encodeURIComponent(buildConfirm(d)), '_blank');
+      }, 600);
+      showSuccess(d);
+    }, 1000);
+  }
 
-function showSuccess(d) {
-  document.querySelectorAll('.form-step').forEach(function(s){ s.classList.remove('active'); });
-  document.getElementById('formNav').style.display = 'none';
-  document.getElementById('progressSteps').style.opacity = '0.35';
-  function row(l,val){ return val?'<div class="success-detail-row"><span>'+l+'</span><span>'+val+'</span></div>':''; }
-  document.getElementById('successDetails').innerHTML = [
-    row('Naam', d.voornaam+' '+d.achternaam), row('Bestemming', d.bestemming),
-    row('Type reis', d.reisType), row('Vertrekdatum', d.vertrekdatum),
-    row('Reisgezelschap', d.aantalVolwassenen+(d.aantalKinderen&&d.aantalKinderen!=='0'?' + '+d.aantalKinde
+  function showSuccess(d) {
+    document.querySelectorAll('.f-step').forEach(function(s) { s.classList.remove('active'); });
+    el('formNav').style.display = 'none';
+    el('progSteps').style.opacity = '0.35';
+
+    function row(l, v) { return v ? '<div class="srow"><span>' + l + '</span><span>' + v + '</span></div>' : ''; }
+    el('sdetails').innerHTML = [
+      row('Naam', d.voornaam + ' ' + d.achternaam),
+      row('Bestemming', d.bestemming),
+      row('Type reis', d.reisType),
+      row('Vertrekdatum', d.vertrekdatum),
+      row('Reisgezelschap', d.aantalVolwassenen + ' persoon/personen'),
+      row('Budget p.p.', d.budgetPerPersoon)
+    ].join('');
+
+    el('successWrap').classList.add('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* Init */
+  setStep(1);
+
+})();
+</script>
+</body>
+</html>
