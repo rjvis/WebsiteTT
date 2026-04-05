@@ -13,121 +13,179 @@
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<div class="mobile-nav" id="mobileNav">
-  <div class="mob-header">
-    <div class="mob-logo">TOTAL <span class="dot">&middot;</span> TRAVEL</div>
-    <button class="mob-close" onclick="toggleNav()">&#10005;</button>
+<style>
+#mobileNav{
+  display:none;position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:9999;background:#2D1F14;overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  font-family:'DM Sans',sans-serif;
+}
+#mobileNav.open{display:block}
+#mobileNav .mn-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 24px;
+  border-bottom:1px solid rgba(196,168,130,.18);
+  position:sticky;top:0;background:#2D1F14;z-index:1;
+}
+#mobileNav .mn-wordmark{
+  font-size:13px;font-weight:500;letter-spacing:.2em;
+  text-transform:uppercase;color:#F5F0E8;
+}
+#mobileNav .mn-wordmark span{color:#A0522D}
+#mobileNav .mn-close{
+  background:none;border:none;cursor:pointer;
+  font-size:24px;color:#C4A882;padding:4px 8px;line-height:1;
+}
+#mobileNav .mn-item{
+  border-bottom:1px solid rgba(196,168,130,.1);
+}
+#mobileNav .mn-btn{
+  display:flex;align-items:center;justify-content:space-between;
+  width:100%;padding:17px 24px;
+  background:none;border:none;cursor:pointer;text-align:left;
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:21px;font-weight:400;color:#F5F0E8;
+  -webkit-tap-highlight-color:transparent;
+}
+#mobileNav .mn-btn .mn-plus{
+  font-family:'DM Sans',sans-serif;
+  font-size:22px;font-weight:300;color:#A0522D;
+  flex-shrink:0;margin-left:12px;
+}
+#mobileNav .mn-sub{display:none;background:rgba(0,0,0,.12)}
+#mobileNav .mn-sub.open{display:block}
+#mobileNav .mn-region-btn{
+  display:flex;align-items:center;justify-content:space-between;
+  width:100%;padding:12px 24px 12px 36px;
+  background:none;border:none;cursor:pointer;text-align:left;
+  font-family:'DM Sans',sans-serif;
+  font-size:12px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:#C4A882;
+  border-top:1px solid rgba(196,168,130,.07);
+  -webkit-tap-highlight-color:transparent;
+}
+#mobileNav .mn-region-btn .mn-plus{
+  font-size:16px;color:#B09068;margin-left:10px;
+}
+#mobileNav .mn-region-sub{display:none;padding:4px 0 8px}
+#mobileNav .mn-region-sub.open{display:block}
+#mobileNav .mn-region-sub a{
+  display:block;padding:9px 24px 9px 56px;
+  font-family:'Playfair Display',Georgia,serif;
+  font-style:italic;font-size:16px;
+  color:rgba(245,240,232,.5);
+  text-decoration:none;
+  -webkit-tap-highlight-color:transparent;
+}
+#mobileNav .mn-thema-list a{
+  display:block;padding:11px 24px 11px 36px;
+  font-family:'Playfair Display',Georgia,serif;
+  font-style:italic;font-size:16px;
+  color:rgba(245,240,232,.5);
+  text-decoration:none;
+  border-top:1px solid rgba(196,168,130,.07);
+  -webkit-tap-highlight-color:transparent;
+}
+#mobileNav .mn-direct{
+  display:block;padding:17px 24px;
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:21px;font-weight:400;color:#F5F0E8;
+  text-decoration:none;
+  border-bottom:1px solid rgba(196,168,130,.1);
+  -webkit-tap-highlight-color:transparent;
+}
+#mobileNav .mn-cta{
+  display:block;margin:24px;padding:16px;
+  background:#A0522D;color:#FAF8F4;
+  font-family:'DM Sans',sans-serif;
+  font-size:11px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;text-align:center;
+  text-decoration:none;
+}
+</style>
+
+<div id="mobileNav">
+  <div class="mn-head">
+    <div class="mn-wordmark">TOTAL <span>&middot;</span> TRAVEL</div>
+    <button class="mn-close" onclick="toggleNav()">&#10005;</button>
   </div>
 
-  <nav class="mob-links">
-
-    <!-- Bestemmingen -->
-    <div class="mob-item">
-      <button class="mob-trigger" onclick="mobToggle(this)">
-        <span>Bestemmingen</span><span class="mob-chevron">+</span>
-      </button>
-      <div class="mob-sub">
-        <div class="mob-sub-item">
-          <button class="mob-trigger mob-trigger--sub" onclick="mobToggle(this)">
-            <span>Afrika</span><span class="mob-chevron">+</span>
-          </button>
-          <div class="mob-sub">
-            <a href="marokko.html" onclick="toggleNav()">Marokko</a>
-            <a href="#" onclick="toggleNav()">Namibi&euml;</a>
-            <a href="#" onclick="toggleNav()">Zanzibar</a>
-            <a href="#" onclick="toggleNav()">Zuid-Afrika</a>
-          </div>
-        </div>
-        <div class="mob-sub-item">
-          <button class="mob-trigger mob-trigger--sub" onclick="mobToggle(this)">
-            <span>Azi&euml;</span><span class="mob-chevron">+</span>
-          </button>
-          <div class="mob-sub">
-            <a href="#" onclick="toggleNav()">Japan</a>
-            <a href="#" onclick="toggleNav()">Maleisi&euml;</a>
-            <a href="#" onclick="toggleNav()">Singapore</a>
-            <a href="#" onclick="toggleNav()">Thailand</a>
-            <a href="#" onclick="toggleNav()">Vietnam</a>
-          </div>
-        </div>
-        <div class="mob-sub-item">
-          <button class="mob-trigger mob-trigger--sub" onclick="mobToggle(this)">
-            <span>Europa</span><span class="mob-chevron">+</span>
-          </button>
-          <div class="mob-sub">
-            <a href="#" onclick="toggleNav()">Denemarken</a>
-            <a href="#" onclick="toggleNav()">Duitsland</a>
-            <a href="#" onclick="toggleNav()">Finland</a>
-            <a href="#" onclick="toggleNav()">Frankrijk</a>
-            <a href="#" onclick="toggleNav()">Griekenland</a>
-            <a href="#" onclick="toggleNav()">Itali&euml;</a>
-            <a href="#" onclick="toggleNav()">Noorwegen</a>
-            <a href="#" onclick="toggleNav()">Oostenrijk</a>
-            <a href="#" onclick="toggleNav()">Portugal</a>
-            <a href="#" onclick="toggleNav()">Spanje</a>
-            <a href="#" onclick="toggleNav()">Zweden</a>
-            <a href="#" onclick="toggleNav()">Zwitserland</a>
-          </div>
-        </div>
-        <div class="mob-sub-item">
-          <button class="mob-trigger mob-trigger--sub" onclick="mobToggle(this)">
-            <span>Midden-Oosten</span><span class="mob-chevron">+</span>
-          </button>
-          <div class="mob-sub">
-            <a href="#" onclick="toggleNav()">Bahrein</a>
-            <a href="#" onclick="toggleNav()">Jordani&euml;</a>
-            <a href="#" onclick="toggleNav()">Oman</a>
-            <a href="#" onclick="toggleNav()">Qatar</a>
-            <a href="#" onclick="toggleNav()">Saudi-Arabi&euml;</a>
-            <a href="#" onclick="toggleNav()">Ver. Arabische Emiraten</a>
-          </div>
-        </div>
-        <div class="mob-sub-item">
-          <button class="mob-trigger mob-trigger--sub" onclick="mobToggle(this)">
-            <span>Noord-Amerika</span><span class="mob-chevron">+</span>
-          </button>
-          <div class="mob-sub">
-            <a href="#" onclick="toggleNav()">Canada</a>
-            <a href="#" onclick="toggleNav()">Verenigde Staten</a>
-          </div>
-        </div>
-        <div class="mob-sub-item">
-          <button class="mob-trigger mob-trigger--sub" onclick="mobToggle(this)">
-            <span>Oceani&euml;</span><span class="mob-chevron">+</span>
-          </button>
-          <div class="mob-sub">
-            <a href="#" onclick="toggleNav()">Australi&euml;</a>
-            <a href="#" onclick="toggleNav()">Nieuw-Zeeland</a>
-          </div>
-        </div>
-        <div class="mob-sub-item">
-          <button class="mob-trigger mob-trigger--sub" onclick="mobToggle(this)">
-            <span>Zuid-Amerika</span><span class="mob-chevron">+</span>
-          </button>
-          <div class="mob-sub">
-            <a href="#" onclick="toggleNav()">Argentini&euml;</a>
-            <a href="#" onclick="toggleNav()">Brazili&euml;</a>
-            <a href="#" onclick="toggleNav()">Chili</a>
-            <a href="#" onclick="toggleNav()">Ecuador</a>
-          </div>
-        </div>
-        <div class="mob-sub-item">
-          <button class="mob-trigger mob-trigger--sub" onclick="mobToggle(this)">
-            <span>Antarctica</span><span class="mob-chevron">+</span>
-          </button>
-          <div class="mob-sub">
-            <a href="#" onclick="toggleNav()">Antarctica</a>
-          </div>
-        </div>
+  <!-- Bestemmingen -->
+  <div class="mn-item">
+    <button class="mn-btn" onclick="mnToggle(this)">
+      Bestemmingen <span class="mn-plus">+</span>
+    </button>
+    <div class="mn-sub">
+      <button class="mn-region-btn" onclick="mnRegion(this)">Afrika <span class="mn-plus">+</span></button>
+      <div class="mn-region-sub">
+        <a href="marokko.html" onclick="toggleNav()">Marokko</a>
+        <a href="#" onclick="toggleNav()">Namibi&euml;</a>
+        <a href="#" onclick="toggleNav()">Zanzibar</a>
+        <a href="#" onclick="toggleNav()">Zuid-Afrika</a>
+      </div>
+      <button class="mn-region-btn" onclick="mnRegion(this)">Azi&euml; <span class="mn-plus">+</span></button>
+      <div class="mn-region-sub">
+        <a href="#" onclick="toggleNav()">Japan</a>
+        <a href="#" onclick="toggleNav()">Maleisi&euml;</a>
+        <a href="#" onclick="toggleNav()">Singapore</a>
+        <a href="#" onclick="toggleNav()">Thailand</a>
+        <a href="#" onclick="toggleNav()">Vietnam</a>
+      </div>
+      <button class="mn-region-btn" onclick="mnRegion(this)">Europa <span class="mn-plus">+</span></button>
+      <div class="mn-region-sub">
+        <a href="#" onclick="toggleNav()">Denemarken</a>
+        <a href="#" onclick="toggleNav()">Duitsland</a>
+        <a href="#" onclick="toggleNav()">Finland</a>
+        <a href="#" onclick="toggleNav()">Frankrijk</a>
+        <a href="#" onclick="toggleNav()">Griekenland</a>
+        <a href="#" onclick="toggleNav()">Itali&euml;</a>
+        <a href="#" onclick="toggleNav()">Noorwegen</a>
+        <a href="#" onclick="toggleNav()">Oostenrijk</a>
+        <a href="#" onclick="toggleNav()">Portugal</a>
+        <a href="#" onclick="toggleNav()">Spanje</a>
+        <a href="#" onclick="toggleNav()">Zweden</a>
+        <a href="#" onclick="toggleNav()">Zwitserland</a>
+      </div>
+      <button class="mn-region-btn" onclick="mnRegion(this)">Midden-Oosten <span class="mn-plus">+</span></button>
+      <div class="mn-region-sub">
+        <a href="#" onclick="toggleNav()">Bahrein</a>
+        <a href="#" onclick="toggleNav()">Jordani&euml;</a>
+        <a href="#" onclick="toggleNav()">Oman</a>
+        <a href="#" onclick="toggleNav()">Qatar</a>
+        <a href="#" onclick="toggleNav()">Saudi-Arabi&euml;</a>
+        <a href="#" onclick="toggleNav()">Ver. Arabische Emiraten</a>
+      </div>
+      <button class="mn-region-btn" onclick="mnRegion(this)">Noord-Amerika <span class="mn-plus">+</span></button>
+      <div class="mn-region-sub">
+        <a href="#" onclick="toggleNav()">Canada</a>
+        <a href="#" onclick="toggleNav()">Verenigde Staten</a>
+      </div>
+      <button class="mn-region-btn" onclick="mnRegion(this)">Oceani&euml; <span class="mn-plus">+</span></button>
+      <div class="mn-region-sub">
+        <a href="#" onclick="toggleNav()">Australi&euml;</a>
+        <a href="#" onclick="toggleNav()">Nieuw-Zeeland</a>
+      </div>
+      <button class="mn-region-btn" onclick="mnRegion(this)">Zuid-Amerika <span class="mn-plus">+</span></button>
+      <div class="mn-region-sub">
+        <a href="#" onclick="toggleNav()">Argentini&euml;</a>
+        <a href="#" onclick="toggleNav()">Brazili&euml;</a>
+        <a href="#" onclick="toggleNav()">Chili</a>
+        <a href="#" onclick="toggleNav()">Ecuador</a>
+      </div>
+      <button class="mn-region-btn" onclick="mnRegion(this)">Antarctica <span class="mn-plus">+</span></button>
+      <div class="mn-region-sub">
+        <a href="#" onclick="toggleNav()">Antarctica</a>
       </div>
     </div>
+  </div>
 
-    <!-- Thema's -->
-    <div class="mob-item">
-      <button class="mob-trigger" onclick="mobToggle(this)">
-        <span>Thema's</span><span class="mob-chevron">+</span>
-      </button>
-      <div class="mob-sub">
+  <!-- Thema's -->
+  <div class="mn-item">
+    <button class="mn-btn" onclick="mnToggle(this)">
+      Thema's <span class="mn-plus">+</span>
+    </button>
+    <div class="mn-sub">
+      <div class="mn-thema-list">
         <a href="#" onclick="toggleNav()">Cruises</a>
         <a href="#" onclick="toggleNav()">Formule 1 reizen</a>
         <a href="#" onclick="toggleNav()">Golfreizen</a>
@@ -137,23 +195,14 @@
         <a href="#" onclick="toggleNav()">Voetbalreizen</a>
       </div>
     </div>
-
-    <!-- Directe links -->
-    <div class="mob-item">
-      <a class="mob-direct" href="#inspiratie" onclick="toggleNav()">Inspiratie</a>
-    </div>
-    <div class="mob-item">
-      <a class="mob-direct" href="#vliegtickets" onclick="toggleNav()">Vliegtickets groepen</a>
-    </div>
-    <div class="mob-item">
-      <a class="mob-direct" href="#over" onclick="toggleNav()">Over ons</a>
-    </div>
-
-  </nav>
-
-  <div class="mob-footer">
-    <a href="totaltravel-aanvraag.html" class="mob-cta-btn" onclick="toggleNav()">Reis aanvragen</a>
   </div>
+
+  <!-- Directe links -->
+  <a class="mn-direct" href="#inspiratie" onclick="toggleNav()">Inspiratie</a>
+  <a class="mn-direct" href="#vliegtickets" onclick="toggleNav()">Vliegtickets groepen</a>
+  <a class="mn-direct" href="#over" onclick="toggleNav()">Over ons</a>
+
+  <a class="mn-cta" href="totaltravel-aanvraag.html" onclick="toggleNav()">Reis aanvragen</a>
 </div>
 
 <div class="topbar">
@@ -525,25 +574,38 @@ function toggleNav(){
   var m = document.getElementById('mobileNav');
   if(m.classList.contains('open')){
     m.classList.remove('open');
-    // Alles sluiten bij wegklikken
-    m.querySelectorAll('.mob-sub').forEach(function(s){ s.style.display = ''; });
-    m.querySelectorAll('.mob-chevron').forEach(function(c){ c.textContent = '+'; });
+    m.querySelectorAll('.mn-sub, .mn-region-sub').forEach(function(s){ s.classList.remove('open'); });
+    m.querySelectorAll('.mn-plus').forEach(function(p){ p.textContent = '+'; });
   } else {
     m.classList.add('open');
   }
 }
-
-function mobToggle(btn){
-  var sub = btn.nextElementSibling; // de .mob-sub direct na de button
-  if(!sub) return;
-  var chevron = btn.querySelector('.mob-chevron');
-  var isOpen = sub.style.display === 'block';
-  if(isOpen){
-    sub.style.display = '';
-    if(chevron) chevron.textContent = '+';
-  } else {
-    sub.style.display = 'block';
-    if(chevron) chevron.textContent = '−';
+function mnToggle(btn){
+  var sub = btn.nextElementSibling;
+  var plus = btn.querySelector('.mn-plus');
+  var isOpen = sub.classList.contains('open');
+  // Sluit andere hoofdsecties
+  btn.closest('#mobileNav').querySelectorAll('.mn-item > .mn-btn + .mn-sub').forEach(function(s){
+    s.classList.remove('open');
+  });
+  btn.closest('#mobileNav').querySelectorAll('.mn-item > .mn-btn .mn-plus').forEach(function(p){
+    p.textContent = '+';
+  });
+  if(!isOpen){
+    sub.classList.add('open');
+    if(plus) plus.textContent = '−';
+  }
+}
+function mnRegion(btn){
+  var sub = btn.nextElementSibling;
+  var plus = btn.querySelector('.mn-plus');
+  var isOpen = sub.classList.contains('open');
+  // Sluit andere regio's
+  btn.closest('.mn-sub').querySelectorAll('.mn-region-sub').forEach(function(s){ s.classList.remove('open'); });
+  btn.closest('.mn-sub').querySelectorAll('.mn-region-btn .mn-plus').forEach(function(p){ p.textContent = '+'; });
+  if(!isOpen){
+    sub.classList.add('open');
+    if(plus) plus.textContent = '−';
   }
 }
 </script>
