@@ -62,7 +62,9 @@
   font-size:12px;font-weight:600;letter-spacing:.1em;
   text-transform:uppercase;color:#C4A882;
   border-top:1px solid rgba(196,168,130,.07);
+  text-decoration:none;
   -webkit-tap-highlight-color:transparent;
+  box-sizing:border-box;
 }
 #mobileNav .mn-region-btn .mn-plus{
   font-size:16px;color:#B09068;margin-left:10px;
@@ -187,15 +189,13 @@
       Thema's <span class="mn-plus">+</span>
     </button>
     <div class="mn-sub">
-      <div class="mn-thema-list">
-        <a href="#" onclick="toggleNav()">Cruises</a>
-        <a href="#" onclick="toggleNav()">Formule 1 reizen</a>
-        <a href="#" onclick="toggleNav()">Golfreizen</a>
-        <a href="#" onclick="toggleNav()">Incentives</a>
-        <a href="#" onclick="toggleNav()">Stedentrips</a>
-        <a href="#" onclick="toggleNav()">Vakantiereizen</a>
-        <a href="#" onclick="toggleNav()">Voetbalreizen</a>
-      </div>
+      <a href="#" class="mn-region-btn" onclick="toggleNav()">Cruises</a>
+      <a href="#" class="mn-region-btn" onclick="toggleNav()">Formule 1 reizen</a>
+      <a href="#" class="mn-region-btn" onclick="toggleNav()">Golfreizen</a>
+      <a href="#" class="mn-region-btn" onclick="toggleNav()">Incentives</a>
+      <a href="#" class="mn-region-btn" onclick="toggleNav()">Stedentrips</a>
+      <a href="#" class="mn-region-btn" onclick="toggleNav()">Vakantiereizen</a>
+      <a href="#" class="mn-region-btn" onclick="toggleNav()">Voetbalreizen</a>
     </div>
   </div>
 
