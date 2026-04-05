@@ -102,6 +102,17 @@
         </div>
         <div class="mob-sub-item">
           <button class="mob-trigger mob-trigger--sub" onclick="mobToggle(this)">
+            <span>Zuid-Amerika</span><span class="mob-chevron">+</span>
+          </button>
+          <div class="mob-sub">
+            <a href="#" onclick="toggleNav()">Argentini&euml;</a>
+            <a href="#" onclick="toggleNav()">Brazili&euml;</a>
+            <a href="#" onclick="toggleNav()">Chili</a>
+            <a href="#" onclick="toggleNav()">Ecuador</a>
+          </div>
+        </div>
+        <div class="mob-sub-item">
+          <button class="mob-trigger mob-trigger--sub" onclick="mobToggle(this)">
             <span>Antarctica</span><span class="mob-chevron">+</span>
           </button>
           <div class="mob-sub">
@@ -180,7 +191,7 @@
           <button class="dest-continent-btn" onmouseenter="showContinent('midden-oosten',this)">Midden-Oosten<span class="cnt-count">6</span></button>
           <button class="dest-continent-btn" onmouseenter="showContinent('noord-amerika',this)">Noord-Amerika<span class="cnt-count">2</span></button>
           <button class="dest-continent-btn" onmouseenter="showContinent('oceanie',this)">Oceani&euml;<span class="cnt-count">2</span></button>
-          <button class="dest-continent-btn empty">Zuid-Amerika</button>
+          <button class="dest-continent-btn" onmouseenter="showContinent('zuid-amerika',this)">Zuid-Amerika<span class="cnt-count">4</span></button>
           <button class="dest-continent-btn" onmouseenter="showContinent('antarctica',this)">Antarctica<span class="cnt-count">1</span></button>
         </div>
         <div class="dest-panels">
@@ -263,6 +274,17 @@
             <div class="dest-panel-label">Antarctica &mdash; 1 bestemming</div>
             <div class="dest-cards">
               <div class="dest-card"><div class="dest-card-inner dest-photo" style="background-image:url('Media/antarctica.jpg')"></div><div class="dest-card-overlay"></div><div class="dest-card-name"><span class="dest-pin">&#9679;</span><span class="dest-name">Antarctica</span></div></div>
+            </div>
+          </div>
+
+          <!-- ZUID-AMERIKA: alfa: Argentinië, Brazilië, Chili, Ecuador -->
+          <div class="dest-panel" id="panel-zuid-amerika">
+            <div class="dest-panel-label">Zuid-Amerika &mdash; 4 bestemmingen</div>
+            <div class="dest-cards">
+              <div class="dest-card"><div class="dest-card-inner dest-photo" style="background-image:url('Media/argentinie.jpg')"></div><div class="dest-card-overlay"></div><div class="dest-card-name"><span class="dest-pin">&#9679;</span><span class="dest-name">Argentini&euml;</span></div></div>
+              <div class="dest-card"><div class="dest-card-inner dest-photo" style="background-image:url('Media/brazilie.jpg')"></div><div class="dest-card-overlay"></div><div class="dest-card-name"><span class="dest-pin">&#9679;</span><span class="dest-name">Brazili&euml;</span></div></div>
+              <div class="dest-card"><div class="dest-card-inner dest-photo" style="background-image:url('Media/chili.jpg')"></div><div class="dest-card-overlay"></div><div class="dest-card-name"><span class="dest-pin">&#9679;</span><span class="dest-name">Chili</span></div></div>
+              <div class="dest-card"><div class="dest-card-inner dest-photo" style="background-image:url('Media/ecuador.jpg')"></div><div class="dest-card-overlay"></div><div class="dest-card-name"><span class="dest-pin">&#9679;</span><span class="dest-name">Ecuador</span></div></div>
             </div>
           </div>
 
