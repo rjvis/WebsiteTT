@@ -274,20 +274,20 @@ nav.scrolled .dest-dropdown,nav.scrolled .thema-dropdown{top:62px}
 .dest-continent-btn.empty:hover{background:transparent;color:var(--sub);border-left-color:transparent}
 .dest-continent-btn:not(.empty):hover,.dest-continent-btn.active{background:var(--w);color:var(--s);border-left-color:var(--s)}
 .dest-continent-btn.active .cnt-count{color:var(--slt)}
-.dest-panels{flex:1;padding:20px 24px;overflow:hidden}
+.dest-panels{flex:1;padding:20px 24px;overflow:visible}
 .dest-panel{display:none;flex-direction:column;gap:10px}
 .dest-panel.active{display:flex}
 .dest-panel-label{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:4px;display:flex;align-items:center;gap:10px}
 .dest-panel-label::after{content:'';flex:1;height:1px;background:var(--zlt)}
-.dest-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.dest-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;overflow:visible}
 .dest-cards.cols3{grid-template-columns:repeat(3,1fr)}
 .dest-cards.cols4{grid-template-columns:repeat(4,1fr)}
 .dest-cards.cols5{grid-template-columns:repeat(5,1fr)}
 .dest-cards.cols6{grid-template-columns:repeat(6,1fr)}
 .dest-photo{background-color:var(--zlt);background-size:cover;background-position:center;background-repeat:no-repeat}
-.dest-card{position:relative;border-radius:4px;overflow:hidden;height:90px;cursor:pointer}
-.dest-card-inner{width:100%;height:100%;transition:transform .4s ease}
-.dest-card:hover .dest-card-inner{transform:scale(1.06)}
+.dest-card{position:relative;border-radius:4px;overflow:hidden;height:90px;cursor:pointer;transition:transform .22s cubic-bezier(.25,.46,.45,.94),box-shadow .22s cubic-bezier(.25,.46,.45,.94);z-index:1}
+.dest-card:hover{transform:scale(1.08);z-index:10;box-shadow:0 6px 20px rgba(45,31,20,.28)}
+.dest-card-inner{width:100%;height:100%}
 .dest-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,20,16,.78) 0%,rgba(26,20,16,.1) 60%,transparent 100%)}
 .dest-card-name{position:absolute;bottom:0;left:0;right:0;padding:6px 8px 6px;display:flex;align-items:center;gap:5px}
 .dest-pin{color:var(--s);font-size:7px;flex-shrink:0}
@@ -307,9 +307,9 @@ nav.scrolled .dest-dropdown,nav.scrolled .thema-dropdown{top:62px}
 .thema-dropdown-label{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;align-items:center;gap:10px}
 .thema-dropdown-label::after{content:'';flex:1;height:1px;background:var(--zlt)}
 .thema-cards{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
-.thema-card{position:relative;border-radius:4px;overflow:hidden;height:90px;cursor:pointer}
-.thema-card-inner{width:100%;height:100%;transition:transform .4s ease}
-.thema-card:hover .thema-card-inner{transform:scale(1.06)}
+.thema-card{position:relative;border-radius:4px;overflow:hidden;height:90px;cursor:pointer;transition:transform .22s cubic-bezier(.25,.46,.45,.94),box-shadow .22s cubic-bezier(.25,.46,.45,.94);z-index:1}
+.thema-card:hover{transform:scale(1.08);z-index:10;box-shadow:0 6px 20px rgba(45,31,20,.28)}
+.thema-card-inner{width:100%;height:100%}
 .thema-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,20,16,.78) 0%,rgba(26,20,16,.1) 60%,transparent 100%)}
 .thema-card-name{position:absolute;bottom:0;left:0;right:0;padding:6px 8px 6px;display:flex;align-items:center;gap:5px}
 .thema-label{font-family:var(--pf);font-style:italic;font-size:11px;color:var(--w);line-height:1.1}
