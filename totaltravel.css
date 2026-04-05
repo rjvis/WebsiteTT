@@ -309,97 +309,127 @@ footer{background:var(--t);padding:80px 48px 48px}
 .footer-bottom{max-width:1280px;margin:0 auto;padding-top:32px;border-top:1px solid rgba(196,168,130,.1);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
 .footer-copy{font-size:11px;color:rgba(245,240,232,.28);letter-spacing:.05em}
 
-/* MOBILE NAV */
+/* ── MOBILE NAV ─────────────────────────────────────────────────── */
 .mobile-nav{
   display:none;
   position:fixed;
-  inset:0;
-  z-index:200;
-  background:var(--t);
+  top:0;left:0;right:0;bottom:0;
+  z-index:300;          /* hoger dan topbar (101) en nav (100) */
+  background:#2D1F14;
   flex-direction:column;
-  overflow-y:auto;
-  -webkit-overflow-scrolling:touch;
+  overflow:hidden;
 }
 .mobile-nav.open{display:flex}
 
-/* Header */
+/* Vaste header balk */
 .mob-header{
+  flex-shrink:0;
   display:flex;align-items:center;justify-content:space-between;
-  padding:20px 24px 20px;
+  padding:18px 24px;
   border-bottom:1px solid rgba(196,168,130,.15);
-  position:sticky;top:0;
-  background:var(--t);
-  z-index:1;
+  background:#2D1F14;
 }
 .mob-logo{
-  font-family:var(--dm);font-size:15px;font-weight:500;
-  letter-spacing:.18em;text-transform:uppercase;color:var(--i);
+  font-family:var(--dm);font-size:14px;font-weight:500;
+  letter-spacing:.2em;text-transform:uppercase;color:#F5F0E8;
 }
-.mob-logo .dot{color:var(--s)}
+.mob-logo .dot{color:#A0522D}
 .mob-close{
   background:none;border:none;cursor:pointer;
-  color:var(--z);font-size:24px;line-height:1;padding:4px 8px;
+  color:#C4A882;font-size:22px;line-height:1;
+  padding:6px;min-width:36px;text-align:center;
 }
 
-/* Nav links */
-.mob-links{display:block;padding:0 0 8px}
+/* Scrollbare zone */
+.mob-links{
+  flex:1;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+}
 
-/* Elk item */
-.mob-item{border-bottom:1px solid rgba(196,168,100,.09)}
+/* Ieder menu-item */
+.mob-item{
+  border-bottom:1px solid rgba(196,168,130,.1);
+}
 
-/* Hoofd-trigger (Bestemmingen, Thema's) */
+/* Hoofd-trigger: Bestemmingen / Thema's */
 .mob-trigger{
-  width:100%;display:flex;align-items:center;justify-content:space-between;
-  background:none;border:none;cursor:pointer;
-  padding:17px 24px;
-  font-family:var(--pf);font-size:22px;font-weight:400;color:var(--i);
-  text-align:left;
+  display:flex;align-items:center;justify-content:space-between;
+  width:100%;
+  padding:18px 24px;
+  background:none;border:none;cursor:pointer;text-align:left;
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:22px;font-weight:400;color:#F5F0E8;
+  -webkit-tap-highlight-color:transparent;
 }
 
-/* Sub-trigger (continent) */
+/* Sub-trigger: continent namen */
 .mob-trigger--sub{
-  font-family:var(--dm);font-size:12px;font-weight:600;
+  font-family:'DM Sans',sans-serif;
+  font-size:12px;font-weight:600;
   letter-spacing:.1em;text-transform:uppercase;
-  color:var(--z);padding:12px 24px 12px 32px;
+  color:#C4A882;
+  padding:13px 24px 13px 36px;
+  font-size:13px;
 }
 
-/* +/− teken */
+/* +/− indicator */
 .mob-chevron{
-  font-style:normal;font-size:22px;font-weight:300;
-  color:var(--s);flex-shrink:0;margin-left:12px;
-  font-family:var(--dm);line-height:1;
+  flex-shrink:0;margin-left:16px;
+  font-family:'DM Sans',sans-serif;
+  font-size:20px;font-weight:300;
+  color:#A0522D;line-height:1;
 }
-.mob-trigger--sub .mob-chevron{font-size:16px;color:var(--zdm)}
+.mob-trigger--sub .mob-chevron{font-size:15px;color:#B09068}
 
-/* Uitklapbare laag — standaard verborgen */
-.mob-sub{display:none}
+/* Uitklapbaar blok — standaard DICHT */
+.mob-sub{
+  display:none;
+  border-top:1px solid rgba(196,168,130,.06);
+}
 
 /* Continent items */
-.mob-sub-item{border-top:1px solid rgba(196,168,100,.07)}
+.mob-sub-item{
+  border-bottom:1px solid rgba(196,168,130,.06);
+}
+.mob-sub-item:last-child{border-bottom:none}
 
-/* Bestemmingen links */
+/* Bestemming links */
 .mob-sub a{
   display:block;
-  padding:10px 24px 10px 48px;
-  font-family:var(--pf);font-style:italic;font-size:16px;
+  padding:11px 24px 11px 52px;
+  font-family:'Playfair Display',Georgia,serif;
+  font-style:italic;font-size:16px;
   color:rgba(245,240,232,.5);
+  -webkit-tap-highlight-color:transparent;
 }
-.mob-sub .mob-sub a{padding-left:56px}
+.mob-sub .mob-sub a{
+  padding-left:60px;
+}
 
-/* Directe links */
+/* Directe links: Inspiratie etc. */
 a.mob-direct{
-  display:block;padding:17px 24px;
-  font-family:var(--pf);font-size:22px;font-weight:400;color:var(--i);
+  display:block;padding:18px 24px;
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:22px;font-weight:400;color:#F5F0E8;
+  -webkit-tap-highlight-color:transparent;
 }
 
-/* CTA onderaan */
-.mob-footer{padding:24px}
+/* CTA knop onderaan */
+.mob-footer{
+  flex-shrink:0;
+  padding:20px 24px;
+  border-top:1px solid rgba(196,168,130,.15);
+  background:#2D1F14;
+}
 .mob-cta-btn{
   display:block;text-align:center;
-  background:var(--s);color:var(--w);
-  font-family:var(--dm);font-size:11px;font-weight:700;
+  background:#A0522D;color:#FAF8F4;
+  font-family:'DM Sans',sans-serif;
+  font-size:11px;font-weight:700;
   letter-spacing:.12em;text-transform:uppercase;
   padding:16px 24px;
+  -webkit-tap-highlight-color:transparent;
 }
 
 /* RESPONSIVE */

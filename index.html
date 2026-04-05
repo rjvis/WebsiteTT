@@ -522,19 +522,29 @@ function showContinent(id,btn){
   if(btn)btn.classList.add('active');
 }
 function toggleNav(){
-  var nav=document.getElementById('mobileNav');
-  nav.classList.toggle('open');
-  if(!nav.classList.contains('open')){
-    nav.querySelectorAll('.mob-sub').forEach(function(s){s.style.display='';});
-    nav.querySelectorAll('.mob-chevron').forEach(function(c){c.textContent='+';});
+  var m = document.getElementById('mobileNav');
+  if(m.classList.contains('open')){
+    m.classList.remove('open');
+    // Alles sluiten bij wegklikken
+    m.querySelectorAll('.mob-sub').forEach(function(s){ s.style.display = ''; });
+    m.querySelectorAll('.mob-chevron').forEach(function(c){ c.textContent = '+'; });
+  } else {
+    m.classList.add('open');
   }
 }
+
 function mobToggle(btn){
-  var sub=btn.nextElementSibling;
-  var chevron=btn.querySelector('.mob-chevron');
-  var isOpen=sub.style.display==='block';
-  sub.style.display=isOpen?'':'block';
-  chevron.textContent=isOpen?'+':'−';
+  var sub = btn.nextElementSibling; // de .mob-sub direct na de button
+  if(!sub) return;
+  var chevron = btn.querySelector('.mob-chevron');
+  var isOpen = sub.style.display === 'block';
+  if(isOpen){
+    sub.style.display = '';
+    if(chevron) chevron.textContent = '+';
+  } else {
+    sub.style.display = 'block';
+    if(chevron) chevron.textContent = '−';
+  }
 }
 </script>
 </body>
