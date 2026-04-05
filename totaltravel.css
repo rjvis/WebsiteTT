@@ -76,12 +76,21 @@ nav{position:fixed;top:34px;left:0;right:0;z-index:100;height:62px;display:flex;
   z-index:500;
   transition:opacity .18s ease, visibility .18s ease;
 }
-.has-dropdown:hover .dest-dropdown,
-.has-dropdown:hover .thema-dropdown{
-  visibility:visible;
-  opacity:1;
-  pointer-events:all;
+.has-dropdown:hover .nav-arrow{transform:rotate(180deg)}
+/* nav-arrow rotation wordt ook via JS inline style gezet */
+
+.dest-dropdown,.thema-dropdown{
+  position:absolute;
+  top:62px;
+  left:0;
+  right:0;
+  visibility:hidden;
+  opacity:0;
+  pointer-events:none;
+  z-index:500;
+  transition:opacity .15s ease, visibility .15s ease;
 }
+/* open/close wordt door JS geregeld via inline styles — geen :hover regel */
 .dd-inner{background:var(--w);border-top:3px solid var(--s);box-shadow:0 24px 64px rgba(45,31,20,.16);display:flex;align-items:stretch;max-width:100%}
 
 /* BESTEMMINGEN */

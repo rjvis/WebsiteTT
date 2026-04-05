@@ -341,6 +341,35 @@ window.addEventListener('scroll',function(){
 });
 var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.12,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(function(el){obs.observe(el);});
+
+/* Dropdown via JS — sluit pas als muis BEIDE (trigger én dropdown) verlaat */
+document.querySelectorAll('.has-dropdown').forEach(function(li){
+  var dropdown = li.querySelector('.dest-dropdown, .thema-dropdown');
+  var arrow = li.querySelector('.nav-arrow');
+  var timer = null;
+
+  function open(){
+    clearTimeout(timer);
+    dropdown.style.visibility='visible';
+    dropdown.style.opacity='1';
+    dropdown.style.pointerEvents='all';
+    if(arrow) arrow.style.transform='rotate(180deg)';
+  }
+  function scheduleClose(){
+    timer = setTimeout(function(){
+      dropdown.style.visibility='hidden';
+      dropdown.style.opacity='0';
+      dropdown.style.pointerEvents='none';
+      if(arrow) arrow.style.transform='';
+    }, 120);
+  }
+
+  li.addEventListener('mouseenter', open);
+  li.addEventListener('mouseleave', scheduleClose);
+  dropdown.addEventListener('mouseenter', function(){ clearTimeout(timer); });
+  dropdown.addEventListener('mouseleave', scheduleClose);
+});
+
 function showContinent(id,btn){
   document.querySelectorAll('.dest-panel').forEach(function(p){p.classList.remove('active');});
   document.querySelectorAll('.dest-continent-btn:not(.empty)').forEach(function(b){b.classList.remove('active');});
