@@ -313,80 +313,100 @@ footer{background:var(--t);padding:80px 48px 48px}
 .mobile-nav{
   position:fixed;inset:0;z-index:200;
   background:var(--t);
-  display:flex;flex-direction:column;
   opacity:0;pointer-events:none;
-  transition:opacity .3s;
-  overflow-y:auto;
-  padding:72px 0 40px;
+  transition:opacity .28s ease;
+  display:flex;flex-direction:column;
+  overflow:hidden;
 }
 .mobile-nav.open{opacity:1;pointer-events:all}
-.mobile-close{
-  position:absolute;top:20px;right:20px;
-  color:var(--z);font-size:26px;
-  cursor:pointer;background:none;border:none;line-height:1;
+
+/* Header */
+.mob-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 24px;
+  border-bottom:1px solid rgba(196,168,130,.12);
+  flex-shrink:0;
+}
+.mob-logo{
+  font-family:var(--dm);font-size:16px;font-weight:500;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--i);
+}
+.mob-logo .dot{color:var(--s)}
+.mob-close{
+  background:none;border:none;cursor:pointer;
+  color:var(--z);font-size:22px;line-height:1;padding:4px;
 }
 
-/* Hoofdlinks (Inspiratie, Vliegtickets etc.) */
-.mobile-nav>a{
-  font-family:var(--pf);font-size:24px;font-weight:400;
-  color:var(--i);padding:14px 28px;
-  border-bottom:1px solid rgba(196,168,130,.08);
-  transition:color .2s;
-}
-.mobile-nav>a:hover{color:var(--s)}
-.mob-cta{
-  margin:20px 28px 0;
-  display:inline-block;
-  background:var(--s);color:var(--w)!important;
-  font-family:var(--dm)!important;font-size:11px!important;
-  font-weight:600;letter-spacing:.1em;text-transform:uppercase;
-  padding:14px 28px;text-align:center;
-  border:none!important;
+/* Scrollbare linkzone */
+.mob-links{
+  flex:1;overflow-y:auto;
+  padding:8px 0;
 }
 
-/* Accordion items */
+/* Elk item */
 .mob-item{border-bottom:1px solid rgba(196,168,130,.08)}
-.mob-main-btn{
-  width:100%;text-align:left;
+
+/* Hoofd-trigger knop (Bestemmingen, Thema's) */
+.mob-trigger{
+  width:100%;display:flex;align-items:center;justify-content:space-between;
   background:none;border:none;cursor:pointer;
-  font-family:var(--pf);font-size:24px;font-weight:400;
-  color:var(--i);padding:14px 28px;
-  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 24px;
+  font-family:var(--pf);font-size:22px;font-weight:400;color:var(--i);
+  text-align:left;
 }
-.mob-main-btn:hover{color:var(--s)}
-.mob-arrow{font-size:12px;color:var(--z);transition:transform .25s;display:inline-block}
+.mob-trigger:active{color:var(--s)}
 
-/* Hoofd-sectie (continent-lijst) */
-.mob-section{display:none}
-.mob-section.mob-open{display:block}
-
-/* Continent knoppen */
-.mob-continent-list{padding:0 0 8px}
-.mob-continent{
-  width:100%;text-align:left;
-  background:none;border:none;cursor:pointer;
-  font-family:var(--dm);font-size:14px;font-weight:500;
+/* Sub-trigger (continent) — iets kleiner */
+.mob-trigger--sub{
+  font-family:var(--dm);font-size:13px;font-weight:600;
   letter-spacing:.08em;text-transform:uppercase;
-  color:var(--z);
-  padding:11px 28px 11px 40px;
-  display:flex;align-items:center;justify-content:space-between;
-  transition:color .15s;
+  color:var(--z);padding:12px 24px 12px 36px;
 }
-.mob-continent:hover{color:var(--w)}
-.mob-arrow-sm{font-size:9px;color:var(--zdm);transition:transform .2s;display:inline-block}
+.mob-trigger--sub:active{color:var(--w)}
 
-/* Bestemmingslijst per continent */
-.mob-dest-list{display:none;padding:0 0 4px 56px}
-.mob-dest-list.mob-open{display:block}
-.mob-dest-list--open{display:block!important;padding:0 0 12px 40px}
-.mob-dest-list a{
+/* +/− indicator */
+.mob-chevron{
+  font-style:normal;font-size:20px;font-weight:300;
+  color:var(--s);flex-shrink:0;margin-left:12px;
+  font-family:var(--dm);
+}
+.mob-trigger--sub .mob-chevron{font-size:16px;color:var(--zdm)}
+
+/* Uitklapbare laag */
+.mob-sub{display:none}
+
+/* Directe links (Inspiratie etc.) */
+a.mob-direct{
+  display:block;padding:16px 24px;
+  font-family:var(--pf);font-size:22px;font-weight:400;color:var(--i);
+}
+a.mob-direct:active{color:var(--s)}
+
+/* Bestemmingen per continent */
+.mob-sub-item{border-top:1px solid rgba(196,168,130,.06)}
+.mob-sub .mob-sub{padding:0 0 8px}
+.mob-sub a{
   display:block;
+  padding:9px 24px 9px 52px;
   font-family:var(--pf);font-style:italic;font-size:16px;
-  color:rgba(245,240,232,.6);
-  padding:7px 0;
+  color:rgba(245,240,232,.55);
   transition:color .15s;
 }
-.mob-dest-list a:hover{color:var(--w)}
+.mob-sub a:active{color:var(--w)}
+
+/* Footer met CTA */
+.mob-footer{
+  flex-shrink:0;
+  padding:20px 24px;
+  border-top:1px solid rgba(196,168,130,.12);
+}
+.mob-cta-btn{
+  display:block;text-align:center;
+  background:var(--s);color:var(--w);
+  font-family:var(--dm);font-size:11px;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;
+  padding:15px 24px;
+}
 
 /* RESPONSIVE */
 @media(max-width:900px){
