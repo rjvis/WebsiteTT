@@ -114,7 +114,7 @@ nav{position:fixed;top:34px;left:0;right:0;z-index:100;height:62px;display:flex;
 .dest-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 
 .dest-photo{background-color:var(--zlt);background-size:cover;background-position:center;background-repeat:no-repeat}
-.dest-card{position:relative;border-radius:6px;overflow:hidden;height:140px;cursor:pointer;transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
+.dest-card{position:relative;border-radius:6px;overflow:hidden;height:175px;cursor:pointer;transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
 .dest-card:hover{transform:scale(1.04);box-shadow:0 8px 24px rgba(45,31,20,.3);z-index:5;position:relative}
 .dest-card-inner{width:100%;height:100%}
 .dest-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,20,16,.80) 0%,rgba(26,20,16,.08) 55%,transparent 100%)}
@@ -136,8 +136,8 @@ nav{position:fixed;top:34px;left:0;right:0;z-index:100;height:62px;display:flex;
 .dd-inner.thema-inner{width:100%;padding:20px 24px;flex-direction:column;gap:14px}
 .thema-dropdown-label{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;align-items:center;gap:10px}
 .thema-dropdown-label::after{content:'';flex:1;height:1px;background:var(--zlt)}
-.thema-cards{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
-.thema-card{position:relative;border-radius:6px;overflow:hidden;height:120px;cursor:pointer;transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
+.thema-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.thema-card{position:relative;border-radius:6px;overflow:hidden;height:175px;cursor:pointer;transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
 .thema-card:hover{transform:scale(1.04);box-shadow:0 8px 24px rgba(45,31,20,.3);z-index:5;position:relative}
 .thema-card-inner{width:100%;height:100%}
 .thema-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,20,16,.80) 0%,rgba(26,20,16,.08) 55%,transparent 100%)}
