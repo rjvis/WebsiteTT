@@ -311,101 +311,95 @@ footer{background:var(--t);padding:80px 48px 48px}
 
 /* MOBILE NAV */
 .mobile-nav{
-  position:fixed;inset:0;z-index:200;
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:200;
   background:var(--t);
-  opacity:0;pointer-events:none;
-  transition:opacity .28s ease;
-  display:flex;flex-direction:column;
-  overflow:hidden;
+  flex-direction:column;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
 }
-.mobile-nav.open{opacity:1;pointer-events:all}
+.mobile-nav.open{display:flex}
 
 /* Header */
 .mob-header{
   display:flex;align-items:center;justify-content:space-between;
-  padding:20px 24px;
-  border-bottom:1px solid rgba(196,168,130,.12);
-  flex-shrink:0;
+  padding:20px 24px 20px;
+  border-bottom:1px solid rgba(196,168,130,.15);
+  position:sticky;top:0;
+  background:var(--t);
+  z-index:1;
 }
 .mob-logo{
-  font-family:var(--dm);font-size:16px;font-weight:500;
+  font-family:var(--dm);font-size:15px;font-weight:500;
   letter-spacing:.18em;text-transform:uppercase;color:var(--i);
 }
 .mob-logo .dot{color:var(--s)}
 .mob-close{
   background:none;border:none;cursor:pointer;
-  color:var(--z);font-size:22px;line-height:1;padding:4px;
+  color:var(--z);font-size:24px;line-height:1;padding:4px 8px;
 }
 
-/* Scrollbare linkzone */
-.mob-links{
-  flex:1;overflow-y:auto;
-  padding:8px 0;
-}
+/* Nav links */
+.mob-links{display:block;padding:0 0 8px}
 
 /* Elk item */
-.mob-item{border-bottom:1px solid rgba(196,168,130,.08)}
+.mob-item{border-bottom:1px solid rgba(196,168,100,.09)}
 
-/* Hoofd-trigger knop (Bestemmingen, Thema's) */
+/* Hoofd-trigger (Bestemmingen, Thema's) */
 .mob-trigger{
   width:100%;display:flex;align-items:center;justify-content:space-between;
   background:none;border:none;cursor:pointer;
-  padding:16px 24px;
+  padding:17px 24px;
   font-family:var(--pf);font-size:22px;font-weight:400;color:var(--i);
   text-align:left;
 }
-.mob-trigger:active{color:var(--s)}
 
-/* Sub-trigger (continent) — iets kleiner */
+/* Sub-trigger (continent) */
 .mob-trigger--sub{
-  font-family:var(--dm);font-size:13px;font-weight:600;
-  letter-spacing:.08em;text-transform:uppercase;
-  color:var(--z);padding:12px 24px 12px 36px;
+  font-family:var(--dm);font-size:12px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--z);padding:12px 24px 12px 32px;
 }
-.mob-trigger--sub:active{color:var(--w)}
 
-/* +/− indicator */
+/* +/− teken */
 .mob-chevron{
-  font-style:normal;font-size:20px;font-weight:300;
+  font-style:normal;font-size:22px;font-weight:300;
   color:var(--s);flex-shrink:0;margin-left:12px;
-  font-family:var(--dm);
+  font-family:var(--dm);line-height:1;
 }
 .mob-trigger--sub .mob-chevron{font-size:16px;color:var(--zdm)}
 
-/* Uitklapbare laag */
+/* Uitklapbare laag — standaard verborgen */
 .mob-sub{display:none}
 
-/* Directe links (Inspiratie etc.) */
-a.mob-direct{
-  display:block;padding:16px 24px;
-  font-family:var(--pf);font-size:22px;font-weight:400;color:var(--i);
-}
-a.mob-direct:active{color:var(--s)}
+/* Continent items */
+.mob-sub-item{border-top:1px solid rgba(196,168,100,.07)}
 
-/* Bestemmingen per continent */
-.mob-sub-item{border-top:1px solid rgba(196,168,130,.06)}
-.mob-sub .mob-sub{padding:0 0 8px}
+/* Bestemmingen links */
 .mob-sub a{
   display:block;
-  padding:9px 24px 9px 52px;
+  padding:10px 24px 10px 48px;
   font-family:var(--pf);font-style:italic;font-size:16px;
-  color:rgba(245,240,232,.55);
-  transition:color .15s;
+  color:rgba(245,240,232,.5);
 }
-.mob-sub a:active{color:var(--w)}
+.mob-sub .mob-sub a{padding-left:56px}
 
-/* Footer met CTA */
-.mob-footer{
-  flex-shrink:0;
-  padding:20px 24px;
-  border-top:1px solid rgba(196,168,130,.12);
+/* Directe links */
+a.mob-direct{
+  display:block;padding:17px 24px;
+  font-family:var(--pf);font-size:22px;font-weight:400;color:var(--i);
 }
+
+/* CTA onderaan */
+.mob-footer{padding:24px}
 .mob-cta-btn{
   display:block;text-align:center;
   background:var(--s);color:var(--w);
   font-family:var(--dm);font-size:11px;font-weight:700;
   letter-spacing:.12em;text-transform:uppercase;
-  padding:15px 24px;
+  padding:16px 24px;
 }
 
 /* RESPONSIVE */
