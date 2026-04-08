@@ -344,7 +344,64 @@
       </div></div>
     </li>
 
-    <li class="has-dropdown"><a href="#themas" class="nav-link-drop">Thema's <span class="nav-arrow">&#9660;</span></a><div class="thema-dropdown"><div class="dd-inner thema-inner"><div class="thema-dropdown-label">Thema's &mdash; 7 categorie&euml;n</div><div class="thema-cards"><div class="thema-card"><div class="thema-card-inner dest-photo" style="background-image:url('Media/thema-cruises.jpg')"></div><div class="thema-card-overlay"></div><div class="thema-card-name"><span class="dest-pin">&#9679;</span><span class="thema-label">Cruises</span></div></div><div class="thema-card"><div class="thema-card-inner dest-photo" style="background-image:url('Media/thema-formule1.jpg')"></div><div class="thema-card-overlay"></div><div class="thema-card-name"><span class="dest-pin">&#9679;</span><span class="thema-label">Formule 1 reizen</span></div></div><div class="thema-card"><div class="thema-card-inner dest-photo" style="background-image:url('Media/thema-golf.jpg')"></div><div class="thema-card-overlay"></div><div class="thema-card-name"><span class="dest-pin">&#9679;</span><span class="thema-label">Golfreizen</span></div></div><div class="thema-card"><div class="thema-card-inner dest-photo" style="background-image:url('Media/thema-incentives.jpg')"></div><div class="thema-card-overlay"></div><div class="thema-card-name"><span class="dest-pin">&#9679;</span><span class="thema-label">Incentives</span></div></div><div class="thema-card"><div class="thema-card-inner dest-photo" style="background-image:url('Media/thema-stedentrips.jpg')"></div><div class="thema-card-overlay"></div><div class="thema-card-name"><span class="dest-pin">&#9679;</span><span class="thema-label">Stedentrips</span></div></div><div class="thema-card"><div class="thema-card-inner dest-photo" style="background-image:url('Media/thema-vakantiereizen.jpg')"></div><div class="thema-card-overlay"></div><div class="thema-card-name"><span class="dest-pin">&#9679;</span><span class="thema-label">Vakantiereizen</span></div></div><div class="thema-card"><div class="thema-card-inner dest-photo" style="background-image:url('Media/thema-voetbal.jpg')"></div><div class="thema-card-overlay"></div><div class="thema-card-name"><span class="dest-pin">&#9679;</span><span class="thema-label">Voetbalreizen</span></div></div></div></div></div></li>
+
+    <li class="has-dropdown"><a href="#themas" class="nav-link-drop">Thema's <span class="nav-arrow">&#9660;</span></a>
+      <div class="thema-dropdown"><div class="dd-inner thema-inner">
+        <div class="dest-continents">
+          <button class="dest-continent-btn active" onmouseenter="showThema('cruises',this)">Cruises</button>
+          <button class="dest-continent-btn" onmouseenter="showThema('formule1',this)">Formule 1 reizen</button>
+          <button class="dest-continent-btn" onmouseenter="showThema('golf',this)">Golfreizen</button>
+          <button class="dest-continent-btn" onmouseenter="showThema('incentives',this)">Incentives</button>
+          <button class="dest-continent-btn" onmouseenter="showThema('stedentrips',this)">Stedentrips</button>
+          <button class="dest-continent-btn" onmouseenter="showThema('vakantie',this)">Vakantiereizen</button>
+          <button class="dest-continent-btn" onmouseenter="showThema('voetbal',this)">Voetbalreizen</button>
+        </div>
+        <div class="dest-panels">
+          <div class="dest-panel active" id="tpanel-cruises">
+            <div class="dest-panel-label">Cruises</div>
+            <div class="dest-cards">
+              <div class="dest-card"><div class="dest-card-inner dest-photo" style="background-image:url('Media/thema-cruises.jpg')"></div><div class="dest-card-overlay"></div><div class="dest-card-name"><span class="dest-pin">&#9679;</span><span class="dest-name">Cruises</span></div></div>
+            </div>
+          </div>
+          <div class="dest-panel" id="tpanel-formule1">
+            <div class="dest-panel-label">Formule 1 reizen</div>
+            <div class="dest-cards">
+              <div class="dest-card"><div class="dest-card-inner dest-photo" style="background-image:url('Media/thema-formule1.jpg')"></div><div class="dest-card-overlay"></div><div class="dest-card-name"><span class="dest-pin">&#9679;</span><span class="dest-name">Formule 1 reizen</span></div></div>
+            </div>
+          </div>
+          <div class="dest-panel" id="tpanel-golf">
+            <div class="dest-panel-label">Golfreizen</div>
+            <div class="dest-cards">
+              <div class="dest-card"><div class="dest-card-inner dest-photo" style="background-image:url('Media/thema-golf.jpg')"></div><div class="dest-card-overlay"></div><div class="dest-card-name"><span class="dest-pin">&#9679;</span><span class="dest-name">Golfreizen</span></div></div>
+            </div>
+          </div>
+          <div class="dest-panel" id="tpanel-incentives">
+            <div class="dest-panel-label">Incentives</div>
+            <div class="dest-cards">
+              <div class="dest-card"><div class="dest-card-inner dest-photo" style="background-image:url('Media/thema-incentives.jpg')"></div><div class="dest-card-overlay"></div><div class="dest-card-name"><span class="dest-pin">&#9679;</span><span class="dest-name">Incentives</span></div></div>
+            </div>
+          </div>
+          <div class="dest-panel" id="tpanel-stedentrips">
+            <div class="dest-panel-label">Stedentrips</div>
+            <div class="dest-cards">
+              <div class="dest-card"><div class="dest-card-inner dest-photo" style="background-image:url('Media/thema-stedentrips.jpg')"></div><div class="dest-card-overlay"></div><div class="dest-card-name"><span class="dest-pin">&#9679;</span><span class="dest-name">Stedentrips</span></div></div>
+            </div>
+          </div>
+          <div class="dest-panel" id="tpanel-vakantie">
+            <div class="dest-panel-label">Vakantiereizen</div>
+            <div class="dest-cards">
+              <div class="dest-card"><div class="dest-card-inner dest-photo" style="background-image:url('Media/thema-vakantiereizen.jpg')"></div><div class="dest-card-overlay"></div><div class="dest-card-name"><span class="dest-pin">&#9679;</span><span class="dest-name">Vakantiereizen</span></div></div>
+            </div>
+          </div>
+          <div class="dest-panel" id="tpanel-voetbal">
+            <div class="dest-panel-label">Voetbalreizen</div>
+            <div class="dest-cards">
+              <div class="dest-card"><div class="dest-card-inner dest-photo" style="background-image:url('Media/thema-voetbal.jpg')"></div><div class="dest-card-overlay"></div><div class="dest-card-name"><span class="dest-pin">&#9679;</span><span class="dest-name">Voetbalreizen</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+    </li>
     <li><a href="#inspiratie">Inspiratie</a></li>
     <li><a href="#vliegtickets">Vliegtickets groepen</a></li>
     <li><a href="totaltravel-wederverkoper.html">Reisbureaus</a></li>
@@ -571,6 +628,13 @@ function showContinent(id,btn){
   document.querySelectorAll('.dest-panel').forEach(function(p){p.classList.remove('active');});
   document.querySelectorAll('.dest-continent-btn:not(.empty)').forEach(function(b){b.classList.remove('active');});
   var panel=document.getElementById('panel-'+id);
+  if(panel)panel.classList.add('active');
+  if(btn)btn.classList.add('active');
+}
+function showThema(id,btn){
+  document.querySelectorAll('[id^="tpanel-"]').forEach(function(p){p.classList.remove('active');});
+  btn.closest('.dest-continents').querySelectorAll('.dest-continent-btn').forEach(function(b){b.classList.remove('active');});
+  var panel=document.getElementById('tpanel-'+id);
   if(panel)panel.classList.add('active');
   if(btn)btn.classList.add('active');
 }
