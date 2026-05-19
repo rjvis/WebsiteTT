@@ -202,7 +202,7 @@ input[type=range].tt-range::-webkit-slider-thumb:hover{transform:scale(1.2)}
     <h1 class="hero-title">Reis<em>zoeker</em></h1>
     <p class="hero-sub">Filter op bestemming, thema, duur en budget — wij regelen de rest</p>
     <div class="hero-count">
-      <div class="hero-count-num" id="heroCount">12</div>
+      <div class="hero-count-num" id="heroCount">20</div>
       <div class="hero-count-lbl">reizen gevonden</div>
     </div>
   </div>
@@ -225,7 +225,7 @@ input[type=range].tt-range::-webkit-slider-thumb:hover{transform:scale(1.2)}
         <span class="filter-chevron">&#9660;</span>
       </div>
       <div class="filter-body">
-        <div class="filter-option"><input type="checkbox" id="f-afrika" data-filter="regio" data-value="Afrika" onchange="applyFilters()"><label for="f-afrika">Afrika <span class="filter-count">4</span></label></div>
+        <div class="filter-option"><input type="checkbox" id="f-afrika" data-filter="regio" data-value="Afrika" onchange="applyFilters()"><label for="f-afrika">Afrika <span class="filter-count">12</span></label></div>
         <div class="filter-option"><input type="checkbox" id="f-azie" data-filter="regio" data-value="Azië" onchange="applyFilters()"><label for="f-azie">Azië <span class="filter-count">3</span></label></div>
         <div class="filter-option"><input type="checkbox" id="f-mo" data-filter="regio" data-value="Midden-Oosten" onchange="applyFilters()"><label for="f-mo">Midden-Oosten <span class="filter-count">3</span></label></div>
         <div class="filter-option"><input type="checkbox" id="f-europa" data-filter="regio" data-value="Europa" onchange="applyFilters()"><label for="f-europa">Europa <span class="filter-count">1</span></label></div>
@@ -356,6 +356,14 @@ const reizen = [
   {id:10,naam:'Grand Prix Abu Dhabi',tagline:'F1-finale op Yas Marina Circuit',regio:'Midden-Oosten',thema:'Formule 1',duur:5,prijs:4490,budgetCat:3,gezelschap:['Stel','Groep','Solo'],photo:'ph-abudhabi'},
   {id:11,naam:'Portugal: Golf & Cultuur',tagline:'Algarve golfbanen en Lissabon',regio:'Europa',thema:'Golf',duur:8,prijs:2190,budgetCat:2,gezelschap:['Stel','Groep'],photo:'ph-portugal'},
   {id:12,naam:'Peru: Inca\'s & Amazone',tagline:'Machu Picchu, Cusco en de jungle',regio:'Zuid-Amerika',thema:'Maatwerk',duur:14,prijs:4990,budgetCat:3,gezelschap:['Stel','Solo'],photo:'ph-peru'},
+  {id:13,naam:'Marokko: Koningssteden Fly & Drive',tagline:'Fez, Meknes, Rabat en Marrakech per huurauto',regio:'Afrika',thema:'Maatwerk',duur:8,prijs:789,budgetCat:1,gezelschap:['Stel','Gezin','Solo'],photo:'ph-marokko',slug:'marokko.html'},
+  {id:14,naam:'Beleef het Echte Marokko',tagline:'Authentieke cultuur, souks en lokaal leven',regio:'Afrika',thema:'Maatwerk',duur:5,prijs:458,budgetCat:1,gezelschap:['Stel','Solo'],photo:'ph-marokko',slug:'marokko.html'},
+  {id:15,naam:'Zuid-Marokko: Bergen, Woestijn & Strand',tagline:'Van Marrakech naar de Sahara en Essaouira',regio:'Afrika',thema:'Maatwerk',duur:9,prijs:2050,budgetCat:1,gezelschap:['Stel','Gezin'],photo:'ph-marokko',slug:'marokko.html'},
+  {id:16,naam:'Rondreis Koningssteden Marokko',tagline:'Fez, Meknes, Rabat & Marrakech met lokale gidsen',regio:'Afrika',thema:'Maatwerk',duur:8,prijs:1990,budgetCat:1,gezelschap:['Stel','Solo'],photo:'ph-marokko',slug:'marokko.html'},
+  {id:17,naam:'Koningssteden & Woestijn',tagline:'Cultuur en avontuur van stad tot Sahara',regio:'Afrika',thema:'Maatwerk',duur:12,prijs:2195,budgetCat:2,gezelschap:['Stel','Gezin'],photo:'ph-marokko',slug:'marokko.html'},
+  {id:18,naam:'Het Beste van Marokko',tagline:'17 dagen langs de mooiste landschappen van noord tot zuid',regio:'Afrika',thema:'Maatwerk',duur:17,prijs:2550,budgetCat:2,gezelschap:['Stel','Gezin','Solo'],photo:'ph-marokko',slug:'marokko.html'},
+  {id:19,naam:'Compleet Marokko Rondreis',tagline:'21 dagen langs alle culturele en natuurlijke highlights',regio:'Afrika',thema:'Maatwerk',duur:21,prijs:2590,budgetCat:2,gezelschap:['Stel','Gezin'],photo:'ph-marokko',slug:'marokko.html'},
+  {id:20,naam:'Marokko per Trein',tagline:'Highlights in 8 dagen — maak kennis met keuken en cultuur',regio:'Afrika',thema:'Maatwerk',duur:8,prijs:1395,budgetCat:1,gezelschap:['Stel','Solo'],photo:'ph-marokko',slug:'marokko.html'},
 ];
 
 let filtered = [...reizen];
