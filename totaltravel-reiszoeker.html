@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reis Zoeker — Total Travel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --s:#A0522D;--sdk:#7A3E21;--slt:#C4784A;
+  --z:#C4A882;--zlt:#DDD0BC;--zdm:#B09068;
+  --i:#F5F0E8;--iw:#EDE5D8;--ic:#E8DDD0;
+  --t:#2D1F14;--e:#1A1410;--w:#FAF8F4;
+  --sub:#5A4030;--dim:#8A7060;
+  --pf:'Playfair Display',Georgia,serif;
+  --dm:'DM Sans',system-ui,sans-serif;
+  --ease:cubic-bezier(.25,.46,.45,.94);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--dm);background:var(--i);color:var(--e);overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:62px;display:flex;align-items:center;background:rgba(250,248,244,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--zlt)}
+.nav-inner{width:100%;max-width:1400px;margin:0 auto;padding:0 40px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:var(--dm);font-size:20px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--t)}
+.nav-logo .dot{color:var(--s)}
+.nav-back{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--sub);transition:color .2s}
+.nav-back:hover{color:var(--s)}
+.nav-back svg{transition:transform .2s}
+.nav-back:hover svg{transform:translateX(-3px)}
+.nav-cta{background:var(--s);color:var(--w);font-family:var(--dm);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:9px 20px;transition:background .2s}
+.nav-cta:hover{background:var(--sdk)}
+
+/* ── HERO BANNER ── */
+.hero-banner{
+  margin-top:62px;
+  height:320px;
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(135deg,#2D1F14 0%,#5A3020 40%,#8B4820 70%,#A0522D 100%);
+  display:flex;align-items:flex-end;
+}
+.hero-banner::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C4A882' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.hero-banner-inner{position:relative;z-index:1;width:100%;max-width:1400px;margin:0 auto;padding:0 40px 48px}
+.hero-eyebrow{font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:rgba(196,168,130,.7);margin-bottom:12px}
+.hero-title{font-family:var(--pf);font-size:clamp(36px,5vw,60px);font-weight:400;color:var(--w);line-height:1;margin-bottom:8px}
+.hero-title em{font-style:italic;color:var(--z)}
+.hero-sub{font-size:14px;font-weight:300;color:rgba(250,248,244,.6);margin-top:8px}
+.hero-count{position:absolute;bottom:48px;right:40px;text-align:right}
+.hero-count-num{font-family:var(--pf);font-size:52px;font-weight:400;color:var(--z);line-height:1}
+.hero-count-lbl{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(196,168,130,.6)}
+
+/* ── LAYOUT ── */
+.page-body{max-width:1400px;margin:0 auto;padding:40px 40px;display:grid;grid-template-columns:280px 1fr;gap:32px;align-items:start}
+
+/* ── FILTER SIDEBAR ── */
+.sidebar{position:sticky;top:82px;background:var(--w);border:1px solid var(--zlt)}
+.sidebar-header{padding:20px 20px 16px;border-bottom:1px solid var(--zlt);display:flex;align-items:center;justify-content:space-between}
+.sidebar-title{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--sub)}
+.sidebar-reset{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--s);cursor:pointer;border:none;background:none;padding:0;transition:color .2s}
+.sidebar-reset:hover{color:var(--sdk)}
+
+.filter-group{border-bottom:1px solid var(--zlt)}
+.filter-group-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;user-select:none}
+.filter-group-name{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--t)}
+.filter-chevron{font-size:10px;color:var(--dim);transition:transform .2s}
+.filter-group.open .filter-chevron{transform:rotate(180deg)}
+.filter-body{padding:4px 20px 16px;display:none}
+.filter-group.open .filter-body{display:block}
+
+.filter-option{display:flex;align-items:center;gap:10px;padding:5px 0;cursor:pointer}
+.filter-option input[type=checkbox]{appearance:none;-webkit-appearance:none;width:15px;height:15px;border:1.5px solid var(--zlt);background:transparent;cursor:pointer;flex-shrink:0;transition:border-color .15s,background .15s;position:relative}
+.filter-option input[type=checkbox]:checked{border-color:var(--s);background:var(--s)}
+.filter-option input[type=checkbox]:checked::after{content:'';position:absolute;top:2px;left:4px;width:4px;height:7px;border:1.5px solid #fff;border-top:none;border-left:none;transform:rotate(45deg)}
+.filter-option label{font-size:13px;font-weight:300;color:var(--sub);cursor:pointer;flex:1;display:flex;align-items:center;justify-content:space-between}
+.filter-count{font-size:10px;color:var(--dim)}
+
+/* Duur slider */
+.duration-range{padding:0 0 4px}
+.range-track{position:relative;height:3px;background:var(--zlt);margin:12px 0 6px}
+.range-fill{position:absolute;height:100%;background:var(--s)}
+.range-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--dim)}
+input[type=range].tt-range{-webkit-appearance:none;appearance:none;width:100%;height:3px;background:transparent;position:absolute;top:0;pointer-events:none}
+input[type=range].tt-range::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--s);border:2px solid var(--w);box-shadow:0 0 0 1.5px var(--s);cursor:pointer;pointer-events:auto;transition:transform .15s}
+input[type=range].tt-range::-webkit-slider-thumb:hover{transform:scale(1.2)}
+
+/* ── RESULTS AREA ── */
+.results-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.results-count{font-size:13px;font-weight:300;color:var(--sub)}
+.results-count strong{color:var(--t);font-weight:600}
+.sort-wrap{display:flex;align-items:center;gap:10px}
+.sort-label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+.sort-select{font-family:var(--dm);font-size:12px;font-weight:500;color:var(--t);background:var(--w);border:1px solid var(--zlt);padding:7px 28px 7px 12px;appearance:none;-webkit-appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238A7060' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
+.sort-select:focus{outline:none;border-color:var(--s)}
+
+/* VIEW TOGGLE */
+.view-toggle{display:flex;gap:2px}
+.view-btn{width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--zlt);cursor:pointer;color:var(--dim);transition:background .15s,color .15s;font-size:14px}
+.view-btn.active{background:var(--s);border-color:var(--s);color:var(--w)}
+
+/* ACTIVE FILTERS */
+.active-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;min-height:0}
+.filter-tag{display:flex;align-items:center;gap:6px;background:var(--iw);border:1px solid var(--zlt);padding:4px 10px 4px 12px;font-size:11px;font-weight:500;color:var(--sub)}
+.filter-tag button{background:none;border:none;cursor:pointer;color:var(--dim);font-size:13px;line-height:1;padding:0;transition:color .15s}
+.filter-tag button:hover{color:var(--s)}
+
+/* ── REIS KAARTEN ── */
+.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.cards-grid.list-view{grid-template-columns:1fr}
+
+.rcard{background:var(--w);border:1px solid var(--zlt);overflow:hidden;cursor:pointer;transition:transform .22s var(--ease),box-shadow .22s var(--ease)}
+.rcard:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(45,31,20,.12)}
+.rcard-photo{position:relative;aspect-ratio:3/2;overflow:hidden}
+.rcard-photo .photo-bg{width:100%;height:100%;transition:transform .5s var(--ease)}
+.rcard:hover .photo-bg{transform:scale(1.05)}
+.rcard-photo .rcard-region{position:absolute;top:12px;left:12px;background:rgba(45,31,20,.65);backdrop-filter:blur(4px);padding:4px 10px;font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--w)}
+.rcard-photo .rcard-thema{position:absolute;top:12px;right:12px;background:var(--s);padding:4px 10px;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--w)}
+.rcard-body{padding:20px 20px 16px}
+.rcard-name{font-family:var(--pf);font-size:18px;font-weight:400;color:var(--t);line-height:1.25;margin-bottom:6px}
+.rcard-tagline{font-size:12px;font-weight:300;color:var(--dim);line-height:1.5;margin-bottom:14px}
+.rcard-meta{display:flex;align-items:center;gap:16px;padding-top:14px;border-top:1px solid var(--zlt)}
+.rcard-meta-item{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:500;color:var(--sub)}
+.rcard-meta-item svg{color:var(--s);flex-shrink:0}
+.rcard-price{margin-left:auto;text-align:right}
+.rcard-price-from{font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.rcard-price-val{font-family:var(--pf);font-size:20px;font-weight:400;color:var(--s);line-height:1}
+
+/* LIST VIEW CARD */
+.cards-grid.list-view .rcard{display:grid;grid-template-columns:280px 1fr}
+.cards-grid.list-view .rcard-photo{aspect-ratio:unset;height:100%}
+.cards-grid.list-view .rcard-body{padding:24px 24px 20px;display:flex;flex-direction:column;justify-content:space-between}
+.cards-grid.list-view .rcard-name{font-size:22px}
+
+/* COLOR PLACEHOLDERS */
+.ph-marokko{background:linear-gradient(135deg,#c09850 0%,#804820 60%,#4A2208 100%)}
+.ph-japan{background:linear-gradient(135deg,#d09090 0%,#904040 60%,#5A1818 100%)}
+.ph-oman{background:linear-gradient(135deg,#70a880 0%,#305840 60%,#102818 100%)}
+.ph-dubai{background:linear-gradient(135deg,#c8a870 0%,#8a6030 60%,#4A2808 100%)}
+.ph-tanzania{background:linear-gradient(135deg,#c09058 0%,#885020 60%,#4A2808 100%)}
+.ph-portugal{background:linear-gradient(135deg,#80a068 0%,#507038 60%,#284018 100%)}
+.ph-jordan{background:linear-gradient(135deg,#c0a070 0%,#806030 60%,#403008 100%)}
+.ph-bali{background:linear-gradient(135deg,#78a870 0%,#387848 60%,#104820 100%)}
+.ph-argentina{background:linear-gradient(135deg,#8090b8 0%,#384868 60%,#102038 100%)}
+.ph-singapore{background:linear-gradient(135deg,#b07888 0%,#784858 60%,#382030 100%)}
+.ph-abudhabi{background:linear-gradient(135deg,#c8bc80 0%,#987840 60%,#583808 100%)}
+.ph-peru{background:linear-gradient(135deg,#a07858 0%,#684030 60%,#301808 100%)}
+
+/* LOAD MORE */
+.load-more-wrap{text-align:center;padding:48px 0 0}
+.btn-load{display:inline-block;border:1.5px solid var(--s);color:var(--s);font-family:var(--dm);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:14px 40px;cursor:pointer;background:none;transition:background .2s,color .2s}
+.btn-load:hover{background:var(--s);color:var(--w)}
+
+/* NO RESULTS */
+.no-results{text-align:center;padding:80px 40px;display:none}
+.no-results.show{display:block}
+.no-results-icon{font-size:40px;margin-bottom:20px;opacity:.3}
+.no-results h3{font-family:var(--pf);font-size:24px;font-weight:400;color:var(--t);margin-bottom:10px}
+.no-results p{font-size:14px;font-weight:300;color:var(--dim)}
+
+/* RESPONSIVE */
+@media(max-width:1100px){.cards-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:900px){
+  .page-body{grid-template-columns:1fr;padding:24px}
+  .sidebar{position:static}
+  .hero-count{display:none}
+  .cards-grid{grid-template-columns:repeat(2,1fr)}
+  .cards-grid.list-view .rcard{grid-template-columns:200px 1fr}
+}
+@media(max-width:600px){
+  .cards-grid,.cards-grid.list-view{grid-template-columns:1fr}
+  .cards-grid.list-view .rcard{grid-template-columns:1fr;display:block}
+  .hero-banner{height:240px}
+  .page-body{padding:16px}
+  .nav-inner{padding:0 16px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-back">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Terug
+    </a>
+    <a href="index.html" class="nav-logo">TOTAL <span class="dot">&middot;</span> TRAVEL</a>
+    <a href="totaltravel-aanvraag.html" class="nav-cta">Reis aanvragen</a>
+  </div>
+</nav>
+
+<!-- HERO BANNER -->
+<div class="hero-banner">
+  <div class="hero-banner-inner">
+    <div class="hero-eyebrow">Ontdek de wereld op uw maat</div>
+    <h1 class="hero-title">Reis<em>zoeker</em></h1>
+    <p class="hero-sub">Filter op bestemming, thema, duur en budget — wij regelen de rest</p>
+    <div class="hero-count">
+      <div class="hero-count-num" id="heroCount">12</div>
+      <div class="hero-count-lbl">reizen gevonden</div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE BODY -->
+<div class="page-body">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <span class="sidebar-title">Filteren</span>
+      <button class="sidebar-reset" onclick="resetFilters()">Wis alles</button>
+    </div>
+
+    <!-- BESTEMMING -->
+    <div class="filter-group open" id="fg-bestemming">
+      <div class="filter-group-header" onclick="toggleGroup('fg-bestemming')">
+        <span class="filter-group-name">Bestemming</span>
+        <span class="filter-chevron">&#9660;</span>
+      </div>
+      <div class="filter-body">
+        <div class="filter-option"><input type="checkbox" id="f-afrika" data-filter="regio" data-value="Afrika" onchange="applyFilters()"><label for="f-afrika">Afrika <span class="filter-count">4</span></label></div>
+        <div class="filter-option"><input type="checkbox" id="f-azie" data-filter="regio" data-value="Azië" onchange="applyFilters()"><label for="f-azie">Azië <span class="filter-count">3</span></label></div>
+        <div class="filter-option"><input type="checkbox" id="f-mo" data-filter="regio" data-value="Midden-Oosten" onchange="applyFilters()"><label for="f-mo">Midden-Oosten <span class="filter-count">3</span></label></div>
+        <div class="filter-option"><input type="checkbox" id="f-europa" data-filter="regio" data-value="Europa" onchange="applyFilters()"><label for="f-europa">Europa <span class="filter-count">1</span></label></div>
+        <div class="filter-option"><input type="checkbox" id="f-za" data-filter="regio" data-value="Zuid-Amerika" onchange="applyFilters()"><label for="f-za">Zuid-Amerika <span class="filter-count">1</span></label></div>
+      </div>
+    </div>
+
+    <!-- THEMA -->
+    <div class="filter-group open" id="fg-thema">
+      <div class="filter-group-header" onclick="toggleGroup('fg-thema')">
+        <span class="filter-group-name">Thema</span>
+        <span class="filter-chevron">&#9660;</span>
+      </div>
+      <div class="filter-body">
+        <div class="filter-option"><input type="checkbox" id="f-maatwerk" data-filter="thema" data-value="Maatwerk" onchange="applyFilters()"><label for="f-maatwerk">Maatwerk</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-safari" data-filter="thema" data-value="Safari" onchange="applyFilters()"><label for="f-safari">Safari</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-golf" data-filter="thema" data-value="Golf" onchange="applyFilters()"><label for="f-golf">Golf</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-f1" data-filter="thema" data-value="Formule 1" onchange="applyFilters()"><label for="f-f1">Formule 1</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-cruise" data-filter="thema" data-value="Cruise" onchange="applyFilters()"><label for="f-cruise">Cruise</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-incentive" data-filter="thema" data-value="Incentive" onchange="applyFilters()"><label for="f-incentive">Incentive</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-steden" data-filter="thema" data-value="Stedentrip" onchange="applyFilters()"><label for="f-steden">Stedentrip</label></div>
+      </div>
+    </div>
+
+    <!-- DUUR -->
+    <div class="filter-group open" id="fg-duur">
+      <div class="filter-group-header" onclick="toggleGroup('fg-duur')">
+        <span class="filter-group-name">Reisduur</span>
+        <span class="filter-chevron">&#9660;</span>
+      </div>
+      <div class="filter-body">
+        <div class="duration-range">
+          <div class="range-track">
+            <div class="range-fill" id="rangeFill"></div>
+            <input type="range" class="tt-range" id="durMin" min="4" max="21" value="4" oninput="updateDurationRange()">
+            <input type="range" class="tt-range" id="durMax" min="4" max="21" value="21" oninput="updateDurationRange()">
+          </div>
+          <div class="range-labels">
+            <span id="durMinLabel">4 dagen</span>
+            <span id="durMaxLabel">21 dagen</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUDGET -->
+    <div class="filter-group open" id="fg-budget">
+      <div class="filter-group-header" onclick="toggleGroup('fg-budget')">
+        <span class="filter-group-name">Budget p.p.</span>
+        <span class="filter-chevron">&#9660;</span>
+      </div>
+      <div class="filter-body">
+        <div class="filter-option"><input type="checkbox" id="f-b1" data-filter="budget" data-value="1" onchange="applyFilters()"><label for="f-b1">Tot €2.500</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-b2" data-filter="budget" data-value="2" onchange="applyFilters()"><label for="f-b2">€2.500 – €5.000</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-b3" data-filter="budget" data-value="3" onchange="applyFilters()"><label for="f-b3">€5.000 – €10.000</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-b4" data-filter="budget" data-value="4" onchange="applyFilters()"><label for="f-b4">€10.000+</label></div>
+      </div>
+    </div>
+
+    <!-- REISGEZELSCHAP -->
+    <div class="filter-group" id="fg-gezelschap">
+      <div class="filter-group-header" onclick="toggleGroup('fg-gezelschap')">
+        <span class="filter-group-name">Reisgezelschap</span>
+        <span class="filter-chevron">&#9660;</span>
+      </div>
+      <div class="filter-body">
+        <div class="filter-option"><input type="checkbox" id="f-stel" data-filter="gezelschap" data-value="Stel" onchange="applyFilters()"><label for="f-stel">Stel</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-gezin" data-filter="gezelschap" data-value="Gezin" onchange="applyFilters()"><label for="f-gezin">Gezin met kinderen</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-groep" data-filter="gezelschap" data-value="Groep" onchange="applyFilters()"><label for="f-groep">Groep / Incentive</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-solo" data-filter="gezelschap" data-value="Solo" onchange="applyFilters()"><label for="f-solo">Solo</label></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- RESULTS -->
+  <main>
+    <div class="results-header">
+      <div class="results-count"><strong id="resultsCount">12</strong> reizen gevonden</div>
+      <div class="sort-wrap">
+        <span class="sort-label">Sorteren</span>
+        <select class="sort-select" id="sortSelect" onchange="applyFilters()">
+          <option value="aanbevolen">Aanbevolen</option>
+          <option value="prijs-laag">Prijs: laag → hoog</option>
+          <option value="prijs-hoog">Prijs: hoog → laag</option>
+          <option value="duur-kort">Duur: korte reizen eerst</option>
+          <option value="duur-lang">Duur: lange reizen eerst</option>
+        </select>
+        <div class="view-toggle">
+          <button class="view-btn active" id="btn-grid" title="Rasterweergave" onclick="setView('grid')">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="0" y="0" width="6" height="6"/><rect x="8" y="0" width="6" height="6"/><rect x="0" y="8" width="6" height="6"/><rect x="8" y="8" width="6" height="6"/></svg>
+          </button>
+          <button class="view-btn" id="btn-list" title="Lijstweergave" onclick="setView('list')">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="0" y="0" width="14" height="3"/><rect x="0" y="5.5" width="14" height="3"/><rect x="0" y="11" width="14" height="3"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="active-filters" id="activeTags"></div>
+
+    <div class="no-results" id="noResults">
+      <div class="no-results-icon">✦</div>
+      <h3>Geen reizen gevonden</h3>
+      <p>Pas uw filters aan of <button onclick="resetFilters()" style="color:var(--s);background:none;border:none;cursor:pointer;font-size:14px;font-weight:500;font-family:var(--dm);">verwijder alle filters</button></p>
+    </div>
+
+    <div class="cards-grid" id="cardsGrid">
+      <!-- Cards rendered by JS -->
+    </div>
+
+    <div class="load-more-wrap" id="loadMoreWrap">
+      <button class="btn-load" onclick="loadMore()">Meer reizen laden</button>
+    </div>
+  </main>
+</div>
+
+<script>
+const reizen = [
+  {id:1,naam:'De Magie van Marokko',tagline:'Medina\'s, Sahara en berbertraditie',regio:'Afrika',thema:'Maatwerk',duur:10,prijs:2290,budgetCat:2,gezelschap:['Stel','Gezin'],photo:'ph-marokko',slug:'marokko.html'},
+  {id:2,naam:'Tanzania & Zanzibar',tagline:'Serengeti, Ngorongoro en een tropisch eiland',regio:'Afrika',thema:'Safari',duur:14,prijs:5890,budgetCat:3,gezelschap:['Stel','Gezin'],photo:'ph-tanzania'},
+  {id:3,naam:'Kenia: Masai Mara',tagline:'De grote migratie van dichtbij beleven',regio:'Afrika',thema:'Safari',duur:10,prijs:4650,budgetCat:3,gezelschap:['Stel','Groep'],photo:'ph-tanzania'},
+  {id:4,naam:'Zuid-Afrika Ontdekt',tagline:'Kaapstad, Wijnland en de Garden Route',regio:'Afrika',thema:'Maatwerk',duur:14,prijs:3990,budgetCat:2,gezelschap:['Stel','Gezin'],photo:'ph-marokko'},
+  {id:5,naam:'Japan: Tradities & Technologie',tagline:'Tokio, Kyoto en de rust van Nara',regio:'Azië',thema:'Maatwerk',duur:14,prijs:4890,budgetCat:3,gezelschap:['Stel','Solo'],photo:'ph-japan'},
+  {id:6,naam:'Bali: Ziel van Indonesië',tagline:'Rijstterrassen, tempels en oceaanstrand',regio:'Azië',thema:'Maatwerk',duur:14,prijs:3290,budgetCat:2,gezelschap:['Stel','Solo'],photo:'ph-bali'},
+  {id:7,naam:'Vietnam van Noord tot Zuid',tagline:'Hanoi, Ha Long Bay en Ho Chi Minh Stad',regio:'Azië',thema:'Maatwerk',duur:16,prijs:3790,budgetCat:2,gezelschap:['Stel','Gezin'],photo:'ph-bali'},
+  {id:8,naam:'Oman: Authentiek Arabië',tagline:'Woestijn, wadis en de blauwe Oman Zee',regio:'Midden-Oosten',thema:'Maatwerk',duur:10,prijs:3190,budgetCat:2,gezelschap:['Stel','Solo'],photo:'ph-oman'},
+  {id:9,naam:'Dubai & Abu Dhabi',tagline:'Ultiem luxe aan de Arabische Golf',regio:'Midden-Oosten',thema:'Incentive',duur:7,prijs:2990,budgetCat:2,gezelschap:['Stel','Groep'],photo:'ph-dubai'},
+  {id:10,naam:'Grand Prix Abu Dhabi',tagline:'F1-finale op Yas Marina Circuit',regio:'Midden-Oosten',thema:'Formule 1',duur:5,prijs:4490,budgetCat:3,gezelschap:['Stel','Groep','Solo'],photo:'ph-abudhabi'},
+  {id:11,naam:'Portugal: Golf & Cultuur',tagline:'Algarve golfbanen en Lissabon',regio:'Europa',thema:'Golf',duur:8,prijs:2190,budgetCat:2,gezelschap:['Stel','Groep'],photo:'ph-portugal'},
+  {id:12,naam:'Peru: Inca\'s & Amazone',tagline:'Machu Picchu, Cusco en de jungle',regio:'Zuid-Amerika',thema:'Maatwerk',duur:14,prijs:4990,budgetCat:3,gezelschap:['Stel','Solo'],photo:'ph-peru'},
+];
+
+let filtered = [...reizen];
+let shown = 9;
+let currentView = 'grid';
+let durMin = 4, durMax = 21;
+
+function renderCards(){
+  const grid = document.getElementById('cardsGrid');
+  const noRes = document.getElementById('noResults');
+  const loadWrap = document.getElementById('loadMoreWrap');
+  const visible = filtered.slice(0, shown);
+
+  document.getElementById('resultsCount').textContent = filtered.length;
+  document.getElementById('heroCount').textContent = filtered.length;
+
+  if(!filtered.length){
+    grid.innerHTML = '';
+    noRes.classList.add('show');
+    loadWrap.style.display = 'none';
+    return;
+  }
+  noRes.classList.remove('show');
+
+  grid.innerHTML = visible.map(r => `
+    <div class="rcard" onclick="window.location='${r.slug||'totaltravel-aanvraag.html'}'">
+      <div class="rcard-photo">
+        <div class="photo-bg ${r.photo}"></div>
+        <div class="rcard-region">${r.regio}</div>
+        <div class="rcard-thema">${r.thema}</div>
+      </div>
+      <div class="rcard-body">
+        <div>
+          <div class="rcard-name">${r.naam}</div>
+          <div class="rcard-tagline">${r.tagline}</div>
+        </div>
+        <div class="rcard-meta">
+          <div class="rcard-meta-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            ${r.duur} dagen
+          </div>
+          <div class="rcard-price">
+            <div class="rcard-price-from">Vanaf p.p.</div>
+            <div class="rcard-price-val">€${r.prijs.toLocaleString('nl-NL')}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  loadWrap.style.display = filtered.length > shown ? 'block' : 'none';
+}
+
+function applyFilters(){
+  const regioChecked = [...document.querySelectorAll('input[data-filter="regio"]:checked')].map(i=>i.dataset.value);
+  const themaChecked = [...document.querySelectorAll('input[data-filter="thema"]:checked')].map(i=>i.dataset.value);
+  const budgetChecked = [...document.querySelectorAll('input[data-filter="budget"]:checked')].map(i=>Number(i.dataset.value));
+  const gezChecked = [...document.querySelectorAll('input[data-filter="gezelschap"]:checked')].map(i=>i.dataset.value);
+  const sort = document.getElementById('sortSelect').value;
+
+  filtered = reizen.filter(r => {
+    if(regioChecked.length && !regioChecked.includes(r.regio)) return false;
+    if(themaChecked.length && !themaChecked.includes(r.thema)) return false;
+    if(budgetChecked.length && !budgetChecked.includes(r.budgetCat)) return false;
+    if(gezChecked.length && !r.gezelschap.some(g=>gezChecked.includes(g))) return false;
+    if(r.duur < durMin || r.duur > durMax) return false;
+    return true;
+  });
+
+  if(sort==='prijs-laag') filtered.sort((a,b)=>a.prijs-b.prijs);
+  else if(sort==='prijs-hoog') filtered.sort((a,b)=>b.prijs-a.prijs);
+  else if(sort==='duur-kort') filtered.sort((a,b)=>a.duur-b.duur);
+  else if(sort==='duur-lang') filtered.sort((a,b)=>b.duur-a.duur);
+
+  shown = 9;
+  renderTags();
+  renderCards();
+}
+
+function renderTags(){
+  const wrap = document.getElementById('activeTags');
+  const checked = [...document.querySelectorAll('input[type=checkbox]:checked')];
+  const duurTag = (durMin > 4 || durMax < 21) ? [{label:`${durMin}–${durMax} dagen`,clear:clearDuur}] : [];
+
+  const tags = checked.map(i => ({
+    label: i.labels[0].childNodes[0].textContent.trim(),
+    clear: ()=>{ i.checked=false; applyFilters(); }
+  })).concat(duurTag);
+
+  wrap.innerHTML = tags.map((t,idx)=>
+    `<div class="filter-tag">${t.label}<button onclick="clearTag(${idx})" aria-label="Verwijder filter">&#10005;</button></div>`
+  ).join('');
+  wrap._clearFns = tags.map(t=>t.clear);
+}
+
+function clearTag(idx){
+  document.getElementById('activeTags')._clearFns[idx]();
+}
+function clearDuur(){ durMin=4; durMax=21; document.getElementById('durMin').value=4; document.getElementById('durMax').value=21; updateDurationRange(false); applyFilters(); }
+
+function resetFilters(){
+  document.querySelectorAll('input[type=checkbox]').forEach(i=>i.checked=false);
+  clearDuur();
+  document.getElementById('sortSelect').value='aanbevolen';
+  applyFilters();
+}
+
+function toggleGroup(id){
+  document.getElementById(id).classList.toggle('open');
+}
+
+function setView(v){
+  currentView = v;
+  const grid = document.getElementById('cardsGrid');
+  grid.classList.toggle('list-view', v==='list');
+  document.getElementById('btn-grid').classList.toggle('active', v==='grid');
+  document.getElementById('btn-list').classList.toggle('active', v==='list');
+}
+
+function loadMore(){ shown += 6; renderCards(); }
+
+function updateDurationRange(doFilter=true){
+  const minEl = document.getElementById('durMin');
+  const maxEl = document.getElementById('durMax');
+  durMin = Math.min(Number(minEl.value), Number(maxEl.value));
+  durMax = Math.max(Number(minEl.value), Number(maxEl.value));
+  document.getElementById('durMinLabel').textContent = durMin + ' dagen';
+  document.getElementById('durMaxLabel').textContent = durMax === 21 ? '21+ dagen' : durMax + ' dagen';
+  const pct1 = (durMin - 4) / 17 * 100;
+  const pct2 = (durMax - 4) / 17 * 100;
+  document.getElementById('rangeFill').style.left = pct1 + '%';
+  document.getElementById('rangeFill').style.width = (pct2 - pct1) + '%';
+  if(doFilter) applyFilters();
+}
+
+// Init
+updateDurationRange(false);
+renderCards();
+</script>
+</body>
+</html>
