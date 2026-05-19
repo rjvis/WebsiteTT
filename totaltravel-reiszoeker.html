@@ -233,6 +233,27 @@ input[type=range].tt-range::-webkit-slider-thumb:hover{transform:scale(1.2)}
       </div>
     </div>
 
+    <!-- LAND -->
+    <div class="filter-group open" id="fg-land">
+      <div class="filter-group-header" onclick="toggleGroup('fg-land')">
+        <span class="filter-group-name">Land</span>
+        <span class="filter-chevron">&#9660;</span>
+      </div>
+      <div class="filter-body">
+        <div class="filter-option"><input type="checkbox" id="f-l-marokko" data-filter="land" data-value="Marokko" onchange="applyFilters()"><label for="f-l-marokko">Marokko <span class="filter-count">9</span></label></div>
+        <div class="filter-option"><input type="checkbox" id="f-l-tanzania" data-filter="land" data-value="Tanzania" onchange="applyFilters()"><label for="f-l-tanzania">Tanzania <span class="filter-count">1</span></label></div>
+        <div class="filter-option"><input type="checkbox" id="f-l-kenia" data-filter="land" data-value="Kenia" onchange="applyFilters()"><label for="f-l-kenia">Kenia <span class="filter-count">1</span></label></div>
+        <div class="filter-option"><input type="checkbox" id="f-l-zuidafrika" data-filter="land" data-value="Zuid-Afrika" onchange="applyFilters()"><label for="f-l-zuidafrika">Zuid-Afrika <span class="filter-count">1</span></label></div>
+        <div class="filter-option"><input type="checkbox" id="f-l-japan" data-filter="land" data-value="Japan" onchange="applyFilters()"><label for="f-l-japan">Japan <span class="filter-count">1</span></label></div>
+        <div class="filter-option"><input type="checkbox" id="f-l-bali" data-filter="land" data-value="Bali" onchange="applyFilters()"><label for="f-l-bali">Bali / Indonesië <span class="filter-count">1</span></label></div>
+        <div class="filter-option"><input type="checkbox" id="f-l-vietnam" data-filter="land" data-value="Vietnam" onchange="applyFilters()"><label for="f-l-vietnam">Vietnam <span class="filter-count">1</span></label></div>
+        <div class="filter-option"><input type="checkbox" id="f-l-oman" data-filter="land" data-value="Oman" onchange="applyFilters()"><label for="f-l-oman">Oman <span class="filter-count">1</span></label></div>
+        <div class="filter-option"><input type="checkbox" id="f-l-vae" data-filter="land" data-value="Ver. Arabische Emiraten" onchange="applyFilters()"><label for="f-l-vae">Ver. Arabische Emiraten <span class="filter-count">2</span></label></div>
+        <div class="filter-option"><input type="checkbox" id="f-l-portugal" data-filter="land" data-value="Portugal" onchange="applyFilters()"><label for="f-l-portugal">Portugal <span class="filter-count">1</span></label></div>
+        <div class="filter-option"><input type="checkbox" id="f-l-peru" data-filter="land" data-value="Peru" onchange="applyFilters()"><label for="f-l-peru">Peru <span class="filter-count">1</span></label></div>
+      </div>
+    </div>
+
     <!-- THEMA -->
     <div class="filter-group open" id="fg-thema">
       <div class="filter-group-header" onclick="toggleGroup('fg-thema')">
@@ -344,26 +365,26 @@ input[type=range].tt-range::-webkit-slider-thumb:hover{transform:scale(1.2)}
 
 <script>
 const reizen = [
-  {id:1,naam:'De Magie van Marokko',tagline:'Medina\'s, Sahara en berbertraditie',regio:'Afrika',thema:'Maatwerk',duur:10,prijs:2290,budgetCat:2,gezelschap:['Stel','Gezin'],photo:'ph-marokko',slug:'marokko.html'},
-  {id:2,naam:'Tanzania & Zanzibar',tagline:'Serengeti, Ngorongoro en een tropisch eiland',regio:'Afrika',thema:'Safari',duur:14,prijs:5890,budgetCat:3,gezelschap:['Stel','Gezin'],photo:'ph-tanzania'},
-  {id:3,naam:'Kenia: Masai Mara',tagline:'De grote migratie van dichtbij beleven',regio:'Afrika',thema:'Safari',duur:10,prijs:4650,budgetCat:3,gezelschap:['Stel','Groep'],photo:'ph-tanzania'},
-  {id:4,naam:'Zuid-Afrika Ontdekt',tagline:'Kaapstad, Wijnland en de Garden Route',regio:'Afrika',thema:'Maatwerk',duur:14,prijs:3990,budgetCat:2,gezelschap:['Stel','Gezin'],photo:'ph-marokko'},
-  {id:5,naam:'Japan: Tradities & Technologie',tagline:'Tokio, Kyoto en de rust van Nara',regio:'Azië',thema:'Maatwerk',duur:14,prijs:4890,budgetCat:3,gezelschap:['Stel','Solo'],photo:'ph-japan'},
-  {id:6,naam:'Bali: Ziel van Indonesië',tagline:'Rijstterrassen, tempels en oceaanstrand',regio:'Azië',thema:'Maatwerk',duur:14,prijs:3290,budgetCat:2,gezelschap:['Stel','Solo'],photo:'ph-bali'},
-  {id:7,naam:'Vietnam van Noord tot Zuid',tagline:'Hanoi, Ha Long Bay en Ho Chi Minh Stad',regio:'Azië',thema:'Maatwerk',duur:16,prijs:3790,budgetCat:2,gezelschap:['Stel','Gezin'],photo:'ph-bali'},
-  {id:8,naam:'Oman: Authentiek Arabië',tagline:'Woestijn, wadis en de blauwe Oman Zee',regio:'Midden-Oosten',thema:'Maatwerk',duur:10,prijs:3190,budgetCat:2,gezelschap:['Stel','Solo'],photo:'ph-oman'},
-  {id:9,naam:'Dubai & Abu Dhabi',tagline:'Ultiem luxe aan de Arabische Golf',regio:'Midden-Oosten',thema:'Incentive',duur:7,prijs:2990,budgetCat:2,gezelschap:['Stel','Groep'],photo:'ph-dubai'},
-  {id:10,naam:'Grand Prix Abu Dhabi',tagline:'F1-finale op Yas Marina Circuit',regio:'Midden-Oosten',thema:'Formule 1',duur:5,prijs:4490,budgetCat:3,gezelschap:['Stel','Groep','Solo'],photo:'ph-abudhabi'},
-  {id:11,naam:'Portugal: Golf & Cultuur',tagline:'Algarve golfbanen en Lissabon',regio:'Europa',thema:'Golf',duur:8,prijs:2190,budgetCat:2,gezelschap:['Stel','Groep'],photo:'ph-portugal'},
-  {id:12,naam:'Peru: Inca\'s & Amazone',tagline:'Machu Picchu, Cusco en de jungle',regio:'Zuid-Amerika',thema:'Maatwerk',duur:14,prijs:4990,budgetCat:3,gezelschap:['Stel','Solo'],photo:'ph-peru'},
-  {id:13,naam:'Marokko: Koningssteden Fly & Drive',tagline:'Fez, Meknes, Rabat en Marrakech per huurauto',regio:'Afrika',thema:'Maatwerk',duur:8,prijs:789,budgetCat:1,gezelschap:['Stel','Gezin','Solo'],photo:'ph-marokko',slug:'marokko.html'},
-  {id:14,naam:'Beleef het Echte Marokko',tagline:'Authentieke cultuur, souks en lokaal leven',regio:'Afrika',thema:'Maatwerk',duur:5,prijs:458,budgetCat:1,gezelschap:['Stel','Solo'],photo:'ph-marokko',slug:'marokko.html'},
-  {id:15,naam:'Zuid-Marokko: Bergen, Woestijn & Strand',tagline:'Van Marrakech naar de Sahara en Essaouira',regio:'Afrika',thema:'Maatwerk',duur:9,prijs:2050,budgetCat:1,gezelschap:['Stel','Gezin'],photo:'ph-marokko',slug:'marokko.html'},
-  {id:16,naam:'Rondreis Koningssteden Marokko',tagline:'Fez, Meknes, Rabat & Marrakech met lokale gidsen',regio:'Afrika',thema:'Maatwerk',duur:8,prijs:1990,budgetCat:1,gezelschap:['Stel','Solo'],photo:'ph-marokko',slug:'marokko.html'},
-  {id:17,naam:'Koningssteden & Woestijn',tagline:'Cultuur en avontuur van stad tot Sahara',regio:'Afrika',thema:'Maatwerk',duur:12,prijs:2195,budgetCat:2,gezelschap:['Stel','Gezin'],photo:'ph-marokko',slug:'marokko.html'},
-  {id:18,naam:'Het Beste van Marokko',tagline:'17 dagen langs de mooiste landschappen van noord tot zuid',regio:'Afrika',thema:'Maatwerk',duur:17,prijs:2550,budgetCat:2,gezelschap:['Stel','Gezin','Solo'],photo:'ph-marokko',slug:'marokko.html'},
-  {id:19,naam:'Compleet Marokko Rondreis',tagline:'21 dagen langs alle culturele en natuurlijke highlights',regio:'Afrika',thema:'Maatwerk',duur:21,prijs:2590,budgetCat:2,gezelschap:['Stel','Gezin'],photo:'ph-marokko',slug:'marokko.html'},
-  {id:20,naam:'Marokko per Trein',tagline:'Highlights in 8 dagen — maak kennis met keuken en cultuur',regio:'Afrika',thema:'Maatwerk',duur:8,prijs:1395,budgetCat:1,gezelschap:['Stel','Solo'],photo:'ph-marokko',slug:'marokko.html'},
+  {id:1,naam:'De Magie van Marokko',tagline:'Medina\'s, Sahara en berbertraditie',regio:'Afrika',land:'Marokko',thema:'Maatwerk',duur:10,prijs:2290,budgetCat:2,gezelschap:['Stel','Gezin'],photo:'ph-marokko',slug:'marokko.html'},
+  {id:2,naam:'Tanzania & Zanzibar',tagline:'Serengeti, Ngorongoro en een tropisch eiland',regio:'Afrika',land:'Tanzania',thema:'Safari',duur:14,prijs:5890,budgetCat:3,gezelschap:['Stel','Gezin'],photo:'ph-tanzania'},
+  {id:3,naam:'Kenia: Masai Mara',tagline:'De grote migratie van dichtbij beleven',regio:'Afrika',land:'Kenia',thema:'Safari',duur:10,prijs:4650,budgetCat:3,gezelschap:['Stel','Groep'],photo:'ph-tanzania'},
+  {id:4,naam:'Zuid-Afrika Ontdekt',tagline:'Kaapstad, Wijnland en de Garden Route',regio:'Afrika',land:'Zuid-Afrika',thema:'Maatwerk',duur:14,prijs:3990,budgetCat:2,gezelschap:['Stel','Gezin'],photo:'ph-marokko'},
+  {id:5,naam:'Japan: Tradities & Technologie',tagline:'Tokio, Kyoto en de rust van Nara',regio:'Azië',land:'Japan',thema:'Maatwerk',duur:14,prijs:4890,budgetCat:3,gezelschap:['Stel','Solo'],photo:'ph-japan'},
+  {id:6,naam:'Bali: Ziel van Indonesië',tagline:'Rijstterrassen, tempels en oceaanstrand',regio:'Azië',land:'Bali',thema:'Maatwerk',duur:14,prijs:3290,budgetCat:2,gezelschap:['Stel','Solo'],photo:'ph-bali'},
+  {id:7,naam:'Vietnam van Noord tot Zuid',tagline:'Hanoi, Ha Long Bay en Ho Chi Minh Stad',regio:'Azië',land:'Vietnam',thema:'Maatwerk',duur:16,prijs:3790,budgetCat:2,gezelschap:['Stel','Gezin'],photo:'ph-bali'},
+  {id:8,naam:'Oman: Authentiek Arabië',tagline:'Woestijn, wadis en de blauwe Oman Zee',regio:'Midden-Oosten',land:'Oman',thema:'Maatwerk',duur:10,prijs:3190,budgetCat:2,gezelschap:['Stel','Solo'],photo:'ph-oman'},
+  {id:9,naam:'Dubai & Abu Dhabi',tagline:'Ultiem luxe aan de Arabische Golf',regio:'Midden-Oosten',land:'Ver. Arabische Emiraten',thema:'Incentive',duur:7,prijs:2990,budgetCat:2,gezelschap:['Stel','Groep'],photo:'ph-dubai'},
+  {id:10,naam:'Grand Prix Abu Dhabi',tagline:'F1-finale op Yas Marina Circuit',regio:'Midden-Oosten',land:'Ver. Arabische Emiraten',thema:'Formule 1',duur:5,prijs:4490,budgetCat:3,gezelschap:['Stel','Groep','Solo'],photo:'ph-abudhabi'},
+  {id:11,naam:'Portugal: Golf & Cultuur',tagline:'Algarve golfbanen en Lissabon',regio:'Europa',land:'Portugal',thema:'Golf',duur:8,prijs:2190,budgetCat:2,gezelschap:['Stel','Groep'],photo:'ph-portugal'},
+  {id:12,naam:'Peru: Inca\'s & Amazone',tagline:'Machu Picchu, Cusco en de jungle',regio:'Zuid-Amerika',land:'Peru',thema:'Maatwerk',duur:14,prijs:4990,budgetCat:3,gezelschap:['Stel','Solo'],photo:'ph-peru'},
+  {id:13,naam:'Marokko: Koningssteden Fly & Drive',tagline:'Fez, Meknes, Rabat en Marrakech per huurauto',regio:'Afrika',land:'Marokko',thema:'Maatwerk',duur:8,prijs:789,budgetCat:1,gezelschap:['Stel','Gezin','Solo'],photo:'ph-marokko',slug:'marokko.html'},
+  {id:14,naam:'Beleef het Echte Marokko',tagline:'Authentieke cultuur, souks en lokaal leven',regio:'Afrika',land:'Marokko',thema:'Maatwerk',duur:5,prijs:458,budgetCat:1,gezelschap:['Stel','Solo'],photo:'ph-marokko',slug:'marokko.html'},
+  {id:15,naam:'Zuid-Marokko: Bergen, Woestijn & Strand',tagline:'Van Marrakech naar de Sahara en Essaouira',regio:'Afrika',land:'Marokko',thema:'Maatwerk',duur:9,prijs:2050,budgetCat:1,gezelschap:['Stel','Gezin'],photo:'ph-marokko',slug:'marokko.html'},
+  {id:16,naam:'Rondreis Koningssteden Marokko',tagline:'Fez, Meknes, Rabat & Marrakech met lokale gidsen',regio:'Afrika',land:'Marokko',thema:'Maatwerk',duur:8,prijs:1990,budgetCat:1,gezelschap:['Stel','Solo'],photo:'ph-marokko',slug:'marokko.html'},
+  {id:17,naam:'Koningssteden & Woestijn',tagline:'Cultuur en avontuur van stad tot Sahara',regio:'Afrika',land:'Marokko',thema:'Maatwerk',duur:12,prijs:2195,budgetCat:2,gezelschap:['Stel','Gezin'],photo:'ph-marokko',slug:'marokko.html'},
+  {id:18,naam:'Het Beste van Marokko',tagline:'17 dagen langs de mooiste landschappen van noord tot zuid',regio:'Afrika',land:'Marokko',thema:'Maatwerk',duur:17,prijs:2550,budgetCat:2,gezelschap:['Stel','Gezin','Solo'],photo:'ph-marokko',slug:'marokko.html'},
+  {id:19,naam:'Compleet Marokko Rondreis',tagline:'21 dagen langs alle culturele en natuurlijke highlights',regio:'Afrika',land:'Marokko',thema:'Maatwerk',duur:21,prijs:2590,budgetCat:2,gezelschap:['Stel','Gezin'],photo:'ph-marokko',slug:'marokko.html'},
+  {id:20,naam:'Marokko per Trein',tagline:'Highlights in 8 dagen — maak kennis met keuken en cultuur',regio:'Afrika',land:'Marokko',thema:'Maatwerk',duur:8,prijs:1395,budgetCat:1,gezelschap:['Stel','Solo'],photo:'ph-marokko',slug:'marokko.html'},
 ];
 
 let filtered = [...reizen];
@@ -419,6 +440,7 @@ function renderCards(){
 
 function applyFilters(){
   const regioChecked = [...document.querySelectorAll('input[data-filter="regio"]:checked')].map(i=>i.dataset.value);
+  const landChecked  = [...document.querySelectorAll('input[data-filter="land"]:checked')].map(i=>i.dataset.value);
   const themaChecked = [...document.querySelectorAll('input[data-filter="thema"]:checked')].map(i=>i.dataset.value);
   const budgetChecked = [...document.querySelectorAll('input[data-filter="budget"]:checked')].map(i=>Number(i.dataset.value));
   const gezChecked = [...document.querySelectorAll('input[data-filter="gezelschap"]:checked')].map(i=>i.dataset.value);
@@ -426,6 +448,7 @@ function applyFilters(){
 
   filtered = reizen.filter(r => {
     if(regioChecked.length && !regioChecked.includes(r.regio)) return false;
+    if(landChecked.length  && !landChecked.includes(r.land))   return false;
     if(themaChecked.length && !themaChecked.includes(r.thema)) return false;
     if(budgetChecked.length && !budgetChecked.includes(r.budgetCat)) return false;
     if(gezChecked.length && !r.gezelschap.some(g=>gezChecked.includes(g))) return false;
