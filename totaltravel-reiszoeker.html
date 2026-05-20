@@ -98,7 +98,7 @@ input[type=range].tt-range::-webkit-slider-thumb:hover{transform:scale(1.2)}
 .cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .cards-grid.list-view{grid-template-columns:1fr}
 
-.rcard{background:var(--w);border:1px solid var(--zlt);overflow:hidden;cursor:pointer;transition:transform .22s var(--ease),box-shadow .22s var(--ease);position:relative}
+.rcard{background:var(--w);border:1px solid var(--zlt);border-radius:20px;overflow:hidden;cursor:pointer;transition:transform .22s var(--ease),box-shadow .22s var(--ease);position:relative}
 .rcard:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(45,31,20,.12)}
 .rcard-photo{position:relative;aspect-ratio:3/2;overflow:hidden}
 .rcard-photo .photo-bg{width:100%;height:100%;background-size:cover;background-position:center;transition:transform .5s var(--ease)}
@@ -468,6 +468,15 @@ function renderCards(){
   loadWrap.style.display = filtered.length > shown ? 'block' : 'none';
 }
 
+/* Bepaalt de budgetcategorie op basis van de vanaf-prijs.
+   Grenzen sluiten aan op de filterlabels: cat 1 t/m €2.499, cat 2 €2.500–€4.999, etc. */
+function berekenBudgetCat(prijs){
+  if(prijs < 2500) return 1;
+  if(prijs < 5000) return 2;
+  if(prijs < 10000) return 3;
+  return 4;
+}
+
 function applyFilters(){
   const regioChecked = [...document.querySelectorAll('input[data-filter="regio"]:checked')].map(i=>i.dataset.value);
   const landChecked  = [...document.querySelectorAll('input[data-filter="land"]:checked')].map(i=>i.dataset.value);
@@ -475,12 +484,13 @@ function applyFilters(){
   const budgetChecked = [...document.querySelectorAll('input[data-filter="budget"]:checked')].map(i=>Number(i.dataset.value));
   const gezChecked = [...document.querySelectorAll('input[data-filter="gezelschap"]:checked')].map(i=>i.dataset.value);
   const sort = document.getElementById('sortSelect').value;
-
   filtered = reizen.filter(r => {
     if(regioChecked.length && !regioChecked.includes(r.regio)) return false;
     if(landChecked.length  && !landChecked.includes(r.land))   return false;
     if(themaChecked.length && !themaChecked.includes(r.thema)) return false;
-    if(budgetChecked.length && !budgetChecked.includes(r.budgetCat)) return false;
+    // Budgetfilter werkt rechtstreeks op de prijs, niet op het opgeslagen budgetCat-veld,
+    // zodat een handmatige prijswijziging meteen in de juiste categorie valt.
+    if(budgetChecked.length && !budgetChecked.includes(berekenBudgetCat(r.prijs))) return false;
     if(gezChecked.length && !(r.gezelschap||[]).some(g=>gezChecked.includes(g))) return false;
     if(r.duur < durMin || r.duur > durMax) return false;
     return true;
