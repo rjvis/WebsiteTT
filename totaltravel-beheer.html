@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reisbeheer — Total Travel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --s:#A0522D;--sdk:#7A3E21;--slt:#C4784A;
+  --z:#C4A882;--zlt:#DDD0BC;--zdm:#B09068;
+  --i:#F5F0E8;--iw:#EDE5D8;--ic:#E8DDD0;
+  --t:#2D1F14;--e:#1A1410;--w:#FAF8F4;
+  --sub:#5A4030;--dim:#8A7060;
+  --ok:#4A6B3A;--warn:#B8860B;--err:#A0392D;
+  --pf:'Playfair Display',Georgia,serif;
+  --dm:'DM Sans',system-ui,sans-serif;
+  --ease:cubic-bezier(.25,.46,.45,.94);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--dm);background:var(--i);color:var(--e);min-height:100vh}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:100;height:62px;display:flex;align-items:center;background:rgba(250,248,244,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--zlt)}
+.nav-inner{width:100%;max-width:1600px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.nav-logo{font-family:var(--dm);font-size:18px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--t)}
+.nav-logo .dot{color:var(--s)}
+.nav-pill{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--s);background:var(--iw);padding:6px 12px;border:1px solid var(--zlt)}
+.nav-actions{display:flex;align-items:center;gap:8px}
+.nav-btn{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:9px 16px;border:1px solid var(--zlt);color:var(--sub);transition:all .15s;display:inline-flex;align-items:center;gap:6px}
+.nav-btn:hover{border-color:var(--s);color:var(--s)}
+.nav-btn.primary{background:var(--s);color:var(--w);border-color:var(--s)}
+.nav-btn.primary:hover{background:var(--sdk);border-color:var(--sdk);color:var(--w)}
+
+/* ── HEADER ── */
+.page-head{max-width:1600px;margin:0 auto;padding:36px 32px 24px}
+.page-head h1{font-family:var(--pf);font-size:42px;font-weight:400;color:var(--t);line-height:1;margin-bottom:8px}
+.page-head h1 em{font-style:italic;color:var(--s)}
+.page-head p{font-size:14px;font-weight:300;color:var(--dim);max-width:680px}
+
+/* ── STATS ── */
+.stat-row{max-width:1600px;margin:0 auto;padding:0 32px 24px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.stat-box{background:var(--w);border:1px solid var(--zlt);padding:16px 20px;display:flex;align-items:center;justify-content:space-between}
+.stat-lbl{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.stat-val{font-family:var(--pf);font-size:28px;font-weight:400;color:var(--t);line-height:1}
+.stat-val.accent{color:var(--s)}
+
+/* ── LAYOUT ── */
+.workbench{max-width:1600px;margin:0 auto;padding:0 32px 60px;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+
+/* ── LIST PANEL ── */
+.panel{background:var(--w);border:1px solid var(--zlt)}
+.panel-head{padding:18px 22px;border-bottom:1px solid var(--zlt);display:flex;align-items:center;justify-content:space-between;gap:16px}
+.panel-title{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--sub)}
+.search-wrap{position:relative;flex:1;max-width:240px}
+.search-wrap input{width:100%;font-family:var(--dm);font-size:12px;padding:7px 10px 7px 30px;border:1px solid var(--zlt);background:var(--i);color:var(--t)}
+.search-wrap input:focus{outline:none;border-color:var(--s);background:var(--w)}
+.search-wrap svg{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--dim)}
+.list-toolbar{padding:10px 22px;border-bottom:1px solid var(--zlt);display:flex;align-items:center;gap:12px;background:var(--i)}
+.list-toolbar select{font-family:var(--dm);font-size:11px;font-weight:500;color:var(--t);background:var(--w);border:1px solid var(--zlt);padding:5px 24px 5px 9px;appearance:none;-webkit-appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238A7060' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center}
+.list-toolbar label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+
+.reis-list{max-height:680px;overflow-y:auto}
+.reis-list::-webkit-scrollbar{width:8px}
+.reis-list::-webkit-scrollbar-track{background:var(--i)}
+.reis-list::-webkit-scrollbar-thumb{background:var(--zlt)}
+.reis-list::-webkit-scrollbar-thumb:hover{background:var(--zdm)}
+
+.reis-item{padding:14px 22px;border-bottom:1px solid var(--zlt);cursor:pointer;display:grid;grid-template-columns:42px 1fr auto;gap:14px;align-items:center;transition:background .12s}
+.reis-item:hover{background:var(--i)}
+.reis-item.active{background:var(--iw)}
+.reis-item.active::before{content:'';position:absolute;left:0;width:3px;background:var(--s)}
+.reis-item-thumb{width:42px;height:42px;border-radius:0;overflow:hidden;background-size:cover;background-position:center}
+.reis-item-thumb.ph-marokko{background:linear-gradient(135deg,#c09850,#804820,#4A2208)}
+.reis-item-thumb.ph-japan{background:linear-gradient(135deg,#d09090,#904040,#5A1818)}
+.reis-item-thumb.ph-oman{background:linear-gradient(135deg,#70a880,#305840,#102818)}
+.reis-item-thumb.ph-dubai{background:linear-gradient(135deg,#c8a870,#8a6030,#4A2808)}
+.reis-item-thumb.ph-tanzania{background:linear-gradient(135deg,#c09058,#885020,#4A2808)}
+.reis-item-thumb.ph-portugal{background:linear-gradient(135deg,#80a068,#507038,#284018)}
+.reis-item-thumb.ph-bali{background:linear-gradient(135deg,#78a870,#387848,#104820)}
+.reis-item-thumb.ph-abudhabi{background:linear-gradient(135deg,#c8bc80,#987840,#583808)}
+.reis-item-thumb.ph-peru{background:linear-gradient(135deg,#a07858,#684030,#301808)}
+.reis-item-thumb.ph-jordan{background:linear-gradient(135deg,#c0a070,#806030,#403008)}
+.reis-item-thumb.ph-argentina{background:linear-gradient(135deg,#8090b8,#384868,#102038)}
+.reis-item-thumb.ph-singapore{background:linear-gradient(135deg,#b07888,#784858,#382030)}
+.reis-item-info{min-width:0}
+.reis-item-naam{font-size:13px;font-weight:500;color:var(--t);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:6px}
+.reis-item-meta{font-size:10px;color:var(--dim);display:flex;gap:8px;align-items:center}
+.reis-item-meta span:not(:last-child)::after{content:'·';margin-left:8px;color:var(--zlt)}
+.badge{display:inline-flex;align-items:center;gap:3px;font-size:8px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 6px;border-radius:0}
+.badge.featured{background:var(--s);color:var(--w)}
+.badge.concept{background:var(--iw);color:var(--warn);border:1px solid var(--zlt)}
+.badge.published{background:#E8EBE2;color:var(--ok)}
+.reis-item-act{display:flex;gap:4px;opacity:.4;transition:opacity .15s}
+.reis-item:hover .reis-item-act{opacity:1}
+.icon-btn{width:26px;height:26px;display:flex;align-items:center;justify-content:center;color:var(--dim);transition:all .12s}
+.icon-btn:hover{color:var(--s);background:var(--iw)}
+.icon-btn.danger:hover{color:var(--err)}
+
+/* ── FORM PANEL ── */
+.form-wrap{padding:0}
+.form-empty{padding:80px 32px;text-align:center}
+.form-empty-icon{font-size:48px;color:var(--zlt);margin-bottom:16px}
+.form-empty h3{font-family:var(--pf);font-size:22px;font-weight:400;color:var(--t);margin-bottom:8px}
+.form-empty p{font-size:13px;color:var(--dim);margin-bottom:20px}
+.form-empty button{background:var(--s);color:var(--w);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:11px 22px;transition:background .15s}
+.form-empty button:hover{background:var(--sdk)}
+
+.preview{padding:22px 22px 0;background:var(--i);border-bottom:1px solid var(--zlt)}
+.preview-lbl{font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
+.preview-card{background:var(--w);border:1px solid var(--zlt);overflow:hidden;max-width:340px;margin:0 auto 22px}
+.preview-photo{position:relative;aspect-ratio:3/2;overflow:hidden}
+.preview-photo .photo-bg{width:100%;height:100%;background-size:cover;background-position:center}
+.preview-photo .pc-region{position:absolute;top:10px;left:10px;background:rgba(45,31,20,.65);backdrop-filter:blur(4px);padding:3px 9px;font-size:8px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--w)}
+.preview-photo .pc-thema{position:absolute;top:10px;right:10px;background:var(--s);padding:3px 9px;font-size:8px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--w)}
+.preview-photo .pc-star{position:absolute;bottom:10px;right:10px;width:24px;height:24px;background:var(--s);color:var(--w);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;display:none}
+.preview-card.featured .pc-star{display:flex}
+.preview-body{padding:16px 18px 14px}
+.preview-naam{font-family:var(--pf);font-size:16px;font-weight:400;color:var(--t);line-height:1.25;margin-bottom:4px}
+.preview-tag{font-size:11px;font-weight:300;color:var(--dim);line-height:1.5;margin-bottom:12px;min-height:16px}
+.preview-meta{display:flex;align-items:center;gap:14px;padding-top:12px;border-top:1px solid var(--zlt)}
+.preview-meta-item{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:500;color:var(--sub)}
+.preview-price{margin-left:auto;text-align:right}
+.preview-pf{font-size:8px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.preview-pv{font-family:var(--pf);font-size:17px;font-weight:400;color:var(--s);line-height:1}
+
+.form-body{padding:24px 24px 100px}
+.form-section{margin-bottom:28px}
+.form-section-title{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--sub);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--zlt);display:flex;align-items:center;gap:8px}
+.form-section-title .num{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;background:var(--s);color:var(--w);border-radius:50%;font-size:9px;font-weight:700;letter-spacing:0}
+
+.field-row{display:grid;gap:14px;margin-bottom:14px}
+.field-row.cols-2{grid-template-columns:1fr 1fr}
+.field-row.cols-3{grid-template-columns:1fr 1fr 1fr}
+.field-row.cols-2-1{grid-template-columns:2fr 1fr}
+
+.field{display:flex;flex-direction:column}
+.field label{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--sub);margin-bottom:6px;display:flex;align-items:center;justify-content:space-between}
+.field label .hint{font-size:9px;font-weight:400;color:var(--dim);text-transform:none;letter-spacing:0}
+.field input[type=text],
+.field input[type=number],
+.field input[type=url],
+.field textarea,
+.field select{font-family:var(--dm);font-size:13px;font-weight:400;color:var(--t);background:var(--w);border:1px solid var(--zlt);padding:9px 11px;transition:border-color .15s}
+.field textarea{resize:vertical;min-height:80px;font-weight:300;line-height:1.5}
+.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--s)}
+.field input[type=number]{appearance:textfield}
+.field input[type=number]::-webkit-outer-spin-button,
+.field input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.field select{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:30px;background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238A7060' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 11px center}
+
+/* checkbox groep */
+.chk-group{display:flex;flex-wrap:wrap;gap:6px}
+.chk-pill{position:relative;display:inline-flex}
+.chk-pill input{position:absolute;opacity:0;pointer-events:none}
+.chk-pill label{margin-bottom:0;padding:7px 12px;border:1px solid var(--zlt);font-size:11px;font-weight:500;color:var(--sub);text-transform:none;letter-spacing:0;cursor:pointer;transition:all .12s;background:var(--w)}
+.chk-pill input:checked + label{background:var(--s);color:var(--w);border-color:var(--s)}
+.chk-pill label:hover{border-color:var(--s)}
+
+/* hoogtepunten list */
+.hl-list{display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
+.hl-row{display:flex;gap:8px;align-items:center}
+.hl-row input{flex:1;font-family:var(--dm);font-size:12px;color:var(--t);background:var(--w);border:1px solid var(--zlt);padding:7px 10px}
+.hl-row input:focus{outline:none;border-color:var(--s)}
+.hl-num{width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--dim);background:var(--iw);border-radius:50%;flex-shrink:0}
+.hl-del{width:24px;height:24px;display:flex;align-items:center;justify-content:center;color:var(--dim);transition:color .12s}
+.hl-del:hover{color:var(--err)}
+.hl-add{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--s);padding:7px 0;display:inline-flex;align-items:center;gap:5px;transition:color .15s}
+.hl-add:hover{color:var(--sdk)}
+
+/* foto input */
+.foto-tabs{display:flex;gap:0;border:1px solid var(--zlt);margin-bottom:10px;background:var(--iw)}
+.foto-tab{flex:1;padding:8px 12px;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);background:transparent;transition:all .12s}
+.foto-tab.active{background:var(--w);color:var(--s);box-shadow:inset 0 -2px 0 var(--s)}
+.foto-tab:hover:not(.active){color:var(--sub)}
+.foto-content{display:none}
+.foto-content.active{display:block}
+.upload-zone{border:1.5px dashed var(--zlt);padding:24px 16px;text-align:center;cursor:pointer;transition:all .15s;background:var(--w)}
+.upload-zone:hover{border-color:var(--s);background:var(--iw)}
+.upload-zone.has-image{padding:0;border-style:solid;overflow:hidden;aspect-ratio:3/2}
+.upload-zone img{width:100%;height:100%;object-fit:cover;display:block}
+.upload-zone-text{font-size:12px;color:var(--dim)}
+.upload-zone-text strong{color:var(--s);font-weight:600}
+.upload-hint{font-size:10px;color:var(--dim);margin-top:6px}
+.upload-zone input[type=file]{display:none}
+.kleur-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.kleur-opt{aspect-ratio:1;cursor:pointer;border:2px solid transparent;transition:border-color .15s;position:relative}
+.kleur-opt.selected{border-color:var(--t)}
+.kleur-opt .kleur-name{position:absolute;bottom:3px;left:0;right:0;text-align:center;font-size:8px;font-weight:700;color:var(--w);letter-spacing:.06em;text-transform:uppercase;text-shadow:0 1px 2px rgba(0,0,0,.5)}
+
+/* toggle */
+.toggle-row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--i);border:1px solid var(--zlt);cursor:pointer;transition:background .12s}
+.toggle-row:hover{background:var(--iw)}
+.toggle{position:relative;width:36px;height:20px;background:var(--zlt);border-radius:20px;transition:background .15s;flex-shrink:0}
+.toggle::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;background:var(--w);border-radius:50%;transition:transform .15s;box-shadow:0 1px 2px rgba(0,0,0,.15)}
+input[type=checkbox]:checked + .toggle{background:var(--s)}
+input[type=checkbox]:checked + .toggle::after{transform:translateX(16px)}
+.toggle-info{flex:1}
+.toggle-info-t{font-size:12px;font-weight:600;color:var(--t)}
+.toggle-info-d{font-size:11px;color:var(--dim);font-weight:300;margin-top:1px}
+.hide{display:none !important}
+
+/* ── ACTION BAR ── */
+.action-bar{position:sticky;bottom:0;background:var(--w);border-top:1px solid var(--zlt);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 -4px 12px rgba(45,31,20,.04)}
+.dirty-flag{font-size:11px;color:var(--warn);font-weight:600;display:none;align-items:center;gap:5px}
+.dirty-flag.show{display:inline-flex}
+.dirty-dot{width:7px;height:7px;background:var(--warn);border-radius:50%;animation:pulse 1.4s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.action-btns{display:flex;gap:8px}
+.btn{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:11px 18px;transition:all .15s;border:1px solid transparent;display:inline-flex;align-items:center;gap:6px}
+.btn-secondary{border-color:var(--zlt);color:var(--sub);background:var(--w)}
+.btn-secondary:hover{border-color:var(--s);color:var(--s)}
+.btn-primary{background:var(--s);color:var(--w);border-color:var(--s)}
+.btn-primary:hover{background:var(--sdk);border-color:var(--sdk)}
+.btn-primary:disabled{opacity:.4;cursor:not-allowed}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--t);color:var(--w);padding:12px 20px;font-size:12px;font-weight:500;z-index:200;opacity:0;transition:all .25s var(--ease);display:flex;align-items:center;gap:8px;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.ok{background:var(--ok)}
+.toast.err{background:var(--err)}
+
+/* ── MODAL ── */
+.modal{position:fixed;inset:0;background:rgba(45,31,20,.55);backdrop-filter:blur(4px);z-index:150;display:none;align-items:center;justify-content:center;padding:20px}
+.modal.show{display:flex}
+.modal-box{background:var(--w);max-width:440px;width:100%;padding:32px;border:1px solid var(--zlt)}
+.modal-box h3{font-family:var(--pf);font-size:22px;font-weight:400;color:var(--t);margin-bottom:8px}
+.modal-box p{font-size:13px;font-weight:300;color:var(--sub);line-height:1.6;margin-bottom:20px}
+.modal-box p strong{font-weight:600;color:var(--t)}
+.modal-acts{display:flex;justify-content:flex-end;gap:8px}
+
+/* ── HELP TIP ── */
+.help-tip{background:var(--iw);border-left:3px solid var(--s);padding:12px 14px;font-size:11px;color:var(--sub);line-height:1.55;margin-bottom:18px;font-weight:300}
+.help-tip strong{font-weight:600;color:var(--t)}
+
+/* responsive */
+@media(max-width:1100px){
+  .workbench{grid-template-columns:1fr}
+  .stat-row{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+  .nav-inner,.page-head,.stat-row,.workbench{padding-left:16px;padding-right:16px}
+  .stat-row{grid-template-columns:1fr}
+  .field-row.cols-2,.field-row.cols-3,.field-row.cols-2-1{grid-template-columns:1fr}
+  .nav-pill{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div style="display:flex;align-items:center;gap:14px">
+      <a href="totaltravel-reiszoeker-v2.html" class="nav-logo">TOTAL <span class="dot">&middot;</span> TRAVEL</a>
+      <span class="nav-pill">Beheer</span>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-btn" onclick="importJSON()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Importeren
+      </button>
+      <input type="file" id="importInput" accept=".json" style="display:none" onchange="handleImport(event)">
+      <button class="nav-btn primary" onclick="exportJSON()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download reizen.json
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<div class="page-head">
+  <h1>Reis<em>beheer</em></h1>
+  <p>Beheer alle inspiratie- en voorbeeldreizen voor de reiszoeker. Wijzigingen worden lokaal in deze browser opgeslagen — download het JSON-bestand om de nieuwe versie op de website te zetten.</p>
+</div>
+
+<!-- STATS -->
+<div class="stat-row">
+  <div class="stat-box"><div class="stat-lbl">Reizen totaal</div><div class="stat-val" id="statTotal">0</div></div>
+  <div class="stat-box"><div class="stat-lbl">Gepubliceerd</div><div class="stat-val accent" id="statPub">0</div></div>
+  <div class="stat-box"><div class="stat-lbl">Concepten</div><div class="stat-val" id="statConcept">0</div></div>
+  <div class="stat-box"><div class="stat-lbl">Uitgelicht</div><div class="stat-val accent" id="statFeat">0</div></div>
+</div>
+
+<!-- WORKBENCH -->
+<div class="workbench">
+
+  <!-- LIST PANEL -->
+  <section class="panel">
+    <div class="panel-head">
+      <span class="panel-title">Alle reizen</span>
+      <div class="search-wrap">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="searchInput" placeholder="Zoek op naam, land…" oninput="renderList()">
+      </div>
+    </div>
+    <div class="list-toolbar">
+      <label>Filter</label>
+      <select id="filterStatus" onchange="renderList()">
+        <option value="all">Alle</option>
+        <option value="gepubliceerd">Alleen gepubliceerd</option>
+        <option value="concept">Alleen concept</option>
+        <option value="uitgelicht">Alleen uitgelicht</option>
+      </select>
+      <label style="margin-left:auto">Sorteer</label>
+      <select id="sortOrder" onchange="renderList()">
+        <option value="recent">Recent toegevoegd</option>
+        <option value="naam">Naam A–Z</option>
+        <option value="prijs-laag">Prijs laag → hoog</option>
+        <option value="prijs-hoog">Prijs hoog → laag</option>
+        <option value="duur">Duur</option>
+      </select>
+    </div>
+    <div class="reis-list" id="reisList"></div>
+    <div style="padding:14px 22px;border-top:1px solid var(--zlt);background:var(--i)">
+      <button class="btn btn-primary" onclick="newReis()" style="width:100%">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Nieuwe reis toevoegen
+      </button>
+    </div>
+  </section>
+
+  <!-- FORM PANEL -->
+  <section class="panel" id="formPanel">
+    <!-- gevuld door JS -->
+  </section>
+
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <h3 id="modalTitle">Bevestigen</h3>
+    <p id="modalMsg"></p>
+    <div class="modal-acts">
+      <button class="btn btn-secondary" onclick="closeModal()">Annuleren</button>
+      <button class="btn btn-primary" id="modalConfirm">Bevestigen</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════
+   DATAMODEL & OPSLAG
+   ═══════════════════════════════════════════════════ */
+
+const STORAGE_KEY = 'tt_reizen_v1';
+const KLEUR_OPTIES = [
+  {key:'ph-marokko',  naam:'Marokko'},
+  {key:'ph-tanzania', naam:'Tanzania'},
+  {key:'ph-japan',    naam:'Japan'},
+  {key:'ph-bali',     naam:'Bali'},
+  {key:'ph-oman',     naam:'Oman'},
+  {key:'ph-dubai',    naam:'Dubai'},
+  {key:'ph-portugal', naam:'Portugal'},
+  {key:'ph-abudhabi', naam:'Abu Dhabi'},
+  {key:'ph-peru',     naam:'Peru'},
+  {key:'ph-jordan',   naam:'Jordanië'},
+  {key:'ph-argentina',naam:'Argentinië'},
+  {key:'ph-singapore',naam:'Singapore'},
+];
+const REGIOS = ['Afrika','Azië','Midden-Oosten','Europa','Zuid-Amerika','Noord-Amerika','Oceanië'];
+const THEMAS = ['Maatwerk','Safari','Golf','Formule 1','Incentive','Strand','Cultuur','Avontuur','Wellness','Wijn & Culinair'];
+const GEZELSCHAPPEN = ['Stel','Gezin','Groep','Solo'];
+const MAANDEN = ['januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december'];
+
+const BUDGETCATS = {
+  1: 'Tot €2.500',
+  2: '€2.500 – €5.000',
+  3: '€5.000 – €10.000',
+  4: '€10.000+'
+};
+
+function leegReis(){
+  return {
+    id: Date.now(),
+    naam: '',
+    tagline: '',
+    beschrijving: '',
+    regio: 'Afrika',
+    land: '',
+    thema: 'Maatwerk',
+    duur: 7,
+    prijs: 1500,
+    budgetCat: 2,
+    gezelschap: ['Stel'],
+    hoogtepunten: [],
+    besteReisperiode: [],
+    uitgelicht: false,
+    status: 'concept',
+    fotoType: 'kleurverloop',
+    fotoBron: 'ph-marokko',
+    fotoUrl: '',
+    detailLink: '',
+    datumToegevoegd: new Date().toISOString().slice(0,10)
+  };
+}
+
+function bepaalBudgetCat(prijs){
+  if(prijs < 2500) return 1;
+  if(prijs < 5000) return 2;
+  if(prijs < 10000) return 3;
+  return 4;
+}
+
+let data = { versie: '1.0', laatstBijgewerkt: '', reizen: [] };
+let huidigeReis = null;
+let dirty = false;
+
+function laadData(){
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if(raw){
+    try{ data = JSON.parse(raw); return; }
+    catch(e){ console.error('Kon opslag niet laden:', e); }
+  }
+  // anders: probeer reizen.json te laden vanaf dezelfde map
+  fetch('reizen.json')
+    .then(r => r.ok ? r.json() : null)
+    .then(json => {
+      if(json && json.reizen){
+        data = json;
+        renderAll();
+        toast('Initiële reizen geladen uit reizen.json','ok');
+      }
+    })
+    .catch(()=>{/* geen probleem, start met lege lijst */});
+}
+
+function bewaar(){
+  data.laatstBijgewerkt = new Date().toISOString();
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+/* ═══════════════════════════════════════════════════
+   LIJST RENDEREN
+   ═══════════════════════════════════════════════════ */
+
+function renderStats(){
+  document.getElementById('statTotal').textContent = data.reizen.length;
+  document.getElementById('statPub').textContent = data.reizen.filter(r=>r.status==='gepubliceerd').length;
+  document.getElementById('statConcept').textContent = data.reizen.filter(r=>r.status==='concept').length;
+  document.getElementById('statFeat').textContent = data.reizen.filter(r=>r.uitgelicht).length;
+}
+
+function renderList(){
+  const lst = document.getElementById('reisList');
+  const zoek = document.getElementById('searchInput').value.toLowerCase().trim();
+  const filter = document.getElementById('filterStatus').value;
+  const sort = document.getElementById('sortOrder').value;
+
+  let items = [...data.reizen];
+
+  if(zoek){
+    items = items.filter(r =>
+      r.naam.toLowerCase().includes(zoek) ||
+      r.land.toLowerCase().includes(zoek) ||
+      r.regio.toLowerCase().includes(zoek)
+    );
+  }
+  if(filter==='gepubliceerd') items = items.filter(r=>r.status==='gepubliceerd');
+  else if(filter==='concept') items = items.filter(r=>r.status==='concept');
+  else if(filter==='uitgelicht') items = items.filter(r=>r.uitgelicht);
+
+  if(sort==='naam') items.sort((a,b)=>a.naam.localeCompare(b.naam));
+  else if(sort==='prijs-laag') items.sort((a,b)=>a.prijs-b.prijs);
+  else if(sort==='prijs-hoog') items.sort((a,b)=>b.prijs-a.prijs);
+  else if(sort==='duur') items.sort((a,b)=>a.duur-b.duur);
+  else items.sort((a,b)=>(b.datumToegevoegd||'').localeCompare(a.datumToegevoegd||''));
+
+  if(!items.length){
+    lst.innerHTML = '<div style="padding:40px 22px;text-align:center;color:var(--dim);font-size:13px">Geen reizen gevonden.</div>';
+    return;
+  }
+
+  lst.innerHTML = items.map(r => {
+    const isActief = huidigeReis && r.id === huidigeReis.id;
+    const fotoStijl = r.fotoType === 'url' && r.fotoUrl
+      ? `style="background-image:url('${escapeAttr(r.fotoUrl)}')"`
+      : '';
+    const fotoClass = r.fotoType === 'kleurverloop' ? r.fotoBron : '';
+    return `
+      <div class="reis-item ${isActief?'active':''}" onclick="selecteerReis(${r.id})">
+        <div class="reis-item-thumb ${fotoClass}" ${fotoStijl}></div>
+        <div class="reis-item-info">
+          <div class="reis-item-naam">
+            ${escapeHtml(r.naam || '(naamloos)')}
+            ${r.uitgelicht ? '<span class="badge featured">★</span>' : ''}
+          </div>
+          <div class="reis-item-meta">
+            <span>${escapeHtml(r.land || '—')}</span>
+            <span>${r.duur} dgn</span>
+            <span>€${r.prijs.toLocaleString('nl-NL')}</span>
+            <span><span class="badge ${r.status==='concept'?'concept':'published'}">${r.status==='concept'?'concept':'live'}</span></span>
+          </div>
+        </div>
+        <div class="reis-item-act">
+          <button class="icon-btn" onclick="event.stopPropagation();dupliceerReis(${r.id})" title="Dupliceren">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+          <button class="icon-btn danger" onclick="event.stopPropagation();vraagVerwijder(${r.id})" title="Verwijderen">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+/* ═══════════════════════════════════════════════════
+   FORMULIER
+   ═══════════════════════════════════════════════════ */
+
+function renderForm(){
+  const pan = document.getElementById('formPanel');
+  if(!huidigeReis){
+    pan.innerHTML = `
+      <div class="form-empty">
+        <div class="form-empty-icon">✦</div>
+        <h3>Geen reis geselecteerd</h3>
+        <p>Kies een reis uit de lijst om te bewerken, of voeg een nieuwe reis toe.</p>
+        <button onclick="newReis()">+ Nieuwe reis</button>
+      </div>
+    `;
+    return;
+  }
+
+  const r = huidigeReis;
+  pan.innerHTML = `
+    <div class="preview">
+      <div class="preview-lbl">Live preview · zo verschijnt de tegel op de reiszoeker</div>
+      <div class="preview-card ${r.uitgelicht?'featured':''}" id="previewCard">
+        <div class="preview-photo">
+          <div class="photo-bg" id="previewPhoto"></div>
+          <div class="pc-region" id="previewRegion">${escapeHtml(r.regio)}</div>
+          <div class="pc-thema" id="previewThema">${escapeHtml(r.thema)}</div>
+          <div class="pc-star" title="Uitgelicht">★</div>
+        </div>
+        <div class="preview-body">
+          <div class="preview-naam" id="previewNaam">${escapeHtml(r.naam || 'Reisnaam')}</div>
+          <div class="preview-tag" id="previewTag">${escapeHtml(r.tagline || 'Tagline van de reis')}</div>
+          <div class="preview-meta">
+            <div class="preview-meta-item">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <span id="previewDuur">${r.duur}</span>&nbsp;dagen
+            </div>
+            <div class="preview-price">
+              <div class="preview-pf">Vanaf p.p.</div>
+              <div class="preview-pv">€<span id="previewPrijs">${r.prijs.toLocaleString('nl-NL')}</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-body">
+
+      <!-- BASIS -->
+      <div class="form-section">
+        <div class="form-section-title"><span class="num">1</span>Basisinformatie</div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>Reisnaam <span class="hint">verplicht</span></label>
+            <input type="text" id="f-naam" value="${escapeAttr(r.naam)}" placeholder="bv. De Magie van Marokko">
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>Tagline <span class="hint">korte ondertitel, max 80 tekens</span></label>
+            <input type="text" id="f-tagline" maxlength="80" value="${escapeAttr(r.tagline)}" placeholder="bv. Medina's, Sahara en berbertraditie">
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>Uitgebreide beschrijving <span class="hint">voor detailpagina</span></label>
+            <textarea id="f-beschrijving" placeholder="Volledige beschrijving van de reis, sfeer en wat de klant kan verwachten…">${escapeHtml(r.beschrijving)}</textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- BESTEMMING & TYPE -->
+      <div class="form-section">
+        <div class="form-section-title"><span class="num">2</span>Bestemming & type</div>
+
+        <div class="field-row cols-2">
+          <div class="field">
+            <label>Regio</label>
+            <select id="f-regio">
+              ${REGIOS.map(rg=>`<option value="${rg}" ${rg===r.regio?'selected':''}>${rg}</option>`).join('')}
+            </select>
+          </div>
+          <div class="field">
+            <label>Land</label>
+            <input type="text" id="f-land" value="${escapeAttr(r.land)}" placeholder="bv. Marokko">
+          </div>
+        </div>
+
+        <div class="field-row cols-2">
+          <div class="field">
+            <label>Thema</label>
+            <select id="f-thema">
+              ${THEMAS.map(t=>`<option value="${t}" ${t===r.thema?'selected':''}>${t}</option>`).join('')}
+            </select>
+          </div>
+          <div class="field">
+            <label>Reisgezelschap <span class="hint">meerdere mogelijk</span></label>
+            <div class="chk-group">
+              ${GEZELSCHAPPEN.map(g=>`
+                <div class="chk-pill">
+                  <input type="checkbox" id="g-${g}" value="${g}" ${r.gezelschap.includes(g)?'checked':''}>
+                  <label for="g-${g}">${g}</label>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DUUR & PRIJS -->
+      <div class="form-section">
+        <div class="form-section-title"><span class="num">3</span>Duur & prijs</div>
+        <div class="field-row cols-2">
+          <div class="field">
+            <label>Duur <span class="hint">in dagen</span></label>
+            <input type="number" id="f-duur" min="1" max="60" value="${r.duur}">
+          </div>
+          <div class="field">
+            <label>Vanaf-prijs p.p. <span class="hint">in euro</span></label>
+            <input type="number" id="f-prijs" min="0" step="10" value="${r.prijs}">
+          </div>
+        </div>
+        <div class="help-tip" id="budgetTip"></div>
+      </div>
+
+      <!-- FOTO -->
+      <div class="form-section">
+        <div class="form-section-title"><span class="num">4</span>Foto</div>
+        <div class="foto-tabs">
+          <button type="button" class="foto-tab ${r.fotoType==='url'?'active':''}" data-tab="url" onclick="setFotoTab('url', this)">URL</button>
+          <button type="button" class="foto-tab ${r.fotoType==='upload'?'active':''}" data-tab="upload" onclick="setFotoTab('upload', this)">Upload</button>
+          <button type="button" class="foto-tab ${r.fotoType==='kleurverloop'?'active':''}" data-tab="kleurverloop" onclick="setFotoTab('kleurverloop', this)">Kleurverloop</button>
+        </div>
+
+        <div class="foto-content ${r.fotoType==='url'?'active':''}" id="foto-url">
+          <div class="field">
+            <label>Foto-URL</label>
+            <input type="url" id="f-fotoUrl" value="${escapeAttr(r.fotoUrl)}" placeholder="https://uw-website.nl/foto.jpg" oninput="updatePreview()">
+          </div>
+        </div>
+
+        <div class="foto-content ${r.fotoType==='upload'?'active':''}" id="foto-upload">
+          <div class="upload-zone ${r.fotoType==='upload'&&r.fotoUrl?'has-image':''}" onclick="document.getElementById('fileUpload').click()" id="uploadZone">
+            ${r.fotoType==='upload'&&r.fotoUrl
+              ? `<img src="${escapeAttr(r.fotoUrl)}" alt="">`
+              : `<div class="upload-zone-text"><strong>Klik om te uploaden</strong> of sleep een foto hierheen</div>
+                 <div class="upload-hint">JPG, PNG of WEBP · max 2 MB · ratio 3:2 aanbevolen</div>`}
+            <input type="file" id="fileUpload" accept="image/*" onchange="handleFotoUpload(event)">
+          </div>
+        </div>
+
+        <div class="foto-content ${r.fotoType==='kleurverloop'?'active':''}" id="foto-kleurverloop">
+          <div class="kleur-grid">
+            ${KLEUR_OPTIES.map(k=>`
+              <div class="kleur-opt ${k.key} ${r.fotoBron===k.key?'selected':''}" onclick="kiesKleur('${k.key}')" data-key="${k.key}" style="background:${getGradient(k.key)}">
+                <div class="kleur-name">${k.naam}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+
+      <!-- HOOGTEPUNTEN -->
+      <div class="form-section">
+        <div class="form-section-title"><span class="num">5</span>Hoogtepunten</div>
+        <div class="hl-list" id="hlList"></div>
+        <button type="button" class="hl-add" onclick="voegHoogtepuntToe()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Hoogtepunt toevoegen
+        </button>
+      </div>
+
+      <!-- BESTE REISPERIODE -->
+      <div class="form-section">
+        <div class="form-section-title"><span class="num">6</span>Beste reisperiode</div>
+        <div class="chk-group">
+          ${MAANDEN.map(m=>`
+            <div class="chk-pill">
+              <input type="checkbox" id="m-${m}" value="${m}" ${r.besteReisperiode.includes(m)?'checked':''}>
+              <label for="m-${m}">${m.charAt(0).toUpperCase()+m.slice(1,3)}</label>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- PUBLICATIE -->
+      <div class="form-section">
+        <div class="form-section-title"><span class="num">7</span>Publicatie</div>
+
+        <div class="field-row cols-2">
+          <label class="toggle-row">
+            <input type="checkbox" id="f-uitgelicht" ${r.uitgelicht?'checked':''} style="display:none">
+            <span class="toggle"></span>
+            <span class="toggle-info">
+              <div class="toggle-info-t">Uitgelicht</div>
+              <div class="toggle-info-d">Toont badge en sorteert hoger</div>
+            </span>
+          </label>
+          <label class="toggle-row">
+            <input type="checkbox" id="f-status" ${r.status==='gepubliceerd'?'checked':''} style="display:none">
+            <span class="toggle"></span>
+            <span class="toggle-info">
+              <div class="toggle-info-t">Gepubliceerd</div>
+              <div class="toggle-info-d">Zichtbaar in de reiszoeker</div>
+            </span>
+          </label>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>Link naar detailpagina <span class="hint">optioneel</span></label>
+            <input type="text" id="f-detailLink" value="${escapeAttr(r.detailLink)}" placeholder="bv. marokko.html">
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>Datum toegevoegd</label>
+            <input type="text" id="f-datumToegevoegd" value="${escapeAttr(r.datumToegevoegd)}" placeholder="2026-05-20">
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="action-bar">
+      <span class="dirty-flag" id="dirtyFlag"><span class="dirty-dot"></span> Niet-opgeslagen wijzigingen</span>
+      <div class="action-btns">
+        <button class="btn btn-secondary" onclick="annuleerBewerken()">Annuleren</button>
+        <button class="btn btn-primary" onclick="bewaarReis()">Opslaan</button>
+      </div>
+    </div>
+  `;
+
+  renderHoogtepunten();
+  updatePreview();
+  bindFormChange();
+}
+
+function renderHoogtepunten(){
+  const wrap = document.getElementById('hlList');
+  if(!wrap) return;
+  const hl = huidigeReis.hoogtepunten;
+  if(!hl.length){
+    wrap.innerHTML = '<div style="font-size:11px;color:var(--dim);padding:4px 0">Nog geen hoogtepunten toegevoegd.</div>';
+    return;
+  }
+  wrap.innerHTML = hl.map((h,i)=>`
+    <div class="hl-row">
+      <span class="hl-num">${i+1}</span>
+      <input type="text" value="${escapeAttr(h)}" oninput="updateHoogtepunt(${i}, this.value)" placeholder="bv. Bezoek aan de medina van Fez">
+      <button class="hl-del" onclick="verwijderHoogtepunt(${i})" title="Verwijder">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+  `).join('');
+}
+
+function voegHoogtepuntToe(){
+  huidigeReis.hoogtepunten.push('');
+  renderHoogtepunten();
+  markDirty();
+  // focus het nieuwe veld
+  setTimeout(()=>{
+    const inputs = document.querySelectorAll('#hlList input');
+    if(inputs.length) inputs[inputs.length-1].focus();
+  },0);
+}
+
+function updateHoogtepunt(i, val){
+  huidigeReis.hoogtepunten[i] = val;
+  markDirty();
+}
+
+function verwijderHoogtepunt(i){
+  huidigeReis.hoogtepunten.splice(i,1);
+  renderHoogtepunten();
+  markDirty();
+}
+
+/* ═══════════════════════════════════════════════════
+   PREVIEW
+   ═══════════════════════════════════════════════════ */
+
+function updatePreview(){
+  if(!huidigeReis) return;
+  const r = huidigeReis;
+  const photo = document.getElementById('previewPhoto');
+  if(!photo) return;
+
+  if(r.fotoType === 'kleurverloop'){
+    photo.style.background = getGradient(r.fotoBron);
+    photo.style.backgroundImage = getGradient(r.fotoBron);
+  } else if(r.fotoUrl){
+    photo.style.background = '';
+    photo.style.backgroundImage = `url('${r.fotoUrl}')`;
+    photo.style.backgroundSize = 'cover';
+    photo.style.backgroundPosition = 'center';
+  } else {
+    photo.style.background = 'var(--iw)';
+    photo.style.backgroundImage = '';
+  }
+
+  document.getElementById('previewNaam').textContent = r.naam || 'Reisnaam';
+  document.getElementById('previewTag').textContent  = r.tagline || 'Tagline van de reis';
+  document.getElementById('previewRegion').textContent = r.regio;
+  document.getElementById('previewThema').textContent  = r.thema;
+  document.getElementById('previewDuur').textContent   = r.duur;
+  document.getElementById('previewPrijs').textContent  = r.prijs.toLocaleString('nl-NL');
+  document.getElementById('previewCard').classList.toggle('featured', r.uitgelicht);
+
+  // budget tip
+  const tip = document.getElementById('budgetTip');
+  if(tip){
+    const cat = bepaalBudgetCat(r.prijs);
+    tip.innerHTML = `<strong>Budgetcategorie:</strong> ${BUDGETCATS[cat]} <span style="color:var(--dim)">— wordt automatisch bepaald op basis van de vanaf-prijs</span>`;
+  }
+}
+
+function getGradient(key){
+  const gradients = {
+    'ph-marokko':'linear-gradient(135deg,#c09850 0%,#804820 60%,#4A2208 100%)',
+    'ph-japan':'linear-gradient(135deg,#d09090 0%,#904040 60%,#5A1818 100%)',
+    'ph-oman':'linear-gradient(135deg,#70a880 0%,#305840 60%,#102818 100%)',
+    'ph-dubai':'linear-gradient(135deg,#c8a870 0%,#8a6030 60%,#4A2808 100%)',
+    'ph-tanzania':'linear-gradient(135deg,#c09058 0%,#885020 60%,#4A2808 100%)',
+    'ph-portugal':'linear-gradient(135deg,#80a068 0%,#507038 60%,#284018 100%)',
+    'ph-jordan':'linear-gradient(135deg,#c0a070 0%,#806030 60%,#403008 100%)',
+    'ph-bali':'linear-gradient(135deg,#78a870 0%,#387848 60%,#104820 100%)',
+    'ph-argentina':'linear-gradient(135deg,#8090b8 0%,#384868 60%,#102038 100%)',
+    'ph-singapore':'linear-gradient(135deg,#b07888 0%,#784858 60%,#382030 100%)',
+    'ph-abudhabi':'linear-gradient(135deg,#c8bc80 0%,#987840 60%,#583808 100%)',
+    'ph-peru':'linear-gradient(135deg,#a07858 0%,#684030 60%,#301808 100%)',
+  };
+  return gradients[key] || gradients['ph-marokko'];
+}
+
+/* ═══════════════════════════════════════════════════
+   FORM BINDING
+   ═══════════════════════════════════════════════════ */
+
+function bindFormChange(){
+  // tekstvelden
+  const map = {
+    'f-naam':'naam', 'f-tagline':'tagline', 'f-beschrijving':'beschrijving',
+    'f-regio':'regio', 'f-land':'land', 'f-thema':'thema',
+    'f-fotoUrl':'fotoUrl', 'f-detailLink':'detailLink', 'f-datumToegevoegd':'datumToegevoegd'
+  };
+  Object.keys(map).forEach(id => {
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.addEventListener('input', () => {
+      huidigeReis[map[id]] = el.value;
+      if(map[id]==='fotoUrl' && huidigeReis.fotoType==='url'){
+        updatePreview();
+      }
+      updatePreview();
+      markDirty();
+    });
+  });
+
+  // numerieke
+  document.getElementById('f-duur').addEventListener('input', e => {
+    huidigeReis.duur = Math.max(1, Number(e.target.value)||1);
+    updatePreview();
+    markDirty();
+  });
+  document.getElementById('f-prijs').addEventListener('input', e => {
+    huidigeReis.prijs = Math.max(0, Number(e.target.value)||0);
+    huidigeReis.budgetCat = bepaalBudgetCat(huidigeReis.prijs);
+    updatePreview();
+    markDirty();
+  });
+
+  // gezelschap checkboxes
+  GEZELSCHAPPEN.forEach(g => {
+    const cb = document.getElementById('g-'+g);
+    if(cb) cb.addEventListener('change', () => {
+      huidigeReis.gezelschap = GEZELSCHAPPEN.filter(x => document.getElementById('g-'+x).checked);
+      markDirty();
+    });
+  });
+
+  // maanden
+  MAANDEN.forEach(m => {
+    const cb = document.getElementById('m-'+m);
+    if(cb) cb.addEventListener('change', () => {
+      huidigeReis.besteReisperiode = MAANDEN.filter(x => document.getElementById('m-'+x).checked);
+      markDirty();
+    });
+  });
+
+  // toggles
+  document.getElementById('f-uitgelicht').addEventListener('change', e => {
+    huidigeReis.uitgelicht = e.target.checked;
+    updatePreview();
+    markDirty();
+  });
+  document.getElementById('f-status').addEventListener('change', e => {
+    huidigeReis.status = e.target.checked ? 'gepubliceerd' : 'concept';
+    markDirty();
+  });
+}
+
+function setFotoTab(type, btn){
+  huidigeReis.fotoType = type;
+  document.querySelectorAll('.foto-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.foto-content').forEach(c=>c.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  else document.querySelector(`.foto-tab[data-tab="${type}"]`)?.classList.add('active');
+  document.getElementById('foto-'+type).classList.add('active');
+  updatePreview();
+  markDirty();
+}
+
+function kiesKleur(key){
+  huidigeReis.fotoBron = key;
+  huidigeReis.fotoType = 'kleurverloop';
+  document.querySelectorAll('.kleur-opt').forEach(o=>{
+    o.classList.toggle('selected', o.dataset.key===key);
+  });
+  updatePreview();
+  markDirty();
+}
+
+function handleFotoUpload(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  if(file.size > 2 * 1024 * 1024){
+    toast('Foto is te groot (max 2 MB)', 'err');
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = ev => {
+    huidigeReis.fotoUrl = ev.target.result;
+    huidigeReis.fotoType = 'upload';
+    const zone = document.getElementById('uploadZone');
+    zone.classList.add('has-image');
+    zone.innerHTML = `<img src="${ev.target.result}" alt=""><input type="file" id="fileUpload" accept="image/*" onchange="handleFotoUpload(event)">`;
+    updatePreview();
+    markDirty();
+  };
+  reader.readAsDataURL(file);
+}
+
+/* ═══════════════════════════════════════════════════
+   ACTIES
+   ═══════════════════════════════════════════════════ */
+
+function selecteerReis(id){
+  if(dirty && !confirm('Je hebt niet-opgeslagen wijzigingen. Weet je het zeker?')) return;
+  const r = data.reizen.find(x=>x.id===id);
+  if(!r) return;
+  // Diepe kopie maken zodat we niet rechtstreeks de opgeslagen versie veranderen
+  huidigeReis = JSON.parse(JSON.stringify(r));
+  dirty = false;
+  renderForm();
+  renderList();
+}
+
+function newReis(){
+  if(dirty && !confirm('Je hebt niet-opgeslagen wijzigingen. Weet je het zeker?')) return;
+  huidigeReis = leegReis();
+  dirty = true;
+  renderForm();
+  renderList();
+  // scroll naar formulier op kleine schermen
+  if(window.innerWidth < 1100){
+    document.getElementById('formPanel').scrollIntoView({behavior:'smooth'});
+  }
+}
+
+function dupliceerReis(id){
+  const r = data.reizen.find(x=>x.id===id);
+  if(!r) return;
+  const copy = JSON.parse(JSON.stringify(r));
+  copy.id = Date.now();
+  copy.naam = r.naam + ' (kopie)';
+  copy.status = 'concept';
+  copy.datumToegevoegd = new Date().toISOString().slice(0,10);
+  data.reizen.unshift(copy);
+  bewaar();
+  huidigeReis = JSON.parse(JSON.stringify(copy));
+  dirty = false;
+  renderAll();
+  toast('Reis gedupliceerd','ok');
+}
+
+function vraagVerwijder(id){
+  const r = data.reizen.find(x=>x.id===id);
+  if(!r) return;
+  openModal('Reis verwijderen', `Weet je zeker dat je <strong>"${escapeHtml(r.naam)}"</strong> wilt verwijderen? Dit kan niet ongedaan gemaakt worden.`, () => {
+    data.reizen = data.reizen.filter(x=>x.id!==id);
+    if(huidigeReis && huidigeReis.id === id){
+      huidigeReis = null;
+    }
+    bewaar();
+    renderAll();
+    toast('Reis verwijderd','ok');
+  });
+}
+
+function bewaarReis(){
+  if(!huidigeReis) return;
+  if(!huidigeReis.naam.trim()){
+    toast('Geef de reis een naam','err');
+    document.getElementById('f-naam')?.focus();
+    return;
+  }
+  if(!huidigeReis.land.trim()){
+    toast('Vul een land in','err');
+    document.getElementById('f-land')?.focus();
+    return;
+  }
+  // schoonmaken: lege hoogtepunten verwijderen
+  huidigeReis.hoogtepunten = huidigeReis.hoogtepunten.filter(h=>h.trim());
+
+  const idx = data.reizen.findIndex(r=>r.id===huidigeReis.id);
+  if(idx >= 0){
+    data.reizen[idx] = JSON.parse(JSON.stringify(huidigeReis));
+  } else {
+    data.reizen.unshift(JSON.parse(JSON.stringify(huidigeReis)));
+  }
+  bewaar();
+  dirty = false;
+  renderAll();
+  toast('Reis opgeslagen','ok');
+}
+
+function annuleerBewerken(){
+  if(dirty && !confirm('Wijzigingen weggooien?')) return;
+  huidigeReis = null;
+  dirty = false;
+  renderForm();
+  renderList();
+}
+
+function markDirty(){
+  dirty = true;
+  const flag = document.getElementById('dirtyFlag');
+  if(flag) flag.classList.add('show');
+}
+
+/* ═══════════════════════════════════════════════════
+   IMPORT / EXPORT
+   ═══════════════════════════════════════════════════ */
+
+function exportJSON(){
+  data.laatstBijgewerkt = new Date().toISOString();
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'reizen.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('reizen.json gedownload','ok');
+}
+
+function importJSON(){
+  document.getElementById('importInput').click();
+}
+
+function handleImport(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const imported = JSON.parse(ev.target.result);
+      if(!imported.reizen || !Array.isArray(imported.reizen)){
+        toast('Ongeldig JSON-formaat','err');
+        return;
+      }
+      openModal('Reizen importeren',
+        `Importeren van <strong>${imported.reizen.length} reizen</strong>. Dit overschrijft alle huidige reizen in dit beheerpaneel.`,
+        () => {
+          data = imported;
+          huidigeReis = null;
+          bewaar();
+          renderAll();
+          toast(`${imported.reizen.length} reizen geïmporteerd`,'ok');
+        });
+    } catch(err){
+      toast('Kon JSON niet lezen: '+err.message,'err');
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
+
+/* ═══════════════════════════════════════════════════
+   MODAL & TOAST
+   ═══════════════════════════════════════════════════ */
+
+function openModal(titel, bericht, onConfirm){
+  document.getElementById('modalTitle').textContent = titel;
+  document.getElementById('modalMsg').innerHTML = bericht;
+  document.getElementById('modal').classList.add('show');
+  document.getElementById('modalConfirm').onclick = () => {
+    onConfirm();
+    closeModal();
+  };
+}
+function closeModal(){ document.getElementById('modal').classList.remove('show'); }
+
+let toastTimer;
+function toast(bericht, type='ok'){
+  const t = document.getElementById('toast');
+  t.textContent = bericht;
+  t.className = 'toast show '+type;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=> t.classList.remove('show'), 2800);
+}
+
+/* ═══════════════════════════════════════════════════
+   HELPERS
+   ═══════════════════════════════════════════════════ */
+
+function escapeHtml(s){
+  if(!s) return '';
+  return String(s).replace(/[&<>"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  })[c]);
+}
+function escapeAttr(s){ return escapeHtml(s); }
+
+function renderAll(){
+  renderStats();
+  renderList();
+  renderForm();
+}
+
+/* ═══════════════════════════════════════════════════
+   INIT
+   ═══════════════════════════════════════════════════ */
+
+window.addEventListener('beforeunload', e => {
+  if(dirty){
+    e.preventDefault();
+    e.returnValue = '';
+  }
+});
+
+laadData();
+renderAll();
+</script>
+</body>
+</html>
