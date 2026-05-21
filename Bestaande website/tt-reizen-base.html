@@ -1,0 +1,250 @@
+<!-- ====================================================================
+     TOTAL TRAVEL — GEDEELDE BASIS-STIJL VOOR REISBLOKKEN
+     Plak dit ÉÉN keer op de pagina (bovenaan), of nog beter:
+     plaats dit in de Custom CSS / globale stijl van je thema.
+     Daarna kun je meerdere reisblokken op de pagina plaatsen
+     zonder de styling te herhalen.
+     ==================================================================== -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ── Basis-container ── */
+.tt-reizen{
+  --tt-accent:#A0522D;
+  --tt-accent-dark:#7A3E21;
+  --tt-sand:#C4A882;
+  --tt-sand-light:#DDD0BC;
+  --tt-bg:#F5F0E8;
+  --tt-card:#FAF8F4;
+  --tt-text:#2D1F14;
+  --tt-sub:#5A4030;
+  --tt-dim:#8A7060;
+  --tt-border:#DDD0BC;
+  --tt-pf:'Playfair Display',Georgia,serif;
+  --tt-dm:'DM Sans',system-ui,sans-serif;
+  --tt-ease:cubic-bezier(.25,.46,.45,.94);
+
+  font-family:var(--tt-dm);
+  color:var(--tt-text);
+  max-width:1400px;
+  margin:0 auto;
+  padding:60px 24px;
+  box-sizing:border-box;
+}
+.tt-reizen *,
+.tt-reizen *::before,
+.tt-reizen *::after{box-sizing:border-box}
+
+/* ── Sectie-kop ── */
+.tt-reizen .tt-section-head{
+  text-align:center;
+  margin-bottom:48px;
+}
+.tt-reizen .tt-eyebrow{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--tt-accent);
+  margin-bottom:14px;
+}
+.tt-reizen .tt-title{
+  font-family:var(--tt-pf);
+  font-size:clamp(32px,4vw,46px);
+  font-weight:400;
+  line-height:1.15;
+  color:var(--tt-text);
+  margin:0 0 14px;
+}
+.tt-reizen .tt-title em{
+  font-style:italic;
+  color:var(--tt-accent);
+}
+.tt-reizen .tt-intro{
+  font-size:15px;
+  font-weight:300;
+  line-height:1.6;
+  color:var(--tt-sub);
+  max-width:620px;
+  margin:0 auto;
+}
+
+/* ── Grid ── */
+.tt-reizen .tt-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:28px;
+}
+@media(max-width:980px){
+  .tt-reizen .tt-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:620px){
+  .tt-reizen .tt-grid{grid-template-columns:1fr}
+  .tt-reizen{padding:40px 16px}
+}
+
+/* ── Kaart ── */
+.tt-reizen .tt-card{
+  background:var(--tt-card);
+  border:1px solid var(--tt-border);
+  border-radius:10px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  transition:transform .25s var(--tt-ease),box-shadow .25s var(--tt-ease);
+}
+.tt-reizen .tt-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 18px 50px rgba(45,31,20,.12);
+}
+.tt-reizen .tt-card-photo{
+  position:relative;
+  aspect-ratio:3/2;
+  overflow:hidden;
+  background:var(--tt-sand-light);
+}
+.tt-reizen .tt-card-photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transition:transform .55s var(--tt-ease);
+}
+.tt-reizen .tt-card:hover .tt-card-photo img{transform:scale(1.05)}
+
+/* Land-badge linksboven op de foto (optioneel) */
+.tt-reizen .tt-card-flag{
+  position:absolute;
+  top:14px;
+  left:14px;
+  background:rgba(250,248,244,.94);
+  color:var(--tt-text);
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  padding:6px 11px;
+  border-radius:4px;
+  backdrop-filter:blur(4px);
+  z-index:2;
+}
+
+/* Foto-placeholders met verloop — alleen gebruikt als er geen echte foto is */
+.tt-reizen .tt-photo-placeholder{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--tt-pf);font-style:italic;
+  color:rgba(255,255,255,.78);
+  font-size:15px;
+  letter-spacing:.05em;
+  transition:transform .55s var(--tt-ease);
+}
+.tt-reizen .tt-card:hover .tt-photo-placeholder{transform:scale(1.05)}
+
+/* Marokko-pagina placeholders */
+.tt-reizen .tt-photo-marrakech   {background:linear-gradient(135deg,#C4784A 0%,#A0522D 60%,#7A3E21 100%)}
+.tt-reizen .tt-photo-sahara      {background:linear-gradient(135deg,#E8B978 0%,#C4784A 50%,#8B4820 100%)}
+.tt-reizen .tt-photo-atlas       {background:linear-gradient(135deg,#8A9B7E 0%,#5D6B5A 60%,#3A4538 100%)}
+.tt-reizen .tt-photo-koningen    {background:linear-gradient(135deg,#D4A574 0%,#A0522D 60%,#5A3020 100%)}
+.tt-reizen .tt-photo-kust        {background:linear-gradient(135deg,#7BA8C4 0%,#4E7C9B 60%,#2D4D6B 100%)}
+.tt-reizen .tt-photo-chefchaouen {background:linear-gradient(135deg,#7C9BC4 0%,#4A6E9B 60%,#2A3F6B 100%)}
+
+/* Golfreizen-pagina placeholders */
+.tt-reizen .tt-photo-algarve     {background:linear-gradient(135deg,#7DB098 0%,#3F7A5C 60%,#234A38 100%)}
+.tt-reizen .tt-photo-lisbon      {background:linear-gradient(135deg,#E8B978 0%,#C48B4A 60%,#7A5128 100%)}
+.tt-reizen .tt-photo-costa       {background:linear-gradient(135deg,#F2C56D 0%,#D49435 60%,#8B5A14 100%)}
+.tt-reizen .tt-photo-agadir      {background:linear-gradient(135deg,#7BA8C4 0%,#4E7C9B 60%,#2D4D6B 100%)}
+.tt-reizen .tt-photo-ireland     {background:linear-gradient(135deg,#6BAA7E 0%,#3D7A52 60%,#1F4530 100%)}
+
+/* ── Kaart-body ── */
+.tt-reizen .tt-card-body{
+  padding:24px 22px 22px;
+  display:flex;
+  flex-direction:column;
+  flex:1;
+}
+.tt-reizen .tt-card-name{
+  font-family:var(--tt-pf);
+  font-size:21px;
+  font-weight:400;
+  line-height:1.25;
+  color:var(--tt-text);
+  margin:0 0 10px;
+}
+.tt-reizen .tt-card-desc{
+  font-size:13.5px;
+  font-weight:300;
+  line-height:1.55;
+  color:var(--tt-sub);
+  margin:0 0 18px;
+  flex:1;
+}
+
+/* Meta-strip: duur + prijs */
+.tt-reizen .tt-card-meta{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:16px 0 18px;
+  border-top:1px solid var(--tt-border);
+  border-bottom:1px solid var(--tt-border);
+  margin-bottom:18px;
+}
+.tt-reizen .tt-card-duration{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:12px;
+  font-weight:500;
+  color:var(--tt-sub);
+}
+.tt-reizen .tt-card-duration svg{color:var(--tt-accent);flex-shrink:0}
+.tt-reizen .tt-card-price{
+  margin-left:auto;
+  text-align:right;
+  line-height:1;
+}
+.tt-reizen .tt-card-price-lbl{
+  font-size:9px;
+  font-weight:600;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--tt-dim);
+  display:block;
+  margin-bottom:3px;
+}
+.tt-reizen .tt-card-price-val{
+  font-family:var(--tt-pf);
+  font-size:22px;
+  font-weight:400;
+  color:var(--tt-accent);
+}
+
+/* CTA knop */
+.tt-reizen .tt-card-cta{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  background:var(--tt-accent);
+  color:#FAF8F4;
+  font-family:var(--tt-dm);
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  padding:12px 18px;
+  border-radius:6px;
+  text-decoration:none;
+  transition:background .2s var(--tt-ease);
+  text-align:center;
+}
+.tt-reizen .tt-card-cta:hover{
+  background:var(--tt-accent-dark);
+  color:#FAF8F4;
+}
+.tt-reizen .tt-card-cta svg{transition:transform .2s var(--tt-ease)}
+.tt-reizen .tt-card-cta:hover svg{transform:translateX(3px)}
+</style>

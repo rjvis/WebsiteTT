@@ -1,0 +1,390 @@
+<!-- ====================================================================
+     TOTAL TRAVEL — MAROKKO VOORBEELDREIZEN BLOK
+     Plak dit volledig in een Elementor HTML-widget op /marokko/
+     ==================================================================== -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* Scope alles onder .tt-marokko-reizen zodat het niets anders op de pagina raakt */
+.tt-marokko-reizen{
+  --tt-accent:#A0522D;
+  --tt-accent-dark:#7A3E21;
+  --tt-sand:#C4A882;
+  --tt-sand-light:#DDD0BC;
+  --tt-bg:#F5F0E8;
+  --tt-card:#FAF8F4;
+  --tt-text:#2D1F14;
+  --tt-sub:#5A4030;
+  --tt-dim:#8A7060;
+  --tt-border:#DDD0BC;
+  --tt-pf:'Playfair Display',Georgia,serif;
+  --tt-dm:'DM Sans',system-ui,sans-serif;
+  --tt-ease:cubic-bezier(.25,.46,.45,.94);
+
+  font-family:var(--tt-dm);
+  color:var(--tt-text);
+  max-width:1400px;
+  margin:0 auto;
+  padding:60px 24px;
+  box-sizing:border-box;
+}
+.tt-marokko-reizen *,
+.tt-marokko-reizen *::before,
+.tt-marokko-reizen *::after{box-sizing:border-box}
+
+/* ── Sectie-kop ── */
+.tt-marokko-reizen .tt-section-head{
+  text-align:center;
+  margin-bottom:48px;
+}
+.tt-marokko-reizen .tt-eyebrow{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--tt-accent);
+  margin-bottom:14px;
+}
+.tt-marokko-reizen .tt-title{
+  font-family:var(--tt-pf);
+  font-size:clamp(32px,4vw,46px);
+  font-weight:400;
+  line-height:1.15;
+  color:var(--tt-text);
+  margin:0 0 14px;
+}
+.tt-marokko-reizen .tt-title em{
+  font-style:italic;
+  color:var(--tt-accent);
+}
+.tt-marokko-reizen .tt-intro{
+  font-size:15px;
+  font-weight:300;
+  line-height:1.6;
+  color:var(--tt-sub);
+  max-width:620px;
+  margin:0 auto;
+}
+
+/* ── Grid ── */
+.tt-marokko-reizen .tt-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:28px;
+}
+@media(max-width:980px){
+  .tt-marokko-reizen .tt-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:620px){
+  .tt-marokko-reizen .tt-grid{grid-template-columns:1fr}
+  .tt-marokko-reizen{padding:40px 16px}
+}
+
+/* ── Kaart ── */
+.tt-marokko-reizen .tt-card{
+  background:var(--tt-card);
+  border:1px solid var(--tt-border);
+  border-radius:10px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  transition:transform .25s var(--tt-ease),box-shadow .25s var(--tt-ease);
+}
+.tt-marokko-reizen .tt-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 18px 50px rgba(45,31,20,.12);
+}
+.tt-marokko-reizen .tt-card-photo{
+  position:relative;
+  aspect-ratio:3/2;
+  overflow:hidden;
+  background:var(--tt-sand-light);
+}
+.tt-marokko-reizen .tt-card-photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transition:transform .55s var(--tt-ease);
+}
+.tt-marokko-reizen .tt-card:hover .tt-card-photo img{transform:scale(1.05)}
+
+/* Foto-placeholders met verloop — vervang door echte <img src=""> */
+.tt-marokko-reizen .tt-photo-placeholder{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--tt-pf);font-style:italic;
+  color:rgba(255,255,255,.75);
+  font-size:15px;
+  letter-spacing:.05em;
+  transition:transform .55s var(--tt-ease);
+}
+.tt-marokko-reizen .tt-card:hover .tt-photo-placeholder{transform:scale(1.05)}
+.tt-photo-marrakech   {background:linear-gradient(135deg,#C4784A 0%,#A0522D 60%,#7A3E21 100%)}
+.tt-photo-sahara      {background:linear-gradient(135deg,#E8B978 0%,#C4784A 50%,#8B4820 100%)}
+.tt-photo-atlas       {background:linear-gradient(135deg,#8A9B7E 0%,#5D6B5A 60%,#3A4538 100%)}
+.tt-photo-koningen    {background:linear-gradient(135deg,#D4A574 0%,#A0522D 60%,#5A3020 100%)}
+.tt-photo-kust        {background:linear-gradient(135deg,#7BA8C4 0%,#4E7C9B 60%,#2D4D6B 100%)}
+.tt-photo-chefchaouen {background:linear-gradient(135deg,#7C9BC4 0%,#4A6E9B 60%,#2A3F6B 100%)}
+
+/* ── Kaart-body ── */
+.tt-marokko-reizen .tt-card-body{
+  padding:24px 22px 22px;
+  display:flex;
+  flex-direction:column;
+  flex:1;
+}
+.tt-marokko-reizen .tt-card-name{
+  font-family:var(--tt-pf);
+  font-size:21px;
+  font-weight:400;
+  line-height:1.25;
+  color:var(--tt-text);
+  margin:0 0 10px;
+}
+.tt-marokko-reizen .tt-card-desc{
+  font-size:13.5px;
+  font-weight:300;
+  line-height:1.55;
+  color:var(--tt-sub);
+  margin:0 0 18px;
+  flex:1;
+}
+
+/* Meta-strip: duur + prijs */
+.tt-marokko-reizen .tt-card-meta{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:16px 0 18px;
+  border-top:1px solid var(--tt-border);
+  border-bottom:1px solid var(--tt-border);
+  margin-bottom:18px;
+}
+.tt-marokko-reizen .tt-card-duration{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:12px;
+  font-weight:500;
+  color:var(--tt-sub);
+}
+.tt-marokko-reizen .tt-card-duration svg{color:var(--tt-accent);flex-shrink:0}
+.tt-marokko-reizen .tt-card-price{
+  margin-left:auto;
+  text-align:right;
+  line-height:1;
+}
+.tt-marokko-reizen .tt-card-price-lbl{
+  font-size:9px;
+  font-weight:600;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--tt-dim);
+  display:block;
+  margin-bottom:3px;
+}
+.tt-marokko-reizen .tt-card-price-val{
+  font-family:var(--tt-pf);
+  font-size:22px;
+  font-weight:400;
+  color:var(--tt-accent);
+}
+
+/* CTA knop */
+.tt-marokko-reizen .tt-card-cta{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  background:var(--tt-accent);
+  color:#FAF8F4;
+  font-family:var(--tt-dm);
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  padding:12px 18px;
+  border-radius:6px;
+  text-decoration:none;
+  transition:background .2s var(--tt-ease);
+  text-align:center;
+}
+.tt-marokko-reizen .tt-card-cta:hover{
+  background:var(--tt-accent-dark);
+  color:#FAF8F4;
+}
+.tt-marokko-reizen .tt-card-cta svg{transition:transform .2s var(--tt-ease)}
+.tt-marokko-reizen .tt-card-cta:hover svg{transform:translateX(3px)}
+</style>
+
+<section class="tt-marokko-reizen">
+
+  <div class="tt-section-head">
+    <div class="tt-eyebrow">Voorbeeldreizen</div>
+    <h2 class="tt-title">Ontdek <em>Marokko</em></h2>
+    <p class="tt-intro">Een selectie van inspirerende routes door Marokko, volledig op maat samen te stellen. Van de koningssteden tot de eindeloze Sahara — wij stemmen elke reis af op uw wensen.</p>
+  </div>
+
+  <div class="tt-grid">
+
+    <!-- ── REIS 1: MARRAKECH ── -->
+    <article class="tt-card">
+      <div class="tt-card-photo">
+        <!-- Vervang dit blok door: <img src="URL_NAAR_FOTO" alt="Marrakech"> -->
+        <div class="tt-photo-placeholder tt-photo-marrakech">Marrakech &amp; omgeving</div>
+      </div>
+      <div class="tt-card-body">
+        <h3 class="tt-card-name">Magisch Marrakech</h3>
+        <p class="tt-card-desc">[KORTE BESCHRIJVING — bijv. Dompel u onder in de bruisende souks, paleizen en tuinen van de rode stad, met optionele uitstapjes naar het Atlasgebergte.]</p>
+        <div class="tt-card-meta">
+          <div class="tt-card-duration">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            [X] dagen
+          </div>
+          <div class="tt-card-price">
+            <span class="tt-card-price-lbl">Prijs vanaf p.p.</span>
+            <span class="tt-card-price-val">€[BEDRAG]</span>
+          </div>
+        </div>
+        <a href="https://totaltravel.nl/reisaanvraag/" class="tt-card-cta">
+          Bekijk reis
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </article>
+
+    <!-- ── REIS 2: SAHARA ── -->
+    <article class="tt-card">
+      <div class="tt-card-photo">
+        <!-- Vervang dit blok door: <img src="URL_NAAR_FOTO" alt="Sahara"> -->
+        <div class="tt-photo-placeholder tt-photo-sahara">Sahara woestijn</div>
+      </div>
+      <div class="tt-card-body">
+        <h3 class="tt-card-name">Stilte van de Sahara</h3>
+        <p class="tt-card-desc">[KORTE BESCHRIJVING — bijv. Een rondreis langs Berberdorpen en woestijnoases, met overnachting onder de sterrenhemel in een luxe woestijnkamp.]</p>
+        <div class="tt-card-meta">
+          <div class="tt-card-duration">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            [X] dagen
+          </div>
+          <div class="tt-card-price">
+            <span class="tt-card-price-lbl">Prijs vanaf p.p.</span>
+            <span class="tt-card-price-val">€[BEDRAG]</span>
+          </div>
+        </div>
+        <a href="https://totaltravel.nl/reisaanvraag/" class="tt-card-cta">
+          Bekijk reis
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </article>
+
+    <!-- ── REIS 3: ATLASGEBERGTE ── -->
+    <article class="tt-card">
+      <div class="tt-card-photo">
+        <!-- Vervang dit blok door: <img src="URL_NAAR_FOTO" alt="Atlasgebergte"> -->
+        <div class="tt-photo-placeholder tt-photo-atlas">Hoge Atlas</div>
+      </div>
+      <div class="tt-card-body">
+        <h3 class="tt-card-name">Avontuur in de Atlas</h3>
+        <p class="tt-card-desc">[KORTE BESCHRIJVING — bijv. Wandel door spectaculaire valleien, ontmoet Berberfamilies en geniet van de adembenemende uitzichten van het Hoge Atlasgebergte.]</p>
+        <div class="tt-card-meta">
+          <div class="tt-card-duration">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            [X] dagen
+          </div>
+          <div class="tt-card-price">
+            <span class="tt-card-price-lbl">Prijs vanaf p.p.</span>
+            <span class="tt-card-price-val">€[BEDRAG]</span>
+          </div>
+        </div>
+        <a href="https://totaltravel.nl/reisaanvraag/" class="tt-card-cta">
+          Bekijk reis
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </article>
+
+    <!-- ── REIS 4: KONINGSSTEDEN ── -->
+    <article class="tt-card">
+      <div class="tt-card-photo">
+        <!-- Vervang dit blok door: <img src="URL_NAAR_FOTO" alt="Koningssteden"> -->
+        <div class="tt-photo-placeholder tt-photo-koningen">Koningssteden</div>
+      </div>
+      <div class="tt-card-body">
+        <h3 class="tt-card-name">Grand Tour Koningssteden</h3>
+        <p class="tt-card-desc">[KORTE BESCHRIJVING — bijv. Een klassieke rondreis langs Rabat, Meknès, Fes en Marrakech — vier eeuwenoude koningssteden vol cultuur, ambachten en geschiedenis.]</p>
+        <div class="tt-card-meta">
+          <div class="tt-card-duration">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            [X] dagen
+          </div>
+          <div class="tt-card-price">
+            <span class="tt-card-price-lbl">Prijs vanaf p.p.</span>
+            <span class="tt-card-price-val">€[BEDRAG]</span>
+          </div>
+        </div>
+        <a href="https://totaltravel.nl/reisaanvraag/" class="tt-card-cta">
+          Bekijk reis
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </article>
+
+    <!-- ── REIS 5: KUST / ESSAOUIRA ── -->
+    <article class="tt-card">
+      <div class="tt-card-photo">
+        <!-- Vervang dit blok door: <img src="URL_NAAR_FOTO" alt="Atlantische kust"> -->
+        <div class="tt-photo-placeholder tt-photo-kust">Atlantische kust</div>
+      </div>
+      <div class="tt-card-body">
+        <h3 class="tt-card-name">Wind &amp; Waves Essaouira</h3>
+        <p class="tt-card-desc">[KORTE BESCHRIJVING — bijv. Combineer cultuur in Marrakech met ontspanning aan de Atlantische kust in het sfeervolle havenstadje Essaouira.]</p>
+        <div class="tt-card-meta">
+          <div class="tt-card-duration">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            [X] dagen
+          </div>
+          <div class="tt-card-price">
+            <span class="tt-card-price-lbl">Prijs vanaf p.p.</span>
+            <span class="tt-card-price-val">€[BEDRAG]</span>
+          </div>
+        </div>
+        <a href="https://totaltravel.nl/reisaanvraag/" class="tt-card-cta">
+          Bekijk reis
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </article>
+
+    <!-- ── REIS 6: CHEFCHAOUEN / NOORDEN ── -->
+    <article class="tt-card">
+      <div class="tt-card-photo">
+        <!-- Vervang dit blok door: <img src="URL_NAAR_FOTO" alt="Chefchaouen"> -->
+        <div class="tt-photo-placeholder tt-photo-chefchaouen">Chefchaouen &amp; Noord</div>
+      </div>
+      <div class="tt-card-body">
+        <h3 class="tt-card-name">Blauwe Parels &amp; Noord</h3>
+        <p class="tt-card-desc">[KORTE BESCHRIJVING — bijv. Ontdek het minder bekende noorden van Marokko, met de blauwe stad Chefchaouen, Tanger en de Rif-bergen.]</p>
+        <div class="tt-card-meta">
+          <div class="tt-card-duration">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            [X] dagen
+          </div>
+          <div class="tt-card-price">
+            <span class="tt-card-price-lbl">Prijs vanaf p.p.</span>
+            <span class="tt-card-price-val">€[BEDRAG]</span>
+          </div>
+        </div>
+        <a href="https://totaltravel.nl/reisaanvraag/" class="tt-card-cta">
+          Bekijk reis
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </article>
+
+  </div>
+</section>
