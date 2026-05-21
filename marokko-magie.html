@@ -6,6 +6,8 @@
 <title>De Magie van Marokko · 10 dagen · Total Travel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js"></script>
 <style>
 :root{
   --s:#A0522D;--sdk:#7A3E21;--slt:#C4784A;
@@ -44,7 +46,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:62px;display:flex;ali
   position:relative;
   overflow:hidden;
   background:
-    linear-gradient(180deg,rgba(45,31,20,.05) 0%,rgba(45,31,20,.3) 60%,rgba(45,31,20,.75) 100%),
+    linear-gradient(180deg,rgba(45,31,20,.1) 0%,rgba(45,31,20,.35) 55%,rgba(45,31,20,.78) 100%),
+    url('Media/marokko.jpg') center/cover no-repeat,
     linear-gradient(135deg,#c09850 0%,#9a6830 30%,#6b3a18 65%,#3a1d08 100%);
 }
 .hero::before{
@@ -94,10 +97,27 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:62px;display:flex;ali
 .phases{display:grid;grid-template-columns:1fr;gap:18px;margin-top:8px}
 .phase{background:var(--w);border:1px solid var(--zlt);border-radius:20px;overflow:hidden;display:grid;grid-template-columns:160px 1fr;transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
 .phase:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(45,31,20,.08)}
-.phase-visual{position:relative;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#c09850,#804820 60%,#4A2208)}
-.phase-visual.v2{background:linear-gradient(135deg,#d4a878,#8a5028 60%,#4a2810)}
-.phase-visual.v3{background:linear-gradient(135deg,#b88858,#704020 60%,#3a1808)}
-.phase-visual.v4{background:linear-gradient(135deg,#cc9858,#925028 60%,#502808)}
+.phase-visual{
+  position:relative;display:flex;align-items:center;justify-content:center;
+  background:
+    linear-gradient(135deg,rgba(160,82,45,.55) 0%,rgba(74,34,8,.7) 100%),
+    url('Media/marokko.jpg') center/cover no-repeat;
+}
+.phase-visual.v2{
+  background:
+    linear-gradient(135deg,rgba(138,80,40,.5) 0%,rgba(74,40,16,.7) 100%),
+    url('Media/marokko.jpg') center/cover no-repeat;
+}
+.phase-visual.v3{
+  background:
+    linear-gradient(135deg,rgba(112,64,32,.45) 0%,rgba(58,24,8,.75) 100%),
+    url('Media/marokko.jpg') center/cover no-repeat;
+}
+.phase-visual.v4{
+  background:
+    linear-gradient(135deg,rgba(146,80,40,.5) 0%,rgba(80,40,8,.7) 100%),
+    url('Media/marokko.jpg') center/cover no-repeat;
+}
 .phase-num{font-family:var(--pf);font-size:64px;font-weight:400;color:rgba(250,248,244,.18);line-height:1;font-style:italic}
 .phase-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:var(--z);opacity:.9}
 .phase-body{padding:22px 26px}
@@ -107,11 +127,36 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:62px;display:flex;ali
 .phase-days{display:inline-block;margin-top:12px;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--s);padding:4px 10px;border:1px solid var(--z);border-radius:20px}
 
 /* ROUTE-KAART */
-.map-wrap{background:var(--w);border:1px solid var(--zlt);border-radius:20px;padding:24px 24px 18px;overflow:hidden}
-.route-map{width:100%;height:auto;display:block;max-height:520px}
-.map-caption{margin-top:8px;text-align:center;font-size:11px;font-style:italic;font-weight:300;color:var(--dim);letter-spacing:.02em}
-.map-marker circle{transition:r .2s var(--ease),fill .2s}
-.map-marker:hover circle{r:16;fill:var(--sdk)}
+.map-wrap{background:var(--w);border:1px solid var(--zlt);border-radius:20px;padding:14px;overflow:hidden;position:relative}
+#routeMap{width:100%;height:480px;border-radius:14px;overflow:hidden}
+.map-caption{margin-top:10px;text-align:center;font-size:11px;font-style:italic;font-weight:300;color:var(--dim);letter-spacing:.02em}
+/* Custom Mapbox marker styling */
+.tt-marker{
+  width:32px;height:32px;border-radius:50%;
+  background:var(--s);color:var(--w);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--pf);font-size:14px;font-weight:500;font-style:italic;
+  border:2px solid var(--w);
+  box-shadow:0 4px 12px rgba(45,31,20,.35);
+  cursor:pointer;transition:transform .2s var(--ease)
+}
+.tt-marker:hover{transform:scale(1.15)}
+/* Mapbox popup-overrides voor onze stijl */
+.mapboxgl-popup-content{
+  font-family:var(--dm);padding:14px 18px;border-radius:14px;
+  box-shadow:0 8px 24px rgba(45,31,20,.12)
+}
+.mapboxgl-popup-content .pop-num{
+  font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--s);margin-bottom:3px
+}
+.mapboxgl-popup-content .pop-title{
+  font-family:var(--pf);font-size:16px;color:var(--t);line-height:1.2;margin-bottom:4px
+}
+.mapboxgl-popup-content .pop-text{
+  font-size:11px;color:var(--sub);font-weight:300;line-height:1.45;max-width:200px
+}
+.mapboxgl-popup-tip{display:none}
+.mapboxgl-ctrl-attrib{font-size:10px}
 
 /* HOOGTEPUNTEN */
 .highlights{display:grid;grid-template-columns:1fr 1fr;gap:12px}
@@ -273,7 +318,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:62px;display:flex;ali
 .sim-card{background:var(--w);border:1px solid var(--zlt);border-radius:20px;overflow:hidden;cursor:pointer;transition:transform .22s var(--ease),box-shadow .22s var(--ease)}
 .sim-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(45,31,20,.12)}
 .sim-photo{position:relative;aspect-ratio:3/2;overflow:hidden}
-.sim-photo .ph{width:100%;height:100%;transition:transform .5s var(--ease)}
+.sim-photo .ph{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s var(--ease)}
 .sim-card:hover .ph{transform:scale(1.05)}
 .sim-region{position:absolute;top:12px;left:12px;background:rgba(45,31,20,.65);backdrop-filter:blur(4px);padding:4px 10px;font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--w);border-radius:20px}
 .sim-body{padding:18px 20px 16px}
@@ -282,10 +327,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:62px;display:flex;ali
 .sim-meta{display:flex;align-items:center;gap:14px;padding-top:12px;border-top:1px solid var(--zlt);font-size:11px;color:var(--sub)}
 .sim-price{margin-left:auto;font-family:var(--pf);font-size:18px;color:var(--s)}
 
-/* foto-gradient kleuren voor similar */
-.ph-jordan{background:linear-gradient(135deg,#c0a070 0%,#806030 60%,#403008 100%)}
-.ph-japan{background:linear-gradient(135deg,#d09090 0%,#904040 60%,#5A1818 100%)}
-.ph-oman{background:linear-gradient(135deg,#70a880 0%,#305840 60%,#102818 100%)}
+/* fallback kleurverloop voor wanneer foto's nog niet beschikbaar zijn */
 
 /* ── MOBILE STICKY BAR ── */
 .mobile-cta{position:fixed;bottom:0;left:0;right:0;background:var(--w);border-top:1px solid var(--zlt);padding:12px 16px;display:none;align-items:center;gap:12px;z-index:90;box-shadow:0 -4px 16px rgba(45,31,20,.08)}
@@ -452,152 +494,7 @@ footer a{color:var(--z)}
       <h2 class="section-title">Uw rondreis op de <em>kaart</em></h2>
       <p class="section-lead" style="margin-bottom:24px">Een lus van zo'n 1.500 kilometer, in een doordacht tempo en met genoeg adempauzes onderweg. De exacte route stippelen we samen met u uit.</p>
       <div class="map-wrap">
-        <svg class="route-map" viewBox="0 0 600 480" xmlns="http://www.w3.org/2000/svg" aria-label="Routekaart van Marokko">
-          <defs>
-            <linearGradient id="landGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#EDE5D8"/>
-              <stop offset="100%" stop-color="#DDD0BC"/>
-            </linearGradient>
-            <linearGradient id="seaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#E8DDD0" stop-opacity=".5"/>
-              <stop offset="100%" stop-color="#E8DDD0" stop-opacity=".2"/>
-            </linearGradient>
-            <pattern id="desert" x="0" y="0" width="14" height="14" patternUnits="userSpaceOnUse">
-              <rect width="14" height="14" fill="#DDD0BC" opacity=".4"/>
-              <circle cx="3" cy="3" r=".7" fill="#B09068" opacity=".5"/>
-              <circle cx="10" cy="9" r=".7" fill="#B09068" opacity=".5"/>
-            </pattern>
-            <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-              <path d="M 0 0 L 10 5 L 0 10 z" fill="#A0522D"/>
-            </marker>
-          </defs>
-
-          <!-- zeeën -->
-          <rect x="0" y="0" width="600" height="480" fill="url(#seaGrad)"/>
-
-          <!-- Marokko silhouet (gestileerd) -->
-          <path d="
-            M 80 95
-            L 140 70
-            L 230 60
-            L 310 70
-            L 380 95
-            L 430 130
-            L 470 175
-            L 495 235
-            L 510 300
-            L 495 365
-            L 460 410
-            L 405 440
-            L 335 450
-            L 270 440
-            L 210 415
-            L 155 380
-            L 115 335
-            L 90 280
-            L 75 220
-            L 70 155
-            Z
-          " fill="url(#landGrad)" stroke="#C4A882" stroke-width="1.5"/>
-
-          <!-- Sahara-zone (zuidoosten) -->
-          <path d="
-            M 320 280
-            L 420 270
-            L 480 290
-            L 500 340
-            L 470 395
-            L 420 425
-            L 360 425
-            L 310 400
-            L 290 350
-            Z
-          " fill="url(#desert)" stroke="none"/>
-
-          <!-- Atlasgebergte (gestileerde driehoekjes) -->
-          <g fill="#B09068" opacity=".55">
-            <polygon points="180,250 200,220 220,250"/>
-            <polygon points="215,255 240,215 265,255"/>
-            <polygon points="260,250 285,225 310,250"/>
-            <polygon points="305,255 330,220 355,255"/>
-            <polygon points="350,250 370,230 390,250"/>
-          </g>
-
-          <!-- buurland-suggestie + zee-labels -->
-          <text x="30" y="220" font-family="DM Sans" font-size="10" font-weight="600" fill="#8A7060" letter-spacing="2" transform="rotate(-90 30 220)">ATLANTISCHE OCEAAN</text>
-          <text x="225" y="35" font-family="DM Sans" font-size="9" font-weight="600" fill="#8A7060" letter-spacing="1.5">MIDDELLANDSE ZEE</text>
-          <text x="540" y="380" font-family="DM Sans" font-size="9" font-weight="500" fill="#B09068" letter-spacing="1" opacity=".7">ALGERIJE</text>
-
-          <!-- regiolabels -->
-          <text x="200" y="180" font-family="Playfair Display" font-style="italic" font-size="14" fill="#5A4030" opacity=".6">Rif</text>
-          <text x="260" y="278" font-family="Playfair Display" font-style="italic" font-size="13" fill="#5A4030" opacity=".7">Atlasgebergte</text>
-          <text x="390" y="360" font-family="Playfair Display" font-style="italic" font-size="14" fill="#7A3E21" opacity=".75">Sahara</text>
-
-          <!-- ROUTE (lus) -->
-          <!-- pad door alle stops, lichtjes gebogen, kleine pijltjes erop -->
-          <path d="
-            M 165 165
-            Q 195 130 245 130
-            Q 290 130 320 145
-            Q 350 175 305 220
-            Q 270 250 295 290
-            Q 320 330 380 340
-            Q 420 345 415 380
-            Q 395 410 330 405
-            Q 270 395 230 360
-            Q 180 320 175 270
-            Q 175 220 165 165
-          " fill="none" stroke="#A0522D" stroke-width="2.5" stroke-dasharray="6 4" opacity=".75"/>
-
-          <!-- markers + labels -->
-          <!-- 1: Casablanca/Rabat (start) -->
-          <g class="map-marker" data-i="1">
-            <circle cx="165" cy="165" r="14" fill="#A0522D"/>
-            <text x="165" y="170" font-family="Playfair Display" font-size="14" font-weight="500" font-style="italic" fill="#FAF8F4" text-anchor="middle">I</text>
-            <text x="165" y="200" font-family="DM Sans" font-size="11" font-weight="600" fill="#2D1F14" text-anchor="middle">Koningsstad</text>
-            <text x="165" y="213" font-family="DM Sans" font-size="9" fill="#8A7060" text-anchor="middle" letter-spacing=".5">start van uw reis</text>
-          </g>
-
-          <!-- 2: Atlasgebergte -->
-          <g class="map-marker" data-i="2">
-            <circle cx="295" cy="245" r="14" fill="#A0522D"/>
-            <text x="295" y="250" font-family="Playfair Display" font-size="14" font-weight="500" font-style="italic" fill="#FAF8F4" text-anchor="middle">II</text>
-            <text x="195" y="240" font-family="DM Sans" font-size="11" font-weight="600" fill="#2D1F14">Atlas &amp;</text>
-            <text x="195" y="254" font-family="DM Sans" font-size="11" font-weight="600" fill="#2D1F14">berberdorpen</text>
-          </g>
-
-          <!-- 3: Sahara -->
-          <g class="map-marker" data-i="3">
-            <circle cx="415" cy="375" r="14" fill="#A0522D"/>
-            <text x="415" y="380" font-family="Playfair Display" font-size="14" font-weight="500" font-style="italic" fill="#FAF8F4" text-anchor="middle">III</text>
-            <text x="445" y="370" font-family="DM Sans" font-size="11" font-weight="600" fill="#2D1F14">Sahara</text>
-            <text x="445" y="384" font-family="DM Sans" font-size="9" fill="#8A7060" letter-spacing=".5">woestijnkamp</text>
-          </g>
-
-          <!-- 4: Marrakech -->
-          <g class="map-marker" data-i="4">
-            <circle cx="230" cy="330" r="14" fill="#A0522D"/>
-            <text x="230" y="335" font-family="Playfair Display" font-size="14" font-weight="500" font-style="italic" fill="#FAF8F4" text-anchor="middle">IV</text>
-            <text x="155" y="350" font-family="DM Sans" font-size="11" font-weight="600" fill="#2D1F14">Marrakech</text>
-            <text x="155" y="363" font-family="DM Sans" font-size="9" fill="#8A7060" letter-spacing=".5">de rode stad</text>
-          </g>
-
-          <!-- kompas -->
-          <g transform="translate(540 90)">
-            <circle r="20" fill="#FAF8F4" stroke="#C4A882" stroke-width="1"/>
-            <path d="M 0 -14 L 4 0 L 0 14 L -4 0 Z" fill="#A0522D"/>
-            <text y="-24" font-family="DM Sans" font-size="10" font-weight="700" fill="#5A4030" text-anchor="middle">N</text>
-          </g>
-
-          <!-- schaal -->
-          <g transform="translate(60 445)">
-            <line x1="0" y1="0" x2="80" y2="0" stroke="#5A4030" stroke-width="1.5"/>
-            <line x1="0" y1="-4" x2="0" y2="4" stroke="#5A4030" stroke-width="1.5"/>
-            <line x1="40" y1="-3" x2="40" y2="3" stroke="#5A4030" stroke-width="1"/>
-            <line x1="80" y1="-4" x2="80" y2="4" stroke="#5A4030" stroke-width="1.5"/>
-            <text x="40" y="16" font-family="DM Sans" font-size="9" font-weight="500" fill="#5A4030" text-anchor="middle" letter-spacing=".5">200 km</text>
-          </g>
-        </svg>
+        <div id="routeMap" role="region" aria-label="Routekaart van Marokko"></div>
         <div class="map-caption">Indicatieve route — de exacte stops bespreken we tijdens uw aanvraag.</div>
       </div>
     </section>
@@ -953,7 +850,7 @@ footer a{color:var(--z)}
   <div class="sim-grid">
     <a class="sim-card" href="totaltravel-aanvraag.html">
       <div class="sim-photo">
-        <div class="ph ph-jordan"></div>
+        <img class="ph" src="Media/jordanie.jpg" alt="Jordanië: Petra en Wadi Rum" loading="lazy">
         <div class="sim-region">Midden-Oosten</div>
       </div>
       <div class="sim-body">
@@ -967,7 +864,7 @@ footer a{color:var(--z)}
     </a>
     <a class="sim-card" href="totaltravel-aanvraag.html">
       <div class="sim-photo">
-        <div class="ph ph-japan"></div>
+        <img class="ph" src="Media/japan.jpg" alt="Japan: Tradities en technologie" loading="lazy">
         <div class="sim-region">Azië</div>
       </div>
       <div class="sim-body">
@@ -981,7 +878,7 @@ footer a{color:var(--z)}
     </a>
     <a class="sim-card" href="totaltravel-aanvraag.html">
       <div class="sim-photo">
-        <div class="ph ph-oman"></div>
+        <img class="ph" src="Media/oman.jpg" alt="Oman: Authentiek Arabië" loading="lazy">
         <div class="sim-region">Midden-Oosten</div>
       </div>
       <div class="sim-body">
@@ -1008,10 +905,103 @@ footer a{color:var(--z)}
 <!-- FOOTER -->
 
 <script>
-function toggleFaq(btn){
-  const item = btn.parentElement;
-  item.classList.toggle('open');
-}
+/* ═══════════════════════════════════════════════════
+   MAPBOX KAART — Marokko-route
+   Vervang MAPBOX_TOKEN met je eigen public token van
+   https://account.mapbox.com/access-tokens/
+   (begint met "pk.eyJ...")
+   Wil je een andere kaartstijl? Pas MAP_STYLE aan:
+   - mapbox://styles/mapbox/outdoors-v12  (huidig: terrein/relief)
+   - mapbox://styles/mapbox/light-v11     (subtiel, licht)
+   - mapbox://styles/mapbox/streets-v12   (gedetailleerd)
+   ═══════════════════════════════════════════════════ */
+
+const MAPBOX_TOKEN = 'pk.eyJ1Ijoicm9iZXJ0dmlzIiwiYSI6ImNtcGY3NGRubDA5aWcyb3IwM3pheWg5cG8ifQ.2ApRPOQCA6xgSUkq7TMLJA';
+const MAP_STYLE    = 'mapbox://styles/mapbox/outdoors-v12';
+
+/* Reisstops met coördinaten (lng, lat) en bijbehorende fase-info */
+const STOPS = [
+  {nr:'I',   stad:'Casablanca',     lng:-7.5898, lat:33.5731, fase:'Hoofdstuk één',  tekst:'Aankomst en eerste indrukken in de witte havenstad aan de Atlantische kust.'},
+  {nr:'I',   stad:'Fez',            lng:-5.0078, lat:34.0181, fase:'Hoofdstuk één',  tekst:'Verken de oudste medina van Marokko, een UNESCO-werelderfgoed.'},
+  {nr:'II',  stad:'Atlasgebergte',  lng:-7.0926, lat:31.5333, fase:'Hoofdstuk twee', tekst:'Berberdorpen, hoge passen en weidse uitzichten.'},
+  {nr:'III', stad:'Merzouga · Sahara', lng:-4.0143, lat:31.0982, fase:'Hoofdstuk drie', tekst:'Dromedaristocht en overnachting in een sfeervol woestijnkamp tussen de Erg Chebbi-duinen.'},
+  {nr:'IV',  stad:'Aït Benhaddou',  lng:-7.1295, lat:31.0473, fase:'Hoofdstuk vier', tekst:'De filmische lemen kasbah aan de poort van de Sahara.'},
+  {nr:'IV',  stad:'Marrakech',      lng:-7.9811, lat:31.6295, fase:'Hoofdstuk vier', tekst:'De rode stad — souks, paleizen en tuinen vol kleur.'}
+];
+
+(function initMap(){
+  if(typeof mapboxgl === 'undefined'){
+    document.getElementById('routeMap').innerHTML =
+      '<div style="padding:60px 20px;text-align:center;color:var(--dim);font-size:13px">Kaart kan niet geladen worden.</div>';
+    return;
+  }
+  if(MAPBOX_TOKEN.startsWith('pk.PLAATS')){
+    document.getElementById('routeMap').innerHTML =
+      '<div style="padding:60px 20px;text-align:center;color:var(--dim);font-size:13px;line-height:1.6">'+
+      '<strong style="color:var(--s);display:block;margin-bottom:6px">Mapbox-token nog niet ingesteld</strong>'+
+      'Vervang <code style="background:var(--iw);padding:2px 6px;border-radius:6px;font-size:11px">MAPBOX_TOKEN</code> bovenin het script door je eigen publieke token van mapbox.com.</div>';
+    return;
+  }
+  mapboxgl.accessToken = MAPBOX_TOKEN;
+
+  const map = new mapboxgl.Map({
+    container: 'routeMap',
+    style: MAP_STYLE,
+    center: [-6.5, 31.7],
+    zoom: 5.4,
+    attributionControl: true,
+    cooperativeGestures: true // voorkomt dat scrollen op pagina per ongeluk de kaart zoomt
+  });
+
+  map.addControl(new mapboxgl.NavigationControl({showCompass:false}), 'top-right');
+  map.scrollZoom.disable(); // alleen zoomen met +/− knoppen of pinch op mobiel
+
+  map.on('load', () => {
+    // Route lijn als GeoJSON
+    const coords = STOPS.map(s => [s.lng, s.lat]);
+    map.addSource('route', {
+      type: 'geojson',
+      data: {
+        type: 'Feature', properties: {},
+        geometry: { type: 'LineString', coordinates: coords }
+      }
+    });
+    map.addLayer({
+      id: 'route-line',
+      type: 'line',
+      source: 'route',
+      layout: { 'line-join':'round', 'line-cap':'round' },
+      paint: {
+        'line-color': '#A0522D',
+        'line-width': 3,
+        'line-dasharray': [2, 1.5],
+        'line-opacity': 0.85
+      }
+    });
+
+    // Markers per stop
+    STOPS.forEach(stop => {
+      const el = document.createElement('div');
+      el.className = 'tt-marker';
+      el.textContent = stop.nr;
+
+      const popup = new mapboxgl.Popup({offset: 22, closeButton: false}).setHTML(
+        `<div class="pop-num">${stop.fase}</div>
+         <div class="pop-title">${stop.stad}</div>
+         <div class="pop-text">${stop.tekst}</div>`
+      );
+
+      new mapboxgl.Marker({element: el, anchor: 'center'})
+        .setLngLat([stop.lng, stop.lat])
+        .setPopup(popup)
+        .addTo(map);
+    });
+
+    // Pas viewport aan zodat alle markers zichtbaar zijn
+    const bounds = coords.reduce((b,c)=> b.extend(c), new mapboxgl.LngLatBounds(coords[0], coords[0]));
+    map.fitBounds(bounds, {padding: 60, maxZoom: 6.4, duration: 0});
+  });
+})();
 </script>
 </body>
 </html>
