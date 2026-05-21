@@ -1,0 +1,479 @@
+<!-- ====================================================================
+     TOTAL TRAVEL — GROEPSTICKETS (CONTENT-BLOK)
+     Vereist: tt-reizen-base.html moet ergens eerder op de pagina staan.
+     Plak dit in een Elementor HTML-widget op de groepstickets-pagina
+     ==================================================================== -->
+
+<style>
+/* Extra styling die alleen voor het groepstickets-blok nodig is.
+   Bouwt voort op de variabelen uit tt-reizen-base. */
+
+/* ── USP strip (4 voordelen onder de intro) ── */
+.tt-reizen .tt-usp-strip{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:24px;
+  margin:0 auto 56px;
+  max-width:1100px;
+}
+@media(max-width:880px){
+  .tt-reizen .tt-usp-strip{grid-template-columns:repeat(2,1fr);gap:20px}
+}
+@media(max-width:480px){
+  .tt-reizen .tt-usp-strip{grid-template-columns:1fr}
+}
+.tt-reizen .tt-usp{
+  text-align:center;
+  padding:8px 4px;
+}
+.tt-reizen .tt-usp-icon{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:44px;height:44px;
+  border-radius:50%;
+  background:rgba(160,82,45,.08);
+  color:var(--tt-accent);
+  margin-bottom:12px;
+}
+.tt-reizen .tt-usp-title{
+  font-family:var(--tt-pf);
+  font-size:16px;
+  font-weight:500;
+  color:var(--tt-text);
+  margin:0 0 4px;
+}
+.tt-reizen .tt-usp-desc{
+  font-size:12.5px;
+  font-weight:300;
+  line-height:1.5;
+  color:var(--tt-sub);
+  margin:0;
+}
+
+/* ── Doelgroepen sectie ── */
+.tt-reizen .tt-subhead{
+  text-align:center;
+  margin:64px auto 32px;
+  max-width:720px;
+}
+.tt-reizen .tt-subhead-title{
+  font-family:var(--tt-pf);
+  font-size:clamp(24px,3vw,32px);
+  font-weight:400;
+  color:var(--tt-text);
+  margin:0 0 10px;
+}
+.tt-reizen .tt-subhead-title em{
+  font-style:italic;color:var(--tt-accent);
+}
+.tt-reizen .tt-subhead-text{
+  font-size:14px;
+  font-weight:300;
+  line-height:1.6;
+  color:var(--tt-sub);
+  margin:0;
+}
+
+.tt-reizen .tt-audience-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+  margin-bottom:24px;
+}
+@media(max-width:880px){
+  .tt-reizen .tt-audience-grid{grid-template-columns:1fr}
+}
+.tt-reizen .tt-audience{
+  background:var(--tt-card);
+  border:1px solid var(--tt-border);
+  border-radius:10px;
+  padding:28px 24px;
+  display:flex;
+  flex-direction:column;
+}
+.tt-reizen .tt-audience-icon{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:48px;height:48px;
+  border-radius:10px;
+  background:rgba(160,82,45,.1);
+  color:var(--tt-accent);
+  margin-bottom:16px;
+}
+.tt-reizen .tt-audience-title{
+  font-family:var(--tt-pf);
+  font-size:20px;
+  font-weight:400;
+  color:var(--tt-text);
+  margin:0 0 10px;
+}
+.tt-reizen .tt-audience-text{
+  font-size:13.5px;
+  font-weight:300;
+  line-height:1.55;
+  color:var(--tt-sub);
+  margin:0 0 16px;
+  flex:1;
+}
+.tt-reizen .tt-audience-examples{
+  list-style:none;
+  padding:0;margin:0;
+  font-size:12.5px;
+  color:var(--tt-sub);
+}
+.tt-reizen .tt-audience-examples li{
+  position:relative;
+  padding:5px 0 5px 16px;
+  border-top:1px solid var(--tt-border);
+}
+.tt-reizen .tt-audience-examples li:first-child{border-top:none}
+.tt-reizen .tt-audience-examples li::before{
+  content:"";
+  position:absolute;
+  left:0;top:50%;
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--tt-accent);
+  transform:translateY(-50%);
+}
+
+/* ── Bestemmingskaart-variant: zonder duur/prijs, met routedetail ── */
+.tt-reizen .tt-card-route{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:14px 0 16px;
+  border-top:1px solid var(--tt-border);
+  margin-bottom:18px;
+  font-size:12.5px;
+  font-weight:500;
+  color:var(--tt-sub);
+}
+.tt-reizen .tt-card-route svg{color:var(--tt-accent);flex-shrink:0}
+
+/* ── CTA-blok onderaan ── */
+.tt-reizen .tt-cta-block{
+  background:var(--tt-card);
+  border:1px solid var(--tt-border);
+  border-radius:10px;
+  padding:40px 32px;
+  text-align:center;
+  margin-top:56px;
+}
+.tt-reizen .tt-cta-title{
+  font-family:var(--tt-pf);
+  font-size:clamp(22px,2.6vw,28px);
+  font-weight:400;
+  color:var(--tt-text);
+  margin:0 0 10px;
+}
+.tt-reizen .tt-cta-title em{font-style:italic;color:var(--tt-accent)}
+.tt-reizen .tt-cta-text{
+  font-size:14px;
+  font-weight:300;
+  line-height:1.6;
+  color:var(--tt-sub);
+  margin:0 auto 22px;
+  max-width:520px;
+}
+.tt-reizen .tt-cta-buttons{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+.tt-reizen .tt-cta-primary,
+.tt-reizen .tt-cta-secondary{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-family:var(--tt-dm);
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  padding:13px 24px;
+  border-radius:6px;
+  text-decoration:none;
+  transition:all .2s var(--tt-ease);
+}
+.tt-reizen .tt-cta-primary{
+  background:var(--tt-accent);
+  color:#FAF8F4;
+}
+.tt-reizen .tt-cta-primary:hover{
+  background:var(--tt-accent-dark);
+  color:#FAF8F4;
+}
+.tt-reizen .tt-cta-secondary{
+  background:transparent;
+  color:var(--tt-accent);
+  border:1px solid var(--tt-accent);
+}
+.tt-reizen .tt-cta-secondary:hover{
+  background:var(--tt-accent);
+  color:#FAF8F4;
+}
+
+/* ── Foto-placeholders voor groepsbestemmingen ── */
+.tt-reizen .tt-photo-nyc       {background:linear-gradient(135deg,#4A5C7A 0%,#2D3E5A 60%,#1A2438 100%)}
+.tt-reizen .tt-photo-singapore {background:linear-gradient(135deg,#7AB5C4 0%,#3F8BA0 60%,#1F5468 100%)}
+.tt-reizen .tt-photo-madrid    {background:linear-gradient(135deg,#D49560 0%,#A86430 60%,#6B3A14 100%)}
+.tt-reizen .tt-photo-sevilla   {background:linear-gradient(135deg,#E8A858 0%,#C47828 60%,#7A4810 100%)}
+.tt-reizen .tt-photo-rome      {background:linear-gradient(135deg,#C49870 0%,#8B5F35 60%,#4F3418 100%)}
+.tt-reizen .tt-photo-barcelona {background:linear-gradient(135deg,#D4604A 0%,#A03B28 60%,#6B2418 100%)}
+</style>
+
+<section class="tt-reizen" id="tt-reizen-groep">
+
+  <!-- ═══════════ SECTIE-KOP ═══════════ -->
+  <div class="tt-section-head">
+    <div class="tt-eyebrow">Vliegtickets voor groepen vanaf 10 personen</div>
+    <h2 class="tt-title">Samen op pad met <em>vliegtickets voor groepen</em></h2>
+    <p class="tt-intro">Of u nu met collega's, familie of een complete delegatie reist — wij regelen de vliegtickets voor uw groep. Eén aanspreekpunt, scherpe groepstarieven en flexibele voorwaarden, ongeacht waar u naartoe gaat.</p>
+  </div>
+
+  <!-- ═══════════ USP STRIP ═══════════ -->
+  <div class="tt-usp-strip">
+
+    <div class="tt-usp">
+      <div class="tt-usp-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>
+      </div>
+      <h4 class="tt-usp-title">Scherpe groepstarieven</h4>
+      <p class="tt-usp-desc">Onderhandelde prijzen via onze airline-relaties, vaak gunstiger dan losse boekingen.</p>
+    </div>
+
+    <div class="tt-usp">
+      <div class="tt-usp-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+      <h4 class="tt-usp-title">Eén aanspreekpunt</h4>
+      <p class="tt-usp-desc">Een vaste contactpersoon van A tot Z — geen callcenters of wisselende agents.</p>
+    </div>
+
+    <div class="tt-usp">
+      <div class="tt-usp-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+      </div>
+      <h4 class="tt-usp-title">Flexibele betaling</h4>
+      <p class="tt-usp-desc">Aanbetaling vooraf, restbedrag dichter bij vertrek. Geen verrassingen.</p>
+    </div>
+
+    <div class="tt-usp">
+      <div class="tt-usp-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      </div>
+      <h4 class="tt-usp-title">Naamswijziging mogelijk</h4>
+      <p class="tt-usp-desc">Personeelswissel of last-minute deelnemer? Wij regelen de naamswijziging.</p>
+    </div>
+
+  </div>
+
+  <!-- ═══════════ VOOR WIE? ═══════════ -->
+  <div class="tt-subhead">
+    <h3 class="tt-subhead-title">Voor <em>wie</em> regelen wij vliegtickets voor groepen?</h3>
+    <p class="tt-subhead-text">Onze groepsservice is er voor iedereen die met 10 personen of meer reist — particulier, zakelijk én voor evenementbureaus die uitbesteden.</p>
+  </div>
+
+  <div class="tt-audience-grid">
+
+    <!-- DOELGROEP 1: PARTICULIEREN -->
+    <div class="tt-audience">
+      <div class="tt-audience-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <h4 class="tt-audience-title">Particulieren</h4>
+      <p class="tt-audience-text">Familiebijeenkomsten in het buitenland, vriendengroepen op stedentrip of een gezamenlijke bruiloft overzee — wij houden uw groep bij elkaar.</p>
+      <ul class="tt-audience-examples">
+        <li>Familiereünies &amp; jubilea</li>
+        <li>Vrijgezellenfeesten</li>
+        <li>Bestemmingsbruiloften</li>
+      </ul>
+    </div>
+
+    <!-- DOELGROEP 2: BEDRIJVEN -->
+    <div class="tt-audience">
+      <div class="tt-audience-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+      </div>
+      <h4 class="tt-audience-title">Bedrijven</h4>
+      <p class="tt-audience-text">Incentive-reizen, congressen en zakelijke uitjes. We zorgen dat uw team comfortabel én op tijd aankomt, met facturatie op uw bedrijfsnaam.</p>
+      <ul class="tt-audience-examples">
+        <li>Personeels-incentives</li>
+        <li>Congressen &amp; beurzen</li>
+        <li>Internationale meetings</li>
+      </ul>
+    </div>
+
+    <!-- DOELGROEP 3: EVENTBUREAUS -->
+    <div class="tt-audience">
+      <div class="tt-audience-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </div>
+      <h4 class="tt-audience-title">Eventbureaus</h4>
+      <p class="tt-audience-text">U regelt het programma, wij het vliegverkeer. Als white-label partner verzorgen wij de luchtvaartcomponent voor evenementen waar u zelf niet de tickets boekt.</p>
+      <ul class="tt-audience-examples">
+        <li>Formule 1 &amp; sportevenementen</li>
+        <li>Incentive-programma's</li>
+        <li>Festivals &amp; awards</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- ═══════════ POPULAIRE GROEPSBESTEMMINGEN ═══════════ -->
+  <div class="tt-subhead">
+    <h3 class="tt-subhead-title">Populaire <em>groepsbestemmingen</em></h3>
+    <p class="tt-subhead-text">Een greep uit de bestemmingen waar wij regelmatig groepen heen brengen. Uw bestemming staat er niet bij? Geen probleem — wij vliegen overal naartoe.</p>
+  </div>
+
+  <div class="tt-grid">
+
+    <!-- ── NEW YORK ── -->
+    <article class="tt-card">
+      <div class="tt-card-photo">
+        <span class="tt-card-flag">Verenigde Staten</span>
+        <!-- Vervang door: <img src="URL" alt="New York"> -->
+        <div class="tt-photo-placeholder tt-photo-nyc">New York</div>
+      </div>
+      <div class="tt-card-body">
+        <h3 class="tt-card-name">New York</h3>
+        <p class="tt-card-desc">[KORTE BESCHRIJVING — bijv. Dé klassieke bestemming voor incentives en bijzondere familieuitstapjes. Veel directe verbindingen vanaf Schiphol.]</p>
+        <div class="tt-card-route">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
+          Directe vluchten vanaf AMS
+        </div>
+        <a href="https://totaltravel.nl/groepsaanvraag/" class="tt-card-cta">
+          Vraag offerte aan
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </article>
+
+    <!-- ── SINGAPORE ── -->
+    <article class="tt-card">
+      <div class="tt-card-photo">
+        <span class="tt-card-flag">Singapore</span>
+        <!-- Vervang door: <img src="URL" alt="Singapore"> -->
+        <div class="tt-photo-placeholder tt-photo-singapore">Singapore</div>
+      </div>
+      <div class="tt-card-body">
+        <h3 class="tt-card-name">Singapore</h3>
+        <p class="tt-card-desc">[KORTE BESCHRIJVING — bijv. Een geliefde incentive-bestemming met topservice aan boord. Ideale hub voor doorreizen naar Azië en Australië.]</p>
+        <div class="tt-card-route">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
+          Directe vluchten vanaf AMS
+        </div>
+        <a href="https://totaltravel.nl/groepsaanvraag/" class="tt-card-cta">
+          Vraag offerte aan
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </article>
+
+    <!-- ── MADRID ── -->
+    <article class="tt-card">
+      <div class="tt-card-photo">
+        <span class="tt-card-flag">Spanje</span>
+        <!-- Vervang door: <img src="URL" alt="Madrid"> -->
+        <div class="tt-photo-placeholder tt-photo-madrid">Madrid</div>
+      </div>
+      <div class="tt-card-body">
+        <h3 class="tt-card-name">Madrid</h3>
+        <p class="tt-card-desc">[KORTE BESCHRIJVING — bijv. Een klassieke stedentrip-bestemming voor groepen, met goede prijzen en veelvuldige verbindingen vanaf alle Nederlandse luchthavens.]</p>
+        <div class="tt-card-route">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
+          Vanuit alle Europese hubs
+        </div>
+        <a href="https://totaltravel.nl/groepsaanvraag/" class="tt-card-cta">
+          Vraag offerte aan
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </article>
+
+    <!-- ── SEVILLA ── -->
+    <article class="tt-card">
+      <div class="tt-card-photo">
+        <span class="tt-card-flag">Spanje</span>
+        <!-- Vervang door: <img src="URL" alt="Sevilla"> -->
+        <div class="tt-photo-placeholder tt-photo-sevilla">Sevilla</div>
+      </div>
+      <div class="tt-card-body">
+        <h3 class="tt-card-name">Sevilla</h3>
+        <p class="tt-card-desc">[KORTE BESCHRIJVING — bijv. Andalusische sfeer voor incentives en culturele groepsreizen. Wij regelen aansluitende verbindingen via Madrid of Barcelona.]</p>
+        <div class="tt-card-route">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
+          Directe en aansluitende vluchten
+        </div>
+        <a href="https://totaltravel.nl/groepsaanvraag/" class="tt-card-cta">
+          Vraag offerte aan
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </article>
+
+    <!-- ── ROME ── -->
+    <article class="tt-card">
+      <div class="tt-card-photo">
+        <span class="tt-card-flag">Italië</span>
+        <!-- Vervang door: <img src="URL" alt="Rome"> -->
+        <div class="tt-photo-placeholder tt-photo-rome">Rome</div>
+      </div>
+      <div class="tt-card-body">
+        <h3 class="tt-card-name">Rome</h3>
+        <p class="tt-card-desc">[KORTE BESCHRIJVING — bijv. Geschiedenis, gastronomie en stedelijke charme. Een populaire keuze voor zowel familiereünies als bedrijfsincentives.]</p>
+        <div class="tt-card-route">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
+          Directe vluchten vanaf AMS
+        </div>
+        <a href="https://totaltravel.nl/groepsaanvraag/" class="tt-card-cta">
+          Vraag offerte aan
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </article>
+
+    <!-- ── BARCELONA ── -->
+    <article class="tt-card">
+      <div class="tt-card-photo">
+        <span class="tt-card-flag">Spanje</span>
+        <!-- Vervang door: <img src="URL" alt="Barcelona"> -->
+        <div class="tt-photo-placeholder tt-photo-barcelona">Barcelona</div>
+      </div>
+      <div class="tt-card-body">
+        <h3 class="tt-card-name">Barcelona</h3>
+        <p class="tt-card-desc">[KORTE BESCHRIJVING — bijv. De allround groepsfavoriet: stad, strand en architectuur. Veel goedkope vluchten en ideaal voor F1-bezoeken in Montmeló.]</p>
+        <div class="tt-card-route">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
+          Directe vluchten vanaf AMS
+        </div>
+        <a href="https://totaltravel.nl/groepsaanvraag/" class="tt-card-cta">
+          Vraag offerte aan
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </article>
+
+  </div>
+
+  <!-- ═══════════ CTA-BLOK ═══════════ -->
+  <div class="tt-cta-block">
+    <h3 class="tt-cta-title">Klaar voor uw <em>groepsreis</em>?</h3>
+    <p class="tt-cta-text">Vraag vrijblijvend een groepsofferte aan of bel ons rechtstreeks. Wij komen binnen één werkdag bij u terug met een voorstel.</p>
+    <div class="tt-cta-buttons">
+      <a href="https://totaltravel.nl/groepsaanvraag/" class="tt-cta-primary">
+        Vraag offerte aan
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <a href="tel:+31000000000" class="tt-cta-secondary">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Bel ons direct
+      </a>
+    </div>
+  </div>
+
+</section>

@@ -1,0 +1,884 @@
+<!-- ============================================================
+     TOTAL TRAVEL — AANVRAAGFORMULIER VLIEGTICKETS GROEPEN
+     Plak dit hele blok (van <section class="tt-groep">...</section>
+     inclusief het bijbehorende <script>) in de gewenste pagina.
+     Alle styling is gescoped onder .tt-groep zodat het niet
+     conflicteert met de rest van de website.
+============================================================ -->
+
+<section class="tt-groep" id="ttGroep">
+<style>
+/* ============== SCOPED STYLING — alleen binnen .tt-groep ============== */
+.tt-groep{
+  --tt-sienna:#a0522d;--tt-sienna-mid:#c47a4a;--tt-sienna-lt:#d9956a;
+  --tt-gold:#b8996a;--tt-gold-lt:#cdb48e;
+  --tt-ivory:#f8f3eb;--tt-ivory-2:#f2ead8;--tt-ivory-3:#ebe0ca;--tt-ivory-4:#e0d2b8;
+  --tt-cream:#faf7f2;
+  --tt-text:#2c1f0e;--tt-text-2:#5a3e28;--tt-text-3:#8a6d52;--tt-text-4:#b09070;
+  --tt-border:rgba(160,82,45,0.14);--tt-border-md:rgba(160,82,45,0.25);--tt-border-str:rgba(160,82,45,0.40);
+  --tt-radius:4px;
+  --tt-dm:'DM Sans',sans-serif;--tt-pf:'Playfair Display',Georgia,serif;
+  --tt-ease:cubic-bezier(.4,0,.2,1);
+  font-family:var(--tt-dm);font-size:15px;line-height:1.6;color:var(--tt-text);
+  display:block;background:transparent;padding:24px 16px 48px;
+}
+.tt-groep *,.tt-groep *::before,.tt-groep *::after{box-sizing:border-box;}
+
+/* HEADER */
+.tt-groep .tt-header{text-align:center;max-width:620px;margin:0 auto 40px;}
+.tt-groep .tt-eyebrow{font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--tt-sienna);margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:12px;}
+.tt-groep .tt-eyebrow::before,.tt-groep .tt-eyebrow::after{content:'';width:28px;height:1px;background:var(--tt-sienna-lt);opacity:.6;}
+.tt-groep .tt-h1{font-family:var(--tt-pf);font-size:clamp(28px,4.4vw,44px);font-weight:400;line-height:1.15;color:var(--tt-text);margin:0 0 16px;}
+.tt-groep .tt-h1 em{font-style:italic;color:var(--tt-sienna-mid);}
+.tt-groep .tt-sub{font-size:15px;color:var(--tt-text-3);line-height:1.75;font-weight:300;margin:0;}
+
+/* PROGRESS */
+.tt-groep .tt-prog-wrap{max-width:720px;width:100%;margin:0 auto 36px;}
+.tt-groep .tt-prog-steps{display:flex;align-items:flex-start;}
+.tt-groep .tt-prog-step{display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;position:relative;}
+.tt-groep .tt-prog-step:not(:last-child)::after{content:'';position:absolute;top:14px;left:calc(50% + 16px);right:calc(-50% + 16px);height:1px;background:var(--tt-border-md);transition:background .35s;}
+.tt-groep .tt-prog-step.done:not(:last-child)::after{background:var(--tt-sienna-lt);}
+.tt-groep .tt-prog-circle{width:28px;height:28px;border-radius:50%;border:1px solid var(--tt-border-str);background:var(--tt-ivory-2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--tt-text-3);transition:all .2s var(--tt-ease);position:relative;z-index:1;}
+.tt-groep .tt-prog-step.active .tt-prog-circle{background:var(--tt-sienna);border-color:var(--tt-sienna);color:#fff;}
+.tt-groep .tt-prog-step.done .tt-prog-circle{background:var(--tt-ivory-3);border-color:var(--tt-sienna-lt);color:var(--tt-sienna);}
+.tt-groep .tt-prog-label{font-size:10px;letter-spacing:.06em;color:var(--tt-text-4);text-transform:uppercase;font-weight:400;text-align:center;white-space:nowrap;transition:color .2s;}
+.tt-groep .tt-prog-step.active .tt-prog-label{color:var(--tt-sienna);}
+.tt-groep .tt-prog-step.done .tt-prog-label{color:var(--tt-text-3);}
+
+/* CARD */
+.tt-groep .tt-card{background:var(--tt-ivory);border:1px solid var(--tt-border-md);max-width:740px;width:100%;margin:0 auto;position:relative;overflow:hidden;box-shadow:0 2px 24px rgba(90,40,10,.06);}
+.tt-groep .tt-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--tt-sienna-lt) 40%,var(--tt-gold) 60%,transparent);opacity:.6;}
+.tt-groep .tt-corner{position:absolute;opacity:.2;}
+.tt-groep .tt-corner.tl{top:14px;left:14px;}
+.tt-groep .tt-corner.tr{top:14px;right:14px;}
+.tt-groep .tt-corner svg{width:36px;height:36px;}
+
+/* STEPS */
+.tt-groep .tt-step{display:none;padding:44px 50px 36px;animation:ttFadeUp .28s ease;}
+.tt-groep .tt-step.active{display:block;}
+@keyframes ttFadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.tt-groep .tt-step-hdr{margin-bottom:30px;padding-bottom:22px;border-bottom:1px solid var(--tt-border);}
+.tt-groep .tt-step-num{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--tt-sienna-mid);font-weight:500;margin-bottom:6px;}
+.tt-groep .tt-step-title{font-family:var(--tt-pf);font-size:24px;font-weight:400;color:var(--tt-text);line-height:1.25;margin:0;}
+.tt-groep .tt-step-title em{font-style:italic;color:var(--tt-sienna-mid);}
+
+/* GRID */
+.tt-groep .tt-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 24px;}
+.tt-groep .tt-grid.c1{grid-template-columns:1fr;}
+.tt-groep .tt-full{grid-column:1/-1;}
+
+/* FIELD */
+.tt-groep .tt-field{display:flex;flex-direction:column;gap:7px;}
+.tt-groep .tt-field label{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--tt-text-2);}
+.tt-groep .tt-req{color:var(--tt-sienna);margin-left:2px;}
+.tt-groep .tt-field input,
+.tt-groep .tt-field select,
+.tt-groep .tt-field textarea{background:#fff;border:1px solid var(--tt-border-md);color:var(--tt-text);font-family:var(--tt-dm);font-size:14px;font-weight:300;padding:11px 14px;border-radius:var(--tt-radius);outline:none;transition:border-color .2s,box-shadow .2s;-webkit-appearance:none;width:100%;}
+.tt-groep .tt-field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%238a6d52' stroke-width='1.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:34px;cursor:pointer;}
+.tt-groep .tt-field textarea{resize:vertical;min-height:100px;line-height:1.6;}
+.tt-groep .tt-field input::placeholder,
+.tt-groep .tt-field textarea::placeholder{color:var(--tt-text-4);font-weight:300;}
+.tt-groep .tt-field input:hover,
+.tt-groep .tt-field select:hover,
+.tt-groep .tt-field textarea:hover{border-color:var(--tt-border-str);}
+.tt-groep .tt-field input:focus,
+.tt-groep .tt-field select:focus,
+.tt-groep .tt-field textarea:focus{border-color:var(--tt-sienna-mid);box-shadow:0 0 0 3px rgba(160,82,45,.1);}
+.tt-groep .tt-field input.err,
+.tt-groep .tt-field select.err,
+.tt-groep .tt-field textarea.err{border-color:#c0392b;box-shadow:0 0 0 3px rgba(192,57,43,.08);}
+.tt-groep .tt-hint{font-size:11px;color:var(--tt-text-4);font-weight:300;}
+.tt-groep .tt-errmsg{font-size:11px;color:#b52a1a;display:none;}
+.tt-groep .tt-errmsg.show{display:block;}
+
+/* RADIO TILES */
+.tt-groep .tt-rgroup{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.tt-groep .tt-rgroup.c2{grid-template-columns:1fr 1fr;}
+.tt-groep .tt-rtile{display:flex;align-items:center;gap:10px;background:var(--tt-ivory-2);border:1px solid var(--tt-border-md);padding:12px 14px;border-radius:var(--tt-radius);cursor:pointer;font-size:13px;color:var(--tt-text-3);user-select:none;transition:border-color .15s,background .15s,color .15s;}
+.tt-groep .tt-rtile:hover{border-color:var(--tt-sienna-lt);color:var(--tt-text-2);background:var(--tt-ivory-3);}
+.tt-groep .tt-rtile.on{border-color:var(--tt-sienna);background:rgba(160,82,45,.07);color:var(--tt-sienna);}
+.tt-groep .tt-rdot{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--tt-border-str);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:border-color .15s,background .15s;}
+.tt-groep .tt-rtile.on .tt-rdot{border-color:var(--tt-sienna);background:var(--tt-sienna);}
+.tt-groep .tt-rtile.on .tt-rdot::after{content:'';width:6px;height:6px;border-radius:50%;background:#fff;}
+
+/* CHECK TILES */
+.tt-groep .tt-cgroup{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.tt-groep .tt-ctile{display:flex;align-items:center;gap:10px;background:var(--tt-ivory-2);border:1px solid var(--tt-border-md);padding:10px 13px;border-radius:var(--tt-radius);cursor:pointer;font-size:13px;color:var(--tt-text-3);user-select:none;transition:border-color .15s,background .15s,color .15s;}
+.tt-groep .tt-ctile:hover{border-color:var(--tt-sienna-lt);color:var(--tt-text-2);background:var(--tt-ivory-3);}
+.tt-groep .tt-ctile.on{border-color:var(--tt-sienna);background:rgba(160,82,45,.07);color:var(--tt-sienna);}
+.tt-groep .tt-cbox{width:16px;height:16px;border-radius:2px;border:1.5px solid var(--tt-border-str);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:border-color .15s,background .15s;}
+.tt-groep .tt-ctile.on .tt-cbox{border-color:var(--tt-sienna);background:var(--tt-sienna);}
+.tt-groep .tt-ctile.on .tt-cbox::after{content:'';display:block;width:4px;height:7px;border:2px solid #fff;border-top:none;border-left:none;transform:rotate(45deg) translateY(-1px);}
+
+/* PRIVACY */
+.tt-groep .tt-prow{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;background:var(--tt-ivory-2);border:1px solid var(--tt-border-md);border-radius:var(--tt-radius);cursor:pointer;transition:border-color .15s,background .15s;}
+.tt-groep .tt-prow:hover{border-color:var(--tt-sienna-lt);}
+.tt-groep .tt-prow.on{border-color:var(--tt-sienna);background:rgba(160,82,45,.06);}
+.tt-groep .tt-pbox{width:18px;height:18px;border-radius:3px;border:1.5px solid var(--tt-border-str);flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:2px;background:#fff;transition:border-color .15s,background .15s;}
+.tt-groep .tt-prow.on .tt-pbox{border-color:var(--tt-sienna);background:var(--tt-sienna);}
+.tt-groep .tt-prow.on .tt-pbox::after{content:'';display:block;width:5px;height:9px;border:2px solid #fff;border-top:none;border-left:none;transform:rotate(45deg) translateY(-1px);}
+.tt-groep .tt-ptext{font-size:13px;color:var(--tt-text-2);line-height:1.6;font-weight:300;}
+.tt-groep .tt-ptext a{color:var(--tt-sienna);text-decoration:underline;}
+
+/* SECTION TITLE */
+.tt-groep .tt-stitle{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--tt-sienna);font-weight:500;margin:24px 0 12px;display:flex;align-items:center;gap:10px;}
+.tt-groep .tt-stitle::after{content:'';flex:1;height:1px;background:var(--tt-border);}
+
+/* INFO NOTE — voor mailbevestiging mededeling */
+.tt-groep .tt-note{background:var(--tt-ivory-2);border-left:3px solid var(--tt-sienna-lt);padding:14px 16px;font-size:13px;color:var(--tt-text-2);line-height:1.65;font-weight:300;border-radius:0 var(--tt-radius) var(--tt-radius) 0;margin-top:8px;}
+.tt-groep .tt-note strong{color:var(--tt-sienna);font-weight:500;}
+
+/* FORM NAV */
+.tt-groep .tt-fnav{display:flex;justify-content:space-between;align-items:center;padding:24px 50px 36px;border-top:1px solid var(--tt-border);background:var(--tt-ivory-2);}
+.tt-groep .tt-btn-prev{font-family:var(--tt-dm);font-size:11px;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--tt-text-3);background:transparent;border:1px solid var(--tt-border-md);padding:11px 22px;cursor:pointer;transition:color .2s,border-color .2s;border-radius:var(--tt-radius);}
+.tt-groep .tt-btn-prev:hover{color:var(--tt-text);border-color:var(--tt-border-str);}
+.tt-groep .tt-btn-next{font-family:var(--tt-dm);font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--tt-sienna);border:none;padding:12px 28px;cursor:pointer;transition:background .2s;border-radius:var(--tt-radius);display:flex;align-items:center;gap:8px;}
+.tt-groep .tt-btn-next:hover{background:var(--tt-text-2);}
+.tt-groep .tt-stepcnt{font-size:11px;color:var(--tt-text-4);letter-spacing:.08em;}
+
+/* SUCCESS */
+.tt-groep .tt-success{display:none;text-align:center;padding:64px 50px;}
+.tt-groep .tt-success.show{display:block;animation:ttFadeUp .35s ease;}
+.tt-groep .tt-sicon{width:68px;height:68px;border-radius:50%;background:rgba(160,82,45,.1);border:1px solid var(--tt-sienna-lt);display:flex;align-items:center;justify-content:center;margin:0 auto 26px;color:var(--tt-sienna);}
+.tt-groep .tt-sh2{font-family:var(--tt-pf);font-size:32px;font-weight:400;color:var(--tt-text);margin:0 0 14px;}
+.tt-groep .tt-sh2 em{font-style:italic;color:var(--tt-sienna-mid);}
+.tt-groep .tt-sp{font-size:15px;color:var(--tt-text-3);line-height:1.75;font-weight:300;max-width:440px;margin:0 auto 30px;}
+.tt-groep .tt-sdetails{background:var(--tt-ivory-2);border:1px solid var(--tt-border-md);padding:20px 28px;max-width:480px;margin:0 auto 30px;text-align:left;border-radius:var(--tt-radius);}
+.tt-groep .tt-srow{display:flex;justify-content:space-between;font-size:13px;padding:7px 0;border-bottom:1px solid var(--tt-border);gap:16px;}
+.tt-groep .tt-srow:last-child{border-bottom:none;}
+.tt-groep .tt-srow span:first-child{color:var(--tt-text-3);flex-shrink:0;}
+.tt-groep .tt-srow span:last-child{color:var(--tt-text);font-weight:400;text-align:right;}
+.tt-groep .tt-mailnote{font-size:12px;color:var(--tt-text-3);font-weight:300;line-height:1.7;max-width:460px;margin:0 auto;padding:14px 18px;background:var(--tt-ivory-2);border:1px dashed var(--tt-border-md);border-radius:var(--tt-radius);}
+.tt-groep .tt-mailnote strong{color:var(--tt-sienna);font-weight:500;}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .tt-groep{padding:16px 8px 32px;}
+  .tt-groep .tt-step{padding:32px 28px 24px;}
+  .tt-groep .tt-fnav{padding:20px 28px 26px;}
+  .tt-groep .tt-grid{gap:14px 18px;}
+  .tt-groep .tt-rgroup{grid-template-columns:1fr;}
+  .tt-groep .tt-success{padding:48px 28px;}
+}
+@media(max-width:560px){
+  .tt-groep .tt-header{margin-bottom:28px;}
+  .tt-groep .tt-h1{font-size:clamp(24px,7vw,32px);}
+  .tt-groep .tt-sub{font-size:13px;}
+  .tt-groep .tt-prog-wrap{margin-bottom:24px;}
+  .tt-groep .tt-prog-circle{width:24px;height:24px;font-size:10px;}
+  .tt-groep .tt-prog-step:not(:last-child)::after{top:12px;left:calc(50% + 13px);right:calc(-50% + 13px);}
+  .tt-groep .tt-prog-label{display:none;}
+  .tt-groep .tt-card{margin-left:-8px;margin-right:-8px;width:calc(100% + 16px);border-left:none;border-right:none;}
+  .tt-groep .tt-corner{display:none;}
+  .tt-groep .tt-step{padding:22px 16px 18px;}
+  .tt-groep .tt-step-title{font-size:20px;}
+  .tt-groep .tt-step-hdr{margin-bottom:20px;padding-bottom:14px;}
+  .tt-groep .tt-grid{grid-template-columns:1fr;gap:12px;}
+  .tt-groep .tt-full{grid-column:1;}
+  .tt-groep .tt-cgroup{grid-template-columns:1fr 1fr;gap:6px;}
+  .tt-groep .tt-rtile,
+  .tt-groep .tt-ctile{padding:9px 11px;font-size:12px;gap:8px;}
+  .tt-groep .tt-rdot,
+  .tt-groep .tt-cbox{width:14px;height:14px;}
+  .tt-groep .tt-field label{font-size:10px;}
+  .tt-groep .tt-field input,
+  .tt-groep .tt-field select,
+  .tt-groep .tt-field textarea{font-size:14px;padding:10px 12px;}
+  .tt-groep .tt-fnav{padding:14px 16px 20px;flex-wrap:wrap;gap:8px;}
+  .tt-groep .tt-btn-prev{padding:10px 14px;font-size:10px;}
+  .tt-groep .tt-btn-next{padding:10px 16px;font-size:10px;gap:6px;}
+  .tt-groep .tt-success{padding:32px 16px;}
+  .tt-groep .tt-sh2{font-size:24px;}
+  .tt-groep .tt-srow{font-size:12px;flex-direction:column;gap:2px;}
+  .tt-groep .tt-srow span:last-child{text-align:left;}
+}
+</style>
+
+<!-- ============ HEADER ============ -->
+<div class="tt-header">
+  <div class="tt-eyebrow">Vliegtickets voor groepen</div>
+  <h2 class="tt-h1">Groepsvlucht <em>op maat</em></h2>
+  <p class="tt-sub">Vraag vrijblijvend een offerte aan voor groepsvliegtickets. Wij stellen binnen 48 uur een passend voorstel op &mdash; afgestemd op uw type groep en wensen.</p>
+</div>
+
+<!-- ============ PROGRESS ============ -->
+<div class="tt-prog-wrap">
+  <div class="tt-prog-steps" id="ttProgSteps">
+    <div class="tt-prog-step active" data-step="1"><div class="tt-prog-circle">1</div><div class="tt-prog-label">Type aanvrager</div></div>
+    <div class="tt-prog-step" data-step="2"><div class="tt-prog-circle">2</div><div class="tt-prog-label">Vluchtgegevens</div></div>
+    <div class="tt-prog-step" data-step="3"><div class="tt-prog-circle">3</div><div class="tt-prog-label">Groep &amp; wensen</div></div>
+    <div class="tt-prog-step" data-step="4"><div class="tt-prog-circle">4</div><div class="tt-prog-label">Contact</div></div>
+  </div>
+</div>
+
+<!-- ============ FORM CARD ============ -->
+<div class="tt-card" id="ttCard">
+  <div class="tt-corner tl"><svg viewBox="0 0 36 36" fill="none"><path d="M0 36L0 0L36 0" stroke="#a0522d" stroke-width="1"/></svg></div>
+  <div class="tt-corner tr"><svg viewBox="0 0 36 36" fill="none"><path d="M0 0L36 0L36 36" stroke="#a0522d" stroke-width="1"/></svg></div>
+
+  <!-- ===== STAP 1 — TYPE AANVRAGER ===== -->
+  <div class="tt-step active" id="ttStep1">
+    <div class="tt-step-hdr">
+      <div class="tt-step-num">Stap 01 &mdash; 04</div>
+      <h3 class="tt-step-title">Type <em>aanvrager</em></h3>
+    </div>
+    <div class="tt-grid c1">
+      <div class="tt-field tt-full">
+        <label>Voor wie is deze aanvraag? <span class="tt-req">*</span></label>
+        <div class="tt-rgroup" id="rg-aanvragerType">
+          <div class="tt-rtile" data-val="Particuliere groep"><div class="tt-rdot"></div>Particuliere groep</div>
+          <div class="tt-rtile" data-val="Zakelijke groep"><div class="tt-rdot"></div>Zakelijke groep</div>
+          <div class="tt-rtile" data-val="Reisorganisator"><div class="tt-rdot"></div>Reisorganisator</div>
+        </div>
+        <div class="tt-hint">Op basis van uw keuze tonen wij relevante vervolgvragen.</div>
+        <div class="tt-errmsg" id="e-aanvragerType">Geef aan voor wie deze aanvraag is</div>
+      </div>
+
+      <!-- PARTICULIER subvelden -->
+      <div class="tt-field tt-full" id="velden-particulier" style="display:none">
+        <label>Aanleiding van de reis</label>
+        <select id="aanleiding">
+          <option value="">Selecteer (optioneel)</option>
+          <option>Familiereünie</option>
+          <option>Bruiloft / huwelijksreis</option>
+          <option>Vriendenuitje</option>
+          <option>Sportevenement / supportersreis</option>
+          <option>Studiereis</option>
+          <option>Anders</option>
+        </select>
+      </div>
+
+      <!-- ZAKELIJK subvelden -->
+      <div id="velden-zakelijk" style="display:none">
+        <div class="tt-grid">
+          <div class="tt-field tt-full">
+            <label>Bedrijfsnaam <span class="tt-req">*</span></label>
+            <input type="text" id="bedrijfsnaam" placeholder="Naam van uw organisatie">
+            <div class="tt-errmsg" id="e-bedrijfsnaam">Vul de bedrijfsnaam in</div>
+          </div>
+          <div class="tt-field">
+            <label>KvK-nummer</label>
+            <input type="text" id="kvk" placeholder="bijv. 12345678">
+          </div>
+          <div class="tt-field">
+            <label>Aard van de reis</label>
+            <select id="zakelijkAard">
+              <option value="">Selecteer</option>
+              <option>Incentive / personeelsreis</option>
+              <option>Beurs / congres</option>
+              <option>Klantreis / relatiebeheer</option>
+              <option>Sales meeting / training</option>
+              <option>Bedrijfsevenement</option>
+              <option>Anders</option>
+            </select>
+          </div>
+          <div class="tt-field tt-full">
+            <label>Factuuradres</label>
+            <input type="text" id="factuuradres" placeholder="Straat, nr, postcode, plaats">
+          </div>
+        </div>
+      </div>
+
+      <!-- REISORGANISATOR subvelden -->
+      <div id="velden-organisator" style="display:none">
+        <div class="tt-grid">
+          <div class="tt-field tt-full">
+            <label>Naam reisorganisatie <span class="tt-req">*</span></label>
+            <input type="text" id="organisatieNaam" placeholder="Naam van uw bureau / agentschap">
+            <div class="tt-errmsg" id="e-organisatieNaam">Vul de naam van uw organisatie in</div>
+          </div>
+          <div class="tt-field">
+            <label>IATA-nummer</label>
+            <input type="text" id="iata" placeholder="indien van toepassing">
+          </div>
+          <div class="tt-field">
+            <label>ANVR / SGR / vergunning</label>
+            <input type="text" id="vergunning" placeholder="bijv. ANVR 1234">
+          </div>
+          <div class="tt-field tt-full">
+            <label>Eindklant / opdrachtgever</label>
+            <input type="text" id="eindklant" placeholder="Voor wie organiseert u deze reis? (optioneel)">
+          </div>
+          <div class="tt-field tt-full">
+            <label>Verkoopt u zelf de tickets door?</label>
+            <div class="tt-rgroup c2" id="rg-doorverkoop">
+              <div class="tt-rtile" data-val="Ja, doorverkoop aan klant"><div class="tt-rdot"></div>Ja, doorverkoop aan klant</div>
+              <div class="tt-rtile" data-val="Nee, alleen bemiddeling"><div class="tt-rdot"></div>Nee, alleen bemiddeling</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== STAP 2 — VLUCHTGEGEVENS ===== -->
+  <div class="tt-step" id="ttStep2">
+    <div class="tt-step-hdr">
+      <div class="tt-step-num">Stap 02 &mdash; 04</div>
+      <h3 class="tt-step-title">Vlucht &amp; <em>route</em></h3>
+    </div>
+    <div class="tt-grid">
+      <div class="tt-field tt-full">
+        <label>Type vlucht <span class="tt-req">*</span></label>
+        <div class="tt-rgroup c2" id="rg-vluchtType">
+          <div class="tt-rtile" data-val="Retour"><div class="tt-rdot"></div>Retour</div>
+          <div class="tt-rtile" data-val="Enkele reis"><div class="tt-rdot"></div>Enkele reis</div>
+        </div>
+        <div class="tt-errmsg" id="e-vluchtType">Kies retour of enkele reis</div>
+      </div>
+      <div class="tt-field">
+        <label>Vertrekluchthaven <span class="tt-req">*</span></label>
+        <input type="text" id="vertrekplaats" placeholder="bijv. Amsterdam Schiphol (AMS)">
+        <div class="tt-errmsg" id="e-vertrekplaats">Vul een vertrekluchthaven in</div>
+      </div>
+      <div class="tt-field">
+        <label>Bestemming <span class="tt-req">*</span></label>
+        <input type="text" id="bestemming" placeholder="bijv. Barcelona (BCN)">
+        <div class="tt-errmsg" id="e-bestemming">Vul een bestemming in</div>
+      </div>
+      <div class="tt-field">
+        <label>Vertrekdatum <span class="tt-req">*</span></label>
+        <input type="date" id="vertrekdatum">
+        <div class="tt-errmsg" id="e-vertrekdatum">Kies een vertrekdatum</div>
+      </div>
+      <div class="tt-field" id="retourdatumWrap">
+        <label>Retourdatum <span class="tt-req">*</span></label>
+        <input type="date" id="retourdatum">
+        <div class="tt-errmsg" id="e-retourdatum">Kies een retourdatum</div>
+      </div>
+      <div class="tt-field tt-full">
+        <label>Datumflexibiliteit</label>
+        <div class="tt-rgroup" id="rg-flex">
+          <div class="tt-rtile" data-val="Exact"><div class="tt-rdot"></div>Exact</div>
+          <div class="tt-rtile" data-val="± 2 dagen flexibel"><div class="tt-rdot"></div>± 2 dagen flexibel</div>
+          <div class="tt-rtile" data-val="Volledig flexibel"><div class="tt-rdot"></div>Volledig flexibel</div>
+        </div>
+      </div>
+      <div class="tt-field">
+        <label>Vluchtvoorkeur</label>
+        <select id="vluchtVoorkeur">
+          <option value="">Geen voorkeur</option>
+          <option>Directe vlucht</option>
+          <option>Tussenstop acceptabel</option>
+          <option>Specifieke maatschappij (toelichten)</option>
+        </select>
+      </div>
+      <div class="tt-field">
+        <label>Klasse</label>
+        <select id="klasse">
+          <option value="">Selecteer</option>
+          <option>Economy</option>
+          <option>Premium Economy</option>
+          <option>Business</option>
+          <option>First</option>
+          <option>Mix (toelichten)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== STAP 3 — GROEP & WENSEN ===== -->
+  <div class="tt-step" id="ttStep3">
+    <div class="tt-step-hdr">
+      <div class="tt-step-num">Stap 03 &mdash; 04</div>
+      <h3 class="tt-step-title">Groepssamenstelling &amp; <em>wensen</em></h3>
+    </div>
+    <div class="tt-grid">
+      <div class="tt-field">
+        <label>Aantal volwassenen <span class="tt-req">*</span></label>
+        <input type="number" id="aantalVolwassenen" min="1" placeholder="bijv. 24">
+        <div class="tt-errmsg" id="e-aantalVolwassenen">Vul het aantal volwassenen in</div>
+      </div>
+      <div class="tt-field">
+        <label>Aantal kinderen (2-11 jr)</label>
+        <input type="number" id="aantalKinderen" min="0" placeholder="0">
+      </div>
+      <div class="tt-field">
+        <label>Aantal baby's (0-2 jr)</label>
+        <input type="number" id="aantalBabies" min="0" placeholder="0">
+      </div>
+      <div class="tt-field">
+        <label>Vaste groep of optie op stoelen?</label>
+        <select id="groepType">
+          <option value="">Selecteer</option>
+          <option>Vaste groep — definitieve namen bekend</option>
+          <option>Vaste groep — namen volgen later</option>
+          <option>Optie op stoelen (allotment)</option>
+          <option>Nog onzeker</option>
+        </select>
+      </div>
+      <div class="tt-field tt-full">
+        <label>Bagage</label>
+        <div class="tt-cgroup" id="cg-bagage">
+          <div class="tt-ctile" data-val="Handbagage"><div class="tt-cbox"></div>Handbagage</div>
+          <div class="tt-ctile" data-val="Ruimbagage"><div class="tt-cbox"></div>Ruimbagage</div>
+          <div class="tt-ctile" data-val="Sportbagage"><div class="tt-cbox"></div>Sportbagage</div>
+        </div>
+      </div>
+      <div class="tt-field tt-full">
+        <label>Extra wensen / bijzonderheden</label>
+        <textarea id="bijzonderheden" placeholder="bijv. rolstoelassistentie, dieetwensen, gezamenlijke stoelen, transfer ter plaatse, hotelarrangement, etc."></textarea>
+      </div>
+      <div class="tt-field tt-full">
+        <label>Indicatie budget per ticket</label>
+        <select id="budget">
+          <option value="">Geen indicatie</option>
+          <option>Tot € 200 p.p.</option>
+          <option>€ 200 — € 400 p.p.</option>
+          <option>€ 400 — € 750 p.p.</option>
+          <option>€ 750 — € 1.500 p.p.</option>
+          <option>€ 1.500+ p.p.</option>
+          <option>Scherpste prijs is leidend</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== STAP 4 — CONTACT ===== -->
+  <div class="tt-step" id="ttStep4">
+    <div class="tt-step-hdr">
+      <div class="tt-step-num">Stap 04 &mdash; 04</div>
+      <h3 class="tt-step-title">Contact &amp; <em>bevestiging</em></h3>
+    </div>
+    <div class="tt-grid">
+      <div class="tt-field">
+        <label>Voornaam <span class="tt-req">*</span></label>
+        <input type="text" id="voornaam" placeholder="Uw voornaam">
+        <div class="tt-errmsg" id="e-voornaam">Vul uw voornaam in</div>
+      </div>
+      <div class="tt-field">
+        <label>Achternaam <span class="tt-req">*</span></label>
+        <input type="text" id="achternaam" placeholder="Uw achternaam">
+        <div class="tt-errmsg" id="e-achternaam">Vul uw achternaam in</div>
+      </div>
+      <div class="tt-field">
+        <label>E-mailadres <span class="tt-req">*</span></label>
+        <input type="email" id="email" placeholder="uw@email.nl">
+        <div class="tt-hint">Op dit adres ontvangt u de bevestiging van uw aanvraag.</div>
+        <div class="tt-errmsg" id="e-email">Vul een geldig e-mailadres in</div>
+      </div>
+      <div class="tt-field">
+        <label>Telefoonnummer <span class="tt-req">*</span></label>
+        <input type="tel" id="telefoon" placeholder="+31 6 12345678">
+        <div class="tt-errmsg" id="e-telefoon">Vul een telefoonnummer in</div>
+      </div>
+      <div class="tt-field">
+        <label>Voorkeur voor contact</label>
+        <select id="contactVoorkeur">
+          <option value="">Selecteer</option>
+          <option>E-mail</option>
+          <option>Telefoon (ochtend)</option>
+          <option>Telefoon (middag)</option>
+          <option>Telefoon (avond)</option>
+          <option>WhatsApp</option>
+        </select>
+      </div>
+      <div class="tt-field">
+        <label>Gewenste reactietermijn</label>
+        <select id="reactieTermijn">
+          <option value="">Zo snel mogelijk</option>
+          <option>Binnen 24 uur</option>
+          <option>Binnen 48 uur</option>
+          <option>Binnen een week</option>
+        </select>
+      </div>
+
+      <div class="tt-field tt-full">
+        <div class="tt-note">
+          <strong>E-mailbevestiging</strong> &mdash; Na verzending ontvangt u op het opgegeven e-mailadres direct een bevestiging van uw aanvraag. De volledige aanvraag wordt tegelijkertijd verzonden naar <strong>info@totaltravel.nl</strong>. Ons team neemt binnen de gewenste termijn contact met u op.
+        </div>
+      </div>
+
+      <div class="tt-field tt-full">
+        <label style="text-transform:none;letter-spacing:0;font-size:12px;color:var(--tt-text-3);font-weight:400">Privacyverklaring <span class="tt-req">*</span></label>
+        <div class="tt-prow" id="ttPrivRow">
+          <div class="tt-pbox" id="ttPrivBox"></div>
+          <span class="tt-ptext">Ik ga akkoord met de <a href="#" id="ttPrivLink">privacyverklaring</a> van Total Travel. Mijn gegevens worden uitsluitend gebruikt voor het verwerken van deze aanvraag.</span>
+        </div>
+        <div class="tt-errmsg" id="e-privacy">Bevestig de privacyverklaring om door te gaan</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SUCCESS ===== -->
+  <div class="tt-success" id="ttSuccess">
+    <div class="tt-sicon">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h3 class="tt-sh2">Aanvraag <em>ontvangen</em></h3>
+    <p class="tt-sp">Bedankt voor uw aanvraag voor groepsvliegtickets. Onze specialisten nemen op korte termijn persoonlijk contact met u op.</p>
+    <div class="tt-sdetails" id="ttSdetails"></div>
+    <div class="tt-mailnote">
+      Een bevestiging is verzonden naar <strong id="ttMailTo">uw e-mailadres</strong>.<br>
+      De volledige aanvraag is afgeleverd bij <strong>info@totaltravel.nl</strong>.
+    </div>
+  </div>
+
+  <!-- ===== NAV ===== -->
+  <div class="tt-fnav" id="ttFnav">
+    <button type="button" class="tt-btn-prev" id="ttBtnPrev">&#8592; Vorige</button>
+    <span class="tt-stepcnt" id="ttStepcnt">Stap 1 van 4</span>
+    <button type="button" class="tt-btn-next" id="ttBtnNext">Volgende <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+  </div>
+</div>
+</section>
+
+<script>
+(function(){
+  'use strict';
+
+  // ============================================================
+  // CONFIGURATIE — pas deze waarden eventueel aan
+  // ============================================================
+  var CONFIG = {
+    ontvangerEmail: 'info@totaltravel.nl',
+    // Zet hier later een backend-endpoint (PHP/Formspree/etc.) als u
+    // automatische verzending zonder mail-client wilt. Voorbeeld:
+    // backendUrl: 'https://formspree.io/f/uwformID'
+    backendUrl: ''
+  };
+
+  var step = 1;
+  var totalSteps = 4;
+  var privChecked = false;
+  var aanvragerType = '';
+  var root = document.getElementById('ttGroep');
+  function $(id){ return document.getElementById(id); }
+  function val(id){ var e = $(id); return e ? (e.value||'').trim() : ''; }
+
+  // ===== RADIO GROEPEN =====
+  var radioVals = {};
+  root.querySelectorAll('.tt-rgroup').forEach(function(grp){
+    grp.querySelectorAll('.tt-rtile').forEach(function(tile){
+      tile.addEventListener('click', function(){
+        var gid = grp.id;
+        grp.querySelectorAll('.tt-rtile').forEach(function(t){ t.classList.remove('on'); });
+        tile.classList.add('on');
+        radioVals[gid] = tile.getAttribute('data-val');
+
+        if(gid === 'rg-aanvragerType'){
+          aanvragerType = radioVals[gid];
+          toonVeldenVoorType(aanvragerType);
+          $('e-aanvragerType').classList.remove('show');
+        }
+        if(gid === 'rg-vluchtType'){
+          var isEnkele = radioVals[gid] === 'Enkele reis';
+          $('retourdatumWrap').style.display = isEnkele ? 'none' : '';
+          $('e-vluchtType').classList.remove('show');
+        }
+      });
+    });
+  });
+  function getRadio(gid){ return radioVals[gid] || ''; }
+
+  // ===== CONDITIONELE VELDEN =====
+  function toonVeldenVoorType(type){
+    $('velden-particulier').style.display = type === 'Particuliere groep' ? '' : 'none';
+    $('velden-zakelijk').style.display    = type === 'Zakelijke groep'    ? '' : 'none';
+    $('velden-organisator').style.display = type === 'Reisorganisator'    ? '' : 'none';
+  }
+
+  // ===== CHECKBOX GROEPEN =====
+  root.querySelectorAll('.tt-ctile').forEach(function(tile){
+    tile.addEventListener('click', function(){ tile.classList.toggle('on'); });
+  });
+  function getChecks(gid){
+    var arr = [];
+    root.querySelectorAll('#' + gid + ' .tt-ctile.on').forEach(function(t){
+      arr.push(t.getAttribute('data-val'));
+    });
+    return arr.join(', ');
+  }
+
+  // ===== PRIVACY =====
+  $('ttPrivRow').addEventListener('click', function(e){
+    if(e.target === $('ttPrivLink') || e.target.tagName === 'A') return;
+    privChecked = !privChecked;
+    $('ttPrivRow').classList.toggle('on', privChecked);
+    if(privChecked) $('e-privacy').classList.remove('show');
+  });
+  $('ttPrivLink').addEventListener('click', function(e){ e.preventDefault(); });
+
+  // ===== NAVIGATIE =====
+  $('ttBtnPrev').addEventListener('click', function(){
+    if(step > 1) setStep(step - 1);
+  });
+  $('ttBtnNext').addEventListener('click', function(){
+    if(!validate(step)) return;
+    if(step < totalSteps) setStep(step + 1);
+    else submitForm();
+  });
+
+  function setStep(n){
+    root.querySelectorAll('.tt-step').forEach(function(s){ s.classList.remove('active'); });
+    $('ttStep' + n).classList.add('active');
+    root.querySelectorAll('.tt-prog-step').forEach(function(s){
+      var sn = parseInt(s.getAttribute('data-step'),10);
+      s.classList.remove('active','done');
+      if(sn === n) s.classList.add('active');
+      else if(sn < n) s.classList.add('done');
+    });
+    $('ttBtnPrev').style.visibility = n === 1 ? 'hidden' : 'visible';
+    $('ttStepcnt').textContent = 'Stap ' + n + ' van ' + totalSteps;
+    $('ttBtnNext').innerHTML = n === totalSteps
+      ? 'Aanvraag versturen <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2L15 22 11 13 2 9z"/></svg>'
+      : 'Volgende <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+    step = n;
+    var rect = root.getBoundingClientRect();
+    if(rect.top < 0) window.scrollTo({ top: window.scrollY + rect.top - 20, behavior:'smooth' });
+  }
+
+  // ===== VALIDATIE =====
+  function chk(errId, inputId, bad){
+    $(errId).classList.toggle('show', bad);
+    if(inputId && $(inputId)) $(inputId).classList.toggle('err', bad);
+    return !bad;
+  }
+  function validate(s){
+    var ok = true;
+    if(s === 1){
+      if(!getRadio('rg-aanvragerType')){
+        $('e-aanvragerType').classList.add('show'); ok = false;
+      } else {
+        if(aanvragerType === 'Zakelijke groep'){
+          if(!chk('e-bedrijfsnaam','bedrijfsnaam', !val('bedrijfsnaam'))) ok = false;
+        }
+        if(aanvragerType === 'Reisorganisator'){
+          if(!chk('e-organisatieNaam','organisatieNaam', !val('organisatieNaam'))) ok = false;
+        }
+      }
+    }
+    if(s === 2){
+      if(!getRadio('rg-vluchtType')){ $('e-vluchtType').classList.add('show'); ok = false; }
+      if(!chk('e-vertrekplaats','vertrekplaats', !val('vertrekplaats'))) ok = false;
+      if(!chk('e-bestemming','bestemming', !val('bestemming'))) ok = false;
+      if(!chk('e-vertrekdatum','vertrekdatum', !val('vertrekdatum'))) ok = false;
+      if(getRadio('rg-vluchtType') !== 'Enkele reis'){
+        if(!chk('e-retourdatum','retourdatum', !val('retourdatum'))) ok = false;
+      }
+    }
+    if(s === 3){
+      var v = parseInt(val('aantalVolwassenen'),10);
+      if(!chk('e-aantalVolwassenen','aantalVolwassenen', isNaN(v) || v < 1)) ok = false;
+    }
+    if(s === 4){
+      if(!chk('e-voornaam','voornaam', !val('voornaam'))) ok = false;
+      if(!chk('e-achternaam','achternaam', !val('achternaam'))) ok = false;
+      var em = val('email');
+      if(!chk('e-email','email', !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em))) ok = false;
+      if(!chk('e-telefoon','telefoon', !val('telefoon'))) ok = false;
+      $('e-privacy').classList.toggle('show', !privChecked);
+      if(!privChecked) ok = false;
+    }
+    return ok;
+  }
+
+  // ===== DATA VERZAMELEN =====
+  function collectData(){
+    var d = {
+      aanvragerType: aanvragerType,
+      // particulier
+      aanleiding: val('aanleiding'),
+      // zakelijk
+      bedrijfsnaam: val('bedrijfsnaam'),
+      kvk: val('kvk'),
+      zakelijkAard: val('zakelijkAard'),
+      factuuradres: val('factuuradres'),
+      // organisator
+      organisatieNaam: val('organisatieNaam'),
+      iata: val('iata'),
+      vergunning: val('vergunning'),
+      eindklant: val('eindklant'),
+      doorverkoop: getRadio('rg-doorverkoop'),
+      // vlucht
+      vluchtType: getRadio('rg-vluchtType'),
+      vertrekplaats: val('vertrekplaats'),
+      bestemming: val('bestemming'),
+      vertrekdatum: val('vertrekdatum'),
+      retourdatum: val('retourdatum'),
+      flex: getRadio('rg-flex'),
+      vluchtVoorkeur: val('vluchtVoorkeur'),
+      klasse: val('klasse'),
+      // groep
+      aantalVolwassenen: val('aantalVolwassenen'),
+      aantalKinderen: val('aantalKinderen'),
+      aantalBabies: val('aantalBabies'),
+      groepType: val('groepType'),
+      bagage: getChecks('cg-bagage'),
+      bijzonderheden: val('bijzonderheden'),
+      budget: val('budget'),
+      // contact
+      voornaam: val('voornaam'),
+      achternaam: val('achternaam'),
+      email: val('email'),
+      telefoon: val('telefoon'),
+      contactVoorkeur: val('contactVoorkeur'),
+      reactieTermijn: val('reactieTermijn')
+    };
+    return d;
+  }
+
+  // ===== E-MAIL BODY OPBOUW =====
+  function l(label, value){ return value ? (label + ': ' + value) : null; }
+  function pad(line){ return line; }
+  function buildBody(d){
+    var dt = new Date().toLocaleString('nl-NL', { weekday:'long', year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' });
+    var rows = [];
+    rows.push('NIEUWE GROEPSVLUCHT-AANVRAAG \u2014 TOTAL TRAVEL');
+    rows.push('Ingediend op: ' + dt);
+    rows.push('');
+    rows.push('\u2500\u2500 TYPE AANVRAGER');
+    rows.push('Aanvrager: ' + (d.aanvragerType || '\u2014'));
+
+    if(d.aanvragerType === 'Particuliere groep'){
+      if(d.aanleiding) rows.push('Aanleiding: ' + d.aanleiding);
+    }
+    if(d.aanvragerType === 'Zakelijke groep'){
+      rows.push('Bedrijfsnaam: ' + (d.bedrijfsnaam || '\u2014'));
+      if(d.kvk) rows.push('KvK-nummer: ' + d.kvk);
+      if(d.zakelijkAard) rows.push('Aard van reis: ' + d.zakelijkAard);
+      if(d.factuuradres) rows.push('Factuuradres: ' + d.factuuradres);
+    }
+    if(d.aanvragerType === 'Reisorganisator'){
+      rows.push('Organisatie: ' + (d.organisatieNaam || '\u2014'));
+      if(d.iata) rows.push('IATA: ' + d.iata);
+      if(d.vergunning) rows.push('Vergunning: ' + d.vergunning);
+      if(d.eindklant) rows.push('Eindklant: ' + d.eindklant);
+      if(d.doorverkoop) rows.push('Doorverkoop: ' + d.doorverkoop);
+    }
+
+    rows.push('');
+    rows.push('\u2500\u2500 VLUCHTGEGEVENS');
+    rows.push('Type vlucht: ' + (d.vluchtType || '\u2014'));
+    rows.push('Vertrek: ' + (d.vertrekplaats || '\u2014'));
+    rows.push('Bestemming: ' + (d.bestemming || '\u2014'));
+    rows.push('Vertrekdatum: ' + (d.vertrekdatum || '\u2014'));
+    if(d.vluchtType !== 'Enkele reis') rows.push('Retourdatum: ' + (d.retourdatum || '\u2014'));
+    if(d.flex) rows.push('Flexibiliteit: ' + d.flex);
+    if(d.vluchtVoorkeur) rows.push('Vluchtvoorkeur: ' + d.vluchtVoorkeur);
+    if(d.klasse) rows.push('Klasse: ' + d.klasse);
+
+    rows.push('');
+    rows.push('\u2500\u2500 GROEP');
+    rows.push('Volwassenen: ' + (d.aantalVolwassenen || '\u2014'));
+    rows.push('Kinderen (2-11): ' + (d.aantalKinderen || '0'));
+    rows.push('Baby\'s (0-2): ' + (d.aantalBabies || '0'));
+    if(d.groepType) rows.push('Groepsstatus: ' + d.groepType);
+    if(d.bagage) rows.push('Bagage: ' + d.bagage);
+    if(d.budget) rows.push('Budget: ' + d.budget);
+    if(d.bijzonderheden){ rows.push(''); rows.push('Bijzonderheden:'); rows.push(d.bijzonderheden); }
+
+    rows.push('');
+    rows.push('\u2500\u2500 CONTACT');
+    rows.push('Naam: ' + d.voornaam + ' ' + d.achternaam);
+    rows.push('E-mail: ' + d.email);
+    rows.push('Telefoon: ' + d.telefoon);
+    if(d.contactVoorkeur) rows.push('Contactvoorkeur: ' + d.contactVoorkeur);
+    if(d.reactieTermijn) rows.push('Gewenste reactietermijn: ' + d.reactieTermijn);
+
+    rows.push('');
+    rows.push('Verzonden via het groepsvluchten-aanvraagformulier op totaltravel.nl');
+    return rows.join('\n');
+  }
+
+  function buildConfirm(d){
+    var lijnen = [
+      'Beste ' + d.voornaam + ',',
+      '',
+      'Hartelijk dank voor uw aanvraag voor groepsvliegtickets bij Total Travel.',
+      '',
+      'Wij hebben uw aanvraag in goede orde ontvangen en nemen op korte termijn persoonlijk contact met u op.',
+      '',
+      'Samenvatting van uw aanvraag:',
+      'Aanvrager: ' + (d.aanvragerType || '\u2014'),
+      'Route: ' + (d.vertrekplaats || '\u2014') + ' \u2192 ' + (d.bestemming || '\u2014'),
+      'Vertrekdatum: ' + (d.vertrekdatum || '\u2014')
+    ];
+    if(d.vluchtType !== 'Enkele reis') lijnen.push('Retourdatum: ' + (d.retourdatum || '\u2014'));
+    lijnen.push('Groepsgrootte: ' + (d.aantalVolwassenen || '0') + ' volw.' + (parseInt(d.aantalKinderen,10) > 0 ? ' + ' + d.aantalKinderen + ' kind' : '') + (parseInt(d.aantalBabies,10) > 0 ? ' + ' + d.aantalBabies + ' baby' : ''));
+    lijnen.push('');
+    lijnen.push('Heeft u in de tussentijd nog vragen? Neem gerust contact op.');
+    lijnen.push('');
+    lijnen.push('Met vriendelijke groet,');
+    lijnen.push('Total Travel');
+    lijnen.push('T: +31 78 681 75 79 | E: info@totaltravel.nl');
+    return lijnen.join('\n');
+  }
+
+  // ===== VERZENDEN =====
+  function submitForm(){
+    var d = collectData();
+    var subject = 'Groepsvlucht-aanvraag: ' + (d.vertrekplaats||'') + ' \u2192 ' + (d.bestemming||'') + ' \u2014 ' + d.voornaam + ' ' + d.achternaam;
+
+    if(CONFIG.backendUrl){
+      // ====== BACKEND-VARIANT (aanbevolen voor productie) ======
+      var payload = Object.assign({}, d, {
+        _subject: subject,
+        _replyto: d.email,
+        _confirmation: buildConfirm(d)
+      });
+      fetch(CONFIG.backendUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(function(r){ if(!r.ok) throw new Error('netwerk'); return r; })
+      .then(function(){ showSuccess(d); })
+      .catch(function(){
+        // fallback naar mailto
+        mailtoFallback(d, subject);
+        showSuccess(d);
+      });
+    } else {
+      // ====== MAILTO-VARIANT (standaard) ======
+      mailtoFallback(d, subject);
+      showSuccess(d);
+    }
+  }
+
+  function mailtoFallback(d, subject){
+    var body = buildBody(d);
+    var href = 'mailto:' + CONFIG.ontvangerEmail + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    window.location.href = href;
+    // tweede mail = bevestiging naar aanvrager
+    setTimeout(function(){
+      var subj2 = 'Bevestiging groepsvlucht-aanvraag \u2014 Total Travel';
+      var href2 = 'mailto:' + encodeURIComponent(d.email) + '?subject=' + encodeURIComponent(subj2) + '&body=' + encodeURIComponent(buildConfirm(d));
+      window.open(href2, '_blank');
+    }, 800);
+  }
+
+  function showSuccess(d){
+    root.querySelectorAll('.tt-step').forEach(function(s){ s.classList.remove('active'); });
+    $('ttFnav').style.display = 'none';
+    $('ttProgSteps').style.opacity = '0.35';
+    $('ttSuccess').classList.add('show');
+    $('ttMailTo').textContent = d.email;
+
+    function row(label, value){ return value ? '<div class="tt-srow"><span>' + label + '</span><span>' + escapeHtml(value) + '</span></div>' : ''; }
+    var groep = (d.aantalVolwassenen || '0') + ' volw.' +
+                (parseInt(d.aantalKinderen,10) > 0 ? ' + ' + d.aantalKinderen + ' kind' : '') +
+                (parseInt(d.aantalBabies,10) > 0 ? ' + ' + d.aantalBabies + ' baby' : '');
+    $('ttSdetails').innerHTML = [
+      row('Naam', d.voornaam + ' ' + d.achternaam),
+      row('Aanvrager', d.aanvragerType),
+      row('Route', (d.vertrekplaats || '') + ' \u2192 ' + (d.bestemming || '')),
+      row('Vertrekdatum', d.vertrekdatum),
+      d.vluchtType === 'Enkele reis' ? '' : row('Retourdatum', d.retourdatum),
+      row('Groep', groep)
+    ].join('');
+
+    var rect = root.getBoundingClientRect();
+    if(rect.top < 0) window.scrollTo({ top: window.scrollY + rect.top - 20, behavior:'smooth' });
+  }
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
+    });
+  }
+
+  // initial state
+  $('ttBtnPrev').style.visibility = 'hidden';
+})();
+</script>
