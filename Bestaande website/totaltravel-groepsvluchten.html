@@ -1,14 +1,16 @@
 <!-- ============================================================
-     TOTAL TRAVEL — AANVRAAGFORMULIER VLIEGTICKETS GROEPEN
-     Plak dit hele blok (van <section class="tt-groep">...</section>
-     inclusief het bijbehorende <script>) in de gewenste pagina.
-     Alle styling is gescoped onder .tt-groep zodat het niet
-     conflicteert met de rest van de website.
+     TOTAL TRAVEL — AANVRAAGFORMULIER VLIEGTICKETS GROEPEN v2
+     Plak dit hele blok in de gewenste pagina.
+
+     CONFIGURATIE — zie het CONFIG object onderaan in <script>.
+     Standaard werkt het formulier via 'mailto:' (geen server nodig).
+     Voor automatische verzending via Brevo: zet CONFIG.backendUrl
+     op het pad naar brevo-send.php (zie meegeleverd PHP-bestand).
 ============================================================ -->
 
 <section class="tt-groep" id="ttGroep">
 <style>
-/* ============== SCOPED STYLING — alleen binnen .tt-groep ============== */
+/* ============== SCOPED STYLING ============== */
 .tt-groep{
   --tt-sienna:#a0522d;--tt-sienna-mid:#c47a4a;--tt-sienna-lt:#d9956a;
   --tt-gold:#b8996a;--tt-gold-lt:#cdb48e;
@@ -120,13 +122,24 @@
 .tt-groep .tt-ptext{font-size:13px;color:var(--tt-text-2);line-height:1.6;font-weight:300;}
 .tt-groep .tt-ptext a{color:var(--tt-sienna);text-decoration:underline;}
 
-/* SECTION TITLE */
-.tt-groep .tt-stitle{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--tt-sienna);font-weight:500;margin:24px 0 12px;display:flex;align-items:center;gap:10px;}
-.tt-groep .tt-stitle::after{content:'';flex:1;height:1px;background:var(--tt-border);}
-
-/* INFO NOTE — voor mailbevestiging mededeling */
+/* NOTE */
 .tt-groep .tt-note{background:var(--tt-ivory-2);border-left:3px solid var(--tt-sienna-lt);padding:14px 16px;font-size:13px;color:var(--tt-text-2);line-height:1.65;font-weight:300;border-radius:0 var(--tt-radius) var(--tt-radius) 0;margin-top:8px;}
 .tt-groep .tt-note strong{color:var(--tt-sienna);font-weight:500;}
+
+/* MULTI VERTREKLUCHTHAVENS */
+.tt-groep .tt-airports{display:flex;flex-direction:column;gap:10px;}
+.tt-groep .tt-airport-row{display:grid;grid-template-columns:1fr 110px auto;gap:8px;align-items:end;}
+.tt-groep .tt-airport-input-wrap,
+.tt-groep .tt-pax-wrap{display:flex;flex-direction:column;gap:3px;}
+.tt-groep .tt-airport-lbl,
+.tt-groep .tt-pax-lbl{font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--tt-text-4);padding-left:2px;}
+.tt-groep .tt-rm-btn{background:transparent;border:1px solid var(--tt-border-md);color:var(--tt-text-4);width:38px;height:38px;border-radius:var(--tt-radius);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;line-height:1;transition:border-color .15s,color .15s,background .15s;}
+.tt-groep .tt-rm-btn:hover{border-color:#c0392b;color:#c0392b;background:rgba(192,57,43,.06);}
+.tt-groep .tt-rm-btn:disabled{opacity:.3;cursor:not-allowed;}
+.tt-groep .tt-rm-btn:disabled:hover{border-color:var(--tt-border-md);color:var(--tt-text-4);background:transparent;}
+.tt-groep .tt-add-btn{align-self:flex-start;background:transparent;border:1px dashed var(--tt-border-str);color:var(--tt-sienna);font-family:var(--tt-dm);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:9px 16px;border-radius:var(--tt-radius);cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;margin-top:2px;}
+.tt-groep .tt-add-btn:hover{background:rgba(160,82,45,.06);border-color:var(--tt-sienna);border-style:solid;}
+.tt-groep .tt-add-btn svg{width:13px;height:13px;}
 
 /* FORM NAV */
 .tt-groep .tt-fnav{display:flex;justify-content:space-between;align-items:center;padding:24px 50px 36px;border-top:1px solid var(--tt-border);background:var(--tt-ivory-2);}
@@ -134,9 +147,10 @@
 .tt-groep .tt-btn-prev:hover{color:var(--tt-text);border-color:var(--tt-border-str);}
 .tt-groep .tt-btn-next{font-family:var(--tt-dm);font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--tt-sienna);border:none;padding:12px 28px;cursor:pointer;transition:background .2s;border-radius:var(--tt-radius);display:flex;align-items:center;gap:8px;}
 .tt-groep .tt-btn-next:hover{background:var(--tt-text-2);}
+.tt-groep .tt-btn-next:disabled{background:var(--tt-text-4);cursor:wait;}
 .tt-groep .tt-stepcnt{font-size:11px;color:var(--tt-text-4);letter-spacing:.08em;}
 
-/* SUCCESS */
+/* SUCCESS / ERROR */
 .tt-groep .tt-success{display:none;text-align:center;padding:64px 50px;}
 .tt-groep .tt-success.show{display:block;animation:ttFadeUp .35s ease;}
 .tt-groep .tt-sicon{width:68px;height:68px;border-radius:50%;background:rgba(160,82,45,.1);border:1px solid var(--tt-sienna-lt);display:flex;align-items:center;justify-content:center;margin:0 auto 26px;color:var(--tt-sienna);}
@@ -150,6 +164,8 @@
 .tt-groep .tt-srow span:last-child{color:var(--tt-text);font-weight:400;text-align:right;}
 .tt-groep .tt-mailnote{font-size:12px;color:var(--tt-text-3);font-weight:300;line-height:1.7;max-width:460px;margin:0 auto;padding:14px 18px;background:var(--tt-ivory-2);border:1px dashed var(--tt-border-md);border-radius:var(--tt-radius);}
 .tt-groep .tt-mailnote strong{color:var(--tt-sienna);font-weight:500;}
+.tt-groep .tt-errbox{display:none;margin:0 50px 24px;padding:14px 18px;background:rgba(192,57,43,.06);border:1px solid rgba(192,57,43,.25);color:#8a2a1a;border-radius:var(--tt-radius);font-size:13px;line-height:1.6;}
+.tt-groep .tt-errbox.show{display:block;}
 
 /* RESPONSIVE */
 @media(max-width:768px){
@@ -159,6 +175,7 @@
   .tt-groep .tt-grid{gap:14px 18px;}
   .tt-groep .tt-rgroup{grid-template-columns:1fr;}
   .tt-groep .tt-success{padding:48px 28px;}
+  .tt-groep .tt-errbox{margin:0 28px 20px;}
 }
 @media(max-width:560px){
   .tt-groep .tt-header{margin-bottom:28px;}
@@ -184,6 +201,8 @@
   .tt-groep .tt-field input,
   .tt-groep .tt-field select,
   .tt-groep .tt-field textarea{font-size:14px;padding:10px 12px;}
+  .tt-groep .tt-airport-row{grid-template-columns:1fr 90px auto;gap:6px;}
+  .tt-groep .tt-rm-btn{width:34px;height:34px;font-size:16px;}
   .tt-groep .tt-fnav{padding:14px 16px 20px;flex-wrap:wrap;gap:8px;}
   .tt-groep .tt-btn-prev{padding:10px 14px;font-size:10px;}
   .tt-groep .tt-btn-next{padding:10px 16px;font-size:10px;gap:6px;}
@@ -191,17 +210,18 @@
   .tt-groep .tt-sh2{font-size:24px;}
   .tt-groep .tt-srow{font-size:12px;flex-direction:column;gap:2px;}
   .tt-groep .tt-srow span:last-child{text-align:left;}
+  .tt-groep .tt-errbox{margin:0 16px 16px;font-size:12px;}
 }
 </style>
 
-<!-- ============ HEADER ============ -->
+<!-- HEADER -->
 <div class="tt-header">
   <div class="tt-eyebrow">Vliegtickets voor groepen</div>
   <h2 class="tt-h1">Groepsvlucht <em>op maat</em></h2>
   <p class="tt-sub">Vraag vrijblijvend een offerte aan voor groepsvliegtickets. Wij stellen binnen 48 uur een passend voorstel op &mdash; afgestemd op uw type groep en wensen.</p>
 </div>
 
-<!-- ============ PROGRESS ============ -->
+<!-- PROGRESS -->
 <div class="tt-prog-wrap">
   <div class="tt-prog-steps" id="ttProgSteps">
     <div class="tt-prog-step active" data-step="1"><div class="tt-prog-circle">1</div><div class="tt-prog-label">Type aanvrager</div></div>
@@ -211,12 +231,12 @@
   </div>
 </div>
 
-<!-- ============ FORM CARD ============ -->
+<!-- CARD -->
 <div class="tt-card" id="ttCard">
   <div class="tt-corner tl"><svg viewBox="0 0 36 36" fill="none"><path d="M0 36L0 0L36 0" stroke="#a0522d" stroke-width="1"/></svg></div>
   <div class="tt-corner tr"><svg viewBox="0 0 36 36" fill="none"><path d="M0 0L36 0L36 36" stroke="#a0522d" stroke-width="1"/></svg></div>
 
-  <!-- ===== STAP 1 — TYPE AANVRAGER ===== -->
+  <!-- STAP 1 -->
   <div class="tt-step active" id="ttStep1">
     <div class="tt-step-hdr">
       <div class="tt-step-num">Stap 01 &mdash; 04</div>
@@ -234,7 +254,6 @@
         <div class="tt-errmsg" id="e-aanvragerType">Geef aan voor wie deze aanvraag is</div>
       </div>
 
-      <!-- PARTICULIER subvelden -->
       <div class="tt-field tt-full" id="velden-particulier" style="display:none">
         <label>Aanleiding van de reis</label>
         <select id="aanleiding">
@@ -248,7 +267,6 @@
         </select>
       </div>
 
-      <!-- ZAKELIJK subvelden -->
       <div id="velden-zakelijk" style="display:none">
         <div class="tt-grid">
           <div class="tt-field tt-full">
@@ -279,7 +297,6 @@
         </div>
       </div>
 
-      <!-- REISORGANISATOR subvelden -->
       <div id="velden-organisator" style="display:none">
         <div class="tt-grid">
           <div class="tt-field tt-full">
@@ -311,7 +328,7 @@
     </div>
   </div>
 
-  <!-- ===== STAP 2 — VLUCHTGEGEVENS ===== -->
+  <!-- STAP 2 -->
   <div class="tt-step" id="ttStep2">
     <div class="tt-step-hdr">
       <div class="tt-step-num">Stap 02 &mdash; 04</div>
@@ -326,12 +343,20 @@
         </div>
         <div class="tt-errmsg" id="e-vluchtType">Kies retour of enkele reis</div>
       </div>
-      <div class="tt-field">
-        <label>Vertrekluchthaven <span class="tt-req">*</span></label>
-        <input type="text" id="vertrekplaats" placeholder="bijv. Amsterdam Schiphol (AMS)">
-        <div class="tt-errmsg" id="e-vertrekplaats">Vul een vertrekluchthaven in</div>
+
+      <!-- MULTI VERTREKLUCHTHAVENS -->
+      <div class="tt-field tt-full">
+        <label>Vertrekluchthaven(s) <span class="tt-req">*</span></label>
+        <div class="tt-airports" id="ttAirports"></div>
+        <button type="button" class="tt-add-btn" id="ttAddAirport">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Luchthaven toevoegen
+        </button>
+        <div class="tt-hint">Geef per luchthaven aan hoeveel passagiers daar opstappen (mag leeg blijven als nog onbekend).</div>
+        <div class="tt-errmsg" id="e-vertrekplaats">Vul ten minste één vertrekluchthaven in</div>
       </div>
-      <div class="tt-field">
+
+      <div class="tt-field tt-full">
         <label>Bestemming <span class="tt-req">*</span></label>
         <input type="text" id="bestemming" placeholder="bijv. Barcelona (BCN)">
         <div class="tt-errmsg" id="e-bestemming">Vul een bestemming in</div>
@@ -377,7 +402,7 @@
     </div>
   </div>
 
-  <!-- ===== STAP 3 — GROEP & WENSEN ===== -->
+  <!-- STAP 3 -->
   <div class="tt-step" id="ttStep3">
     <div class="tt-step-hdr">
       <div class="tt-step-num">Stap 03 &mdash; 04</div>
@@ -434,7 +459,7 @@
     </div>
   </div>
 
-  <!-- ===== STAP 4 — CONTACT ===== -->
+  <!-- STAP 4 -->
   <div class="tt-step" id="ttStep4">
     <div class="tt-step-hdr">
       <div class="tt-step-num">Stap 04 &mdash; 04</div>
@@ -500,7 +525,7 @@
     </div>
   </div>
 
-  <!-- ===== SUCCESS ===== -->
+  <!-- SUCCESS -->
   <div class="tt-success" id="ttSuccess">
     <div class="tt-sicon">
       <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -514,7 +539,10 @@
     </div>
   </div>
 
-  <!-- ===== NAV ===== -->
+  <!-- ERROR BOX -->
+  <div class="tt-errbox" id="ttErrbox"></div>
+
+  <!-- NAV -->
   <div class="tt-fnav" id="ttFnav">
     <button type="button" class="tt-btn-prev" id="ttBtnPrev">&#8592; Vorige</button>
     <span class="tt-stepcnt" id="ttStepcnt">Stap 1 van 4</span>
@@ -528,13 +556,13 @@
   'use strict';
 
   // ============================================================
-  // CONFIGURATIE — pas deze waarden eventueel aan
+  // CONFIGURATIE
   // ============================================================
   var CONFIG = {
     ontvangerEmail: 'info@totaltravel.nl',
-    // Zet hier later een backend-endpoint (PHP/Formspree/etc.) als u
-    // automatische verzending zonder mail-client wilt. Voorbeeld:
-    // backendUrl: 'https://formspree.io/f/uwformID'
+    // Voor Brevo-verzending: zet hier het pad naar brevo-send.php
+    // bijv. '/php/brevo-send.php' of 'https://totaltravel.nl/api/brevo-send.php'
+    // Leeg laten = mailto-fallback gebruiken.
     backendUrl: ''
   };
 
@@ -546,7 +574,7 @@
   function $(id){ return document.getElementById(id); }
   function val(id){ var e = $(id); return e ? (e.value||'').trim() : ''; }
 
-  // ===== RADIO GROEPEN =====
+  // RADIO GROEPEN
   var radioVals = {};
   root.querySelectorAll('.tt-rgroup').forEach(function(grp){
     grp.querySelectorAll('.tt-rtile').forEach(function(tile){
@@ -555,7 +583,6 @@
         grp.querySelectorAll('.tt-rtile').forEach(function(t){ t.classList.remove('on'); });
         tile.classList.add('on');
         radioVals[gid] = tile.getAttribute('data-val');
-
         if(gid === 'rg-aanvragerType'){
           aanvragerType = radioVals[gid];
           toonVeldenVoorType(aanvragerType);
@@ -571,14 +598,13 @@
   });
   function getRadio(gid){ return radioVals[gid] || ''; }
 
-  // ===== CONDITIONELE VELDEN =====
   function toonVeldenVoorType(type){
     $('velden-particulier').style.display = type === 'Particuliere groep' ? '' : 'none';
     $('velden-zakelijk').style.display    = type === 'Zakelijke groep'    ? '' : 'none';
     $('velden-organisator').style.display = type === 'Reisorganisator'    ? '' : 'none';
   }
 
-  // ===== CHECKBOX GROEPEN =====
+  // CHECKBOX GROEPEN
   root.querySelectorAll('.tt-ctile').forEach(function(tile){
     tile.addEventListener('click', function(){ tile.classList.toggle('on'); });
   });
@@ -590,7 +616,74 @@
     return arr.join(', ');
   }
 
-  // ===== PRIVACY =====
+  // MULTI VERTREKLUCHTHAVENS
+  var airportsWrap = $('ttAirports');
+  var airportCounter = 0;
+
+  function airportRowHTML(){
+    airportCounter++;
+    var idA = 'ttAirport_' + airportCounter;
+    var idP = 'ttPax_' + airportCounter;
+    return '<div class="tt-airport-row" data-row="' + airportCounter + '">' +
+             '<div class="tt-airport-input-wrap">' +
+               '<span class="tt-airport-lbl">Luchthaven</span>' +
+               '<input type="text" id="' + idA + '" class="tt-airport-input" placeholder="bijv. Amsterdam Schiphol (AMS)">' +
+             '</div>' +
+             '<div class="tt-pax-wrap">' +
+               '<span class="tt-pax-lbl">Aantal pax</span>' +
+               '<input type="number" id="' + idP + '" class="tt-pax-input" min="0" placeholder="0">' +
+             '</div>' +
+             '<button type="button" class="tt-rm-btn" aria-label="Verwijderen">&times;</button>' +
+           '</div>';
+  }
+
+  function addAirportRow(){
+    var tmp = document.createElement('div');
+    tmp.innerHTML = airportRowHTML();
+    var row = tmp.firstChild;
+    airportsWrap.appendChild(row);
+    row.querySelector('.tt-rm-btn').addEventListener('click', function(){
+      if(airportsWrap.children.length > 1){
+        row.remove();
+        updateRemoveButtons();
+      }
+    });
+    row.querySelector('.tt-airport-input').addEventListener('input', function(){
+      $('e-vertrekplaats').classList.remove('show');
+      this.classList.remove('err');
+    });
+    updateRemoveButtons();
+    return row;
+  }
+
+  function updateRemoveButtons(){
+    var rows = airportsWrap.querySelectorAll('.tt-airport-row');
+    rows.forEach(function(r){
+      r.querySelector('.tt-rm-btn').disabled = rows.length === 1;
+    });
+  }
+
+  addAirportRow();
+  $('ttAddAirport').addEventListener('click', addAirportRow);
+
+  function collectAirports(){
+    var arr = [];
+    airportsWrap.querySelectorAll('.tt-airport-row').forEach(function(row){
+      var name = (row.querySelector('.tt-airport-input').value || '').trim();
+      var pax  = (row.querySelector('.tt-pax-input').value || '').trim();
+      if(name) arr.push({ name: name, pax: pax });
+    });
+    return arr;
+  }
+
+  function airportsAsText(arr){
+    if(!arr || !arr.length) return '\u2014';
+    return arr.map(function(a){
+      return a.name + (a.pax ? ' (' + a.pax + ' pax)' : '');
+    }).join('; ');
+  }
+
+  // PRIVACY
   $('ttPrivRow').addEventListener('click', function(e){
     if(e.target === $('ttPrivLink') || e.target.tagName === 'A') return;
     privChecked = !privChecked;
@@ -599,7 +692,7 @@
   });
   $('ttPrivLink').addEventListener('click', function(e){ e.preventDefault(); });
 
-  // ===== NAVIGATIE =====
+  // NAVIGATIE
   $('ttBtnPrev').addEventListener('click', function(){
     if(step > 1) setStep(step - 1);
   });
@@ -628,7 +721,7 @@
     if(rect.top < 0) window.scrollTo({ top: window.scrollY + rect.top - 20, behavior:'smooth' });
   }
 
-  // ===== VALIDATIE =====
+  // VALIDATIE
   function chk(errId, inputId, bad){
     $(errId).classList.toggle('show', bad);
     if(inputId && $(inputId)) $(inputId).classList.toggle('err', bad);
@@ -637,20 +730,23 @@
   function validate(s){
     var ok = true;
     if(s === 1){
-      if(!getRadio('rg-aanvragerType')){
-        $('e-aanvragerType').classList.add('show'); ok = false;
-      } else {
-        if(aanvragerType === 'Zakelijke groep'){
-          if(!chk('e-bedrijfsnaam','bedrijfsnaam', !val('bedrijfsnaam'))) ok = false;
-        }
-        if(aanvragerType === 'Reisorganisator'){
-          if(!chk('e-organisatieNaam','organisatieNaam', !val('organisatieNaam'))) ok = false;
-        }
+      if(!getRadio('rg-aanvragerType')){ $('e-aanvragerType').classList.add('show'); ok = false; }
+      else {
+        if(aanvragerType === 'Zakelijke groep' &&
+           !chk('e-bedrijfsnaam','bedrijfsnaam', !val('bedrijfsnaam'))) ok = false;
+        if(aanvragerType === 'Reisorganisator' &&
+           !chk('e-organisatieNaam','organisatieNaam', !val('organisatieNaam'))) ok = false;
       }
     }
     if(s === 2){
       if(!getRadio('rg-vluchtType')){ $('e-vluchtType').classList.add('show'); ok = false; }
-      if(!chk('e-vertrekplaats','vertrekplaats', !val('vertrekplaats'))) ok = false;
+      var ap = collectAirports();
+      if(ap.length === 0){
+        $('e-vertrekplaats').classList.add('show');
+        var firstInp = airportsWrap.querySelector('.tt-airport-input');
+        if(firstInp) firstInp.classList.add('err');
+        ok = false;
+      }
       if(!chk('e-bestemming','bestemming', !val('bestemming'))) ok = false;
       if(!chk('e-vertrekdatum','vertrekdatum', !val('vertrekdatum'))) ok = false;
       if(getRadio('rg-vluchtType') !== 'Enkele reis'){
@@ -673,33 +769,28 @@
     return ok;
   }
 
-  // ===== DATA VERZAMELEN =====
+  // DATA VERZAMELEN
   function collectData(){
-    var d = {
+    return {
       aanvragerType: aanvragerType,
-      // particulier
       aanleiding: val('aanleiding'),
-      // zakelijk
       bedrijfsnaam: val('bedrijfsnaam'),
       kvk: val('kvk'),
       zakelijkAard: val('zakelijkAard'),
       factuuradres: val('factuuradres'),
-      // organisator
       organisatieNaam: val('organisatieNaam'),
       iata: val('iata'),
       vergunning: val('vergunning'),
       eindklant: val('eindklant'),
       doorverkoop: getRadio('rg-doorverkoop'),
-      // vlucht
       vluchtType: getRadio('rg-vluchtType'),
-      vertrekplaats: val('vertrekplaats'),
+      vertrekluchthavens: collectAirports(),
       bestemming: val('bestemming'),
       vertrekdatum: val('vertrekdatum'),
       retourdatum: val('retourdatum'),
       flex: getRadio('rg-flex'),
       vluchtVoorkeur: val('vluchtVoorkeur'),
       klasse: val('klasse'),
-      // groep
       aantalVolwassenen: val('aantalVolwassenen'),
       aantalKinderen: val('aantalKinderen'),
       aantalBabies: val('aantalBabies'),
@@ -707,7 +798,6 @@
       bagage: getChecks('cg-bagage'),
       bijzonderheden: val('bijzonderheden'),
       budget: val('budget'),
-      // contact
       voornaam: val('voornaam'),
       achternaam: val('achternaam'),
       email: val('email'),
@@ -715,12 +805,9 @@
       contactVoorkeur: val('contactVoorkeur'),
       reactieTermijn: val('reactieTermijn')
     };
-    return d;
   }
 
-  // ===== E-MAIL BODY OPBOUW =====
-  function l(label, value){ return value ? (label + ': ' + value) : null; }
-  function pad(line){ return line; }
+  // PLAIN TEXT BODY (voor mailto-fallback)
   function buildBody(d){
     var dt = new Date().toLocaleString('nl-NL', { weekday:'long', year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' });
     var rows = [];
@@ -729,10 +816,7 @@
     rows.push('');
     rows.push('\u2500\u2500 TYPE AANVRAGER');
     rows.push('Aanvrager: ' + (d.aanvragerType || '\u2014'));
-
-    if(d.aanvragerType === 'Particuliere groep'){
-      if(d.aanleiding) rows.push('Aanleiding: ' + d.aanleiding);
-    }
+    if(d.aanvragerType === 'Particuliere groep' && d.aanleiding) rows.push('Aanleiding: ' + d.aanleiding);
     if(d.aanvragerType === 'Zakelijke groep'){
       rows.push('Bedrijfsnaam: ' + (d.bedrijfsnaam || '\u2014'));
       if(d.kvk) rows.push('KvK-nummer: ' + d.kvk);
@@ -746,18 +830,21 @@
       if(d.eindklant) rows.push('Eindklant: ' + d.eindklant);
       if(d.doorverkoop) rows.push('Doorverkoop: ' + d.doorverkoop);
     }
-
     rows.push('');
     rows.push('\u2500\u2500 VLUCHTGEGEVENS');
     rows.push('Type vlucht: ' + (d.vluchtType || '\u2014'));
-    rows.push('Vertrek: ' + (d.vertrekplaats || '\u2014'));
+    rows.push('Vertrekluchthaven(s):');
+    if(d.vertrekluchthavens && d.vertrekluchthavens.length){
+      d.vertrekluchthavens.forEach(function(a){
+        rows.push('  - ' + a.name + (a.pax ? ' (' + a.pax + ' pax)' : ''));
+      });
+    } else rows.push('  \u2014');
     rows.push('Bestemming: ' + (d.bestemming || '\u2014'));
     rows.push('Vertrekdatum: ' + (d.vertrekdatum || '\u2014'));
     if(d.vluchtType !== 'Enkele reis') rows.push('Retourdatum: ' + (d.retourdatum || '\u2014'));
     if(d.flex) rows.push('Flexibiliteit: ' + d.flex);
     if(d.vluchtVoorkeur) rows.push('Vluchtvoorkeur: ' + d.vluchtVoorkeur);
     if(d.klasse) rows.push('Klasse: ' + d.klasse);
-
     rows.push('');
     rows.push('\u2500\u2500 GROEP');
     rows.push('Volwassenen: ' + (d.aantalVolwassenen || '\u2014'));
@@ -767,7 +854,6 @@
     if(d.bagage) rows.push('Bagage: ' + d.bagage);
     if(d.budget) rows.push('Budget: ' + d.budget);
     if(d.bijzonderheden){ rows.push(''); rows.push('Bijzonderheden:'); rows.push(d.bijzonderheden); }
-
     rows.push('');
     rows.push('\u2500\u2500 CONTACT');
     rows.push('Naam: ' + d.voornaam + ' ' + d.achternaam);
@@ -775,7 +861,6 @@
     rows.push('Telefoon: ' + d.telefoon);
     if(d.contactVoorkeur) rows.push('Contactvoorkeur: ' + d.contactVoorkeur);
     if(d.reactieTermijn) rows.push('Gewenste reactietermijn: ' + d.reactieTermijn);
-
     rows.push('');
     rows.push('Verzonden via het groepsvluchten-aanvraagformulier op totaltravel.nl');
     return rows.join('\n');
@@ -791,11 +876,14 @@
       '',
       'Samenvatting van uw aanvraag:',
       'Aanvrager: ' + (d.aanvragerType || '\u2014'),
-      'Route: ' + (d.vertrekplaats || '\u2014') + ' \u2192 ' + (d.bestemming || '\u2014'),
+      'Vertrekluchthaven(s): ' + airportsAsText(d.vertrekluchthavens),
+      'Bestemming: ' + (d.bestemming || '\u2014'),
       'Vertrekdatum: ' + (d.vertrekdatum || '\u2014')
     ];
     if(d.vluchtType !== 'Enkele reis') lijnen.push('Retourdatum: ' + (d.retourdatum || '\u2014'));
-    lijnen.push('Groepsgrootte: ' + (d.aantalVolwassenen || '0') + ' volw.' + (parseInt(d.aantalKinderen,10) > 0 ? ' + ' + d.aantalKinderen + ' kind' : '') + (parseInt(d.aantalBabies,10) > 0 ? ' + ' + d.aantalBabies + ' baby' : ''));
+    lijnen.push('Groepsgrootte: ' + (d.aantalVolwassenen || '0') + ' volw.' +
+                (parseInt(d.aantalKinderen,10) > 0 ? ' + ' + d.aantalKinderen + ' kind' : '') +
+                (parseInt(d.aantalBabies,10) > 0 ? ' + ' + d.aantalBabies + ' baby' : ''));
     lijnen.push('');
     lijnen.push('Heeft u in de tussentijd nog vragen? Neem gerust contact op.');
     lijnen.push('');
@@ -805,32 +893,49 @@
     return lijnen.join('\n');
   }
 
-  // ===== VERZENDEN =====
+  // VERZENDEN
   function submitForm(){
     var d = collectData();
-    var subject = 'Groepsvlucht-aanvraag: ' + (d.vertrekplaats||'') + ' \u2192 ' + (d.bestemming||'') + ' \u2014 ' + d.voornaam + ' ' + d.achternaam;
+    var eerste = (d.vertrekluchthavens && d.vertrekluchthavens[0]) ? d.vertrekluchthavens[0].name : '';
+    var meer = d.vertrekluchthavens && d.vertrekluchthavens.length > 1 ? ' +' + (d.vertrekluchthavens.length - 1) : '';
+    var subject = 'Groepsvlucht-aanvraag: ' + eerste + meer + ' \u2192 ' + (d.bestemming||'') + ' \u2014 ' + d.voornaam + ' ' + d.achternaam;
+
+    $('ttErrbox').classList.remove('show');
 
     if(CONFIG.backendUrl){
-      // ====== BACKEND-VARIANT (aanbevolen voor productie) ======
-      var payload = Object.assign({}, d, {
-        _subject: subject,
-        _replyto: d.email,
-        _confirmation: buildConfirm(d)
-      });
+      var btn = $('ttBtnNext');
+      btn.disabled = true;
+      btn.innerHTML = 'Bezig met verzenden\u2026';
+
       fetch(CONFIG.backendUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({
+          data: d,
+          subject: subject,
+          adminBody: buildBody(d),
+          confirmBody: buildConfirm(d)
+        })
       })
-      .then(function(r){ if(!r.ok) throw new Error('netwerk'); return r; })
-      .then(function(){ showSuccess(d); })
-      .catch(function(){
-        // fallback naar mailto
-        mailtoFallback(d, subject);
-        showSuccess(d);
+      .then(function(r){
+        return r.json().then(function(j){ return { ok: r.ok, body: j }; })
+                       .catch(function(){ return { ok: r.ok, body: null }; });
+      })
+      .then(function(res){
+        if(res.ok && res.body && res.body.success){
+          showSuccess(d);
+        } else {
+          throw new Error((res.body && res.body.error) || 'Onbekende fout');
+        }
+      })
+      .catch(function(err){
+        btn.disabled = false;
+        btn.innerHTML = 'Opnieuw versturen <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2L15 22 11 13 2 9z"/></svg>';
+        var box = $('ttErrbox');
+        box.textContent = 'Verzending mislukt: ' + err.message + '. Probeer het opnieuw of mail rechtstreeks naar ' + CONFIG.ontvangerEmail + '.';
+        box.classList.add('show');
       });
     } else {
-      // ====== MAILTO-VARIANT (standaard) ======
       mailtoFallback(d, subject);
       showSuccess(d);
     }
@@ -840,7 +945,6 @@
     var body = buildBody(d);
     var href = 'mailto:' + CONFIG.ontvangerEmail + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
     window.location.href = href;
-    // tweede mail = bevestiging naar aanvrager
     setTimeout(function(){
       var subj2 = 'Bevestiging groepsvlucht-aanvraag \u2014 Total Travel';
       var href2 = 'mailto:' + encodeURIComponent(d.email) + '?subject=' + encodeURIComponent(subj2) + '&body=' + encodeURIComponent(buildConfirm(d));
@@ -851,6 +955,7 @@
   function showSuccess(d){
     root.querySelectorAll('.tt-step').forEach(function(s){ s.classList.remove('active'); });
     $('ttFnav').style.display = 'none';
+    $('ttErrbox').classList.remove('show');
     $('ttProgSteps').style.opacity = '0.35';
     $('ttSuccess').classList.add('show');
     $('ttMailTo').textContent = d.email;
@@ -862,7 +967,8 @@
     $('ttSdetails').innerHTML = [
       row('Naam', d.voornaam + ' ' + d.achternaam),
       row('Aanvrager', d.aanvragerType),
-      row('Route', (d.vertrekplaats || '') + ' \u2192 ' + (d.bestemming || '')),
+      row('Vertrek', airportsAsText(d.vertrekluchthavens)),
+      row('Bestemming', d.bestemming),
       row('Vertrekdatum', d.vertrekdatum),
       d.vluchtType === 'Enkele reis' ? '' : row('Retourdatum', d.retourdatum),
       row('Groep', groep)
@@ -878,7 +984,6 @@
     });
   }
 
-  // initial state
   $('ttBtnPrev').style.visibility = 'hidden';
 })();
 </script>
