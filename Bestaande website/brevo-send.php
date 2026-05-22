@@ -1,7 +1,4 @@
 <?php
-if (!defined('ABSPATH')) {
-    // standalone uitvoeren toegestaan
-}
 /**
  * ============================================================================
  *  TOTAL TRAVEL — BREVO E-MAIL PROXY
@@ -50,9 +47,18 @@ $CONFIG = [
     'brevo_api_key' => 'xkeysib-VUL-HIER-UW-SLEUTEL-IN',
 
     // ✅ Afzender — moet een geverifieerd e-mailadres op uw geverifieerd
-    //    Brevo-domein zijn. Bijv. noreply@totaltravel.nl
-    'sender_email'  => 'noreply@totaltravel.nl',
+    //    Brevo-domein zijn.
+    'sender_email'  => 'info@totaltravel.nl',
     'sender_name'   => 'Total Travel',
+
+    // ✅ Logo in de e-mails. Vul een PUBLIEK bereikbare URL in naar uw logo
+    //    (bijv. 'https://totaltravel.nl/wp-content/uploads/2024/logo.png').
+    //    De afbeelding moet online staan — e-mailclients tonen geen lokale
+    //    bestanden. Laat leeg ('') om in plaats daarvan de tekst "Total Travel"
+    //    in de huisstijl te tonen.
+    'logo_url'      => 'https://totaltravel.nl/wp-content/uploads/2026/04/Logo-zonder-pay-off.png',
+    // Maximale weergavebreedte van het logo in pixels.
+    'logo_width'    => 180,
 
     // ✅ Ontvanger van de aanvragen (intern)
     'recipient_email' => 'info@totaltravel.nl',
@@ -161,8 +167,8 @@ if (!enforceRateLimit($CONFIG)) {
 // (Brevo accepteert htmlContent of textContent — we sturen beide
 //  zodat clients zonder HTML-weergave ook de tekstversie zien.)
 // =============================================================
-$adminHtml   = bodyToHtml($adminBody);
-$confirmHtml = bodyToHtml($confirmBody, true);
+$adminHtml   = bodyToHtml($adminBody, $CONFIG, false);
+$confirmHtml = bodyToHtml($confirmBody, $CONFIG, true);
 
 $voornaam   = trim((string)$data['voornaam']);
 $achternaam = trim((string)$data['achternaam']);
@@ -253,16 +259,34 @@ function brevoSendEmail(array $cfg, array $payload): array
 /**
  * Converteer plain-text body naar eenvoudige HTML met behoud van regels.
  */
-function bodyToHtml(string $text, bool $isConfirmation = false): string
+function bodyToHtml(string $text, array $cfg, bool $isConfirmation = false): string
 {
     $esc = htmlspecialchars($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
     // Maak section headers (regels die met ── beginnen) vetgedrukt
     $esc = preg_replace('/^(── [^\n]+)$/m', '<strong style="color:#a0522d">$1</strong>', $esc);
-    // Houd whitespace + newlines intact
-    $html = '<div style="font-family:DM Sans,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.7;color:#2c1f0e;max-width:600px;margin:0 auto;padding:20px;">';
-    $html .= '<div style="border-bottom:2px solid #a0522d;padding-bottom:14px;margin-bottom:18px;font-family:Georgia,serif;font-size:22px;font-style:italic;color:#a0522d;">Total Travel</div>';
+
+    // Header: logo indien ingesteld, anders tekst "Total Travel"
+    $logoUrl   = trim((string)($cfg['logo_url'] ?? ''));
+    $logoWidth = (int)($cfg['logo_width'] ?? 180);
+    if ($logoUrl !== '') {
+        $header = '<div style="border-bottom:2px solid #a0522d;padding-bottom:14px;margin-bottom:18px;">'
+                . '<img src="' . htmlspecialchars($logoUrl, ENT_QUOTES, 'UTF-8') . '" '
+                . 'alt="Total Travel" width="' . $logoWidth . '" '
+                . 'style="display:block;border:0;outline:none;text-decoration:none;max-width:' . $logoWidth . 'px;height:auto;">'
+                . '</div>';
+    } else {
+        $header = '<div style="border-bottom:2px solid #a0522d;padding-bottom:14px;margin-bottom:18px;'
+                . 'font-family:Georgia,serif;font-size:22px;font-style:italic;color:#a0522d;">Total Travel</div>';
+    }
+
+    $html  = '<div style="font-family:DM Sans,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.7;color:#2c1f0e;max-width:600px;margin:0 auto;padding:20px;">';
+    $html .= $header;
     $html .= '<pre style="font-family:DM Sans,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.7;white-space:pre-wrap;margin:0;color:#2c1f0e;">' . $esc . '</pre>';
-    $html .= '<div style="margin-top:24px;padding-top:14px;border-top:1px solid #e0d2b8;font-size:11px;color:#8a6d52;">Total Travel · T: +31 78 681 75 79 · info@totaltravel.nl</div>';
+    // Footer (dunne lijn + bedrijfsregel) alleen tonen bij de interne admin-mail,
+    // niet bij de bevestiging aan de aanvrager.
+    if (!$isConfirmation) {
+        $html .= '<div style="margin-top:24px;padding-top:14px;border-top:1px solid #e0d2b8;font-size:11px;color:#8a6d52;">Total Travel · T: +31 78 681 75 79 · info@totaltravel.nl</div>';
+    }
     $html .= '</div>';
     return $html;
 }

@@ -563,7 +563,7 @@
     // Voor Brevo-verzending: zet hier het pad naar brevo-send.php
     // bijv. '/php/brevo-send.php' of 'https://totaltravel.nl/api/brevo-send.php'
     // Leeg laten = mailto-fallback gebruiken.
-    backendUrl: ''
+    backendUrl: 'https://totaltravel.nl/api/brevo-send.php'
   };
 
   var step = 1;
@@ -867,30 +867,80 @@
   }
 
   function buildConfirm(d){
-    var lijnen = [
-      'Beste ' + d.voornaam + ',',
-      '',
-      'Hartelijk dank voor uw aanvraag voor groepsvliegtickets bij Total Travel.',
-      '',
-      'Wij hebben uw aanvraag in goede orde ontvangen en nemen op korte termijn persoonlijk contact met u op.',
-      '',
-      'Samenvatting van uw aanvraag:',
-      'Aanvrager: ' + (d.aanvragerType || '\u2014'),
-      'Vertrekluchthaven(s): ' + airportsAsText(d.vertrekluchthavens),
-      'Bestemming: ' + (d.bestemming || '\u2014'),
-      'Vertrekdatum: ' + (d.vertrekdatum || '\u2014')
-    ];
-    if(d.vluchtType !== 'Enkele reis') lijnen.push('Retourdatum: ' + (d.retourdatum || '\u2014'));
-    lijnen.push('Groepsgrootte: ' + (d.aantalVolwassenen || '0') + ' volw.' +
-                (parseInt(d.aantalKinderen,10) > 0 ? ' + ' + d.aantalKinderen + ' kind' : '') +
-                (parseInt(d.aantalBabies,10) > 0 ? ' + ' + d.aantalBabies + ' baby' : ''));
-    lijnen.push('');
-    lijnen.push('Heeft u in de tussentijd nog vragen? Neem gerust contact op.');
-    lijnen.push('');
-    lijnen.push('Met vriendelijke groet,');
-    lijnen.push('Total Travel');
-    lijnen.push('T: +31 78 681 75 79 | E: info@totaltravel.nl');
-    return lijnen.join('\n');
+    var L = [];
+    L.push('Beste ' + d.voornaam + ',');
+    L.push('');
+    L.push('Hartelijk dank voor uw aanvraag voor groepsvliegtickets bij Total Travel.');
+    L.push('');
+    L.push('Wij hebben uw aanvraag in goede orde ontvangen en nemen op korte termijn persoonlijk contact met u op.');
+    L.push('');
+    L.push('Samenvatting van uw aanvraag:');
+    L.push('');
+
+    // helper: voeg regel alleen toe als waarde aanwezig is
+    function add(label, value){
+      if(value !== undefined && value !== null && String(value).trim() !== ''){
+        L.push(label + ': ' + value);
+      }
+    }
+
+    // ── TYPE AANVRAGER
+    L.push('\u2500\u2500 Type aanvrager');
+    add('Aanvrager', d.aanvragerType);
+    if(d.aanvragerType === 'Particuliere groep'){
+      add('Aanleiding', d.aanleiding);
+    }
+    if(d.aanvragerType === 'Zakelijke groep'){
+      add('Bedrijfsnaam', d.bedrijfsnaam);
+      add('KvK-nummer', d.kvk);
+      add('Aard van de reis', d.zakelijkAard);
+      add('Factuuradres', d.factuuradres);
+    }
+    if(d.aanvragerType === 'Reisorganisator'){
+      add('Organisatie', d.organisatieNaam);
+      add('IATA-nummer', d.iata);
+      add('Vergunning', d.vergunning);
+      add('Eindklant', d.eindklant);
+      add('Doorverkoop', d.doorverkoop);
+    }
+    L.push('');
+
+    // ── VLUCHTGEGEVENS
+    L.push('\u2500\u2500 Vluchtgegevens');
+    add('Type vlucht', d.vluchtType);
+    add('Vertrekluchthaven(s)', airportsAsText(d.vertrekluchthavens));
+    add('Bestemming', d.bestemming);
+    add('Vertrekdatum', d.vertrekdatum);
+    if(d.vluchtType !== 'Enkele reis') add('Retourdatum', d.retourdatum);
+    add('Flexibiliteit', d.flex);
+    add('Vluchtvoorkeur', d.vluchtVoorkeur);
+    add('Klasse', d.klasse);
+    L.push('');
+
+    // ── GROEP & WENSEN
+    L.push('\u2500\u2500 Groep & wensen');
+    var groep = (d.aantalVolwassenen || '0') + ' volwassenen' +
+                (parseInt(d.aantalKinderen,10) > 0 ? ', ' + d.aantalKinderen + ' kinderen' : '') +
+                (parseInt(d.aantalBabies,10) > 0 ? ', ' + d.aantalBabies + ' baby\'s' : '');
+    add('Groepsgrootte', groep);
+    add('Groepsstatus', d.groepType);
+    add('Bagage', d.bagage);
+    add('Budget', d.budget);
+    add('Bijzonderheden', d.bijzonderheden);
+    L.push('');
+
+    // ── CONTACT
+    L.push('\u2500\u2500 Contactgegevens');
+    add('Naam', (d.voornaam + ' ' + d.achternaam).trim());
+    add('E-mail', d.email);
+    add('Telefoon', d.telefoon);
+    add('Contactvoorkeur', d.contactVoorkeur);
+    add('Gewenste reactietermijn', d.reactieTermijn);
+    L.push('');
+
+    L.push('Kloppen bovenstaande gegevens niet of wilt u iets aanvullen? Neem gerust contact met ons op.');
+
+    return L.join('\n');
   }
 
   // VERZENDEN
