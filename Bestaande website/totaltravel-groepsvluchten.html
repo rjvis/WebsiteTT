@@ -12,7 +12,7 @@
 <style>
 /* ============== SCOPED STYLING ============== */
 .tt-groep{
-  --tt-sienna:#a0522d;--tt-sienna-mid:#c47a4a;--tt-sienna-lt:#d9956a;
+  --tt-sienna:#a0522d;--tt-sienna-mid:#a0522d;--tt-sienna-lt:#d9956a;
   --tt-gold:#b8996a;--tt-gold-lt:#cdb48e;
   --tt-ivory:#f8f3eb;--tt-ivory-2:#f2ead8;--tt-ivory-3:#ebe0ca;--tt-ivory-4:#e0d2b8;
   --tt-cream:#faf7f2;
@@ -128,11 +128,13 @@
 
 /* MULTI VERTREKLUCHTHAVENS */
 .tt-groep .tt-airports{display:flex;flex-direction:column;gap:10px;}
-.tt-groep .tt-airport-row{display:grid;grid-template-columns:1fr 110px auto;gap:8px;align-items:end;}
-.tt-groep .tt-airport-input-wrap,
-.tt-groep .tt-pax-wrap{display:flex;flex-direction:column;gap:3px;}
-.tt-groep .tt-airport-lbl,
-.tt-groep .tt-pax-lbl{font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--tt-text-4);padding-left:2px;}
+.tt-groep .tt-airport-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end;}
+.tt-groep .tt-airport-input-wrap{display:flex;flex-direction:column;gap:3px;}
+.tt-groep .tt-airport-input{background:#fff;border:1px solid var(--tt-border-md);color:var(--tt-text);font-family:var(--tt-dm);font-size:14px;font-weight:300;padding:11px 34px 11px 14px;border-radius:var(--tt-radius);outline:none;width:100%;-webkit-appearance:none;appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%238a6d52' stroke-width='1.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;transition:border-color .2s,box-shadow .2s;}
+.tt-groep .tt-airport-input:hover{border-color:var(--tt-border-str);}
+.tt-groep .tt-airport-input:focus{border-color:var(--tt-sienna-mid);box-shadow:0 0 0 3px rgba(160,82,45,.1);}
+.tt-groep .tt-airport-input.err{border-color:#c0392b;box-shadow:0 0 0 3px rgba(192,57,43,.08);}
+.tt-groep .tt-airport-lbl{font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--tt-text-4);padding-left:2px;}
 .tt-groep .tt-rm-btn{background:transparent;border:1px solid var(--tt-border-md);color:var(--tt-text-4);width:38px;height:38px;border-radius:var(--tt-radius);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;line-height:1;transition:border-color .15s,color .15s,background .15s;}
 .tt-groep .tt-rm-btn:hover{border-color:#c0392b;color:#c0392b;background:rgba(192,57,43,.06);}
 .tt-groep .tt-rm-btn:disabled{opacity:.3;cursor:not-allowed;}
@@ -201,7 +203,7 @@
   .tt-groep .tt-field input,
   .tt-groep .tt-field select,
   .tt-groep .tt-field textarea{font-size:14px;padding:10px 12px;}
-  .tt-groep .tt-airport-row{grid-template-columns:1fr 90px auto;gap:6px;}
+  .tt-groep .tt-airport-row{grid-template-columns:1fr auto;gap:6px;}
   .tt-groep .tt-rm-btn{width:34px;height:34px;font-size:16px;}
   .tt-groep .tt-fnav{padding:14px 16px 20px;flex-wrap:wrap;gap:8px;}
   .tt-groep .tt-btn-prev{padding:10px 14px;font-size:10px;}
@@ -217,7 +219,7 @@
 <!-- HEADER -->
 <div class="tt-header">
   <div class="tt-eyebrow">Vliegtickets voor groepen</div>
-  <h2 class="tt-h1">Groepsvlucht <em>op maat</em></h2>
+  <h2 class="tt-h1">Groepstickets <em>aanvragen</em></h2>
   <p class="tt-sub">Vraag vrijblijvend een offerte aan voor groepsvliegtickets. Wij stellen binnen 48 uur een passend voorstel op &mdash; afgestemd op uw type groep en wensen.</p>
 </div>
 
@@ -352,7 +354,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           Luchthaven toevoegen
         </button>
-        <div class="tt-hint">Geef per luchthaven aan hoeveel passagiers daar opstappen (mag leeg blijven als nog onbekend).</div>
+        <div class="tt-hint">Selecteer één of meer luchthavens van waaruit de groep wil vertrekken.</div>
         <div class="tt-errmsg" id="e-vertrekplaats">Vul ten minste één vertrekluchthaven in</div>
       </div>
 
@@ -598,6 +600,24 @@
   });
   function getRadio(gid){ return radioVals[gid] || ''; }
 
+  // Retourdatum-kalender opent op de maand van de vertrekdatum.
+  // De gekozen vertrekdatum wordt de vroegst toegestane retourdatum (min),
+  // waardoor de datumkiezer standaard op die maand opent.
+  $('vertrekdatum').addEventListener('change', function(){
+    var v = this.value;
+    var retour = $('retourdatum');
+    if(v){
+      retour.min = v;
+      // Als er nog geen retourdatum is, of de retour vóór vertrek ligt,
+      // zet de retourwaarde gelijk aan vertrek zodat de kalender daar opent.
+      if(!retour.value || retour.value < v){
+        retour.value = v;
+      }
+    } else {
+      retour.removeAttribute('min');
+    }
+  });
+
   function toonVeldenVoorType(type){
     $('velden-particulier').style.display = type === 'Particuliere groep' ? '' : 'none';
     $('velden-zakelijk').style.display    = type === 'Zakelijke groep'    ? '' : 'none';
@@ -620,18 +640,31 @@
   var airportsWrap = $('ttAirports');
   var airportCounter = 0;
 
+  // Luchthavenopties (label per optie). Toegevoegd land tussen haakjes.
+  var AIRPORT_OPTIONS = [
+    'Amsterdam (Nederland)',
+    'Eindhoven (Nederland)',
+    'Rotterdam (Nederland)',
+    'Brussel Zaventem (België)',
+    'Brussel Charleroi (België)',
+    'Düsseldorf International (Duitsland)',
+    'Düsseldorf Weeze (Duitsland)'
+  ];
+
+  function airportOptionsHTML(){
+    var opts = '<option value="">Selecteer luchthaven</option>';
+    AIRPORT_OPTIONS.forEach(function(a){
+      opts += '<option value="' + a + '">' + a + '</option>';
+    });
+    return opts;
+  }
+
   function airportRowHTML(){
     airportCounter++;
     var idA = 'ttAirport_' + airportCounter;
-    var idP = 'ttPax_' + airportCounter;
     return '<div class="tt-airport-row" data-row="' + airportCounter + '">' +
              '<div class="tt-airport-input-wrap">' +
-               '<span class="tt-airport-lbl">Luchthaven</span>' +
-               '<input type="text" id="' + idA + '" class="tt-airport-input" placeholder="bijv. Amsterdam Schiphol (AMS)">' +
-             '</div>' +
-             '<div class="tt-pax-wrap">' +
-               '<span class="tt-pax-lbl">Aantal pax</span>' +
-               '<input type="number" id="' + idP + '" class="tt-pax-input" min="0" placeholder="0">' +
+               '<select id="' + idA + '" class="tt-airport-input">' + airportOptionsHTML() + '</select>' +
              '</div>' +
              '<button type="button" class="tt-rm-btn" aria-label="Verwijderen">&times;</button>' +
            '</div>';
@@ -648,7 +681,7 @@
         updateRemoveButtons();
       }
     });
-    row.querySelector('.tt-airport-input').addEventListener('input', function(){
+    row.querySelector('.tt-airport-input').addEventListener('change', function(){
       $('e-vertrekplaats').classList.remove('show');
       this.classList.remove('err');
     });
@@ -670,17 +703,14 @@
     var arr = [];
     airportsWrap.querySelectorAll('.tt-airport-row').forEach(function(row){
       var name = (row.querySelector('.tt-airport-input').value || '').trim();
-      var pax  = (row.querySelector('.tt-pax-input').value || '').trim();
-      if(name) arr.push({ name: name, pax: pax });
+      if(name) arr.push({ name: name });
     });
     return arr;
   }
 
   function airportsAsText(arr){
     if(!arr || !arr.length) return '\u2014';
-    return arr.map(function(a){
-      return a.name + (a.pax ? ' (' + a.pax + ' pax)' : '');
-    }).join('; ');
+    return arr.map(function(a){ return a.name; }).join('; ');
   }
 
   // PRIVACY
@@ -836,7 +866,7 @@
     rows.push('Vertrekluchthaven(s):');
     if(d.vertrekluchthavens && d.vertrekluchthavens.length){
       d.vertrekluchthavens.forEach(function(a){
-        rows.push('  - ' + a.name + (a.pax ? ' (' + a.pax + ' pax)' : ''));
+        rows.push('  - ' + a.name);
       });
     } else rows.push('  \u2014');
     rows.push('Bestemming: ' + (d.bestemming || '\u2014'));

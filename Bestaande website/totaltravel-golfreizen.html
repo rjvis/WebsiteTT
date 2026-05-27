@@ -1,0 +1,1094 @@
+<!-- ============================================================
+     TOTAL TRAVEL — AANVRAAGFORMULIER GOLFREIZEN
+     Plak dit hele blok in de gewenste pagina.
+
+     CONFIGURATIE — zie het CONFIG object onderaan in <script>.
+     Standaard werkt het formulier via 'mailto:' (geen server nodig).
+     Voor automatische verzending via Brevo: zet CONFIG.backendUrl
+     op het pad naar brevo-send.php (hetzelfde script als het
+     groepsvluchtenformulier kan worden hergebruikt).
+============================================================ -->
+
+<section class="tt-golf" id="ttGolf">
+<style>
+/* ============== SCOPED STYLING ============== */
+.tt-golf{
+  --tt-sienna:#a0522d;--tt-sienna-mid:#a0522d;--tt-sienna-lt:#d9956a;
+  --tt-gold:#b8996a;--tt-gold-lt:#cdb48e;
+  --tt-ivory:#f8f3eb;--tt-ivory-2:#f2ead8;--tt-ivory-3:#ebe0ca;--tt-ivory-4:#e0d2b8;
+  --tt-cream:#faf7f2;
+  --tt-text:#2c1f0e;--tt-text-2:#5a3e28;--tt-text-3:#8a6d52;--tt-text-4:#b09070;
+  --tt-border:rgba(160,82,45,0.14);--tt-border-md:rgba(160,82,45,0.25);--tt-border-str:rgba(160,82,45,0.40);
+  --tt-radius:4px;
+  --tt-dm:'DM Sans',sans-serif;--tt-pf:'Playfair Display',Georgia,serif;
+  --tt-ease:cubic-bezier(.4,0,.2,1);
+  font-family:var(--tt-dm);font-size:15px;line-height:1.6;color:var(--tt-text);
+  display:block;background:transparent;padding:24px 16px 48px;
+}
+.tt-golf *,.tt-golf *::before,.tt-golf *::after{box-sizing:border-box;}
+
+/* HEADER */
+.tt-golf .tt-header{text-align:center;max-width:620px;margin:0 auto 40px;}
+.tt-golf .tt-eyebrow{font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--tt-sienna);margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:12px;}
+.tt-golf .tt-eyebrow::before,.tt-golf .tt-eyebrow::after{content:'';width:28px;height:1px;background:var(--tt-sienna-lt);opacity:.6;}
+.tt-golf .tt-h1{font-family:var(--tt-pf);font-size:clamp(28px,4.4vw,44px);font-weight:400;line-height:1.15;color:var(--tt-text);margin:0 0 16px;}
+.tt-golf .tt-h1 em{font-style:italic;color:var(--tt-sienna-mid);}
+.tt-golf .tt-sub{font-size:15px;color:var(--tt-text-3);line-height:1.75;font-weight:300;margin:0;}
+
+/* PROGRESS */
+.tt-golf .tt-prog-wrap{max-width:720px;width:100%;margin:0 auto 36px;}
+.tt-golf .tt-prog-steps{display:flex;align-items:flex-start;}
+.tt-golf .tt-prog-step{display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;position:relative;}
+.tt-golf .tt-prog-step:not(:last-child)::after{content:'';position:absolute;top:14px;left:calc(50% + 16px);right:calc(-50% + 16px);height:1px;background:var(--tt-border-md);transition:background .35s;}
+.tt-golf .tt-prog-step.done:not(:last-child)::after{background:var(--tt-sienna-lt);}
+.tt-golf .tt-prog-circle{width:28px;height:28px;border-radius:50%;border:1px solid var(--tt-border-str);background:var(--tt-ivory-2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--tt-text-3);transition:all .2s var(--tt-ease);position:relative;z-index:1;}
+.tt-golf .tt-prog-step.active .tt-prog-circle{background:var(--tt-sienna);border-color:var(--tt-sienna);color:#fff;}
+.tt-golf .tt-prog-step.done .tt-prog-circle{background:var(--tt-ivory-3);border-color:var(--tt-sienna-lt);color:var(--tt-sienna);}
+.tt-golf .tt-prog-label{font-size:10px;letter-spacing:.06em;color:var(--tt-text-4);text-transform:uppercase;font-weight:400;text-align:center;white-space:nowrap;transition:color .2s;}
+.tt-golf .tt-prog-step.active .tt-prog-label{color:var(--tt-sienna);}
+.tt-golf .tt-prog-step.done .tt-prog-label{color:var(--tt-text-3);}
+
+/* CARD */
+.tt-golf .tt-card{background:var(--tt-ivory);border:1px solid var(--tt-border-md);max-width:740px;width:100%;margin:0 auto;position:relative;overflow:hidden;box-shadow:0 2px 24px rgba(90,40,10,.06);}
+.tt-golf .tt-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--tt-sienna-lt) 40%,var(--tt-gold) 60%,transparent);opacity:.6;}
+.tt-golf .tt-corner{position:absolute;opacity:.2;}
+.tt-golf .tt-corner.tl{top:14px;left:14px;}
+.tt-golf .tt-corner.tr{top:14px;right:14px;}
+.tt-golf .tt-corner svg{width:36px;height:36px;}
+
+/* STEPS */
+.tt-golf .tt-step{display:none;padding:44px 50px 36px;animation:ttFadeUp .28s ease;}
+.tt-golf .tt-step.active{display:block;}
+@keyframes ttFadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.tt-golf .tt-step-hdr{margin-bottom:30px;padding-bottom:22px;border-bottom:1px solid var(--tt-border);}
+.tt-golf .tt-step-num{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--tt-sienna-mid);font-weight:500;margin-bottom:6px;}
+.tt-golf .tt-step-title{font-family:var(--tt-pf);font-size:24px;font-weight:400;color:var(--tt-text);line-height:1.25;margin:0;}
+.tt-golf .tt-step-title em{font-style:italic;color:var(--tt-sienna-mid);}
+
+/* GRID */
+.tt-golf .tt-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 24px;}
+.tt-golf .tt-grid.c1{grid-template-columns:1fr;}
+.tt-golf .tt-full{grid-column:1/-1;}
+
+/* FIELD */
+.tt-golf .tt-field{display:flex;flex-direction:column;gap:7px;}
+.tt-golf .tt-field label{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--tt-text-2);}
+.tt-golf .tt-req{color:var(--tt-sienna);margin-left:2px;}
+.tt-golf .tt-field input,
+.tt-golf .tt-field select,
+.tt-golf .tt-field textarea{background:#fff;border:1px solid var(--tt-border-md);color:var(--tt-text);font-family:var(--tt-dm);font-size:14px;font-weight:300;padding:11px 14px;border-radius:var(--tt-radius);outline:none;transition:border-color .2s,box-shadow .2s;-webkit-appearance:none;width:100%;}
+.tt-golf .tt-field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%238a6d52' stroke-width='1.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:34px;cursor:pointer;}
+.tt-golf .tt-field textarea{resize:vertical;min-height:100px;line-height:1.6;}
+.tt-golf .tt-field input::placeholder,
+.tt-golf .tt-field textarea::placeholder{color:var(--tt-text-4);font-weight:300;}
+.tt-golf .tt-field input:hover,
+.tt-golf .tt-field select:hover,
+.tt-golf .tt-field textarea:hover{border-color:var(--tt-border-str);}
+.tt-golf .tt-field input:focus,
+.tt-golf .tt-field select:focus,
+.tt-golf .tt-field textarea:focus{border-color:var(--tt-sienna-mid);box-shadow:0 0 0 3px rgba(160,82,45,.1);}
+.tt-golf .tt-field input.err,
+.tt-golf .tt-field select.err,
+.tt-golf .tt-field textarea.err{border-color:#c0392b;box-shadow:0 0 0 3px rgba(192,57,43,.08);}
+.tt-golf .tt-hint{font-size:11px;color:var(--tt-text-4);font-weight:300;}
+.tt-golf .tt-errmsg{font-size:11px;color:#b52a1a;display:none;}
+.tt-golf .tt-errmsg.show{display:block;}
+
+/* RADIO TILES */
+.tt-golf .tt-rgroup{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.tt-golf .tt-rgroup.c2{grid-template-columns:1fr 1fr;}
+.tt-golf .tt-rgroup.c4{grid-template-columns:1fr 1fr 1fr 1fr;}
+.tt-golf .tt-rtile{display:flex;align-items:center;gap:10px;background:var(--tt-ivory-2);border:1px solid var(--tt-border-md);padding:12px 14px;border-radius:var(--tt-radius);cursor:pointer;font-size:13px;color:var(--tt-text-3);user-select:none;transition:border-color .15s,background .15s,color .15s;}
+.tt-golf .tt-rtile:hover{border-color:var(--tt-sienna-lt);color:var(--tt-text-2);background:var(--tt-ivory-3);}
+.tt-golf .tt-rtile.on{border-color:var(--tt-sienna);background:rgba(160,82,45,.07);color:var(--tt-sienna);}
+.tt-golf .tt-rdot{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--tt-border-str);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:border-color .15s,background .15s;}
+.tt-golf .tt-rtile.on .tt-rdot{border-color:var(--tt-sienna);background:var(--tt-sienna);}
+.tt-golf .tt-rtile.on .tt-rdot::after{content:'';width:6px;height:6px;border-radius:50%;background:#fff;}
+
+/* CHECK TILES */
+.tt-golf .tt-cgroup{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.tt-golf .tt-cgroup.c2{grid-template-columns:1fr 1fr;}
+.tt-golf .tt-ctile{display:flex;align-items:center;gap:10px;background:var(--tt-ivory-2);border:1px solid var(--tt-border-md);padding:10px 13px;border-radius:var(--tt-radius);cursor:pointer;font-size:13px;color:var(--tt-text-3);user-select:none;transition:border-color .15s,background .15s,color .15s;}
+.tt-golf .tt-ctile:hover{border-color:var(--tt-sienna-lt);color:var(--tt-text-2);background:var(--tt-ivory-3);}
+.tt-golf .tt-ctile.on{border-color:var(--tt-sienna);background:rgba(160,82,45,.07);color:var(--tt-sienna);}
+.tt-golf .tt-cbox{width:16px;height:16px;border-radius:2px;border:1.5px solid var(--tt-border-str);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:border-color .15s,background .15s;}
+.tt-golf .tt-ctile.on .tt-cbox{border-color:var(--tt-sienna);background:var(--tt-sienna);}
+.tt-golf .tt-ctile.on .tt-cbox::after{content:'';display:block;width:4px;height:7px;border:2px solid #fff;border-top:none;border-left:none;transform:rotate(45deg) translateY(-1px);}
+
+/* PRIVACY */
+.tt-golf .tt-prow{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;background:var(--tt-ivory-2);border:1px solid var(--tt-border-md);border-radius:var(--tt-radius);cursor:pointer;transition:border-color .15s,background .15s;}
+.tt-golf .tt-prow:hover{border-color:var(--tt-sienna-lt);}
+.tt-golf .tt-prow.on{border-color:var(--tt-sienna);background:rgba(160,82,45,.06);}
+.tt-golf .tt-pbox{width:18px;height:18px;border-radius:3px;border:1.5px solid var(--tt-border-str);flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:2px;background:#fff;transition:border-color .15s,background .15s;}
+.tt-golf .tt-prow.on .tt-pbox{border-color:var(--tt-sienna);background:var(--tt-sienna);}
+.tt-golf .tt-prow.on .tt-pbox::after{content:'';display:block;width:5px;height:9px;border:2px solid #fff;border-top:none;border-left:none;transform:rotate(45deg) translateY(-1px);}
+.tt-golf .tt-ptext{font-size:13px;color:var(--tt-text-2);line-height:1.6;font-weight:300;}
+.tt-golf .tt-ptext a{color:var(--tt-sienna);text-decoration:underline;}
+
+/* NOTE */
+.tt-golf .tt-note{background:var(--tt-ivory-2);border-left:3px solid var(--tt-sienna-lt);padding:14px 16px;font-size:13px;color:var(--tt-text-2);line-height:1.65;font-weight:300;border-radius:0 var(--tt-radius) var(--tt-radius) 0;margin-top:8px;}
+.tt-golf .tt-note strong{color:var(--tt-sienna);font-weight:500;}
+
+/* AIRPORTS */
+.tt-golf .tt-airports{display:flex;flex-direction:column;gap:10px;}
+.tt-golf .tt-airport-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end;}
+.tt-golf .tt-airport-input-wrap{display:flex;flex-direction:column;gap:3px;}
+.tt-golf .tt-airport-input{background:#fff;border:1px solid var(--tt-border-md);color:var(--tt-text);font-family:var(--tt-dm);font-size:14px;font-weight:300;padding:11px 34px 11px 14px;border-radius:var(--tt-radius);outline:none;width:100%;-webkit-appearance:none;appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%238a6d52' stroke-width='1.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;transition:border-color .2s,box-shadow .2s;}
+.tt-golf .tt-airport-input:hover{border-color:var(--tt-border-str);}
+.tt-golf .tt-airport-input:focus{border-color:var(--tt-sienna-mid);box-shadow:0 0 0 3px rgba(160,82,45,.1);}
+.tt-golf .tt-airport-input.err{border-color:#c0392b;box-shadow:0 0 0 3px rgba(192,57,43,.08);}
+.tt-golf .tt-rm-btn{background:transparent;border:1px solid var(--tt-border-md);color:var(--tt-text-4);width:38px;height:38px;border-radius:var(--tt-radius);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;line-height:1;transition:border-color .15s,color .15s,background .15s;}
+.tt-golf .tt-rm-btn:hover{border-color:#c0392b;color:#c0392b;background:rgba(192,57,43,.06);}
+.tt-golf .tt-rm-btn:disabled{opacity:.3;cursor:not-allowed;}
+.tt-golf .tt-rm-btn:disabled:hover{border-color:var(--tt-border-md);color:var(--tt-text-4);background:transparent;}
+.tt-golf .tt-add-btn{align-self:flex-start;background:transparent;border:1px dashed var(--tt-border-str);color:var(--tt-sienna);font-family:var(--tt-dm);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:9px 16px;border-radius:var(--tt-radius);cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;margin-top:2px;}
+.tt-golf .tt-add-btn:hover{background:rgba(160,82,45,.06);border-color:var(--tt-sienna);border-style:solid;}
+.tt-golf .tt-add-btn svg{width:13px;height:13px;}
+
+/* FORM NAV */
+.tt-golf .tt-fnav{display:flex;justify-content:space-between;align-items:center;padding:24px 50px 36px;border-top:1px solid var(--tt-border);background:var(--tt-ivory-2);}
+.tt-golf .tt-btn-prev{font-family:var(--tt-dm);font-size:11px;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--tt-text-3);background:transparent;border:1px solid var(--tt-border-md);padding:11px 22px;cursor:pointer;transition:color .2s,border-color .2s;border-radius:var(--tt-radius);}
+.tt-golf .tt-btn-prev:hover{color:var(--tt-text);border-color:var(--tt-border-str);}
+.tt-golf .tt-btn-next{font-family:var(--tt-dm);font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--tt-sienna);border:none;padding:12px 28px;cursor:pointer;transition:background .2s;border-radius:var(--tt-radius);display:flex;align-items:center;gap:8px;}
+.tt-golf .tt-btn-next:hover{background:var(--tt-text-2);}
+.tt-golf .tt-btn-next:disabled{background:var(--tt-text-4);cursor:wait;}
+.tt-golf .tt-stepcnt{font-size:11px;color:var(--tt-text-4);letter-spacing:.08em;}
+
+/* SUCCESS / ERROR */
+.tt-golf .tt-success{display:none;text-align:center;padding:64px 50px;}
+.tt-golf .tt-success.show{display:block;animation:ttFadeUp .35s ease;}
+.tt-golf .tt-sicon{width:68px;height:68px;border-radius:50%;background:rgba(160,82,45,.1);border:1px solid var(--tt-sienna-lt);display:flex;align-items:center;justify-content:center;margin:0 auto 26px;color:var(--tt-sienna);}
+.tt-golf .tt-sh2{font-family:var(--tt-pf);font-size:32px;font-weight:400;color:var(--tt-text);margin:0 0 14px;}
+.tt-golf .tt-sh2 em{font-style:italic;color:var(--tt-sienna-mid);}
+.tt-golf .tt-sp{font-size:15px;color:var(--tt-text-3);line-height:1.75;font-weight:300;max-width:440px;margin:0 auto 30px;}
+.tt-golf .tt-sdetails{background:var(--tt-ivory-2);border:1px solid var(--tt-border-md);padding:20px 28px;max-width:480px;margin:0 auto 30px;text-align:left;border-radius:var(--tt-radius);}
+.tt-golf .tt-srow{display:flex;justify-content:space-between;font-size:13px;padding:7px 0;border-bottom:1px solid var(--tt-border);gap:16px;}
+.tt-golf .tt-srow:last-child{border-bottom:none;}
+.tt-golf .tt-srow span:first-child{color:var(--tt-text-3);flex-shrink:0;}
+.tt-golf .tt-srow span:last-child{color:var(--tt-text);font-weight:400;text-align:right;}
+.tt-golf .tt-mailnote{font-size:12px;color:var(--tt-text-3);font-weight:300;line-height:1.7;max-width:460px;margin:0 auto;padding:14px 18px;background:var(--tt-ivory-2);border:1px dashed var(--tt-border-md);border-radius:var(--tt-radius);}
+.tt-golf .tt-mailnote strong{color:var(--tt-sienna);font-weight:500;}
+.tt-golf .tt-errbox{display:none;margin:0 50px 24px;padding:14px 18px;background:rgba(192,57,43,.06);border:1px solid rgba(192,57,43,.25);color:#8a2a1a;border-radius:var(--tt-radius);font-size:13px;line-height:1.6;}
+.tt-golf .tt-errbox.show{display:block;}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .tt-golf{padding:16px 8px 32px;}
+  .tt-golf .tt-step{padding:32px 28px 24px;}
+  .tt-golf .tt-fnav{padding:20px 28px 26px;}
+  .tt-golf .tt-grid{gap:14px 18px;}
+  .tt-golf .tt-rgroup,.tt-golf .tt-rgroup.c4{grid-template-columns:1fr;}
+  .tt-golf .tt-success{padding:48px 28px;}
+  .tt-golf .tt-errbox{margin:0 28px 20px;}
+}
+@media(max-width:560px){
+  .tt-golf .tt-header{margin-bottom:28px;}
+  .tt-golf .tt-h1{font-size:clamp(24px,7vw,32px);}
+  .tt-golf .tt-sub{font-size:13px;}
+  .tt-golf .tt-prog-wrap{margin-bottom:24px;}
+  .tt-golf .tt-prog-circle{width:24px;height:24px;font-size:10px;}
+  .tt-golf .tt-prog-step:not(:last-child)::after{top:12px;left:calc(50% + 13px);right:calc(-50% + 13px);}
+  .tt-golf .tt-prog-label{display:none;}
+  .tt-golf .tt-card{margin-left:-8px;margin-right:-8px;width:calc(100% + 16px);border-left:none;border-right:none;}
+  .tt-golf .tt-corner{display:none;}
+  .tt-golf .tt-step{padding:22px 16px 18px;}
+  .tt-golf .tt-step-title{font-size:20px;}
+  .tt-golf .tt-step-hdr{margin-bottom:20px;padding-bottom:14px;}
+  .tt-golf .tt-grid{grid-template-columns:1fr;gap:12px;}
+  .tt-golf .tt-full{grid-column:1;}
+  .tt-golf .tt-cgroup,.tt-golf .tt-cgroup.c2{grid-template-columns:1fr 1fr;gap:6px;}
+  .tt-golf .tt-rtile,.tt-golf .tt-ctile{padding:9px 11px;font-size:12px;gap:8px;}
+  .tt-golf .tt-rdot,.tt-golf .tt-cbox{width:14px;height:14px;}
+  .tt-golf .tt-field label{font-size:10px;}
+  .tt-golf .tt-field input,.tt-golf .tt-field select,.tt-golf .tt-field textarea{font-size:14px;padding:10px 12px;}
+  .tt-golf .tt-airport-row{grid-template-columns:1fr auto;gap:6px;}
+  .tt-golf .tt-rm-btn{width:34px;height:34px;font-size:16px;}
+  .tt-golf .tt-fnav{padding:14px 16px 20px;flex-wrap:wrap;gap:8px;}
+  .tt-golf .tt-btn-prev{padding:10px 14px;font-size:10px;}
+  .tt-golf .tt-btn-next{padding:10px 16px;font-size:10px;gap:6px;}
+  .tt-golf .tt-success{padding:32px 16px;}
+  .tt-golf .tt-sh2{font-size:24px;}
+  .tt-golf .tt-srow{font-size:12px;flex-direction:column;gap:2px;}
+  .tt-golf .tt-srow span:last-child{text-align:left;}
+  .tt-golf .tt-errbox{margin:0 16px 16px;font-size:12px;}
+}
+</style>
+
+<!-- HEADER -->
+<div class="tt-header">
+  <div class="tt-eyebrow">Golfreizen op maat</div>
+  <h2 class="tt-h1">Uw <em>golfreis</em> samengesteld</h2>
+  <p class="tt-sub">Vertel ons over uw gezelschap en golfwensen. Wij stellen een voorstel op maat samen &mdash; van baanselectie tot verblijf. Weet u nog niet waarheen? Geef uw budget en wensen op, dan adviseren wij de ideale bestemming.</p>
+</div>
+
+<!-- PROGRESS -->
+<div class="tt-prog-wrap">
+  <div class="tt-prog-steps" id="ttProgSteps">
+    <div class="tt-prog-step active" data-step="1"><div class="tt-prog-circle">1</div><div class="tt-prog-label">Gezelschap</div></div>
+    <div class="tt-prog-step" data-step="2"><div class="tt-prog-circle">2</div><div class="tt-prog-label">Golfwensen</div></div>
+    <div class="tt-prog-step" data-step="3"><div class="tt-prog-circle">3</div><div class="tt-prog-label">Verblijf &amp; reis</div></div>
+    <div class="tt-prog-step" data-step="4"><div class="tt-prog-circle">4</div><div class="tt-prog-label">Contact</div></div>
+  </div>
+</div>
+
+<!-- CARD -->
+<div class="tt-card" id="ttCard">
+  <div class="tt-corner tl"><svg viewBox="0 0 36 36" fill="none"><path d="M0 36L0 0L36 0" stroke="#a0522d" stroke-width="1"/></svg></div>
+  <div class="tt-corner tr"><svg viewBox="0 0 36 36" fill="none"><path d="M0 0L36 0L36 36" stroke="#a0522d" stroke-width="1"/></svg></div>
+
+  <!-- STAP 1 — GEZELSCHAP -->
+  <div class="tt-step active" id="ttStep1">
+    <div class="tt-step-hdr">
+      <div class="tt-step-num">Stap 01 &mdash; 04</div>
+      <h3 class="tt-step-title">Uw <em>reisgezelschap</em></h3>
+    </div>
+    <div class="tt-grid">
+      <div class="tt-field tt-full">
+        <label>Type aanvraag <span class="tt-req">*</span></label>
+        <div class="tt-rgroup" id="rg-aanvragerType">
+          <div class="tt-rtile" data-val="Particulier / vrienden"><div class="tt-rdot"></div>Particulier / vrienden</div>
+          <div class="tt-rtile" data-val="Golfclub / vereniging"><div class="tt-rdot"></div>Golfclub / vereniging</div>
+          <div class="tt-rtile" data-val="Zakelijk / bedrijf"><div class="tt-rdot"></div>Zakelijk / bedrijf</div>
+        </div>
+        <div class="tt-errmsg" id="e-aanvragerType">Geef aan wat voor soort aanvraag dit is</div>
+      </div>
+
+      <div class="tt-field tt-full" id="velden-club" style="display:none">
+        <label>Naam club / vereniging</label>
+        <input type="text" id="clubNaam" placeholder="bijv. Golfclub De Duinen">
+      </div>
+      <div id="velden-zakelijk" style="display:none">
+        <div class="tt-grid">
+          <div class="tt-field tt-full">
+            <label>Bedrijfsnaam</label>
+            <input type="text" id="bedrijfsnaam" placeholder="Naam van uw organisatie">
+          </div>
+          <div class="tt-field tt-full">
+            <label>Aanleiding</label>
+            <select id="zakelijkAanleiding">
+              <option value="">Selecteer (optioneel)</option>
+              <option>Incentive / personeelsreis</option>
+              <option>Relatie- / klantevenement</option>
+              <option>Golfevenement / bedrijfstoernooi</option>
+              <option>Anders</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="tt-field">
+        <label>Aantal golfers <span class="tt-req">*</span></label>
+        <input type="number" id="aantalGolfers" min="1" placeholder="bijv. 8">
+        <div class="tt-errmsg" id="e-aantalGolfers">Vul het aantal golfers in</div>
+      </div>
+      <div class="tt-field">
+        <label>Aantal niet-golfers</label>
+        <input type="number" id="aantalNietGolfers" min="0" placeholder="0">
+        <div class="tt-hint">Reizen er partners / introducés mee die niet golfen?</div>
+      </div>
+
+      <div class="tt-field tt-full">
+        <label>Voorzieningen voor niet-golfers</label>
+        <div class="tt-cgroup" id="cg-nietGolfer">
+          <div class="tt-ctile" data-val="Spa / wellness"><div class="tt-cbox"></div>Spa / wellness</div>
+          <div class="tt-ctile" data-val="Strand / zwembad"><div class="tt-cbox"></div>Strand / zwembad</div>
+          <div class="tt-ctile" data-val="Excursies / cultuur"><div class="tt-cbox"></div>Excursies / cultuur</div>
+          <div class="tt-ctile" data-val="Shopping"><div class="tt-cbox"></div>Shopping</div>
+          <div class="tt-ctile" data-val="Tennis / padel"><div class="tt-cbox"></div>Tennis / padel</div>
+          <div class="tt-ctile" data-val="Niet van toepassing"><div class="tt-cbox"></div>Niet van toepassing</div>
+        </div>
+        <div class="tt-hint">Helpt ons een resort te kiezen dat voor iedereen aantrekkelijk is.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAP 2 — GOLFWENSEN -->
+  <div class="tt-step" id="ttStep2">
+    <div class="tt-step-hdr">
+      <div class="tt-step-num">Stap 02 &mdash; 04</div>
+      <h3 class="tt-step-title">Uw <em>golfwensen</em></h3>
+    </div>
+    <div class="tt-grid">
+      <div class="tt-field">
+        <label>Aantal speeldagen / rondes <span class="tt-req">*</span></label>
+        <input type="text" id="aantalRondes" placeholder="bijv. 4 rondes in 5 dagen">
+        <div class="tt-errmsg" id="e-aantalRondes">Geef een indicatie van het aantal rondes</div>
+      </div>
+      <div class="tt-field">
+        <label>Aantal verschillende banen</label>
+        <select id="aantalBanen">
+          <option value="">Geen voorkeur</option>
+          <option>Elke dag een andere baan</option>
+          <option>2 — 3 verschillende banen</option>
+          <option>Liefst één vaste (thuis)baan</option>
+          <option>Total Travel mag adviseren</option>
+        </select>
+      </div>
+
+      <div class="tt-field tt-full">
+        <label>Gemiddeld niveau van de groep <span class="tt-req">*</span></label>
+        <div class="tt-rgroup" id="rg-niveau">
+          <div class="tt-rtile" data-val="Beginners / hoge handicap"><div class="tt-rdot"></div>Beginners</div>
+          <div class="tt-rtile" data-val="Recreatief (HCP 20-36)"><div class="tt-rdot"></div>Recreatief</div>
+          <div class="tt-rtile" data-val="Gevorderd (HCP 10-20)"><div class="tt-rdot"></div>Gevorderd</div>
+        </div>
+        <div class="tt-errmsg" id="e-niveau">Geef het gemiddelde niveau van de groep aan</div>
+      </div>
+
+      <div class="tt-field">
+        <label>Laagste handicap-categorie in groep</label>
+        <select id="hcpLaag">
+          <option value="">Selecteer (optioneel)</option>
+          <option>Scratch / +handicap</option>
+          <option>HCP &lt; 10</option>
+          <option>HCP 10 &mdash; 20</option>
+          <option>HCP 20 &mdash; 36</option>
+          <option>HCP 36+ / beginner</option>
+        </select>
+        <div class="tt-hint">Sommige topbanen stellen handicapeisen.</div>
+      </div>
+      <div class="tt-field">
+        <label>Hoogste handicap-categorie in groep</label>
+        <select id="hcpHoog">
+          <option value="">Selecteer (optioneel)</option>
+          <option>Scratch / +handicap</option>
+          <option>HCP &lt; 10</option>
+          <option>HCP 10 &mdash; 20</option>
+          <option>HCP 20 &mdash; 36</option>
+          <option>HCP 36+ / beginner</option>
+          <option>Niet alle spelers hebben handicap / GVB</option>
+        </select>
+        <div class="tt-hint">Hebben alle spelers een geldige handicap / GVB?</div>
+      </div>
+
+      <div class="tt-field tt-full">
+        <label>Gewenst niveau / type banen</label>
+        <div class="tt-cgroup c2" id="cg-baantype">
+          <div class="tt-ctile" data-val="Championship / toernooibanen"><div class="tt-cbox"></div>Championship / toernooibanen</div>
+          <div class="tt-ctile" data-val="Links (kustbanen)"><div class="tt-cbox"></div>Links (kustbanen)</div>
+          <div class="tt-ctile" data-val="Parkland"><div class="tt-cbox"></div>Parkland</div>
+          <div class="tt-ctile" data-val="Resortbanen (ontspannen)"><div class="tt-cbox"></div>Resortbanen (ontspannen)</div>
+          <div class="tt-ctile" data-val="Bekende / iconische banen"><div class="tt-cbox"></div>Bekende / iconische banen</div>
+          <div class="tt-ctile" data-val="Geen voorkeur"><div class="tt-cbox"></div>Geen voorkeur</div>
+        </div>
+      </div>
+
+      <div class="tt-field">
+        <label>Vervoer op de baan</label>
+        <select id="buggy">
+          <option value="">Geen voorkeur</option>
+          <option>Buggy's gewenst</option>
+          <option>Lopend (met trolley)</option>
+          <option>Gemengd</option>
+        </select>
+      </div>
+      <div class="tt-field">
+        <label>Caddies gewenst?</label>
+        <select id="caddie">
+          <option value="">Geen voorkeur</option>
+          <option>Ja, indien beschikbaar</option>
+          <option>Nee</option>
+        </select>
+      </div>
+      <div class="tt-field tt-full">
+        <label>Voorkeur tee-times</label>
+        <div class="tt-rgroup c4" id="rg-teetime">
+          <div class="tt-rtile" data-val="Vroege ochtend"><div class="tt-rdot"></div>Vroege ochtend</div>
+          <div class="tt-rtile" data-val="Ochtend"><div class="tt-rdot"></div>Ochtend</div>
+          <div class="tt-rtile" data-val="Middag"><div class="tt-rdot"></div>Middag</div>
+          <div class="tt-rtile" data-val="Geen voorkeur"><div class="tt-rdot"></div>Geen voorkeur</div>
+        </div>
+        <div class="tt-hint">Wilt u liever vroeg starten (koeler, rustiger) of juist later op de dag?</div>
+      </div>
+
+      <div class="tt-field tt-full">
+        <label>Extra golfwensen</label>
+        <div class="tt-cgroup c2" id="cg-golfextra">
+          <div class="tt-ctile" data-val="Onderlinge wedstrijd / toernooivorm"><div class="tt-cbox"></div>Onderlinge wedstrijd / toernooivorm</div>
+          <div class="tt-ctile" data-val="Golfles / clinic"><div class="tt-cbox"></div>Golfles / clinic</div>
+          <div class="tt-ctile" data-val="Clubhuur ter plaatse"><div class="tt-cbox"></div>Clubhuur ter plaatse</div>
+          <div class="tt-ctile" data-val="Flexibele tee times"><div class="tt-cbox"></div>Flexibele tee times</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAP 3 — VERBLIJF & REIS -->
+  <div class="tt-step" id="ttStep3">
+    <div class="tt-step-hdr">
+      <div class="tt-step-num">Stap 03 &mdash; 04</div>
+      <h3 class="tt-step-title">Bestemming, <em>verblijf &amp; reis</em></h3>
+    </div>
+    <div class="tt-grid">
+      <div class="tt-field tt-full">
+        <label>Bestemming(en)</label>
+        <input type="text" id="bestemming" placeholder="bijv. Algarve, Costa del Sol, Turkije — of laat leeg">
+        <div class="tt-note" style="margin-top:6px">
+          <strong>Nog geen bestemming in gedachten?</strong> Laat dit veld gerust leeg. Op basis van uw periode, budget en wensen adviseren wij de meest geschikte golfbestemming.
+        </div>
+      </div>
+
+      <div class="tt-field tt-full">
+        <label>Verblijfsniveau hotel</label>
+        <div class="tt-rgroup c4" id="rg-hotelNiveau">
+          <div class="tt-rtile" data-val="3 sterren"><div class="tt-rdot"></div>3 sterren</div>
+          <div class="tt-rtile" data-val="4 sterren"><div class="tt-rdot"></div>4 sterren</div>
+          <div class="tt-rtile" data-val="5 sterren"><div class="tt-rdot"></div>5 sterren</div>
+          <div class="tt-rtile" data-val="Maakt niet uit"><div class="tt-rdot"></div>Maakt niet uit</div>
+        </div>
+      </div>
+
+      <div class="tt-field">
+        <label>Ligging hotel</label>
+        <select id="hotelLigging">
+          <option value="">Geen voorkeur</option>
+          <option>On-course (aan de golfbaan)</option>
+          <option>Vlakbij de baan</option>
+          <option>Centraal / levendig</option>
+          <option>Rustig gelegen</option>
+        </select>
+      </div>
+      <div class="tt-field">
+        <label>Verzorging</label>
+        <select id="verzorging">
+          <option value="">Geen voorkeur</option>
+          <option>Logies / ontbijt</option>
+          <option>Halfpension</option>
+          <option>All-inclusive</option>
+          <option>Volpension</option>
+        </select>
+      </div>
+
+      <div class="tt-field">
+        <label>Kamerindeling</label>
+        <select id="kamerindeling">
+          <option value="">Selecteer</option>
+          <option>1-persoonskamers</option>
+          <option>2-persoonskamers (twin)</option>
+          <option>Mix (specificeren bij opmerkingen)</option>
+        </select>
+        <div class="tt-hint">Golfers delen vaak liever een twinkamer dan een tweepersoonsbed.</div>
+      </div>
+      <div class="tt-field">
+        <label>Type vlucht</label>
+        <div class="tt-rgroup c2" id="rg-vluchtType">
+          <div class="tt-rtile" data-val="Retour"><div class="tt-rdot"></div>Retour</div>
+          <div class="tt-rtile" data-val="Eigen vervoer"><div class="tt-rdot"></div>Eigen vervoer</div>
+        </div>
+      </div>
+
+      <div class="tt-field tt-full" id="airportsWrap-field">
+        <label>Vertrekluchthaven(s)</label>
+        <div class="tt-airports" id="ttAirports"></div>
+        <button type="button" class="tt-add-btn" id="ttAddAirport">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Luchthaven toevoegen
+        </button>
+        <div class="tt-hint">Selecteer één of meer luchthavens van waaruit de groep kan vertrekken.</div>
+      </div>
+
+      <div class="tt-field tt-full">
+        <label>Vervoer ter plaatse</label>
+        <div class="tt-rgroup c4" id="rg-vervoer">
+          <div class="tt-rtile" data-val="Huurauto('s)"><div class="tt-rdot"></div>Huurauto('s)</div>
+          <div class="tt-rtile" data-val="Losse transfers"><div class="tt-rdot"></div>Losse transfers</div>
+          <div class="tt-rtile" data-val="Geen vervoer nodig"><div class="tt-rdot"></div>Geen nodig</div>
+          <div class="tt-rtile" data-val="Total Travel mag adviseren"><div class="tt-rdot"></div>Adviseer mij</div>
+        </div>
+        <div class="tt-hint">Huurauto geeft vrijheid (handig bij meerdere banen); transfers zijn zorgeloos van/naar luchthaven en baan.</div>
+      </div>
+
+      <div class="tt-field">
+        <label>Heenreisdatum</label>
+        <input type="date" id="heenDatum">
+        <div class="tt-hint">Weet u de datum al? Vul hem in. Zo niet, gebruik dan het veld 'reisperiode' hieronder.</div>
+      </div>
+      <div class="tt-field">
+        <label>Terugreisdatum</label>
+        <input type="date" id="terugDatum">
+        <div class="tt-hint">Opent op de maand van de heenreisdatum.</div>
+      </div>
+
+      <div class="tt-field">
+        <label>Marge op de data</label>
+        <select id="datumMarge">
+          <option value="">Selecteer</option>
+          <option>Exact deze data</option>
+          <option>± 1 dag</option>
+          <option>± 2 dagen</option>
+          <option>± 3 dagen</option>
+          <option>± 1 week</option>
+          <option>Volledig flexibel</option>
+        </select>
+        <div class="tt-hint">Hoeveel mogen de data schuiven voor een scherpere prijs?</div>
+      </div>
+      <div class="tt-field">
+        <label>Aantal nachten</label>
+        <input type="text" id="aantalNachten" placeholder="bijv. 5 nachten">
+      </div>
+
+      <div class="tt-field tt-full">
+        <label>Reisperiode (als de exacte data nog niet vaststaan) <span class="tt-req">*</span></label>
+        <input type="text" id="reisperiode" placeholder="bijv. 2e helft mei 2026, of 'voorjaar' — niet nodig als u hierboven data invulde">
+        <div class="tt-errmsg" id="e-reisperiode">Vul concrete data in, of geef hier een indicatie van de reisperiode</div>
+      </div>
+
+      <div class="tt-field tt-full">
+        <label>Budgetindicatie per persoon</label>
+        <select id="budget">
+          <option value="">Geen indicatie</option>
+          <option>Tot € 750 p.p.</option>
+          <option>€ 750 — € 1.250 p.p.</option>
+          <option>€ 1.250 — € 2.000 p.p.</option>
+          <option>€ 2.000 — € 3.000 p.p.</option>
+          <option>€ 3.000+ p.p.</option>
+          <option>Total Travel mag adviseren binnen passend budget</option>
+        </select>
+      </div>
+      <div class="tt-field tt-full">
+        <label>Wat moet het budget omvatten?</label>
+        <div class="tt-cgroup c2" id="cg-budgetInhoud">
+          <div class="tt-ctile" data-val="Vluchten"><div class="tt-cbox"></div>Vluchten</div>
+          <div class="tt-ctile" data-val="Greenfees"><div class="tt-cbox"></div>Greenfees</div>
+          <div class="tt-ctile" data-val="Accommodatie"><div class="tt-cbox"></div>Accommodatie</div>
+          <div class="tt-ctile" data-val="Transfers / huurauto"><div class="tt-cbox"></div>Transfers / huurauto</div>
+        </div>
+        <div class="tt-hint">Zo weten wij of uw budget de complete reis dekt of alleen onderdelen.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAP 4 — CONTACT -->
+  <div class="tt-step" id="ttStep4">
+    <div class="tt-step-hdr">
+      <div class="tt-step-num">Stap 04 &mdash; 04</div>
+      <h3 class="tt-step-title">Contact &amp; <em>bevestiging</em></h3>
+    </div>
+    <div class="tt-grid">
+      <div class="tt-field">
+        <label>Voornaam <span class="tt-req">*</span></label>
+        <input type="text" id="voornaam" placeholder="Uw voornaam">
+        <div class="tt-errmsg" id="e-voornaam">Vul uw voornaam in</div>
+      </div>
+      <div class="tt-field">
+        <label>Achternaam <span class="tt-req">*</span></label>
+        <input type="text" id="achternaam" placeholder="Uw achternaam">
+        <div class="tt-errmsg" id="e-achternaam">Vul uw achternaam in</div>
+      </div>
+      <div class="tt-field">
+        <label>E-mailadres <span class="tt-req">*</span></label>
+        <input type="email" id="email" placeholder="uw@email.nl">
+        <div class="tt-hint">Op dit adres ontvangt u de bevestiging van uw aanvraag.</div>
+        <div class="tt-errmsg" id="e-email">Vul een geldig e-mailadres in</div>
+      </div>
+      <div class="tt-field">
+        <label>Telefoonnummer <span class="tt-req">*</span></label>
+        <input type="tel" id="telefoon" placeholder="+31 6 12345678">
+        <div class="tt-errmsg" id="e-telefoon">Vul een telefoonnummer in</div>
+      </div>
+      <div class="tt-field">
+        <label>Voorkeur voor contact</label>
+        <select id="contactVoorkeur">
+          <option value="">Selecteer</option>
+          <option>E-mail</option>
+          <option>Telefoon (ochtend)</option>
+          <option>Telefoon (middag)</option>
+          <option>Telefoon (avond)</option>
+          <option>WhatsApp</option>
+        </select>
+      </div>
+      <div class="tt-field">
+        <label>Gewenste reactietermijn</label>
+        <select id="reactieTermijn">
+          <option value="">Zo snel mogelijk</option>
+          <option>Binnen 24 uur</option>
+          <option>Binnen 48 uur</option>
+          <option>Binnen een week</option>
+        </select>
+      </div>
+
+      <div class="tt-field tt-full">
+        <label>Opmerkingen of bijzonderheden</label>
+        <textarea id="opmerkingen" placeholder="bijv. specifieke baan die u graag wilt spelen, dieetwensen, vieren van een jubileum, vervoer ter plaatse, eerdere golfreizen, etc."></textarea>
+      </div>
+
+      <div class="tt-field tt-full">
+        <div class="tt-note">
+          <strong>E-mailbevestiging</strong> &mdash; Na verzending ontvangt u direct een bevestiging met een overzicht van uw aanvraag. De volledige aanvraag wordt tegelijkertijd verzonden naar <strong>info@totaltravel.nl</strong>. Ons team neemt binnen de gewenste termijn contact met u op.
+        </div>
+      </div>
+
+      <div class="tt-field tt-full">
+        <label style="text-transform:none;letter-spacing:0;font-size:12px;color:var(--tt-text-3);font-weight:400">Privacyverklaring <span class="tt-req">*</span></label>
+        <div class="tt-prow" id="ttPrivRow">
+          <div class="tt-pbox" id="ttPrivBox"></div>
+          <span class="tt-ptext">Ik ga akkoord met de <a href="#" id="ttPrivLink">privacyverklaring</a> van Total Travel. Mijn gegevens worden uitsluitend gebruikt voor het verwerken van deze aanvraag.</span>
+        </div>
+        <div class="tt-errmsg" id="e-privacy">Bevestig de privacyverklaring om door te gaan</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="tt-success" id="ttSuccess">
+    <div class="tt-sicon">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h3 class="tt-sh2">Aanvraag <em>ontvangen</em></h3>
+    <p class="tt-sp">Bedankt voor uw golfreis-aanvraag. Onze golfspecialisten stellen een voorstel op maat samen en nemen op korte termijn contact met u op.</p>
+    <div class="tt-sdetails" id="ttSdetails"></div>
+    <div class="tt-mailnote">
+      Een bevestiging is verzonden naar <strong id="ttMailTo">uw e-mailadres</strong>.<br>
+      De volledige aanvraag is afgeleverd bij <strong>info@totaltravel.nl</strong>.
+    </div>
+  </div>
+
+  <!-- ERROR BOX -->
+  <div class="tt-errbox" id="ttErrbox"></div>
+
+  <!-- NAV -->
+  <div class="tt-fnav" id="ttFnav">
+    <button type="button" class="tt-btn-prev" id="ttBtnPrev">&#8592; Vorige</button>
+    <span class="tt-stepcnt" id="ttStepcnt">Stap 1 van 4</span>
+    <button type="button" class="tt-btn-next" id="ttBtnNext">Volgende <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+  </div>
+</div>
+</section>
+
+<script>
+(function(){
+  'use strict';
+
+  var CONFIG = {
+    ontvangerEmail: 'info@totaltravel.nl',
+    // Voor Brevo-verzending: zet hier het pad naar brevo-send.php
+    // (hetzelfde script als het groepsvluchtenformulier werkt).
+    // Leeg laten = mailto-fallback gebruiken.
+    backendUrl: 'https://totaltravel.nl/api/brevo-send.php'
+  };
+
+  var step = 1;
+  var totalSteps = 4;
+  var privChecked = false;
+  var aanvragerType = '';
+  var root = document.getElementById('ttGolf');
+  function $(id){ return document.getElementById(id); }
+  function val(id){ var e = $(id); return e ? (e.value||'').trim() : ''; }
+
+  // RADIO GROEPEN
+  var radioVals = {};
+  root.querySelectorAll('.tt-rgroup').forEach(function(grp){
+    grp.querySelectorAll('.tt-rtile').forEach(function(tile){
+      tile.addEventListener('click', function(){
+        var gid = grp.id;
+        grp.querySelectorAll('.tt-rtile').forEach(function(t){ t.classList.remove('on'); });
+        tile.classList.add('on');
+        radioVals[gid] = tile.getAttribute('data-val');
+        if(gid === 'rg-aanvragerType'){
+          aanvragerType = radioVals[gid];
+          toonVeldenVoorType(aanvragerType);
+          $('e-aanvragerType').classList.remove('show');
+        }
+        if(gid === 'rg-niveau') $('e-niveau').classList.remove('show');
+        if(gid === 'rg-vluchtType'){
+          var eigen = radioVals[gid] === 'Eigen vervoer';
+          $('airportsWrap-field').style.display = eigen ? 'none' : '';
+        }
+      });
+    });
+  });
+  function getRadio(gid){ return radioVals[gid] || ''; }
+
+  // Terugreisdatum-kalender opent op de maand van de heenreisdatum.
+  $('heenDatum').addEventListener('change', function(){
+    var v = this.value;
+    var terug = $('terugDatum');
+    if(v){
+      terug.min = v;
+      if(!terug.value || terug.value < v) terug.value = v;
+    } else {
+      terug.removeAttribute('min');
+    }
+  });
+
+  function toonVeldenVoorType(type){
+    $('velden-club').style.display    = type === 'Golfclub / vereniging' ? '' : 'none';
+    $('velden-zakelijk').style.display = type === 'Zakelijk / bedrijf'   ? '' : 'none';
+  }
+
+  // CHECKBOX GROEPEN
+  root.querySelectorAll('.tt-ctile').forEach(function(tile){
+    tile.addEventListener('click', function(){ tile.classList.toggle('on'); });
+  });
+  function getChecks(gid){
+    var arr = [];
+    root.querySelectorAll('#' + gid + ' .tt-ctile.on').forEach(function(t){
+      arr.push(t.getAttribute('data-val'));
+    });
+    return arr.join(', ');
+  }
+
+  // LUCHTHAVENS (zelfde lijst als groepsvluchtenformulier)
+  var AIRPORT_OPTIONS = [
+    'Amsterdam (Nederland)',
+    'Eindhoven (Nederland)',
+    'Rotterdam (Nederland)',
+    'Brussel Zaventem (België)',
+    'Brussel Charleroi (België)',
+    'Düsseldorf International (Duitsland)',
+    'Düsseldorf Weeze (Duitsland)'
+  ];
+  var airportsWrap = $('ttAirports');
+  var airportCounter = 0;
+
+  function airportOptionsHTML(){
+    var opts = '<option value="">Selecteer luchthaven</option>';
+    AIRPORT_OPTIONS.forEach(function(a){ opts += '<option value="' + a + '">' + a + '</option>'; });
+    return opts;
+  }
+  function airportRowHTML(){
+    airportCounter++;
+    var idA = 'ttAirport_' + airportCounter;
+    return '<div class="tt-airport-row" data-row="' + airportCounter + '">' +
+             '<div class="tt-airport-input-wrap">' +
+               '<select id="' + idA + '" class="tt-airport-input">' + airportOptionsHTML() + '</select>' +
+             '</div>' +
+             '<button type="button" class="tt-rm-btn" aria-label="Verwijderen">&times;</button>' +
+           '</div>';
+  }
+  function addAirportRow(){
+    var tmp = document.createElement('div');
+    tmp.innerHTML = airportRowHTML();
+    var row = tmp.firstChild;
+    airportsWrap.appendChild(row);
+    row.querySelector('.tt-rm-btn').addEventListener('click', function(){
+      if(airportsWrap.children.length > 1){ row.remove(); updateRemoveButtons(); }
+    });
+    updateRemoveButtons();
+    return row;
+  }
+  function updateRemoveButtons(){
+    var rows = airportsWrap.querySelectorAll('.tt-airport-row');
+    rows.forEach(function(r){ r.querySelector('.tt-rm-btn').disabled = rows.length === 1; });
+  }
+  addAirportRow();
+  $('ttAddAirport').addEventListener('click', addAirportRow);
+
+  function collectAirports(){
+    var arr = [];
+    airportsWrap.querySelectorAll('.tt-airport-row').forEach(function(row){
+      var name = (row.querySelector('.tt-airport-input').value || '').trim();
+      if(name) arr.push({ name: name });
+    });
+    return arr;
+  }
+  function airportsAsText(arr){
+    if(!arr || !arr.length) return '\u2014';
+    return arr.map(function(a){ return a.name; }).join('; ');
+  }
+
+  // PRIVACY
+  $('ttPrivRow').addEventListener('click', function(e){
+    if(e.target === $('ttPrivLink') || e.target.tagName === 'A') return;
+    privChecked = !privChecked;
+    $('ttPrivRow').classList.toggle('on', privChecked);
+    if(privChecked) $('e-privacy').classList.remove('show');
+  });
+  $('ttPrivLink').addEventListener('click', function(e){ e.preventDefault(); });
+
+  // NAVIGATIE
+  $('ttBtnPrev').addEventListener('click', function(){ if(step > 1) setStep(step - 1); });
+  $('ttBtnNext').addEventListener('click', function(){
+    if(!validate(step)) return;
+    if(step < totalSteps) setStep(step + 1);
+    else submitForm();
+  });
+
+  function setStep(n){
+    root.querySelectorAll('.tt-step').forEach(function(s){ s.classList.remove('active'); });
+    $('ttStep' + n).classList.add('active');
+    root.querySelectorAll('.tt-prog-step').forEach(function(s){
+      var sn = parseInt(s.getAttribute('data-step'),10);
+      s.classList.remove('active','done');
+      if(sn === n) s.classList.add('active');
+      else if(sn < n) s.classList.add('done');
+    });
+    $('ttBtnPrev').style.visibility = n === 1 ? 'hidden' : 'visible';
+    $('ttStepcnt').textContent = 'Stap ' + n + ' van ' + totalSteps;
+    $('ttBtnNext').innerHTML = n === totalSteps
+      ? 'Aanvraag versturen <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2L15 22 11 13 2 9z"/></svg>'
+      : 'Volgende <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+    step = n;
+    var rect = root.getBoundingClientRect();
+    if(rect.top < 0) window.scrollTo({ top: window.scrollY + rect.top - 20, behavior:'smooth' });
+  }
+
+  // VALIDATIE
+  function chk(errId, inputId, bad){
+    $(errId).classList.toggle('show', bad);
+    if(inputId && $(inputId)) $(inputId).classList.toggle('err', bad);
+    return !bad;
+  }
+  function validate(s){
+    var ok = true;
+    if(s === 1){
+      if(!getRadio('rg-aanvragerType')){ $('e-aanvragerType').classList.add('show'); ok = false; }
+      var g = parseInt(val('aantalGolfers'),10);
+      if(!chk('e-aantalGolfers','aantalGolfers', isNaN(g) || g < 1)) ok = false;
+    }
+    if(s === 2){
+      if(!chk('e-aantalRondes','aantalRondes', !val('aantalRondes'))) ok = false;
+      if(!getRadio('rg-niveau')){ $('e-niveau').classList.add('show'); ok = false; }
+    }
+    if(s === 3){
+      // Verplicht: óf een concrete heenreisdatum, óf een tekstuele reisperiode
+      var heeftDatum = !!val('heenDatum');
+      var heeftPeriode = !!val('reisperiode');
+      if(!chk('e-reisperiode','reisperiode', !heeftDatum && !heeftPeriode)) ok = false;
+    }
+    if(s === 4){
+      if(!chk('e-voornaam','voornaam', !val('voornaam'))) ok = false;
+      if(!chk('e-achternaam','achternaam', !val('achternaam'))) ok = false;
+      var em = val('email');
+      if(!chk('e-email','email', !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em))) ok = false;
+      if(!chk('e-telefoon','telefoon', !val('telefoon'))) ok = false;
+      $('e-privacy').classList.toggle('show', !privChecked);
+      if(!privChecked) ok = false;
+    }
+    return ok;
+  }
+
+  // DATA VERZAMELEN
+  function collectData(){
+    return {
+      aanvragerType: aanvragerType,
+      clubNaam: val('clubNaam'),
+      bedrijfsnaam: val('bedrijfsnaam'),
+      zakelijkAanleiding: val('zakelijkAanleiding'),
+      aantalGolfers: val('aantalGolfers'),
+      aantalNietGolfers: val('aantalNietGolfers'),
+      nietGolferWensen: getChecks('cg-nietGolfer'),
+      aantalRondes: val('aantalRondes'),
+      aantalBanen: val('aantalBanen'),
+      niveau: getRadio('rg-niveau'),
+      hcpLaag: val('hcpLaag'),
+      hcpHoog: val('hcpHoog'),
+      baantype: getChecks('cg-baantype'),
+      buggy: val('buggy'),
+      caddie: val('caddie'),
+      teetime: getRadio('rg-teetime'),
+      golfextra: getChecks('cg-golfextra'),
+      bestemming: val('bestemming'),
+      hotelNiveau: getRadio('rg-hotelNiveau'),
+      hotelLigging: val('hotelLigging'),
+      verzorging: val('verzorging'),
+      kamerindeling: val('kamerindeling'),
+      vluchtType: getRadio('rg-vluchtType'),
+      vertrekluchthavens: collectAirports(),
+      vervoer: getRadio('rg-vervoer'),
+      heenDatum: val('heenDatum'),
+      terugDatum: val('terugDatum'),
+      datumMarge: val('datumMarge'),
+      reisperiode: val('reisperiode'),
+      aantalNachten: val('aantalNachten'),
+      budget: val('budget'),
+      budgetInhoud: getChecks('cg-budgetInhoud'),
+      voornaam: val('voornaam'),
+      achternaam: val('achternaam'),
+      email: val('email'),
+      telefoon: val('telefoon'),
+      contactVoorkeur: val('contactVoorkeur'),
+      reactieTermijn: val('reactieTermijn'),
+      opmerkingen: val('opmerkingen')
+    };
+  }
+
+  // Bestemming-fallback zodat PHP-validatie tevreden is bij leeg veld
+  function bestemmingText(d){
+    return d.bestemming || 'Nog te bepalen (advies op basis van budget/wensen)';
+  }
+
+  // GEDEELDE OVERZICHT-OPBOUW (zowel admin als bevestiging)
+  function buildOverview(d, L){
+    function add(label, value){
+      if(value !== undefined && value !== null && String(value).trim() !== ''){
+        L.push(label + ': ' + value);
+      }
+    }
+    L.push('\u2500\u2500 Reisgezelschap');
+    add('Type aanvraag', d.aanvragerType);
+    if(d.aanvragerType === 'Golfclub / vereniging') add('Club / vereniging', d.clubNaam);
+    if(d.aanvragerType === 'Zakelijk / bedrijf'){
+      add('Bedrijfsnaam', d.bedrijfsnaam);
+      add('Aanleiding', d.zakelijkAanleiding);
+    }
+    add('Aantal golfers', d.aantalGolfers);
+    add('Aantal niet-golfers', (parseInt(d.aantalNietGolfers,10) > 0 ? d.aantalNietGolfers : ''));
+    add('Wensen niet-golfers', d.nietGolferWensen);
+    L.push('');
+    L.push('\u2500\u2500 Golfwensen');
+    add('Speeldagen / rondes', d.aantalRondes);
+    add('Aantal verschillende banen', d.aantalBanen);
+    add('Niveau groep', d.niveau);
+    add('Laagste handicap-categorie', d.hcpLaag);
+    add('Hoogste handicap-categorie', d.hcpHoog);
+    add('Type banen', d.baantype);
+    add('Vervoer op baan', d.buggy);
+    add('Caddies', d.caddie);
+    add('Voorkeur tee-times', d.teetime);
+    add('Extra golfwensen', d.golfextra);
+    L.push('');
+    L.push('\u2500\u2500 Bestemming, verblijf & reis');
+    add('Bestemming', bestemmingText(d));
+    add('Hotelniveau', d.hotelNiveau);
+    add('Ligging hotel', d.hotelLigging);
+    add('Verzorging', d.verzorging);
+    add('Kamerindeling', d.kamerindeling);
+    add('Type vlucht', d.vluchtType);
+    if(d.vluchtType !== 'Eigen vervoer') add('Vertrekluchthaven(s)', airportsAsText(d.vertrekluchthavens));
+    add('Vervoer ter plaatse', d.vervoer);
+    add('Heenreisdatum', d.heenDatum);
+    add('Terugreisdatum', d.terugDatum);
+    add('Marge op data', d.datumMarge);
+    add('Reisperiode (indicatie)', d.reisperiode);
+    add('Aantal nachten', d.aantalNachten);
+    add('Budget p.p.', d.budget);
+    add('Budget omvat', d.budgetInhoud);
+    L.push('');
+    L.push('\u2500\u2500 Contactgegevens');
+    add('Naam', (d.voornaam + ' ' + d.achternaam).trim());
+    add('E-mail', d.email);
+    add('Telefoon', d.telefoon);
+    add('Contactvoorkeur', d.contactVoorkeur);
+    add('Gewenste reactietermijn', d.reactieTermijn);
+    add('Opmerkingen', d.opmerkingen);
+    return L;
+  }
+
+  // ADMIN-MAIL (naar info@)
+  function buildBody(d){
+    var dt = new Date().toLocaleString('nl-NL', { weekday:'long', year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' });
+    var L = [];
+    L.push('NIEUWE GOLFREIS-AANVRAAG \u2014 TOTAL TRAVEL');
+    L.push('Ingediend op: ' + dt);
+    L.push('');
+    buildOverview(d, L);
+    L.push('');
+    L.push('Verzonden via het golfreizen-aanvraagformulier op totaltravel.nl');
+    return L.join('\n');
+  }
+
+  // BEVESTIGING (naar aanvrager) — zelfde volledige overzicht
+  function buildConfirm(d){
+    var L = [];
+    L.push('Beste ' + d.voornaam + ',');
+    L.push('');
+    L.push('Hartelijk dank voor uw aanvraag voor een golfreis bij Total Travel.');
+    L.push('');
+    L.push('Wij hebben uw aanvraag in goede orde ontvangen. Onze golfspecialisten stellen een voorstel op maat samen en nemen op korte termijn contact met u op.');
+    L.push('');
+    L.push('Samenvatting van uw aanvraag:');
+    L.push('');
+    buildOverview(d, L);
+    L.push('');
+    L.push('Kloppen bovenstaande gegevens niet of wilt u iets aanvullen? Neem gerust contact met ons op.');
+    return L.join('\n');
+  }
+
+  // VERZENDEN
+  function submitForm(){
+    var d = collectData();
+    var bestemmingKort = d.bestemming || 'nog te bepalen';
+    var subject = 'Golfreis-aanvraag: ' + bestemmingKort + ' \u2014 ' + d.voornaam + ' ' + d.achternaam;
+    $('ttErrbox').classList.remove('show');
+
+    if(CONFIG.backendUrl){
+      var btn = $('ttBtnNext');
+      btn.disabled = true;
+      btn.innerHTML = 'Bezig met verzenden\u2026';
+      fetch(CONFIG.backendUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          data: {
+            aanvragerType: d.aanvragerType,
+            vluchtType: d.vluchtType || 'Retour',
+            bestemming: bestemmingText(d),
+            vertrekdatum: d.heenDatum || d.reisperiode,
+            voornaam: d.voornaam, achternaam: d.achternaam,
+            email: d.email, telefoon: d.telefoon,
+            vertrekluchthavens: d.vertrekluchthavens.length ? d.vertrekluchthavens : [{name:'n.v.t.'}]
+          },
+          subject: subject,
+          adminBody: buildBody(d),
+          confirmBody: buildConfirm(d)
+        })
+      })
+      .then(function(r){
+        return r.json().then(function(j){ return { ok: r.ok, body: j }; })
+                       .catch(function(){ return { ok: r.ok, body: null }; });
+      })
+      .then(function(res){
+        if(res.ok && res.body && res.body.success){ showSuccess(d); }
+        else { throw new Error((res.body && res.body.error) || 'Onbekende fout'); }
+      })
+      .catch(function(err){
+        btn.disabled = false;
+        btn.innerHTML = 'Opnieuw versturen <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2L15 22 11 13 2 9z"/></svg>';
+        var box = $('ttErrbox');
+        box.textContent = 'Verzending mislukt: ' + err.message + '. Probeer het opnieuw of mail rechtstreeks naar ' + CONFIG.ontvangerEmail + '.';
+        box.classList.add('show');
+      });
+    } else {
+      mailtoFallback(d, subject);
+      showSuccess(d);
+    }
+  }
+
+  function mailtoFallback(d, subject){
+    var body = buildBody(d);
+    var href = 'mailto:' + CONFIG.ontvangerEmail + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    window.location.href = href;
+    setTimeout(function(){
+      var subj2 = 'Bevestiging golfreis-aanvraag \u2014 Total Travel';
+      var href2 = 'mailto:' + encodeURIComponent(d.email) + '?subject=' + encodeURIComponent(subj2) + '&body=' + encodeURIComponent(buildConfirm(d));
+      window.open(href2, '_blank');
+    }, 800);
+  }
+
+  function showSuccess(d){
+    root.querySelectorAll('.tt-step').forEach(function(s){ s.classList.remove('active'); });
+    $('ttFnav').style.display = 'none';
+    $('ttErrbox').classList.remove('show');
+    $('ttProgSteps').style.opacity = '0.35';
+    $('ttSuccess').classList.add('show');
+    $('ttMailTo').textContent = d.email;
+
+    function row(label, value){ return value ? '<div class="tt-srow"><span>' + label + '</span><span>' + escapeHtml(value) + '</span></div>' : ''; }
+    var gezelschap = (d.aantalGolfers || '0') + ' golfers' +
+                     (parseInt(d.aantalNietGolfers,10) > 0 ? ' + ' + d.aantalNietGolfers + ' niet-golfers' : '');
+    var wanneer = d.heenDatum
+      ? d.heenDatum + (d.terugDatum ? ' t/m ' + d.terugDatum : '') + (d.datumMarge && d.datumMarge !== 'Exact deze data' ? ' (' + d.datumMarge + ')' : '')
+      : d.reisperiode;
+    $('ttSdetails').innerHTML = [
+      row('Naam', d.voornaam + ' ' + d.achternaam),
+      row('Gezelschap', gezelschap),
+      row('Niveau', d.niveau),
+      row('Bestemming', bestemmingText(d)),
+      row('Wanneer', wanneer),
+      row('Rondes', d.aantalRondes)
+    ].join('');
+
+    var rect = root.getBoundingClientRect();
+    if(rect.top < 0) window.scrollTo({ top: window.scrollY + rect.top - 20, behavior:'smooth' });
+  }
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
+    });
+  }
+
+  $('ttBtnPrev').style.visibility = 'hidden';
+})();
+</script>

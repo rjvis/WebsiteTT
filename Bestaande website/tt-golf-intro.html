@@ -1,0 +1,127 @@
+<!-- ====================================================================
+     TOTAL TRAVEL — GOLFREIZEN INTRODUCTIE (CONTENT-BLOK)
+     Vereist: tt-reizen-base.html moet ergens eerder op de pagina staan.
+     Plaatsing op de golfreizen-pagina (van boven naar beneden):
+       1. Hero
+       2. DIT introductie-blok
+       3. tt-reizen-golf.html  (bestemmingen-grid)
+       4. Aanvraagformulier
+       5. Footer
+     ==================================================================== -->
+
+<style>
+/* Extra styling die alleen voor het golf-introblok nodig is.
+   Bouwt voort op de variabelen uit tt-reizen-base. */
+
+/* ── USP strip (4 voordelen onder de intro) ── */
+.tt-reizen .tt-usp-strip{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:24px;
+  margin:0 auto;
+  max-width:1100px;
+}
+@media(max-width:880px){
+  .tt-reizen .tt-usp-strip{grid-template-columns:repeat(2,1fr);gap:20px}
+}
+@media(max-width:480px){
+  .tt-reizen .tt-usp-strip{grid-template-columns:1fr}
+}
+.tt-reizen .tt-usp{
+  text-align:center;
+  padding:8px 4px;
+}
+.tt-reizen .tt-usp-icon{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:44px;height:44px;
+  border-radius:50%;
+  background:rgba(160,82,45,.08);
+  color:var(--tt-accent);
+  margin-bottom:12px;
+}
+.tt-reizen .tt-usp-title{
+  font-family:var(--tt-pf);
+  font-size:16px;
+  font-weight:500;
+  color:var(--tt-text);
+  margin:0 0 4px;
+}
+.tt-reizen .tt-usp-desc{
+  font-size:12.5px;
+  font-weight:300;
+  line-height:1.5;
+  color:var(--tt-sub);
+  margin:0;
+}
+
+/* ── Intro-lead: iets ruimere lopende tekst onder de titel ── */
+.tt-reizen .tt-intro-lead{
+  max-width:760px;
+  margin:0 auto 48px;
+  text-align:center;
+}
+.tt-reizen .tt-intro-lead p{
+  font-size:15px;
+  font-weight:300;
+  line-height:1.7;
+  color:var(--tt-sub);
+  margin:0 0 16px;
+}
+.tt-reizen .tt-intro-lead p:last-child{margin-bottom:0}
+</style>
+
+<section class="tt-reizen" id="tt-golf-intro">
+
+  <!-- ═══════════ SECTIE-KOP ═══════════ -->
+  <div class="tt-section-head">
+    <div class="tt-eyebrow">Golfreizen op maat</div>
+    <h2 class="tt-title">Uw perfecte <em>golfvakantie</em>, tot in de details geregeld</h2>
+    <p class="tt-intro">Van een verlengd weekend op de Algarve tot een week links-golf in Ierland — wij stellen uw golfreis volledig op maat samen. U speelt, wij regelen de rest.</p>
+  </div>
+
+  <!-- ═══════════ INTRO-LEAD ═══════════ -->
+  <div class="tt-intro-lead">
+    <p>Een golfreis is meer dan alleen een vliegticket en een hotel. Het draait om de juiste banen op het juiste moment, comfortabel verblijf binnen handbereik van de eerste tee, en een programma dat past bij uw gezelschap — of u nu met een vast flight reist, met het hele clubteam of samen met uw partner.</p>
+    <p>Wij kennen de bestemmingen, de banen en de beste reisperiodes. Daardoor regelen we niet alleen uw greenfees en tee-times vooraf, maar denken we ook mee over de route, het niveau van de banen en de balans tussen golfen en ontspanning.</p>
+  </div>
+
+  <!-- ═══════════ USP STRIP ═══════════ -->
+  <div class="tt-usp-strip">
+
+    <div class="tt-usp">
+      <div class="tt-usp-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M12 2l7 4-7 4"/><circle cx="12" cy="20" r="2"/></svg>
+      </div>
+      <h4 class="tt-usp-title">Tee-times vooraf geregeld</h4>
+      <p class="tt-usp-desc">Wij reserveren uw starttijden op de beste banen, zodat u verzekerd bent van een plek.</p>
+    </div>
+
+    <div class="tt-usp">
+      <div class="tt-usp-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg>
+      </div>
+      <h4 class="tt-usp-title">Verblijf op of bij de baan</h4>
+      <p class="tt-usp-desc">Geselecteerde resorts en hotels binnen handbereik van de eerste afslag.</p>
+    </div>
+
+    <div class="tt-usp">
+      <div class="tt-usp-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      </div>
+      <h4 class="tt-usp-title">Greenfees inbegrepen</h4>
+      <p class="tt-usp-desc">Alle greenfees vooraf vastgelegd — geen verrassingen ter plaatse aan de balie.</p>
+    </div>
+
+    <div class="tt-usp">
+      <div class="tt-usp-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+      <h4 class="tt-usp-title">Voor elk gezelschap</h4>
+      <p class="tt-usp-desc">Solo, met uw partner, vrienden of het complete clubteam — wij stemmen het af.</p>
+    </div>
+
+  </div>
+
+</section>

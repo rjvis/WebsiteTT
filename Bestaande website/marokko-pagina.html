@@ -1,0 +1,1219 @@
+<!-- ============================================================
+     TOTAL TRAVEL — MAROKKO PAGINA (3 blokken in 1 bestand)
+     ============================================================
+     Bevat achtereenvolgens:
+       1. Introblok            (#ttMarIntro)
+       2. Inspiratie / 3 reizen(#ttMarInsp)
+       3. Aanvraagformulier    (#ttMarForm)  <-- meerstaps
+
+     DOORSCHIET-LINKS (CTA -> formulier):
+       Alle CTA-knoppen verwijzen naar  href="#ttMarForm"
+       en scrollen dus soepel naar het aanvraagformulier op
+       deze pagina. (Soepel scrollen staat aan via CSS hieronder.)
+
+     ── AFBEELDINGEN VERVANGEN ──────────────────────────────────
+     De 4 beelden (1 intro + 3 reizen) staan nu als SVG-placeholder.
+     Vervang elke <svg class="tt-img-ph" ...>...</svg> door een
+     gewone <img>, bijvoorbeeld:
+         <img src="/img/marokko/marrakech.jpg"
+              alt="Marrakech medina" loading="lazy">
+     De omliggende kaders schalen de foto automatisch (object-fit:cover).
+
+     ── VERZENDING (formulier) ──────────────────────────────────
+     Zie het CONFIG-object onderaan in het <script> van het
+     formulier. backendUrl = pad naar brevo-send.php; leeg laten
+     = mailto-fallback.
+============================================================ -->
+
+<!-- Soepel scrollen naar ankers (CTA -> formulier). Verwijder als
+     je dit globaal al in je thema hebt staan. -->
+<style>html{scroll-behavior:smooth;}</style>
+
+<!-- ======================= INTRO ======================= -->
+<section class="tt-mar-intro" id="ttMarIntro">
+<style>
+.tt-mar-intro,.tt-mar-insp{
+  --tt-sienna:#a0522d;--tt-sienna-mid:#a0522d;--tt-sienna-lt:#d9956a;
+  --tt-gold:#b8996a;--tt-gold-lt:#cdb48e;
+  --tt-ivory:#f8f3eb;--tt-ivory-2:#f2ead8;--tt-ivory-3:#ebe0ca;--tt-ivory-4:#e0d2b8;
+  --tt-cream:#faf7f2;
+  --tt-text:#2c1f0e;--tt-text-2:#5a3e28;--tt-text-3:#8a6d52;--tt-text-4:#b09070;
+  --tt-border:rgba(160,82,45,0.14);--tt-border-md:rgba(160,82,45,0.25);--tt-border-str:rgba(160,82,45,0.40);
+  --tt-radius:4px;
+  --tt-dm:'DM Sans',sans-serif;--tt-pf:'Playfair Display',Georgia,serif;
+  --tt-ease:cubic-bezier(.4,0,.2,1);
+  font-family:var(--tt-dm);font-size:15px;line-height:1.6;color:var(--tt-text);
+  display:block;background:transparent;
+}
+.tt-mar-intro *,.tt-mar-intro *::before,.tt-mar-intro *::after,
+.tt-mar-insp *,.tt-mar-insp *::before,.tt-mar-insp *::after{box-sizing:border-box;}
+
+.tt-mar-intro{padding:64px 16px 40px;}
+.tt-mar-intro .tt-i-wrap{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;gap:54px;align-items:center;}
+
+/* TEKSTKOLOM */
+.tt-mar-intro .tt-i-eyebrow{font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--tt-sienna);margin-bottom:18px;display:flex;align-items:center;gap:12px;}
+.tt-mar-intro .tt-i-eyebrow::before{content:'';width:28px;height:1px;background:var(--tt-sienna-lt);opacity:.6;}
+.tt-mar-intro .tt-i-h1{font-family:var(--tt-pf);font-size:clamp(32px,4.8vw,50px);font-weight:400;line-height:1.1;color:var(--tt-text);margin:0 0 22px;}
+.tt-mar-intro .tt-i-h1 em{font-style:italic;color:var(--tt-sienna-mid);}
+.tt-mar-intro .tt-i-lead{font-size:16px;line-height:1.8;color:var(--tt-text-2);font-weight:300;margin:0 0 18px;}
+.tt-mar-intro .tt-i-body{font-size:14.5px;line-height:1.8;color:var(--tt-text-3);font-weight:300;margin:0 0 28px;}
+
+/* highlights */
+.tt-mar-intro .tt-i-highs{display:grid;grid-template-columns:1fr 1fr;gap:16px 22px;margin:0 0 32px;}
+.tt-mar-intro .tt-i-high{display:flex;align-items:flex-start;gap:12px;}
+.tt-mar-intro .tt-i-hicon{width:38px;height:38px;border-radius:50%;background:rgba(160,82,45,.09);border:1px solid var(--tt-sienna-lt);display:flex;align-items:center;justify-content:center;color:var(--tt-sienna);flex-shrink:0;}
+.tt-mar-intro .tt-i-hicon svg{width:19px;height:19px;}
+.tt-mar-intro .tt-i-htxt b{display:block;font-family:var(--tt-pf);font-size:15px;font-weight:500;color:var(--tt-text);margin-bottom:2px;}
+.tt-mar-intro .tt-i-htxt span{font-size:12.5px;line-height:1.55;color:var(--tt-text-3);font-weight:300;}
+
+.tt-mar-intro .tt-i-cta{display:inline-flex;align-items:center;gap:9px;font-family:var(--tt-dm);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--tt-sienna);border:none;padding:14px 32px;border-radius:var(--tt-radius);cursor:pointer;text-decoration:none;transition:background .25s var(--tt-ease),transform .25s var(--tt-ease);}
+.tt-mar-intro .tt-i-cta:hover{background:var(--tt-text-2);transform:translateY(-1px);}
+.tt-mar-intro .tt-i-cta svg{width:13px;height:13px;transition:transform .25s var(--tt-ease);}
+.tt-mar-intro .tt-i-cta:hover svg{transform:translateX(3px);}
+
+/* BEELDKOLOM */
+.tt-mar-intro .tt-i-media{position:relative;}
+.tt-mar-intro .tt-i-imgwrap{position:relative;border:1px solid var(--tt-border-md);border-radius:var(--tt-radius);overflow:hidden;box-shadow:0 8px 34px rgba(90,40,10,.14);aspect-ratio:4/5;background:var(--tt-ivory-3);}
+.tt-mar-intro .tt-i-imgwrap::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;z-index:2;background:linear-gradient(90deg,transparent,var(--tt-sienna-lt) 40%,var(--tt-gold) 60%,transparent);opacity:.7;}
+.tt-mar-intro .tt-i-imgwrap img{width:100%;height:100%;object-fit:cover;display:block;}
+/* sfeer-badge overlay */
+.tt-mar-intro .tt-i-badge{position:absolute;left:-18px;bottom:30px;background:var(--tt-ivory);border:1px solid var(--tt-border-md);border-radius:var(--tt-radius);padding:16px 22px;box-shadow:0 6px 22px rgba(90,40,10,.12);max-width:220px;}
+.tt-mar-intro .tt-i-badge .n{font-family:var(--tt-pf);font-size:30px;font-weight:500;color:var(--tt-sienna-mid);line-height:1;margin-bottom:5px;}
+.tt-mar-intro .tt-i-badge .l{font-size:11.5px;line-height:1.5;color:var(--tt-text-3);font-weight:300;}
+.tt-mar-intro .tt-i-corner{position:absolute;opacity:.3;pointer-events:none;z-index:3;}
+.tt-mar-intro .tt-i-corner.tr{top:12px;right:12px;}
+.tt-mar-intro .tt-i-corner svg{width:30px;height:30px;}
+
+
+.tt-mar-intro .tt-i-imgwrap .tt-img-ph,
+.tt-mar-insp .tt-n-imgwrap .tt-img-ph{width:100%;height:100%;display:block;object-fit:cover;}
+@media(max-width:880px){
+  .tt-mar-intro{padding:48px 16px 28px;}
+  .tt-mar-intro .tt-i-wrap{grid-template-columns:1fr;gap:38px;}
+  .tt-mar-intro .tt-i-media{max-width:460px;margin:0 auto;width:100%;}
+  .tt-mar-intro .tt-i-imgwrap{aspect-ratio:16/11;}
+}
+@media(max-width:560px){
+  .tt-mar-intro .tt-i-highs{grid-template-columns:1fr;gap:13px;}
+  .tt-mar-intro .tt-i-badge{left:0;bottom:-16px;padding:13px 18px;max-width:190px;}
+  .tt-mar-intro .tt-i-badge .n{font-size:25px;}
+}
+
+/* ---- REVEAL (gedeeld) ---- */
+.tt-reveal-m{opacity:0;transform:translateY(18px);transition:opacity .6s var(--tt-ease),transform .6s var(--tt-ease);}
+.tt-reveal-m.tt-in{opacity:1;transform:translateY(0);}
+.tt-no-jsm .tt-reveal-m{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.tt-reveal-m{opacity:1!important;transform:none!important;transition:none!important;}}
+</style>
+
+<div class="tt-i-wrap">
+  <!-- TEKST -->
+  <div class="tt-i-text tt-reveal-m">
+    <div class="tt-i-eyebrow">Bestemming Marokko</div>
+    <h1 class="tt-i-h1">Marokko, <em>waar elke zintuig</em> ontwaakt</h1>
+    <p class="tt-i-lead">Van de bruisende souks van Marrakech tot de eindeloze stilte van de Sahara &mdash; Marokko is een land van contrasten dat zich in &eacute;&eacute;n reis laat ontvouwen.</p>
+    <p class="tt-i-body">Wandel door eeuwenoude medina&rsquo;s, overnacht in sfeervolle riads, rijd over de bergpassen van het Atlasgebergte en slaap onder een hemel vol sterren in een luxe woestijnkamp. Wij stellen uw Marokkaanse reis volledig op maat samen &mdash; met een persoonlijke chauffeur, zorgvuldig gekozen verblijven en de tijd om werkelijk te proeven van de Marokkaanse gastvrijheid.</p>
+
+    <div class="tt-i-highs">
+      <div class="tt-i-high">
+        <div class="tt-i-hicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-4 7 4v13M9 21v-5h6v5"/></svg></div>
+        <div class="tt-i-htxt"><b>Authentieke riads</b><span>Overnacht in karakteristieke stadspaleizen met binnentuin.</span></div>
+      </div>
+      <div class="tt-i-high">
+        <div class="tt-i-hicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></div>
+        <div class="tt-i-htxt"><b>Nacht in de Sahara</b><span>Luxe woestijnkamp onder een ongekend sterrenrijke hemel.</span></div>
+      </div>
+      <div class="tt-i-high">
+        <div class="tt-i-hicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18l5-8 4 5 3-4 6 7z"/><circle cx="8" cy="7" r="2"/></svg></div>
+        <div class="tt-i-htxt"><b>Hoge Atlas</b><span>Bergpassen, Berberdorpen en adembenemende vergezichten.</span></div>
+      </div>
+      <div class="tt-i-high">
+        <div class="tt-i-hicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V5a2 2 0 0 1 2-2h7l5 5v13"/><path d="M14 3v6h5M8 13h8M8 17h8"/></svg></div>
+        <div class="tt-i-htxt"><b>Priv&eacute;chauffeur</b><span>Zorgeloos reizen met een eigen gids op maat.</span></div>
+      </div>
+    </div>
+
+    <a class="tt-i-cta" href="#ttMarForm">
+      Stel uw Marokkoreis samen
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+
+  <!-- BEELD -->
+  <div class="tt-i-media tt-reveal-m" style="transition-delay:.12s">
+    <div class="tt-i-imgwrap">
+      <div class="tt-i-corner tr"><svg viewBox="0 0 36 36" fill="none"><path d="M0 0L36 0L36 36" stroke="#fff" stroke-width="1.4"/></svg></div>
+      <svg class="tt-img-ph" viewBox="0 0 800 533" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Marokko — sfeerbeeld"><defs><linearGradient id="g_intro" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ebe0ca"/><stop offset="1" stop-color="#d9bd95"/></linearGradient></defs><rect width="800" height="533" fill="url(#g_intro)"/><g fill="none" stroke="#a0522d" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="translate(400 232)"><rect x="-34" y="-24" width="68" height="50" rx="6"/><circle cx="0" cy="3" r="14"/><path d="M-24 -24l8 -10h32l8 10"/></g><text x="400" y="300" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="26" fill="#5a3e28">Marokko — sfeerbeeld</text><text x="400" y="330" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" letter-spacing="1.5" fill="#8a6d52">VERVANG DOOR EIGEN FOTO</text></svg>
+    </div>
+    <div class="tt-i-badge">
+      <div class="n">25+</div>
+      <div class="l">jaar ervaring met maatwerkreizen naar Noord-Afrika</div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var root=document.getElementById('ttMarIntro');if(!root)return;
+  if(!('IntersectionObserver'in window)){root.classList.add('tt-no-jsm');return;}
+  var o=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('tt-in');o.unobserve(e.target);}});},{threshold:.15,rootMargin:'0px 0px -40px 0px'});
+  root.querySelectorAll('.tt-reveal-m').forEach(function(el){o.observe(el);});
+})();
+</script>
+</section>
+
+
+<!-- ===================== INSPIRATIE ===================== -->
+<section class="tt-mar-insp" id="ttMarInsp">
+<style>
+.tt-mar-insp{padding:48px 16px 64px;}
+.tt-mar-insp .tt-n-header{text-align:center;max-width:640px;margin:0 auto 46px;}
+.tt-mar-insp .tt-n-eyebrow{font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--tt-sienna);margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:12px;}
+.tt-mar-insp .tt-n-eyebrow::before,.tt-mar-insp .tt-n-eyebrow::after{content:'';width:28px;height:1px;background:var(--tt-sienna-lt);opacity:.6;}
+.tt-mar-insp .tt-n-h2{font-family:var(--tt-pf);font-size:clamp(28px,4.4vw,44px);font-weight:400;line-height:1.15;color:var(--tt-text);margin:0 0 16px;}
+.tt-mar-insp .tt-n-h2 em{font-style:italic;color:var(--tt-sienna-mid);}
+.tt-mar-insp .tt-n-sub{font-size:15px;color:var(--tt-text-3);line-height:1.75;font-weight:300;margin:0;}
+
+.tt-mar-insp .tt-n-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1120px;margin:0 auto;}
+
+.tt-mar-insp .tt-n-card{background:var(--tt-ivory);border:1px solid var(--tt-border-md);border-radius:var(--tt-radius);overflow:hidden;display:flex;flex-direction:column;box-shadow:0 2px 24px rgba(90,40,10,.06);transition:transform .4s var(--tt-ease),box-shadow .4s var(--tt-ease),border-color .4s var(--tt-ease);}
+.tt-mar-insp .tt-n-card:hover{transform:translateY(-5px);box-shadow:0 12px 34px rgba(90,40,10,.13);border-color:var(--tt-border-str);}
+
+.tt-mar-insp .tt-n-imgwrap{position:relative;aspect-ratio:3/2;overflow:hidden;background:var(--tt-ivory-3);}
+.tt-mar-insp .tt-n-imgwrap img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s var(--tt-ease);}
+.tt-mar-insp .tt-n-card:hover .tt-n-imgwrap img{transform:scale(1.05);}
+.tt-mar-insp .tt-n-imgwrap::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(44,31,14,0) 55%,rgba(44,31,14,.32));}
+.tt-mar-insp .tt-n-tag{position:absolute;top:14px;left:14px;z-index:2;background:rgba(248,243,235,.94);border:1px solid var(--tt-border-md);color:var(--tt-sienna);font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;border-radius:var(--tt-radius);}
+.tt-mar-insp .tt-n-dur{position:absolute;bottom:13px;right:14px;z-index:2;color:#fff;font-size:12px;font-weight:400;letter-spacing:.04em;display:flex;align-items:center;gap:6px;}
+.tt-mar-insp .tt-n-dur svg{width:14px;height:14px;}
+
+.tt-mar-insp .tt-n-body{padding:24px 24px 26px;display:flex;flex-direction:column;flex:1;}
+.tt-mar-insp .tt-n-route{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--tt-text-4);font-weight:400;margin-bottom:9px;}
+.tt-mar-insp .tt-n-title{font-family:var(--tt-pf);font-size:21px;font-weight:400;line-height:1.25;color:var(--tt-text);margin:0 0 12px;}
+.tt-mar-insp .tt-n-title em{font-style:italic;color:var(--tt-sienna-mid);}
+.tt-mar-insp .tt-n-rule{width:34px;height:1px;background:var(--tt-sienna-lt);opacity:.8;margin-bottom:14px;}
+.tt-mar-insp .tt-n-desc{font-size:13.5px;line-height:1.7;color:var(--tt-text-2);font-weight:300;margin:0 0 20px;flex:1;}
+
+.tt-mar-insp .tt-n-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;padding-top:18px;border-top:1px solid var(--tt-border);}
+.tt-mar-insp .tt-n-price .p-lbl{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--tt-text-4);font-weight:400;display:block;margin-bottom:2px;}
+.tt-mar-insp .tt-n-price .p-val{font-family:var(--tt-pf);font-size:20px;font-weight:500;color:var(--tt-text);}
+.tt-mar-insp .tt-n-price .p-val small{font-size:12px;font-weight:400;color:var(--tt-text-3);font-family:var(--tt-dm);}
+.tt-mar-insp .tt-n-link{font-family:var(--tt-dm);font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--tt-sienna);text-decoration:none;display:inline-flex;align-items:center;gap:7px;padding:9px 0;white-space:nowrap;transition:gap .25s var(--tt-ease),color .2s;}
+.tt-mar-insp .tt-n-link svg{width:13px;height:13px;transition:transform .25s var(--tt-ease);}
+.tt-mar-insp .tt-n-link:hover{color:var(--tt-text-2);}
+.tt-mar-insp .tt-n-link:hover svg{transform:translateX(3px);}
+
+/* onderregel */
+.tt-mar-insp .tt-n-foot-note{text-align:center;max-width:620px;margin:42px auto 0;}
+.tt-mar-insp .tt-n-foot-note p{font-family:var(--tt-pf);font-style:italic;font-size:clamp(16px,2.3vw,20px);color:var(--tt-text-2);line-height:1.5;margin:0 0 22px;}
+.tt-mar-insp .tt-n-foot-note p span{color:var(--tt-sienna-mid);}
+.tt-mar-insp .tt-n-cta{display:inline-flex;align-items:center;gap:9px;font-family:var(--tt-dm);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--tt-sienna);border:none;padding:14px 32px;border-radius:var(--tt-radius);cursor:pointer;text-decoration:none;transition:background .25s var(--tt-ease),transform .25s var(--tt-ease);}
+.tt-mar-insp .tt-n-cta:hover{background:var(--tt-text-2);transform:translateY(-1px);}
+.tt-mar-insp .tt-n-cta svg{width:13px;height:13px;transition:transform .25s var(--tt-ease);}
+.tt-mar-insp .tt-n-cta:hover svg{transform:translateX(3px);}
+
+@media(max-width:880px){
+  .tt-mar-insp .tt-n-grid{grid-template-columns:1fr;max-width:480px;}
+}
+@media(max-width:560px){
+  .tt-mar-insp{padding:36px 12px 52px;}
+  .tt-mar-insp .tt-n-header{margin-bottom:32px;}
+}
+</style>
+
+<div class="tt-n-header tt-reveal-m">
+  <div class="tt-n-eyebrow">Ter inspiratie</div>
+  <h2 class="tt-n-h2">Voorbeeld<em>reizen</em> door Marokko</h2>
+  <p class="tt-n-sub">Drie routes als startpunt voor uw eigen reis. Elk voorbeeld passen wij volledig aan op uw wensen, reisgezelschap en budget.</p>
+</div>
+
+<div class="tt-n-grid">
+
+  <!-- REIS 1 -->
+  <div class="tt-n-card tt-reveal-m" style="transition-delay:.05s">
+    <div class="tt-n-imgwrap">
+      <span class="tt-n-tag">Steden &amp; Sahara</span>
+      <span class="tt-n-dur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>10 dagen</span>
+      <svg class="tt-img-ph" viewBox="0 0 800 533" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Koningssteden &amp; woestijn"><defs><linearGradient id="g_r1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ebe0ca"/><stop offset="1" stop-color="#d9bd95"/></linearGradient></defs><rect width="800" height="533" fill="url(#g_r1)"/><g fill="none" stroke="#a0522d" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="translate(400 232)"><rect x="-34" y="-24" width="68" height="50" rx="6"/><circle cx="0" cy="3" r="14"/><path d="M-24 -24l8 -10h32l8 10"/></g><text x="400" y="300" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="26" fill="#5a3e28">Koningssteden &amp; woestijn</text><text x="400" y="330" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" letter-spacing="1.5" fill="#8a6d52">VERVANG DOOR EIGEN FOTO</text></svg>
+    </div>
+    <div class="tt-n-body">
+      <div class="tt-n-route">Marrakech &middot; A&iuml;t Ben Haddou &middot; Sahara &middot; Fez</div>
+      <h3 class="tt-n-title">De <em>Koningssteden</em> &amp; de woestijn</h3>
+      <div class="tt-n-rule"></div>
+      <p class="tt-n-desc">De grote klassieker. Van de levendige Djemaa el-Fna via de filmkasbah A&iuml;t Ben Haddou en een onvergetelijke nacht in een luxe woestijnkamp, naar het spirituele Fez met zijn duizelingwekkende medina.</p>
+      <div class="tt-n-foot">
+        <div class="tt-n-price"><span class="p-lbl">Vanaf</span><span class="p-val">&euro; 1.895 <small>p.p.</small></span></div>
+        <a class="tt-n-link" href="#ttMarForm">Aanvragen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- REIS 2 -->
+  <div class="tt-n-card tt-reveal-m" style="transition-delay:.13s">
+    <div class="tt-n-imgwrap">
+      <span class="tt-n-tag">Riads &amp; cultuur</span>
+      <span class="tt-n-dur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>5 dagen</span>
+      <svg class="tt-img-ph" viewBox="0 0 800 533" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Marrakech — riad"><defs><linearGradient id="g_r2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ebe0ca"/><stop offset="1" stop-color="#d9bd95"/></linearGradient></defs><rect width="800" height="533" fill="url(#g_r2)"/><g fill="none" stroke="#a0522d" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="translate(400 232)"><rect x="-34" y="-24" width="68" height="50" rx="6"/><circle cx="0" cy="3" r="14"/><path d="M-24 -24l8 -10h32l8 10"/></g><text x="400" y="300" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="26" fill="#5a3e28">Marrakech — riad</text><text x="400" y="330" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" letter-spacing="1.5" fill="#8a6d52">VERVANG DOOR EIGEN FOTO</text></svg>
+    </div>
+    <div class="tt-n-body">
+      <div class="tt-n-route">Marrakech &middot; Atlas-uitstap &middot; Marrakech</div>
+      <h3 class="tt-n-title">Lang weekend in <em>Marrakech</em></h3>
+      <div class="tt-n-rule"></div>
+      <p class="tt-n-desc">Een verfijnde stedentrip vanuit een authentieke riad in de medina. Souks, paleizen en hammam, met een dagexcursie naar de watervallen en Berberdorpen van de Hoge Atlas. Ideaal voor een korte, intense onderdompeling.</p>
+      <div class="tt-n-foot">
+        <div class="tt-n-price"><span class="p-lbl">Vanaf</span><span class="p-val">&euro; 745 <small>p.p.</small></span></div>
+        <a class="tt-n-link" href="#ttMarForm">Aanvragen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- REIS 3 -->
+  <div class="tt-n-card tt-reveal-m" style="transition-delay:.21s">
+    <div class="tt-n-imgwrap">
+      <span class="tt-n-tag">Kust &amp; wellness</span>
+      <span class="tt-n-dur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>8 dagen</span>
+      <svg class="tt-img-ph" viewBox="0 0 800 533" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Essaouira — kust"><defs><linearGradient id="g_r3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ebe0ca"/><stop offset="1" stop-color="#d9bd95"/></linearGradient></defs><rect width="800" height="533" fill="url(#g_r3)"/><g fill="none" stroke="#a0522d" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="translate(400 232)"><rect x="-34" y="-24" width="68" height="50" rx="6"/><circle cx="0" cy="3" r="14"/><path d="M-24 -24l8 -10h32l8 10"/></g><text x="400" y="300" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="26" fill="#5a3e28">Essaouira — kust</text><text x="400" y="330" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" letter-spacing="1.5" fill="#8a6d52">VERVANG DOOR EIGEN FOTO</text></svg>
+    </div>
+    <div class="tt-n-body">
+      <div class="tt-n-route">Marrakech &middot; Essaouira &middot; Atlantische kust</div>
+      <h3 class="tt-n-title">Van medina naar <em>oceaanbries</em></h3>
+      <div class="tt-n-rule"></div>
+      <p class="tt-n-desc">Combineer het bruisende Marrakech met de ontspannen zeewind van Essaouira: witgekalkte vissershaven, verse tajine aan zee, en tijd voor wellness en wandelingen langs het strand. Cultuur en rust in perfecte balans.</p>
+      <div class="tt-n-foot">
+        <div class="tt-n-price"><span class="p-lbl">Vanaf</span><span class="p-val">&euro; 1.350 <small>p.p.</small></span></div>
+        <a class="tt-n-link" href="#ttMarForm">Aanvragen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="tt-n-foot-note tt-reveal-m" style="transition-delay:.26s">
+  <p>Geen van deze reizen precies wat u zoekt? <span>Wij stellen uw reis volledig op maat samen.</span></p>
+  <a class="tt-n-cta" href="#ttMarForm">
+    Vraag uw reis op maat aan
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  </a>
+</div>
+
+<script>
+(function(){
+  var root=document.getElementById('ttMarInsp');if(!root)return;
+  if(!('IntersectionObserver'in window)){root.classList.add('tt-no-jsm');return;}
+  var o=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('tt-in');o.unobserve(e.target);}});},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  root.querySelectorAll('.tt-reveal-m').forEach(function(el){o.observe(el);});
+})();
+</script>
+</section>
+
+
+<section class="tt-mar" id="ttMarForm">
+<style>
+/* ============== SCOPED STYLING ============== */
+.tt-mar{
+  --tt-sienna:#a0522d;--tt-sienna-mid:#a0522d;--tt-sienna-lt:#d9956a;
+  --tt-gold:#b8996a;--tt-gold-lt:#cdb48e;
+  --tt-ivory:#f8f3eb;--tt-ivory-2:#f2ead8;--tt-ivory-3:#ebe0ca;--tt-ivory-4:#e0d2b8;
+  --tt-cream:#faf7f2;
+  --tt-text:#2c1f0e;--tt-text-2:#5a3e28;--tt-text-3:#8a6d52;--tt-text-4:#b09070;
+  --tt-border:rgba(160,82,45,0.14);--tt-border-md:rgba(160,82,45,0.25);--tt-border-str:rgba(160,82,45,0.40);
+  --tt-radius:4px;
+  --tt-dm:'DM Sans',sans-serif;--tt-pf:'Playfair Display',Georgia,serif;
+  --tt-ease:cubic-bezier(.4,0,.2,1);
+  font-family:var(--tt-dm);font-size:15px;line-height:1.6;color:var(--tt-text);
+  display:block;background:transparent;padding:24px 16px 48px;
+}
+.tt-mar *,.tt-mar *::before,.tt-mar *::after{box-sizing:border-box;}
+
+/* HEADER */
+.tt-mar .tt-header{text-align:center;max-width:620px;margin:0 auto 40px;}
+.tt-mar .tt-eyebrow{font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--tt-sienna);margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:12px;}
+.tt-mar .tt-eyebrow::before,.tt-mar .tt-eyebrow::after{content:'';width:28px;height:1px;background:var(--tt-sienna-lt);opacity:.6;}
+.tt-mar .tt-h1{font-family:var(--tt-pf);font-size:clamp(28px,4.4vw,44px);font-weight:400;line-height:1.15;color:var(--tt-text);margin:0 0 16px;}
+.tt-mar .tt-h1 em{font-style:italic;color:var(--tt-sienna-mid);}
+.tt-mar .tt-sub{font-size:15px;color:var(--tt-text-3);line-height:1.75;font-weight:300;margin:0;}
+
+/* PROGRESS */
+.tt-mar .tt-prog-wrap{max-width:720px;width:100%;margin:0 auto 36px;}
+.tt-mar .tt-prog-steps{display:flex;align-items:flex-start;}
+.tt-mar .tt-prog-step{display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;position:relative;}
+.tt-mar .tt-prog-step:not(:last-child)::after{content:'';position:absolute;top:14px;left:calc(50% + 16px);right:calc(-50% + 16px);height:1px;background:var(--tt-border-md);transition:background .35s;}
+.tt-mar .tt-prog-step.done:not(:last-child)::after{background:var(--tt-sienna-lt);}
+.tt-mar .tt-prog-circle{width:28px;height:28px;border-radius:50%;border:1px solid var(--tt-border-str);background:var(--tt-ivory-2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--tt-text-3);transition:all .2s var(--tt-ease);position:relative;z-index:1;}
+.tt-mar .tt-prog-step.active .tt-prog-circle{background:var(--tt-sienna);border-color:var(--tt-sienna);color:#fff;}
+.tt-mar .tt-prog-step.done .tt-prog-circle{background:var(--tt-ivory-3);border-color:var(--tt-sienna-lt);color:var(--tt-sienna);}
+.tt-mar .tt-prog-label{font-size:10px;letter-spacing:.06em;color:var(--tt-text-4);text-transform:uppercase;font-weight:400;text-align:center;white-space:nowrap;transition:color .2s;}
+.tt-mar .tt-prog-step.active .tt-prog-label{color:var(--tt-sienna);}
+.tt-mar .tt-prog-step.done .tt-prog-label{color:var(--tt-text-3);}
+
+/* CARD */
+.tt-mar .tt-card{background:var(--tt-ivory);border:1px solid var(--tt-border-md);max-width:740px;width:100%;margin:0 auto;position:relative;overflow:hidden;box-shadow:0 2px 24px rgba(90,40,10,.06);}
+.tt-mar .tt-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--tt-sienna-lt) 40%,var(--tt-gold) 60%,transparent);opacity:.6;}
+.tt-mar .tt-corner{position:absolute;opacity:.2;}
+.tt-mar .tt-corner.tl{top:14px;left:14px;}
+.tt-mar .tt-corner.tr{top:14px;right:14px;}
+.tt-mar .tt-corner svg{width:36px;height:36px;}
+
+/* STEPS */
+.tt-mar .tt-step{display:none;padding:44px 50px 36px;animation:ttMarFade .28s ease;}
+.tt-mar .tt-step.active{display:block;}
+@keyframes ttMarFade{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.tt-mar .tt-step-hdr{margin-bottom:30px;padding-bottom:22px;border-bottom:1px solid var(--tt-border);}
+.tt-mar .tt-step-num{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--tt-sienna-mid);font-weight:500;margin-bottom:6px;}
+.tt-mar .tt-step-title{font-family:var(--tt-pf);font-size:24px;font-weight:400;color:var(--tt-text);line-height:1.25;margin:0;}
+.tt-mar .tt-step-title em{font-style:italic;color:var(--tt-sienna-mid);}
+
+/* GRID */
+.tt-mar .tt-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 24px;}
+.tt-mar .tt-grid.c1{grid-template-columns:1fr;}
+.tt-mar .tt-full{grid-column:1/-1;}
+
+/* FIELD */
+.tt-mar .tt-field{display:flex;flex-direction:column;gap:7px;}
+.tt-mar .tt-field label{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--tt-text-2);}
+.tt-mar .tt-req{color:var(--tt-sienna);margin-left:2px;}
+.tt-mar .tt-field input,
+.tt-mar .tt-field select,
+.tt-mar .tt-field textarea{background:#fff;border:1px solid var(--tt-border-md);color:var(--tt-text);font-family:var(--tt-dm);font-size:14px;font-weight:300;padding:11px 14px;border-radius:var(--tt-radius);outline:none;transition:border-color .2s,box-shadow .2s;-webkit-appearance:none;width:100%;}
+.tt-mar .tt-field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%238a6d52' stroke-width='1.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:34px;cursor:pointer;}
+.tt-mar .tt-field textarea{resize:vertical;min-height:100px;line-height:1.6;}
+.tt-mar .tt-field input::placeholder,
+.tt-mar .tt-field textarea::placeholder{color:var(--tt-text-4);font-weight:300;}
+.tt-mar .tt-field input:hover,
+.tt-mar .tt-field select:hover,
+.tt-mar .tt-field textarea:hover{border-color:var(--tt-border-str);}
+.tt-mar .tt-field input:focus,
+.tt-mar .tt-field select:focus,
+.tt-mar .tt-field textarea:focus{border-color:var(--tt-sienna-mid);box-shadow:0 0 0 3px rgba(160,82,45,.1);}
+.tt-mar .tt-field input.err,
+.tt-mar .tt-field select.err,
+.tt-mar .tt-field textarea.err{border-color:#c0392b;box-shadow:0 0 0 3px rgba(192,57,43,.08);}
+.tt-mar .tt-hint{font-size:11px;color:var(--tt-text-4);font-weight:300;}
+.tt-mar .tt-errmsg{font-size:11px;color:#b52a1a;display:none;}
+.tt-mar .tt-errmsg.show{display:block;}
+
+/* RADIO TILES */
+.tt-mar .tt-rgroup{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.tt-mar .tt-rgroup.c2{grid-template-columns:1fr 1fr;}
+.tt-mar .tt-rgroup.c4{grid-template-columns:1fr 1fr 1fr 1fr;}
+.tt-mar .tt-rtile{display:flex;align-items:center;gap:10px;background:var(--tt-ivory-2);border:1px solid var(--tt-border-md);padding:12px 14px;border-radius:var(--tt-radius);cursor:pointer;font-size:13px;color:var(--tt-text-3);user-select:none;transition:border-color .15s,background .15s,color .15s;}
+.tt-mar .tt-rtile:hover{border-color:var(--tt-sienna-lt);color:var(--tt-text-2);background:var(--tt-ivory-3);}
+.tt-mar .tt-rtile.on{border-color:var(--tt-sienna);background:rgba(160,82,45,.07);color:var(--tt-sienna);}
+.tt-mar .tt-rdot{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--tt-border-str);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:border-color .15s,background .15s;}
+.tt-mar .tt-rtile.on .tt-rdot{border-color:var(--tt-sienna);background:var(--tt-sienna);}
+.tt-mar .tt-rtile.on .tt-rdot::after{content:'';width:6px;height:6px;border-radius:50%;background:#fff;}
+
+/* CHECK TILES */
+.tt-mar .tt-cgroup{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.tt-mar .tt-cgroup.c2{grid-template-columns:1fr 1fr;}
+.tt-mar .tt-ctile{display:flex;align-items:center;gap:10px;background:var(--tt-ivory-2);border:1px solid var(--tt-border-md);padding:10px 13px;border-radius:var(--tt-radius);cursor:pointer;font-size:13px;color:var(--tt-text-3);user-select:none;transition:border-color .15s,background .15s,color .15s;}
+.tt-mar .tt-ctile:hover{border-color:var(--tt-sienna-lt);color:var(--tt-text-2);background:var(--tt-ivory-3);}
+.tt-mar .tt-ctile.on{border-color:var(--tt-sienna);background:rgba(160,82,45,.07);color:var(--tt-sienna);}
+.tt-mar .tt-cbox{width:16px;height:16px;border-radius:2px;border:1.5px solid var(--tt-border-str);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:border-color .15s,background .15s;}
+.tt-mar .tt-ctile.on .tt-cbox{border-color:var(--tt-sienna);background:var(--tt-sienna);}
+.tt-mar .tt-ctile.on .tt-cbox::after{content:'';display:block;width:4px;height:7px;border:2px solid #fff;border-top:none;border-left:none;transform:rotate(45deg) translateY(-1px);}
+
+/* PRIVACY */
+.tt-mar .tt-prow{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;background:var(--tt-ivory-2);border:1px solid var(--tt-border-md);border-radius:var(--tt-radius);cursor:pointer;transition:border-color .15s,background .15s;}
+.tt-mar .tt-prow:hover{border-color:var(--tt-sienna-lt);}
+.tt-mar .tt-prow.on{border-color:var(--tt-sienna);background:rgba(160,82,45,.06);}
+.tt-mar .tt-pbox{width:18px;height:18px;border-radius:3px;border:1.5px solid var(--tt-border-str);flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:2px;background:#fff;transition:border-color .15s,background .15s;}
+.tt-mar .tt-prow.on .tt-pbox{border-color:var(--tt-sienna);background:var(--tt-sienna);}
+.tt-mar .tt-prow.on .tt-pbox::after{content:'';display:block;width:5px;height:9px;border:2px solid #fff;border-top:none;border-left:none;transform:rotate(45deg) translateY(-1px);}
+.tt-mar .tt-ptext{font-size:13px;color:var(--tt-text-2);line-height:1.6;font-weight:300;}
+.tt-mar .tt-ptext a{color:var(--tt-sienna);text-decoration:underline;}
+
+/* AIRPORTS */
+.tt-mar .tt-airports{display:flex;flex-direction:column;gap:10px;}
+.tt-mar .tt-airport-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end;}
+.tt-mar .tt-airport-input-wrap{display:flex;flex-direction:column;gap:3px;}
+.tt-mar .tt-airport-input{background:#fff;border:1px solid var(--tt-border-md);color:var(--tt-text);font-family:var(--tt-dm);font-size:14px;font-weight:300;padding:11px 34px 11px 14px;border-radius:var(--tt-radius);outline:none;width:100%;-webkit-appearance:none;appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%238a6d52' stroke-width='1.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;transition:border-color .2s,box-shadow .2s;}
+.tt-mar .tt-airport-input:hover{border-color:var(--tt-border-str);}
+.tt-mar .tt-airport-input:focus{border-color:var(--tt-sienna-mid);box-shadow:0 0 0 3px rgba(160,82,45,.1);}
+.tt-mar .tt-rm-btn{background:transparent;border:1px solid var(--tt-border-md);color:var(--tt-text-4);width:38px;height:38px;border-radius:var(--tt-radius);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;line-height:1;transition:border-color .15s,color .15s,background .15s;}
+.tt-mar .tt-rm-btn:hover{border-color:#c0392b;color:#c0392b;background:rgba(192,57,43,.06);}
+.tt-mar .tt-rm-btn:disabled{opacity:.3;cursor:not-allowed;}
+.tt-mar .tt-rm-btn:disabled:hover{border-color:var(--tt-border-md);color:var(--tt-text-4);background:transparent;}
+.tt-mar .tt-add-btn{align-self:flex-start;background:transparent;border:1px dashed var(--tt-border-str);color:var(--tt-sienna);font-family:var(--tt-dm);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:9px 16px;border-radius:var(--tt-radius);cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;margin-top:2px;}
+.tt-mar .tt-add-btn:hover{background:rgba(160,82,45,.06);border-color:var(--tt-sienna);border-style:solid;}
+.tt-mar .tt-add-btn svg{width:13px;height:13px;}
+
+/* FORM NAV */
+.tt-mar .tt-fnav{display:flex;justify-content:space-between;align-items:center;padding:24px 50px 36px;border-top:1px solid var(--tt-border);background:var(--tt-ivory-2);}
+.tt-mar .tt-btn-prev{font-family:var(--tt-dm);font-size:11px;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--tt-text-3);background:transparent;border:1px solid var(--tt-border-md);padding:11px 22px;cursor:pointer;transition:color .2s,border-color .2s;border-radius:var(--tt-radius);}
+.tt-mar .tt-btn-prev:hover{color:var(--tt-text);border-color:var(--tt-border-str);}
+.tt-mar .tt-btn-next{font-family:var(--tt-dm);font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--tt-sienna);border:none;padding:12px 28px;cursor:pointer;transition:background .2s;border-radius:var(--tt-radius);display:flex;align-items:center;gap:8px;}
+.tt-mar .tt-btn-next:hover{background:var(--tt-text-2);}
+.tt-mar .tt-btn-next:disabled{background:var(--tt-text-4);cursor:wait;}
+.tt-mar .tt-stepcnt{font-size:11px;color:var(--tt-text-4);letter-spacing:.08em;}
+
+/* SUCCESS / ERROR */
+.tt-mar .tt-success{display:none;text-align:center;padding:64px 50px;}
+.tt-mar .tt-success.show{display:block;animation:ttMarFade .35s ease;}
+.tt-mar .tt-sicon{width:68px;height:68px;border-radius:50%;background:rgba(160,82,45,.1);border:1px solid var(--tt-sienna-lt);display:flex;align-items:center;justify-content:center;margin:0 auto 26px;color:var(--tt-sienna);}
+.tt-mar .tt-sh2{font-family:var(--tt-pf);font-size:32px;font-weight:400;color:var(--tt-text);margin:0 0 14px;}
+.tt-mar .tt-sh2 em{font-style:italic;color:var(--tt-sienna-mid);}
+.tt-mar .tt-sp{font-size:15px;color:var(--tt-text-3);line-height:1.75;font-weight:300;max-width:440px;margin:0 auto 30px;}
+.tt-mar .tt-sdetails{background:var(--tt-ivory-2);border:1px solid var(--tt-border-md);padding:20px 28px;max-width:480px;margin:0 auto 30px;text-align:left;border-radius:var(--tt-radius);}
+.tt-mar .tt-srow{display:flex;justify-content:space-between;font-size:13px;padding:7px 0;border-bottom:1px solid var(--tt-border);gap:16px;}
+.tt-mar .tt-srow:last-child{border-bottom:none;}
+.tt-mar .tt-srow span:first-child{color:var(--tt-text-3);flex-shrink:0;}
+.tt-mar .tt-srow span:last-child{color:var(--tt-text);font-weight:400;text-align:right;}
+.tt-mar .tt-mailnote{font-size:12px;color:var(--tt-text-3);font-weight:300;line-height:1.7;max-width:460px;margin:0 auto;padding:14px 18px;background:var(--tt-ivory-2);border:1px dashed var(--tt-border-md);border-radius:var(--tt-radius);}
+.tt-mar .tt-mailnote strong{color:var(--tt-sienna);font-weight:500;}
+.tt-mar .tt-errbox{display:none;margin:0 50px 24px;padding:14px 18px;background:rgba(192,57,43,.06);border:1px solid rgba(192,57,43,.25);color:#8a2a1a;border-radius:var(--tt-radius);font-size:13px;line-height:1.6;}
+.tt-mar .tt-errbox.show{display:block;}
+
+/* NOTE */
+.tt-mar .tt-note{background:var(--tt-ivory-2);border-left:3px solid var(--tt-sienna-lt);padding:14px 16px;font-size:13px;color:var(--tt-text-2);line-height:1.65;font-weight:300;border-radius:0 var(--tt-radius) var(--tt-radius) 0;}
+.tt-mar .tt-note strong{color:var(--tt-sienna);font-weight:500;}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .tt-mar{padding:16px 8px 32px;}
+  .tt-mar .tt-step{padding:32px 28px 24px;}
+  .tt-mar .tt-fnav{padding:20px 28px 26px;}
+  .tt-mar .tt-grid{gap:14px 18px;}
+  .tt-mar .tt-rgroup,.tt-mar .tt-rgroup.c4{grid-template-columns:1fr;}
+  .tt-mar .tt-success{padding:48px 28px;}
+  .tt-mar .tt-errbox{margin:0 28px 20px;}
+}
+@media(max-width:560px){
+  .tt-mar .tt-header{margin-bottom:28px;}
+  .tt-mar .tt-h1{font-size:clamp(24px,7vw,32px);}
+  .tt-mar .tt-sub{font-size:13px;}
+  .tt-mar .tt-prog-wrap{margin-bottom:24px;}
+  .tt-mar .tt-prog-circle{width:24px;height:24px;font-size:10px;}
+  .tt-mar .tt-prog-step:not(:last-child)::after{top:12px;left:calc(50% + 13px);right:calc(-50% + 13px);}
+  .tt-mar .tt-prog-label{display:none;}
+  .tt-mar .tt-card{margin-left:-8px;margin-right:-8px;width:calc(100% + 16px);border-left:none;border-right:none;}
+  .tt-mar .tt-corner{display:none;}
+  .tt-mar .tt-step{padding:22px 16px 18px;}
+  .tt-mar .tt-step-title{font-size:20px;}
+  .tt-mar .tt-step-hdr{margin-bottom:20px;padding-bottom:14px;}
+  .tt-mar .tt-grid{grid-template-columns:1fr;gap:12px;}
+  .tt-mar .tt-full{grid-column:1;}
+  .tt-mar .tt-cgroup,.tt-mar .tt-cgroup.c2{grid-template-columns:1fr 1fr;gap:6px;}
+  .tt-mar .tt-rtile,.tt-mar .tt-ctile{padding:9px 11px;font-size:12px;gap:8px;}
+  .tt-mar .tt-rdot,.tt-mar .tt-cbox{width:14px;height:14px;}
+  .tt-mar .tt-field label{font-size:10px;}
+  .tt-mar .tt-field input,.tt-mar .tt-field select,.tt-mar .tt-field textarea{font-size:14px;padding:10px 12px;}
+  .tt-mar .tt-airport-row{grid-template-columns:1fr auto;gap:6px;}
+  .tt-mar .tt-rm-btn{width:34px;height:34px;font-size:16px;}
+  .tt-mar .tt-fnav{padding:14px 16px 20px;flex-wrap:wrap;gap:8px;}
+  .tt-mar .tt-btn-prev{padding:10px 14px;font-size:10px;}
+  .tt-mar .tt-btn-next{padding:10px 16px;font-size:10px;gap:6px;}
+  .tt-mar .tt-success{padding:32px 16px;}
+  .tt-mar .tt-sh2{font-size:24px;}
+  .tt-mar .tt-srow{font-size:12px;flex-direction:column;gap:2px;}
+  .tt-mar .tt-srow span:last-child{text-align:left;}
+  .tt-mar .tt-errbox{margin:0 16px 16px;font-size:12px;}
+}
+</style>
+
+<!-- HEADER -->
+<div class="tt-header">
+  <div class="tt-eyebrow">Marokko op maat</div>
+  <h2 class="tt-h1">Uw <em>Marokkoreis</em> samengesteld</h2>
+  <p class="tt-sub">Vertel ons over uw reisgezelschap en wensen. Wij stellen een voorstel op maat samen &mdash; van riad tot woestijnkamp en priv&eacute;chauffeur. Weet u nog niet welke route? Geef uw wensen en budget op, dan adviseren wij de ideale invulling.</p>
+</div>
+
+<!-- PROGRESS -->
+<div class="tt-prog-wrap">
+  <div class="tt-prog-steps" id="ttProgSteps">
+    <div class="tt-prog-step active" data-step="1"><div class="tt-prog-circle">1</div><div class="tt-prog-label">Gezelschap</div></div>
+    <div class="tt-prog-step" data-step="2"><div class="tt-prog-circle">2</div><div class="tt-prog-label">Reiswensen</div></div>
+    <div class="tt-prog-step" data-step="3"><div class="tt-prog-circle">3</div><div class="tt-prog-label">Verblijf &amp; reis</div></div>
+    <div class="tt-prog-step" data-step="4"><div class="tt-prog-circle">4</div><div class="tt-prog-label">Contact</div></div>
+  </div>
+</div>
+
+<!-- CARD -->
+<div class="tt-card" id="ttCard">
+  <div class="tt-corner tl"><svg viewBox="0 0 36 36" fill="none"><path d="M0 36L0 0L36 0" stroke="#a0522d" stroke-width="1"/></svg></div>
+  <div class="tt-corner tr"><svg viewBox="0 0 36 36" fill="none"><path d="M0 0L36 0L36 36" stroke="#a0522d" stroke-width="1"/></svg></div>
+
+  <!-- STAP 1 — GEZELSCHAP -->
+  <div class="tt-step active" id="ttStep1">
+    <div class="tt-step-hdr">
+      <div class="tt-step-num">Stap 01 &mdash; 04</div>
+      <h3 class="tt-step-title">Uw <em>reisgezelschap</em></h3>
+    </div>
+    <div class="tt-grid">
+      <div class="tt-field tt-full">
+        <label>Type aanvraag <span class="tt-req">*</span></label>
+        <div class="tt-rgroup" id="rg-aanvragerType">
+          <div class="tt-rtile" data-val="Particulier / gezin"><div class="tt-rdot"></div>Particulier / gezin</div>
+          <div class="tt-rtile" data-val="Vrienden / groep"><div class="tt-rdot"></div>Vrienden / groep</div>
+          <div class="tt-rtile" data-val="Zakelijk / bedrijf"><div class="tt-rdot"></div>Zakelijk / bedrijf</div>
+        </div>
+        <div class="tt-errmsg" id="e-aanvragerType">Geef aan wat voor soort aanvraag dit is</div>
+      </div>
+
+      <div id="velden-zakelijk" style="display:none">
+        <div class="tt-grid">
+          <div class="tt-field tt-full">
+            <label>Bedrijfsnaam</label>
+            <input type="text" id="bedrijfsnaam" placeholder="Naam van uw organisatie">
+          </div>
+          <div class="tt-field tt-full">
+            <label>Aanleiding</label>
+            <select id="zakelijkAanleiding">
+              <option value="">Selecteer (optioneel)</option>
+              <option>Incentive / personeelsreis</option>
+              <option>Relatie- / klantevenement</option>
+              <option>Teambuilding</option>
+              <option>Anders</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="tt-field">
+        <label>Aantal volwassenen <span class="tt-req">*</span></label>
+        <input type="number" id="aantalVolwassenen" min="1" placeholder="bijv. 2">
+        <div class="tt-errmsg" id="e-aantalVolwassenen">Vul het aantal volwassenen in</div>
+      </div>
+      <div class="tt-field">
+        <label>Aantal kinderen</label>
+        <input type="number" id="aantalKinderen" min="0" placeholder="0">
+        <div class="tt-hint">Reizen er kinderen mee? Geef ook hun leeftijden door bij opmerkingen.</div>
+      </div>
+
+      <div class="tt-field tt-full">
+        <label>Reist u eerder naar Marokko of bent u er al geweest?</label>
+        <div class="tt-rgroup c2" id="rg-ervaring">
+          <div class="tt-rtile" data-val="Eerste keer"><div class="tt-rdot"></div>Eerste keer</div>
+          <div class="tt-rtile" data-val="Al eerder geweest"><div class="tt-rdot"></div>Al eerder geweest</div>
+        </div>
+        <div class="tt-hint">Helpt ons de route en hoogtepunten beter af te stemmen.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAP 2 — REISWENSEN -->
+  <div class="tt-step" id="ttStep2">
+    <div class="tt-step-hdr">
+      <div class="tt-step-num">Stap 02 &mdash; 04</div>
+      <h3 class="tt-step-title">Uw <em>reiswensen</em></h3>
+    </div>
+    <div class="tt-grid">
+      <div class="tt-field tt-full">
+        <label>Wat voor type reis zoekt u? <span class="tt-req">*</span></label>
+        <div class="tt-cgroup c2" id="cg-reistype">
+          <div class="tt-ctile" data-val="Rondreis koningssteden"><div class="tt-cbox"></div>Rondreis koningssteden</div>
+          <div class="tt-ctile" data-val="Stedentrip (riad)"><div class="tt-cbox"></div>Stedentrip (riad)</div>
+          <div class="tt-ctile" data-val="Woestijn / Sahara-expeditie"><div class="tt-cbox"></div>Woestijn / Sahara-expeditie</div>
+          <div class="tt-ctile" data-val="Atlasgebergte / actief"><div class="tt-cbox"></div>Atlasgebergte / actief</div>
+          <div class="tt-ctile" data-val="Kust / strand (Essaouira, Agadir)"><div class="tt-cbox"></div>Kust / strand</div>
+          <div class="tt-ctile" data-val="Wellness / luxe (hammam, spa)"><div class="tt-cbox"></div>Wellness / luxe</div>
+        </div>
+        <div class="tt-errmsg" id="e-reistype">Kies minimaal &eacute;&eacute;n type reis</div>
+      </div>
+
+      <div class="tt-field tt-full">
+        <label>Gewenste reisstijl</label>
+        <div class="tt-rgroup" id="rg-reisstijl">
+          <div class="tt-rtile" data-val="Comfortabel"><div class="tt-rdot"></div>Comfortabel</div>
+          <div class="tt-rtile" data-val="Luxe"><div class="tt-rdot"></div>Luxe</div>
+          <div class="tt-rtile" data-val="Ultra-luxe"><div class="tt-rdot"></div>Ultra-luxe</div>
+        </div>
+      </div>
+
+      <div class="tt-field tt-full">
+        <label>Welke ervaringen wilt u zeker meemaken?</label>
+        <div class="tt-cgroup c2" id="cg-ervaringen">
+          <div class="tt-ctile" data-val="Nacht in luxe woestijnkamp"><div class="tt-cbox"></div>Nacht in luxe woestijnkamp</div>
+          <div class="tt-ctile" data-val="Kameeltocht bij zonsondergang"><div class="tt-cbox"></div>Kameeltocht / zonsondergang</div>
+          <div class="tt-ctile" data-val="Kookworkshop / culinair"><div class="tt-cbox"></div>Kookworkshop / culinair</div>
+          <div class="tt-ctile" data-val="Hammam &amp; spa"><div class="tt-cbox"></div>Hammam &amp; spa</div>
+          <div class="tt-ctile" data-val="Souk &amp; ambachten"><div class="tt-cbox"></div>Souk &amp; ambachten</div>
+          <div class="tt-ctile" data-val="Wandelen in de Atlas"><div class="tt-cbox"></div>Wandelen in de Atlas</div>
+        </div>
+        <div class="tt-hint">Selecteer wat u aanspreekt &mdash; wij verwerken dit in het voorstel.</div>
+      </div>
+
+      <div class="tt-field tt-full">
+        <label>Tempo van de reis</label>
+        <div class="tt-rgroup" id="rg-tempo">
+          <div class="tt-rtile" data-val="Rustig (weinig verplaatsingen)"><div class="tt-rdot"></div>Rustig</div>
+          <div class="tt-rtile" data-val="Gemiddeld"><div class="tt-rdot"></div>Gemiddeld</div>
+          <div class="tt-rtile" data-val="Actief (veel zien)"><div class="tt-rdot"></div>Actief</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAP 3 — VERBLIJF & REIS -->
+  <div class="tt-step" id="ttStep3">
+    <div class="tt-step-hdr">
+      <div class="tt-step-num">Stap 03 &mdash; 04</div>
+      <h3 class="tt-step-title">Bestemming, <em>verblijf &amp; reis</em></h3>
+    </div>
+    <div class="tt-grid">
+      <div class="tt-field tt-full">
+        <label>Welke plaatsen / regio's wilt u bezoeken?</label>
+        <input type="text" id="bestemming" placeholder="bijv. Marrakech, Fez, Sahara — of laat leeg voor advies">
+        <div class="tt-note" style="margin-top:6px">
+          <strong>Nog geen route in gedachten?</strong> Laat dit veld gerust leeg. Op basis van uw periode, budget en wensen stellen wij de ideale route samen.
+        </div>
+      </div>
+
+      <div class="tt-field tt-full">
+        <label>Verblijfsniveau</label>
+        <div class="tt-rgroup c4" id="rg-hotelNiveau">
+          <div class="tt-rtile" data-val="Charme / 3-4 sterren"><div class="tt-rdot"></div>Charme</div>
+          <div class="tt-rtile" data-val="4 sterren"><div class="tt-rdot"></div>4 sterren</div>
+          <div class="tt-rtile" data-val="5 sterren"><div class="tt-rdot"></div>5 sterren</div>
+          <div class="tt-rtile" data-val="Maakt niet uit"><div class="tt-rdot"></div>Maakt niet uit</div>
+        </div>
+      </div>
+
+      <div class="tt-field">
+        <label>Type accommodatie</label>
+        <select id="accomType">
+          <option value="">Geen voorkeur</option>
+          <option>Authentieke riad</option>
+          <option>Boutique hotel</option>
+          <option>Luxe resort</option>
+          <option>Woestijnkamp (luxe tent)</option>
+          <option>Mix van bovenstaande</option>
+        </select>
+      </div>
+      <div class="tt-field">
+        <label>Verzorging</label>
+        <select id="verzorging">
+          <option value="">Geen voorkeur</option>
+          <option>Logies / ontbijt</option>
+          <option>Halfpension</option>
+          <option>All-inclusive</option>
+        </select>
+      </div>
+
+      <div class="tt-field tt-full">
+        <label>Vervoer ter plaatse</label>
+        <div class="tt-rgroup c4" id="rg-vervoer">
+          <div class="tt-rtile" data-val="Privéchauffeur"><div class="tt-rdot"></div>Priv&eacute;chauffeur</div>
+          <div class="tt-rtile" data-val="Huurauto"><div class="tt-rdot"></div>Huurauto</div>
+          <div class="tt-rtile" data-val="Transfers"><div class="tt-rdot"></div>Transfers</div>
+          <div class="tt-rtile" data-val="Total Travel mag adviseren"><div class="tt-rdot"></div>Adviseer mij</div>
+        </div>
+        <div class="tt-hint">Een priv&eacute;chauffeur geeft maximale vrijheid en comfort; ideaal voor rondreizen.</div>
+      </div>
+
+      <div class="tt-field tt-full">
+        <label>Type vlucht</label>
+        <div class="tt-rgroup c2" id="rg-vluchtType">
+          <div class="tt-rtile" data-val="Retour"><div class="tt-rdot"></div>Retour</div>
+          <div class="tt-rtile" data-val="Eigen vervoer / geen vlucht"><div class="tt-rdot"></div>Eigen vervoer</div>
+        </div>
+      </div>
+
+      <div class="tt-field tt-full" id="airportsWrap-field">
+        <label>Vertrekluchthaven(s)</label>
+        <div class="tt-airports" id="ttAirports"></div>
+        <button type="button" class="tt-add-btn" id="ttAddAirport">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Luchthaven toevoegen
+        </button>
+        <div class="tt-hint">Selecteer &eacute;&eacute;n of meer luchthavens van waaruit u kunt vertrekken.</div>
+      </div>
+
+      <div class="tt-field">
+        <label>Heenreisdatum</label>
+        <input type="date" id="heenDatum">
+        <div class="tt-hint">Weet u de datum al? Vul hem in. Zo niet, gebruik dan 'reisperiode' hieronder.</div>
+      </div>
+      <div class="tt-field">
+        <label>Terugreisdatum</label>
+        <input type="date" id="terugDatum">
+        <div class="tt-hint">Opent op de maand van de heenreisdatum.</div>
+      </div>
+
+      <div class="tt-field">
+        <label>Marge op de data</label>
+        <select id="datumMarge">
+          <option value="">Selecteer</option>
+          <option>Exact deze data</option>
+          <option>± 2 dagen</option>
+          <option>± 3 dagen</option>
+          <option>± 1 week</option>
+          <option>Volledig flexibel</option>
+        </select>
+      </div>
+      <div class="tt-field">
+        <label>Aantal nachten</label>
+        <input type="text" id="aantalNachten" placeholder="bijv. 7 nachten">
+      </div>
+
+      <div class="tt-field tt-full">
+        <label>Reisperiode (als de exacte data nog niet vaststaan) <span class="tt-req">*</span></label>
+        <input type="text" id="reisperiode" placeholder="bijv. 2e helft oktober 2026, of 'najaar' — niet nodig als u hierboven data invulde">
+        <div class="tt-errmsg" id="e-reisperiode">Vul concrete data in, of geef hier een indicatie van de reisperiode</div>
+      </div>
+
+      <div class="tt-field tt-full">
+        <label>Budgetindicatie per persoon</label>
+        <select id="budget">
+          <option value="">Geen indicatie</option>
+          <option>Tot € 750 p.p.</option>
+          <option>€ 750 — € 1.250 p.p.</option>
+          <option>€ 1.250 — € 2.000 p.p.</option>
+          <option>€ 2.000 — € 3.500 p.p.</option>
+          <option>€ 3.500+ p.p.</option>
+          <option>Total Travel mag adviseren binnen passend budget</option>
+        </select>
+        <div class="tt-hint">Helpt ons een passend voorstel samen te stellen. Vluchten + verblijf + vervoer.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAP 4 — CONTACT -->
+  <div class="tt-step" id="ttStep4">
+    <div class="tt-step-hdr">
+      <div class="tt-step-num">Stap 04 &mdash; 04</div>
+      <h3 class="tt-step-title">Contact &amp; <em>bevestiging</em></h3>
+    </div>
+    <div class="tt-grid">
+      <div class="tt-field">
+        <label>Voornaam <span class="tt-req">*</span></label>
+        <input type="text" id="voornaam" placeholder="Uw voornaam">
+        <div class="tt-errmsg" id="e-voornaam">Vul uw voornaam in</div>
+      </div>
+      <div class="tt-field">
+        <label>Achternaam <span class="tt-req">*</span></label>
+        <input type="text" id="achternaam" placeholder="Uw achternaam">
+        <div class="tt-errmsg" id="e-achternaam">Vul uw achternaam in</div>
+      </div>
+      <div class="tt-field">
+        <label>E-mailadres <span class="tt-req">*</span></label>
+        <input type="email" id="email" placeholder="uw@email.nl">
+        <div class="tt-hint">Op dit adres ontvangt u de bevestiging van uw aanvraag.</div>
+        <div class="tt-errmsg" id="e-email">Vul een geldig e-mailadres in</div>
+      </div>
+      <div class="tt-field">
+        <label>Telefoonnummer <span class="tt-req">*</span></label>
+        <input type="tel" id="telefoon" placeholder="+31 6 12345678">
+        <div class="tt-errmsg" id="e-telefoon">Vul een telefoonnummer in</div>
+      </div>
+      <div class="tt-field">
+        <label>Voorkeur voor contact</label>
+        <select id="contactVoorkeur">
+          <option value="">Selecteer</option>
+          <option>E-mail</option>
+          <option>Telefoon (ochtend)</option>
+          <option>Telefoon (middag)</option>
+          <option>Telefoon (avond)</option>
+          <option>WhatsApp</option>
+        </select>
+      </div>
+      <div class="tt-field">
+        <label>Gewenste reactietermijn</label>
+        <select id="reactieTermijn">
+          <option value="">Zo snel mogelijk</option>
+          <option>Binnen 24 uur</option>
+          <option>Binnen 48 uur</option>
+          <option>Binnen een week</option>
+        </select>
+      </div>
+
+      <div class="tt-field tt-full">
+        <label>Opmerkingen of bijzonderheden</label>
+        <textarea id="opmerkingen" placeholder="bijv. leeftijden van kinderen, dieetwensen, vieren van een jubileum, specifieke wensen voor accommodatie of route, mobiliteit, etc."></textarea>
+      </div>
+
+      <div class="tt-field tt-full">
+        <div class="tt-note">
+          <strong>E-mailbevestiging</strong> &mdash; Na verzending ontvangt u direct een bevestiging met een overzicht van uw aanvraag. De volledige aanvraag wordt tegelijkertijd verzonden naar <strong>info@totaltravel.nl</strong>. Ons team neemt binnen de gewenste termijn contact met u op.
+        </div>
+      </div>
+
+      <div class="tt-field tt-full">
+        <label style="text-transform:none;letter-spacing:0;font-size:12px;color:var(--tt-text-3);font-weight:400">Privacyverklaring <span class="tt-req">*</span></label>
+        <div class="tt-prow" id="ttPrivRow">
+          <div class="tt-pbox" id="ttPrivBox"></div>
+          <span class="tt-ptext">Ik ga akkoord met de <a href="#" id="ttPrivLink">privacyverklaring</a> van Total Travel. Mijn gegevens worden uitsluitend gebruikt voor het verwerken van deze aanvraag.</span>
+        </div>
+        <div class="tt-errmsg" id="e-privacy">Bevestig de privacyverklaring om door te gaan</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="tt-success" id="ttSuccess">
+    <div class="tt-sicon">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h3 class="tt-sh2">Aanvraag <em>ontvangen</em></h3>
+    <p class="tt-sp">Bedankt voor uw Marokko-aanvraag. Onze reisspecialisten stellen een voorstel op maat samen en nemen op korte termijn contact met u op.</p>
+    <div class="tt-sdetails" id="ttSdetails"></div>
+    <div class="tt-mailnote">
+      Een bevestiging is verzonden naar <strong id="ttMailTo">uw e-mailadres</strong>.<br>
+      De volledige aanvraag is afgeleverd bij <strong>info@totaltravel.nl</strong>.
+    </div>
+  </div>
+
+  <!-- ERROR BOX -->
+  <div class="tt-errbox" id="ttErrbox"></div>
+
+  <!-- NAV -->
+  <div class="tt-fnav" id="ttFnav">
+    <button type="button" class="tt-btn-prev" id="ttBtnPrev">&#8592; Vorige</button>
+    <span class="tt-stepcnt" id="ttStepcnt">Stap 1 van 4</span>
+    <button type="button" class="tt-btn-next" id="ttBtnNext">Volgende <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+  </div>
+</div>
+</section>
+
+<script>
+(function(){
+  'use strict';
+
+  var CONFIG = {
+    ontvangerEmail: 'info@totaltravel.nl',
+    // Voor Brevo-verzending: zet hier het pad naar brevo-send.php.
+    // Leeg laten = mailto-fallback gebruiken.
+    backendUrl: 'https://totaltravel.nl/api/brevo-send.php'
+  };
+
+  var step = 1, totalSteps = 4, privChecked = false, aanvragerType = '';
+  var root = document.getElementById('ttMarForm');
+  function $(id){ return document.getElementById(id); }
+  function val(id){ var e = $(id); return e ? (e.value||'').trim() : ''; }
+
+  // RADIO GROEPEN
+  var radioVals = {};
+  root.querySelectorAll('.tt-rgroup').forEach(function(grp){
+    grp.querySelectorAll('.tt-rtile').forEach(function(tile){
+      tile.addEventListener('click', function(){
+        var gid = grp.id;
+        grp.querySelectorAll('.tt-rtile').forEach(function(t){ t.classList.remove('on'); });
+        tile.classList.add('on');
+        radioVals[gid] = tile.getAttribute('data-val');
+        if(gid === 'rg-aanvragerType'){
+          aanvragerType = radioVals[gid];
+          $('velden-zakelijk').style.display = aanvragerType === 'Zakelijk / bedrijf' ? '' : 'none';
+          $('e-aanvragerType').classList.remove('show');
+        }
+        if(gid === 'rg-vluchtType'){
+          var eigen = radioVals[gid] === 'Eigen vervoer / geen vlucht';
+          $('airportsWrap-field').style.display = eigen ? 'none' : '';
+        }
+      });
+    });
+  });
+  function getRadio(gid){ return radioVals[gid] || ''; }
+
+  // Terugreisdatum opent op de maand van de heenreisdatum
+  $('heenDatum').addEventListener('change', function(){
+    var v = this.value, terug = $('terugDatum');
+    if(v){ terug.min = v; if(!terug.value || terug.value < v) terug.value = v; }
+    else { terug.removeAttribute('min'); }
+  });
+
+  // CHECKBOX GROEPEN
+  root.querySelectorAll('.tt-ctile').forEach(function(tile){
+    tile.addEventListener('click', function(){
+      tile.classList.toggle('on');
+      if(tile.closest('#cg-reistype')) $('e-reistype').classList.remove('show');
+    });
+  });
+  function getChecks(gid){
+    var arr = [];
+    root.querySelectorAll('#' + gid + ' .tt-ctile.on').forEach(function(t){ arr.push(t.getAttribute('data-val')); });
+    return arr.join(', ');
+  }
+
+  // LUCHTHAVENS
+  var AIRPORT_OPTIONS = [
+    'Amsterdam (Nederland)',
+    'Eindhoven (Nederland)',
+    'Rotterdam (Nederland)',
+    'Brussel Zaventem (België)',
+    'Brussel Charleroi (België)',
+    'Düsseldorf International (Duitsland)',
+    'Düsseldorf Weeze (Duitsland)'
+  ];
+  var airportsWrap = $('ttAirports'), airportCounter = 0;
+  function airportOptionsHTML(){
+    var opts = '<option value="">Selecteer luchthaven</option>';
+    AIRPORT_OPTIONS.forEach(function(a){ opts += '<option value="' + a + '">' + a + '</option>'; });
+    return opts;
+  }
+  function airportRowHTML(){
+    airportCounter++;
+    return '<div class="tt-airport-row" data-row="' + airportCounter + '">' +
+             '<div class="tt-airport-input-wrap">' +
+               '<select id="ttAirport_' + airportCounter + '" class="tt-airport-input">' + airportOptionsHTML() + '</select>' +
+             '</div>' +
+             '<button type="button" class="tt-rm-btn" aria-label="Verwijderen">&times;</button>' +
+           '</div>';
+  }
+  function addAirportRow(){
+    var tmp = document.createElement('div');
+    tmp.innerHTML = airportRowHTML();
+    var row = tmp.firstChild;
+    airportsWrap.appendChild(row);
+    row.querySelector('.tt-rm-btn').addEventListener('click', function(){
+      if(airportsWrap.children.length > 1){ row.remove(); updateRemoveButtons(); }
+    });
+    updateRemoveButtons();
+    return row;
+  }
+  function updateRemoveButtons(){
+    var rows = airportsWrap.querySelectorAll('.tt-airport-row');
+    rows.forEach(function(r){ r.querySelector('.tt-rm-btn').disabled = rows.length === 1; });
+  }
+  addAirportRow();
+  $('ttAddAirport').addEventListener('click', addAirportRow);
+  function collectAirports(){
+    var arr = [];
+    airportsWrap.querySelectorAll('.tt-airport-row').forEach(function(row){
+      var name = (row.querySelector('.tt-airport-input').value || '').trim();
+      if(name) arr.push({ name: name });
+    });
+    return arr;
+  }
+  function airportsAsText(arr){ return (!arr || !arr.length) ? '\u2014' : arr.map(function(a){ return a.name; }).join('; '); }
+
+  // PRIVACY
+  $('ttPrivRow').addEventListener('click', function(e){
+    if(e.target === $('ttPrivLink') || e.target.tagName === 'A') return;
+    privChecked = !privChecked;
+    $('ttPrivRow').classList.toggle('on', privChecked);
+    if(privChecked) $('e-privacy').classList.remove('show');
+  });
+  $('ttPrivLink').addEventListener('click', function(e){ e.preventDefault(); });
+
+  // NAVIGATIE
+  $('ttBtnPrev').addEventListener('click', function(){ if(step > 1) setStep(step - 1); });
+  $('ttBtnNext').addEventListener('click', function(){
+    if(!validate(step)) return;
+    if(step < totalSteps) setStep(step + 1); else submitForm();
+  });
+  function setStep(n){
+    root.querySelectorAll('.tt-step').forEach(function(s){ s.classList.remove('active'); });
+    $('ttStep' + n).classList.add('active');
+    root.querySelectorAll('.tt-prog-step').forEach(function(s){
+      var sn = parseInt(s.getAttribute('data-step'),10);
+      s.classList.remove('active','done');
+      if(sn === n) s.classList.add('active'); else if(sn < n) s.classList.add('done');
+    });
+    $('ttBtnPrev').style.visibility = n === 1 ? 'hidden' : 'visible';
+    $('ttStepcnt').textContent = 'Stap ' + n + ' van ' + totalSteps;
+    $('ttBtnNext').innerHTML = n === totalSteps
+      ? 'Aanvraag versturen <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2L15 22 11 13 2 9z"/></svg>'
+      : 'Volgende <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+    step = n;
+    var rect = root.getBoundingClientRect();
+    if(rect.top < 0) window.scrollTo({ top: window.scrollY + rect.top - 20, behavior:'smooth' });
+  }
+
+  // VALIDATIE
+  function chk(errId, inputId, bad){
+    $(errId).classList.toggle('show', bad);
+    if(inputId && $(inputId)) $(inputId).classList.toggle('err', bad);
+    return !bad;
+  }
+  function validate(s){
+    var ok = true;
+    if(s === 1){
+      if(!getRadio('rg-aanvragerType')){ $('e-aanvragerType').classList.add('show'); ok = false; }
+      var v = parseInt(val('aantalVolwassenen'),10);
+      if(!chk('e-aantalVolwassenen','aantalVolwassenen', isNaN(v) || v < 1)) ok = false;
+    }
+    if(s === 2){
+      if(!getChecks('cg-reistype')){ $('e-reistype').classList.add('show'); ok = false; }
+    }
+    if(s === 3){
+      var heeftDatum = !!val('heenDatum'), heeftPeriode = !!val('reisperiode');
+      if(!chk('e-reisperiode','reisperiode', !heeftDatum && !heeftPeriode)) ok = false;
+    }
+    if(s === 4){
+      if(!chk('e-voornaam','voornaam', !val('voornaam'))) ok = false;
+      if(!chk('e-achternaam','achternaam', !val('achternaam'))) ok = false;
+      if(!chk('e-email','email', !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val('email')))) ok = false;
+      if(!chk('e-telefoon','telefoon', !val('telefoon'))) ok = false;
+      $('e-privacy').classList.toggle('show', !privChecked);
+      if(!privChecked) ok = false;
+    }
+    return ok;
+  }
+
+  // DATA VERZAMELEN
+  function collectData(){
+    return {
+      aanvragerType: aanvragerType,
+      bedrijfsnaam: val('bedrijfsnaam'),
+      zakelijkAanleiding: val('zakelijkAanleiding'),
+      aantalVolwassenen: val('aantalVolwassenen'),
+      aantalKinderen: val('aantalKinderen'),
+      ervaring: getRadio('rg-ervaring'),
+      reistype: getChecks('cg-reistype'),
+      reisstijl: getRadio('rg-reisstijl'),
+      ervaringen: getChecks('cg-ervaringen'),
+      tempo: getRadio('rg-tempo'),
+      bestemming: val('bestemming'),
+      hotelNiveau: getRadio('rg-hotelNiveau'),
+      accomType: val('accomType'),
+      verzorging: val('verzorging'),
+      vervoer: getRadio('rg-vervoer'),
+      vluchtType: getRadio('rg-vluchtType'),
+      vertrekluchthavens: collectAirports(),
+      heenDatum: val('heenDatum'),
+      terugDatum: val('terugDatum'),
+      datumMarge: val('datumMarge'),
+      aantalNachten: val('aantalNachten'),
+      reisperiode: val('reisperiode'),
+      budget: val('budget'),
+      voornaam: val('voornaam'),
+      achternaam: val('achternaam'),
+      email: val('email'),
+      telefoon: val('telefoon'),
+      contactVoorkeur: val('contactVoorkeur'),
+      reactieTermijn: val('reactieTermijn'),
+      opmerkingen: val('opmerkingen')
+    };
+  }
+  function bestemmingText(d){ return d.bestemming || 'Nog te bepalen (advies op basis van wensen/budget)'; }
+
+  // GEDEELD OVERZICHT
+  function buildOverview(d, L){
+    function add(label, value){ if(value !== undefined && value !== null && String(value).trim() !== '') L.push(label + ': ' + value); }
+    L.push('\u2500\u2500 Reisgezelschap');
+    add('Type aanvraag', d.aanvragerType);
+    if(d.aanvragerType === 'Zakelijk / bedrijf'){ add('Bedrijfsnaam', d.bedrijfsnaam); add('Aanleiding', d.zakelijkAanleiding); }
+    add('Aantal volwassenen', d.aantalVolwassenen);
+    add('Aantal kinderen', (parseInt(d.aantalKinderen,10) > 0 ? d.aantalKinderen : ''));
+    add('Marokko-ervaring', d.ervaring);
+    L.push('');
+    L.push('\u2500\u2500 Reiswensen');
+    add('Type reis', d.reistype);
+    add('Reisstijl', d.reisstijl);
+    add('Gewenste ervaringen', d.ervaringen);
+    add('Tempo', d.tempo);
+    L.push('');
+    L.push('\u2500\u2500 Bestemming, verblijf & reis');
+    add('Plaatsen / regio\'s', bestemmingText(d));
+    add('Verblijfsniveau', d.hotelNiveau);
+    add('Type accommodatie', d.accomType);
+    add('Verzorging', d.verzorging);
+    add('Vervoer ter plaatse', d.vervoer);
+    add('Type vlucht', d.vluchtType);
+    if(d.vluchtType !== 'Eigen vervoer / geen vlucht') add('Vertrekluchthaven(s)', airportsAsText(d.vertrekluchthavens));
+    add('Heenreisdatum', d.heenDatum);
+    add('Terugreisdatum', d.terugDatum);
+    add('Marge op data', d.datumMarge);
+    add('Aantal nachten', d.aantalNachten);
+    add('Reisperiode (indicatie)', d.reisperiode);
+    add('Budget p.p.', d.budget);
+    L.push('');
+    L.push('\u2500\u2500 Contactgegevens');
+    add('Naam', (d.voornaam + ' ' + d.achternaam).trim());
+    add('E-mail', d.email);
+    add('Telefoon', d.telefoon);
+    add('Contactvoorkeur', d.contactVoorkeur);
+    add('Gewenste reactietermijn', d.reactieTermijn);
+    add('Opmerkingen', d.opmerkingen);
+    return L;
+  }
+  function buildBody(d){
+    var dt = new Date().toLocaleString('nl-NL', { weekday:'long', year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' });
+    var L = [];
+    L.push('NIEUWE MAROKKO-AANVRAAG \u2014 TOTAL TRAVEL');
+    L.push('Ingediend op: ' + dt);
+    L.push('');
+    buildOverview(d, L);
+    L.push('');
+    L.push('Verzonden via het Marokko-aanvraagformulier op totaltravel.nl');
+    return L.join('\n');
+  }
+  function buildConfirm(d){
+    var L = [];
+    L.push('Beste ' + d.voornaam + ',');
+    L.push('');
+    L.push('Hartelijk dank voor uw aanvraag voor een reis naar Marokko bij Total Travel.');
+    L.push('');
+    L.push('Wij hebben uw aanvraag in goede orde ontvangen. Onze reisspecialisten stellen een voorstel op maat samen en nemen op korte termijn contact met u op.');
+    L.push('');
+    L.push('Samenvatting van uw aanvraag:');
+    L.push('');
+    buildOverview(d, L);
+    L.push('');
+    L.push('Kloppen bovenstaande gegevens niet of wilt u iets aanvullen? Neem gerust contact met ons op.');
+    return L.join('\n');
+  }
+
+  // VERZENDEN
+  function submitForm(){
+    var d = collectData();
+    var subject = 'Marokko-aanvraag: ' + (d.bestemming || 'nog te bepalen') + ' \u2014 ' + d.voornaam + ' ' + d.achternaam;
+    $('ttErrbox').classList.remove('show');
+    if(CONFIG.backendUrl){
+      var btn = $('ttBtnNext');
+      btn.disabled = true;
+      btn.innerHTML = 'Bezig met verzenden\u2026';
+      fetch(CONFIG.backendUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          data: {
+            aanvragerType: d.aanvragerType,
+            vluchtType: d.vluchtType || 'Retour',
+            bestemming: bestemmingText(d),
+            vertrekdatum: d.heenDatum || d.reisperiode,
+            voornaam: d.voornaam, achternaam: d.achternaam,
+            email: d.email, telefoon: d.telefoon,
+            vertrekluchthavens: d.vertrekluchthavens.length ? d.vertrekluchthavens : [{name:'n.v.t.'}]
+          },
+          subject: subject, adminBody: buildBody(d), confirmBody: buildConfirm(d)
+        })
+      })
+      .then(function(r){ return r.json().then(function(j){ return { ok:r.ok, body:j }; }).catch(function(){ return { ok:r.ok, body:null }; }); })
+      .then(function(res){ if(res.ok && res.body && res.body.success){ showSuccess(d); } else { throw new Error((res.body && res.body.error) || 'Onbekende fout'); } })
+      .catch(function(err){
+        btn.disabled = false;
+        btn.innerHTML = 'Opnieuw versturen <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2L15 22 11 13 2 9z"/></svg>';
+        var box = $('ttErrbox');
+        box.textContent = 'Verzending mislukt: ' + err.message + '. Probeer het opnieuw of mail rechtstreeks naar ' + CONFIG.ontvangerEmail + '.';
+        box.classList.add('show');
+      });
+    } else { mailtoFallback(d, subject); showSuccess(d); }
+  }
+  function mailtoFallback(d, subject){
+    var href = 'mailto:' + CONFIG.ontvangerEmail + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(buildBody(d));
+    window.location.href = href;
+    setTimeout(function(){
+      var href2 = 'mailto:' + encodeURIComponent(d.email) + '?subject=' + encodeURIComponent('Bevestiging Marokko-aanvraag \u2014 Total Travel') + '&body=' + encodeURIComponent(buildConfirm(d));
+      window.open(href2, '_blank');
+    }, 800);
+  }
+  function showSuccess(d){
+    root.querySelectorAll('.tt-step').forEach(function(s){ s.classList.remove('active'); });
+    $('ttFnav').style.display = 'none';
+    $('ttErrbox').classList.remove('show');
+    $('ttProgSteps').style.opacity = '0.35';
+    $('ttSuccess').classList.add('show');
+    $('ttMailTo').textContent = d.email;
+    function row(label, value){ return value ? '<div class="tt-srow"><span>' + label + '</span><span>' + escapeHtml(value) + '</span></div>' : ''; }
+    var gezelschap = (d.aantalVolwassenen || '0') + ' volw.' + (parseInt(d.aantalKinderen,10) > 0 ? ' + ' + d.aantalKinderen + ' kind' : '');
+    var wanneer = d.heenDatum
+      ? d.heenDatum + (d.terugDatum ? ' t/m ' + d.terugDatum : '') + (d.datumMarge && d.datumMarge !== 'Exact deze data' ? ' (' + d.datumMarge + ')' : '')
+      : d.reisperiode;
+    $('ttSdetails').innerHTML = [
+      row('Naam', d.voornaam + ' ' + d.achternaam),
+      row('Gezelschap', gezelschap),
+      row('Type reis', d.reistype),
+      row('Bestemming', bestemmingText(d)),
+      row('Wanneer', wanneer),
+      row('Budget p.p.', d.budget)
+    ].join('');
+    var rect = root.getBoundingClientRect();
+    if(rect.top < 0) window.scrollTo({ top: window.scrollY + rect.top - 20, behavior:'smooth' });
+  }
+  function escapeHtml(s){ return String(s).replace(/[&<>"']/g, function(c){ return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]; }); }
+
+  $('ttBtnPrev').style.visibility = 'hidden';
+})();
+</script>

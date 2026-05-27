@@ -1,0 +1,274 @@
+<!-- ============================================================
+     TOTAL TRAVEL — MAROKKO: INTRO + INSPIRATIE (voorbeeldreizen)
+     Plak dit hele blok in de gewenste pagina.
+
+     • Twee secties: .tt-mar-intro (introblok) en
+       .tt-mar-insp (inspiratie / 3 voorbeeldreizen).
+     • Volledig scoped, zelfde huisstijl als de formulieren:
+       Playfair Display + DM Sans, sienna/ivoor, gradient-streep,
+       hoekornamenten, ivoor-kaarten met border + schaduw.
+     • Geen JS / geen scroll-animatie: werkt betrouwbaar in page
+       builders zoals Elementor. Hover-effecten blijven (pure CSS).
+     • Reisinhoud = plausibele voorbeelden; vervang teksten,
+       prijzen en de afbeelding-URLs door eigen content.
+     • CTA-knoppen verwijzen naar href="#ttMarForm" (het anker op
+       het aanvraagformulier).
+============================================================ -->
+
+<!-- ======================= INTRO ======================= -->
+<section class="tt-mar-intro" id="ttMarIntro">
+<style>
+.tt-mar-intro,.tt-mar-insp{
+  --tt-sienna:#a0522d;--tt-sienna-mid:#a0522d;--tt-sienna-lt:#d9956a;
+  --tt-gold:#b8996a;--tt-gold-lt:#cdb48e;
+  --tt-ivory:#f8f3eb;--tt-ivory-2:#f2ead8;--tt-ivory-3:#ebe0ca;--tt-ivory-4:#e0d2b8;
+  --tt-cream:#faf7f2;
+  --tt-text:#2c1f0e;--tt-text-2:#5a3e28;--tt-text-3:#8a6d52;--tt-text-4:#b09070;
+  --tt-border:rgba(160,82,45,0.14);--tt-border-md:rgba(160,82,45,0.25);--tt-border-str:rgba(160,82,45,0.40);
+  --tt-radius:4px;
+  --tt-dm:'DM Sans',sans-serif;--tt-pf:'Playfair Display',Georgia,serif;
+  --tt-ease:cubic-bezier(.4,0,.2,1);
+  font-family:var(--tt-dm);font-size:15px;line-height:1.6;color:var(--tt-text);
+  display:block;background:transparent;
+}
+.tt-mar-intro *,.tt-mar-intro *::before,.tt-mar-intro *::after,
+.tt-mar-insp *,.tt-mar-insp *::before,.tt-mar-insp *::after{box-sizing:border-box;}
+
+.tt-mar-intro{padding:64px 16px 40px;}
+.tt-mar-intro .tt-i-wrap{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;gap:54px;align-items:center;}
+
+/* TEKSTKOLOM */
+.tt-mar-intro .tt-i-eyebrow{font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--tt-sienna);margin-bottom:18px;display:flex;align-items:center;gap:12px;}
+.tt-mar-intro .tt-i-eyebrow::before{content:'';width:28px;height:1px;background:var(--tt-sienna-lt);opacity:.6;}
+.tt-mar-intro .tt-i-h1{font-family:var(--tt-pf);font-size:clamp(32px,4.8vw,50px);font-weight:400;line-height:1.1;color:var(--tt-text);margin:0 0 22px;}
+.tt-mar-intro .tt-i-h1 em{font-style:italic;color:var(--tt-sienna-mid);}
+.tt-mar-intro .tt-i-lead{font-size:16px;line-height:1.8;color:var(--tt-text-2);font-weight:300;margin:0 0 18px;}
+.tt-mar-intro .tt-i-body{font-size:14.5px;line-height:1.8;color:var(--tt-text-3);font-weight:300;margin:0 0 28px;}
+
+/* highlights */
+.tt-mar-intro .tt-i-highs{display:grid;grid-template-columns:1fr 1fr;gap:16px 22px;margin:0 0 32px;}
+.tt-mar-intro .tt-i-high{display:flex;align-items:flex-start;gap:12px;}
+.tt-mar-intro .tt-i-hicon{width:38px;height:38px;border-radius:50%;background:rgba(160,82,45,.09);border:1px solid var(--tt-sienna-lt);display:flex;align-items:center;justify-content:center;color:var(--tt-sienna);flex-shrink:0;}
+.tt-mar-intro .tt-i-hicon svg{width:19px;height:19px;}
+.tt-mar-intro .tt-i-htxt b{display:block;font-family:var(--tt-pf);font-size:15px;font-weight:500;color:var(--tt-text);margin-bottom:2px;}
+.tt-mar-intro .tt-i-htxt span{font-size:12.5px;line-height:1.55;color:var(--tt-text-3);font-weight:300;}
+
+.tt-mar-intro .tt-i-cta{display:inline-flex;align-items:center;gap:9px;font-family:var(--tt-dm);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--tt-sienna);border:none;padding:14px 32px;border-radius:var(--tt-radius);cursor:pointer;text-decoration:none;transition:background .25s var(--tt-ease),transform .25s var(--tt-ease);}
+.tt-mar-intro .tt-i-cta:hover{background:var(--tt-text-2);transform:translateY(-1px);}
+.tt-mar-intro .tt-i-cta svg{width:13px;height:13px;transition:transform .25s var(--tt-ease);}
+.tt-mar-intro .tt-i-cta:hover svg{transform:translateX(3px);}
+
+/* BEELDKOLOM */
+.tt-mar-intro .tt-i-media{position:relative;}
+.tt-mar-intro .tt-i-imgwrap{position:relative;border:1px solid var(--tt-border-md);border-radius:var(--tt-radius);overflow:hidden;box-shadow:0 8px 34px rgba(90,40,10,.14);aspect-ratio:4/5;background:var(--tt-ivory-3);}
+.tt-mar-intro .tt-i-imgwrap::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;z-index:2;background:linear-gradient(90deg,transparent,var(--tt-sienna-lt) 40%,var(--tt-gold) 60%,transparent);opacity:.7;}
+.tt-mar-intro .tt-i-imgwrap img{width:100%;height:100%;object-fit:cover;display:block;}
+/* sfeer-badge overlay */
+.tt-mar-intro .tt-i-badge{position:absolute;left:-18px;bottom:30px;background:var(--tt-ivory);border:1px solid var(--tt-border-md);border-radius:var(--tt-radius);padding:16px 22px;box-shadow:0 6px 22px rgba(90,40,10,.12);max-width:220px;}
+.tt-mar-intro .tt-i-badge .n{font-family:var(--tt-pf);font-size:30px;font-weight:500;color:var(--tt-sienna-mid);line-height:1;margin-bottom:5px;}
+.tt-mar-intro .tt-i-badge .l{font-size:11.5px;line-height:1.5;color:var(--tt-text-3);font-weight:300;}
+.tt-mar-intro .tt-i-corner{position:absolute;opacity:.3;pointer-events:none;z-index:3;}
+.tt-mar-intro .tt-i-corner.tr{top:12px;right:12px;}
+.tt-mar-intro .tt-i-corner svg{width:30px;height:30px;}
+
+@media(max-width:880px){
+  .tt-mar-intro{padding:48px 16px 28px;}
+  .tt-mar-intro .tt-i-wrap{grid-template-columns:1fr;gap:38px;}
+  .tt-mar-intro .tt-i-media{max-width:460px;margin:0 auto;width:100%;}
+  .tt-mar-intro .tt-i-imgwrap{aspect-ratio:16/11;}
+}
+@media(max-width:560px){
+  .tt-mar-intro .tt-i-highs{grid-template-columns:1fr;gap:13px;}
+  .tt-mar-intro .tt-i-badge{left:0;bottom:-16px;padding:13px 18px;max-width:190px;}
+  .tt-mar-intro .tt-i-badge .n{font-size:25px;}
+}
+
+/* ---- REVEAL (gedeeld) ---- */
+/* Scroll-reveal animatie is bewust verwijderd: in sommige page builders
+   (o.a. Elementor) worden losse <script>-blokken niet uitgevoerd, waardoor
+   elementen met opacity:0 verborgen bleven. Alles is nu altijd zichtbaar. */
+.tt-reveal-m{opacity:1;transform:none;}
+</style>
+
+<div class="tt-i-wrap">
+  <!-- TEKST -->
+  <div class="tt-i-text tt-reveal-m">
+    <div class="tt-i-eyebrow">Bestemming Marokko</div>
+    <h1 class="tt-i-h1">Marokko, <em>waar elke zintuig</em> ontwaakt</h1>
+    <p class="tt-i-lead">Van de bruisende souks van Marrakech tot de eindeloze stilte van de Sahara &mdash; Marokko is een land van contrasten dat zich in &eacute;&eacute;n reis laat ontvouwen.</p>
+    <p class="tt-i-body">Wandel door eeuwenoude medina&rsquo;s, overnacht in sfeervolle riads, rijd over de bergpassen van het Atlasgebergte en slaap onder een hemel vol sterren in een luxe woestijnkamp. Wij stellen uw Marokkaanse reis volledig op maat samen &mdash; met een persoonlijke chauffeur, zorgvuldig gekozen verblijven en de tijd om werkelijk te proeven van de Marokkaanse gastvrijheid.</p>
+
+    <div class="tt-i-highs">
+      <div class="tt-i-high">
+        <div class="tt-i-hicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-4 7 4v13M9 21v-5h6v5"/></svg></div>
+        <div class="tt-i-htxt"><b>Authentieke riads</b><span>Overnacht in karakteristieke stadspaleizen met binnentuin.</span></div>
+      </div>
+      <div class="tt-i-high">
+        <div class="tt-i-hicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></div>
+        <div class="tt-i-htxt"><b>Nacht in de Sahara</b><span>Luxe woestijnkamp onder een ongekend sterrenrijke hemel.</span></div>
+      </div>
+      <div class="tt-i-high">
+        <div class="tt-i-hicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18l5-8 4 5 3-4 6 7z"/><circle cx="8" cy="7" r="2"/></svg></div>
+        <div class="tt-i-htxt"><b>Hoge Atlas</b><span>Bergpassen, Berberdorpen en adembenemende vergezichten.</span></div>
+      </div>
+      <div class="tt-i-high">
+        <div class="tt-i-hicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V5a2 2 0 0 1 2-2h7l5 5v13"/><path d="M14 3v6h5M8 13h8M8 17h8"/></svg></div>
+        <div class="tt-i-htxt"><b>Priv&eacute;chauffeur</b><span>Zorgeloos reizen met een eigen gids op maat.</span></div>
+      </div>
+    </div>
+
+    <a class="tt-i-cta" href="#ttMarForm">
+      Stel uw Marokkoreis samen
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+
+  <!-- BEELD -->
+  <div class="tt-i-media tt-reveal-m" style="transition-delay:.12s">
+    <div class="tt-i-imgwrap">
+      <div class="tt-i-corner tr"><svg viewBox="0 0 36 36" fill="none"><path d="M0 0L36 0L36 36" stroke="#fff" stroke-width="1.4"/></svg></div>
+      <img src="https://images.unsplash.com/photo-1539020140153-e479b8c22e70?auto=format&fit=crop&w=1000&q=80" alt="Uitzicht over Marokko" loading="lazy">
+    </div>
+    <div class="tt-i-badge">
+      <div class="n">25+</div>
+      <div class="l">jaar ervaring met maatwerkreizen naar Noord-Afrika</div>
+    </div>
+  </div>
+</div>
+</section>
+
+
+
+<!-- ===================== INSPIRATIE ===================== -->
+<section class="tt-mar-insp" id="ttMarInsp">
+<style>
+.tt-mar-insp{padding:48px 16px 64px;}
+.tt-mar-insp .tt-n-header{text-align:center;max-width:640px;margin:0 auto 46px;}
+.tt-mar-insp .tt-n-eyebrow{font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--tt-sienna);margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:12px;}
+.tt-mar-insp .tt-n-eyebrow::before,.tt-mar-insp .tt-n-eyebrow::after{content:'';width:28px;height:1px;background:var(--tt-sienna-lt);opacity:.6;}
+.tt-mar-insp .tt-n-h2{font-family:var(--tt-pf);font-size:clamp(28px,4.4vw,44px);font-weight:400;line-height:1.15;color:var(--tt-text);margin:0 0 16px;}
+.tt-mar-insp .tt-n-h2 em{font-style:italic;color:var(--tt-sienna-mid);}
+.tt-mar-insp .tt-n-sub{font-size:15px;color:var(--tt-text-3);line-height:1.75;font-weight:300;margin:0;}
+
+.tt-mar-insp .tt-n-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1120px;margin:0 auto;}
+
+.tt-mar-insp .tt-n-card{background:var(--tt-ivory);border:1px solid var(--tt-border-md);border-radius:var(--tt-radius);overflow:hidden;display:flex;flex-direction:column;box-shadow:0 2px 24px rgba(90,40,10,.06);transition:transform .4s var(--tt-ease),box-shadow .4s var(--tt-ease),border-color .4s var(--tt-ease);}
+.tt-mar-insp .tt-n-card:hover{transform:translateY(-5px);box-shadow:0 12px 34px rgba(90,40,10,.13);border-color:var(--tt-border-str);}
+
+.tt-mar-insp .tt-n-imgwrap{position:relative;aspect-ratio:3/2;overflow:hidden;background:var(--tt-ivory-3);}
+.tt-mar-insp .tt-n-imgwrap img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s var(--tt-ease);}
+.tt-mar-insp .tt-n-card:hover .tt-n-imgwrap img{transform:scale(1.05);}
+.tt-mar-insp .tt-n-imgwrap::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(44,31,14,0) 55%,rgba(44,31,14,.32));}
+.tt-mar-insp .tt-n-tag{position:absolute;top:14px;left:14px;z-index:2;background:rgba(248,243,235,.94);border:1px solid var(--tt-border-md);color:var(--tt-sienna);font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;border-radius:var(--tt-radius);}
+.tt-mar-insp .tt-n-dur{position:absolute;bottom:13px;right:14px;z-index:2;color:#fff;font-size:12px;font-weight:400;letter-spacing:.04em;display:flex;align-items:center;gap:6px;}
+.tt-mar-insp .tt-n-dur svg{width:14px;height:14px;}
+
+.tt-mar-insp .tt-n-body{padding:24px 24px 26px;display:flex;flex-direction:column;flex:1;}
+.tt-mar-insp .tt-n-route{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--tt-text-4);font-weight:400;margin-bottom:9px;}
+.tt-mar-insp .tt-n-title{font-family:var(--tt-pf);font-size:21px;font-weight:400;line-height:1.25;color:var(--tt-text);margin:0 0 12px;}
+.tt-mar-insp .tt-n-title em{font-style:italic;color:var(--tt-sienna-mid);}
+.tt-mar-insp .tt-n-rule{width:34px;height:1px;background:var(--tt-sienna-lt);opacity:.8;margin-bottom:14px;}
+.tt-mar-insp .tt-n-desc{font-size:13.5px;line-height:1.7;color:var(--tt-text-2);font-weight:300;margin:0 0 20px;flex:1;}
+
+.tt-mar-insp .tt-n-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;padding-top:18px;border-top:1px solid var(--tt-border);}
+.tt-mar-insp .tt-n-price .p-lbl{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--tt-text-4);font-weight:400;display:block;margin-bottom:2px;}
+.tt-mar-insp .tt-n-price .p-val{font-family:var(--tt-pf);font-size:20px;font-weight:500;color:var(--tt-text);}
+.tt-mar-insp .tt-n-price .p-val small{font-size:12px;font-weight:400;color:var(--tt-text-3);font-family:var(--tt-dm);}
+.tt-mar-insp .tt-n-link{font-family:var(--tt-dm);font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--tt-sienna);text-decoration:none;display:inline-flex;align-items:center;gap:7px;padding:9px 0;white-space:nowrap;transition:gap .25s var(--tt-ease),color .2s;}
+.tt-mar-insp .tt-n-link svg{width:13px;height:13px;transition:transform .25s var(--tt-ease);}
+.tt-mar-insp .tt-n-link:hover{color:var(--tt-text-2);}
+.tt-mar-insp .tt-n-link:hover svg{transform:translateX(3px);}
+
+/* onderregel */
+.tt-mar-insp .tt-n-foot-note{text-align:center;max-width:620px;margin:42px auto 0;}
+.tt-mar-insp .tt-n-foot-note p{font-family:var(--tt-pf);font-style:italic;font-size:clamp(16px,2.3vw,20px);color:var(--tt-text-2);line-height:1.5;margin:0 0 22px;}
+.tt-mar-insp .tt-n-foot-note p span{color:var(--tt-sienna-mid);}
+.tt-mar-insp .tt-n-cta{display:inline-flex;align-items:center;gap:9px;font-family:var(--tt-dm);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--tt-sienna);border:none;padding:14px 32px;border-radius:var(--tt-radius);cursor:pointer;text-decoration:none;transition:background .25s var(--tt-ease),transform .25s var(--tt-ease);}
+.tt-mar-insp .tt-n-cta:hover{background:var(--tt-text-2);transform:translateY(-1px);}
+.tt-mar-insp .tt-n-cta svg{width:13px;height:13px;transition:transform .25s var(--tt-ease);}
+.tt-mar-insp .tt-n-cta:hover svg{transform:translateX(3px);}
+
+@media(max-width:880px){
+  .tt-mar-insp .tt-n-grid{grid-template-columns:1fr;max-width:480px;}
+}
+@media(max-width:560px){
+  .tt-mar-insp{padding:36px 12px 52px;}
+  .tt-mar-insp .tt-n-header{margin-bottom:32px;}
+}
+</style>
+
+<div class="tt-n-header tt-reveal-m">
+  <div class="tt-n-eyebrow">Ter inspiratie</div>
+  <h2 class="tt-n-h2">Voorbeeld<em>reizen</em> door Marokko</h2>
+  <p class="tt-n-sub">Drie routes als startpunt voor uw eigen reis. Elk voorbeeld passen wij volledig aan op uw wensen, reisgezelschap en budget.</p>
+</div>
+
+<div class="tt-n-grid">
+
+  <!-- REIS 1 -->
+  <div class="tt-n-card tt-reveal-m" style="transition-delay:.05s">
+    <div class="tt-n-imgwrap">
+      <span class="tt-n-tag">Steden &amp; Sahara</span>
+      <span class="tt-n-dur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>10 dagen</span>
+      <img src="https://images.unsplash.com/photo-1597212618440-806262de4f6b?auto=format&fit=crop&w=900&q=80" alt="Marrakech en de woestijn" loading="lazy">
+    </div>
+    <div class="tt-n-body">
+      <div class="tt-n-route">Marrakech &middot; A&iuml;t Ben Haddou &middot; Sahara &middot; Fez</div>
+      <h3 class="tt-n-title">De <em>Koningssteden</em> &amp; de woestijn</h3>
+      <div class="tt-n-rule"></div>
+      <p class="tt-n-desc">De grote klassieker. Van de levendige Djemaa el-Fna via de filmkasbah A&iuml;t Ben Haddou en een onvergetelijke nacht in een luxe woestijnkamp, naar het spirituele Fez met zijn duizelingwekkende medina.</p>
+      <div class="tt-n-foot">
+        <div class="tt-n-price"><span class="p-lbl">Vanaf</span><span class="p-val">&euro; 1.895 <small>p.p.</small></span></div>
+        <a class="tt-n-link" href="#ttMarForm">Aanvragen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- REIS 2 -->
+  <div class="tt-n-card tt-reveal-m" style="transition-delay:.13s">
+    <div class="tt-n-imgwrap">
+      <span class="tt-n-tag">Riads &amp; cultuur</span>
+      <span class="tt-n-dur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>5 dagen</span>
+      <img src="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80" alt="Riad in Marrakech" loading="lazy">
+    </div>
+    <div class="tt-n-body">
+      <div class="tt-n-route">Marrakech &middot; Atlas-uitstap &middot; Marrakech</div>
+      <h3 class="tt-n-title">Lang weekend in <em>Marrakech</em></h3>
+      <div class="tt-n-rule"></div>
+      <p class="tt-n-desc">Een verfijnde stedentrip vanuit een authentieke riad in de medina. Souks, paleizen en hammam, met een dagexcursie naar de watervallen en Berberdorpen van de Hoge Atlas. Ideaal voor een korte, intense onderdompeling.</p>
+      <div class="tt-n-foot">
+        <div class="tt-n-price"><span class="p-lbl">Vanaf</span><span class="p-val">&euro; 745 <small>p.p.</small></span></div>
+        <a class="tt-n-link" href="#ttMarForm">Aanvragen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- REIS 3 -->
+  <div class="tt-n-card tt-reveal-m" style="transition-delay:.21s">
+    <div class="tt-n-imgwrap">
+      <span class="tt-n-tag">Kust &amp; wellness</span>
+      <span class="tt-n-dur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>8 dagen</span>
+      <img src="https://images.unsplash.com/photo-1531761535209-180857e963b9?auto=format&fit=crop&w=900&q=80" alt="Essaouira aan de kust" loading="lazy">
+    </div>
+    <div class="tt-n-body">
+      <div class="tt-n-route">Marrakech &middot; Essaouira &middot; Atlantische kust</div>
+      <h3 class="tt-n-title">Van medina naar <em>oceaanbries</em></h3>
+      <div class="tt-n-rule"></div>
+      <p class="tt-n-desc">Combineer het bruisende Marrakech met de ontspannen zeewind van Essaouira: witgekalkte vissershaven, verse tajine aan zee, en tijd voor wellness en wandelingen langs het strand. Cultuur en rust in perfecte balans.</p>
+      <div class="tt-n-foot">
+        <div class="tt-n-price"><span class="p-lbl">Vanaf</span><span class="p-val">&euro; 1.350 <small>p.p.</small></span></div>
+        <a class="tt-n-link" href="#ttMarForm">Aanvragen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="tt-n-foot-note tt-reveal-m" style="transition-delay:.26s">
+  <p>Geen van deze reizen precies wat u zoekt? <span>Wij stellen uw reis volledig op maat samen.</span></p>
+  <a class="tt-n-cta" href="#ttMarForm">
+    Vraag uw reis op maat aan
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  </a>
+</div>
+</section>
