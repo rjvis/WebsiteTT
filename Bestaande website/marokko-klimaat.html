@@ -1,0 +1,648 @@
+<!-- ============================================================
+     TOTAL TRAVEL — MAROKKO: KLIMAAT & BESTE REISTIJD
+
+     Concept: in plaats van de gebruikelijke "lente/zomer/herfst/
+     winter"-blokken, een MAAND-MATRIX waarin je per regio direct
+     ziet welke maanden ideaal, redelijk of af te raden zijn.
+     Daarnaast een paneel dat per geselecteerde maand vertelt wat
+     je dan kunt verwachten — temperatuur, regen, sfeer, advies.
+
+     • Pure CSS interactie (radio inputs + :checked-selectors).
+       Géén JavaScript. Werkt in Elementor.
+     • Klik op een maand → details verschijnen rechts/onder.
+     • Mobiel: kalender + paneel onder elkaar, scrollbaar.
+============================================================ -->
+
+<section class="tt-klim" id="ttKlim">
+<style>
+.tt-klim{
+  --tt-sienna:#a0522d;--tt-sienna-mid:#a0522d;--tt-sienna-lt:#d9956a;
+  --tt-gold:#b8996a;--tt-gold-lt:#cdb48e;
+  --tt-ivory:#f8f3eb;--tt-ivory-2:#f2ead8;--tt-ivory-3:#ebe0ca;
+  --tt-text:#2c1f0e;--tt-text-2:#5a3e28;--tt-text-3:#8a6d52;--tt-text-4:#b09070;
+  --tt-border:rgba(160,82,45,0.14);--tt-border-md:rgba(160,82,45,0.25);--tt-border-str:rgba(160,82,45,0.40);
+  --tt-radius:4px;
+  --tt-dm:'DM Sans',sans-serif;--tt-pf:'Playfair Display',Georgia,serif;
+  --tt-ease:cubic-bezier(.4,0,.2,1);
+
+  /* legenda-kleuren voor de matrix */
+  --tt-ideal: #6e9a73;    /* zacht groen — ideaal */
+  --tt-ok:    #cdb48e;    /* warm goud — redelijk */
+  --tt-bad:   #c47a5a;    /* zacht roest — af te raden */
+  --tt-cold:  #8aa8b8;    /* zacht blauw — kouder maar OK */
+
+  font-family:var(--tt-dm);font-size:15px;line-height:1.6;color:var(--tt-text);
+  display:block;background:transparent;padding:64px 16px 72px;
+}
+.tt-klim *,.tt-klim *::before,.tt-klim *::after{box-sizing:border-box;}
+
+/* ---- HEADER ---- */
+.tt-klim .tt-k-header{text-align:center;max-width:680px;margin:0 auto 44px;}
+.tt-klim .tt-k-eyebrow{font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--tt-sienna);margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:12px;}
+.tt-klim .tt-k-eyebrow::before,.tt-klim .tt-k-eyebrow::after{content:'';width:28px;height:1px;background:var(--tt-sienna-lt);opacity:.6;}
+.tt-klim .tt-k-h2{font-family:var(--tt-pf);font-size:clamp(28px,4.4vw,44px);font-weight:400;line-height:1.15;color:var(--tt-text);margin:0 0 16px;}
+.tt-klim .tt-k-h2 em{font-style:italic;color:var(--tt-sienna-mid);}
+.tt-klim .tt-k-sub{font-size:15px;color:var(--tt-text-3);line-height:1.75;font-weight:300;margin:0;}
+
+/* ---- LAYOUT ---- */
+.tt-klim .tt-k-wrap{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.35fr .9fr;gap:32px;align-items:start;}
+
+/* ---- KALENDER-CARD ---- */
+.tt-klim .tt-k-cal{
+  background:var(--tt-ivory);border:1px solid var(--tt-border-md);border-radius:var(--tt-radius);
+  padding:28px 28px 22px;position:relative;overflow:hidden;
+  box-shadow:0 2px 22px rgba(90,40,10,.06);
+}
+.tt-klim .tt-k-cal::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--tt-sienna-lt) 40%,var(--tt-gold) 60%,transparent);opacity:.55;}
+.tt-klim .tt-k-cal-title{font-family:var(--tt-pf);font-size:18px;font-weight:400;color:var(--tt-text);margin:0 0 4px;}
+.tt-klim .tt-k-cal-title em{font-style:italic;color:var(--tt-sienna-mid);}
+.tt-klim .tt-k-cal-hint{font-size:11.5px;color:var(--tt-text-3);font-weight:300;margin:0 0 22px;}
+
+/* tabel-rooster: 1 kolom regio-naam + 12 kolommen maanden */
+.tt-klim .tt-k-tbl{display:grid;grid-template-columns:90px repeat(12,1fr);gap:5px;}
+.tt-klim .tt-k-tbl-h{font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--tt-text-4);text-align:center;padding:0 0 6px;font-weight:500;}
+.tt-klim .tt-k-tbl-h.region{text-align:left;}
+.tt-klim .tt-k-tbl-region{
+  font-size:11.5px;font-weight:500;color:var(--tt-text-2);
+  display:flex;align-items:center;gap:6px;padding-right:4px;
+}
+.tt-klim .tt-k-tbl-region svg{width:14px;height:14px;color:var(--tt-sienna);flex-shrink:0;}
+
+/* cellen */
+.tt-klim .tt-k-cell{
+  aspect-ratio:1/1;border-radius:3px;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;transition:transform .2s var(--tt-ease);
+}
+.tt-klim .tt-k-cell.ideal{background:var(--tt-ideal);}
+.tt-klim .tt-k-cell.ok   {background:var(--tt-ok);}
+.tt-klim .tt-k-cell.bad  {background:var(--tt-bad);}
+.tt-klim .tt-k-cell.cold {background:var(--tt-cold);}
+
+/* maandlabels onder de matrix */
+.tt-klim .tt-k-monthrow{display:grid;grid-template-columns:90px repeat(12,1fr);gap:5px;margin-top:6px;}
+.tt-klim .tt-k-monthrow > div:first-child{}
+.tt-klim .tt-k-monthlbl{
+  text-align:center;font-size:10px;font-weight:500;letter-spacing:.04em;
+  color:var(--tt-text-3);padding:4px 0 0;
+}
+
+/* radio-laag bovenop de cellen (onzichtbaar maar klikbaar) */
+.tt-klim .tt-k-pickrow{
+  display:grid;grid-template-columns:90px repeat(12,1fr);gap:5px;
+  margin-top:14px;padding-top:14px;border-top:1px dashed var(--tt-border-md);
+}
+.tt-klim .tt-k-pickrow > .lbl{
+  font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--tt-text-3);font-weight:500;display:flex;align-items:center;
+}
+.tt-klim .tt-k-pick{position:relative;aspect-ratio:1/1;}
+.tt-klim .tt-k-pick input{position:absolute;inset:0;opacity:0;cursor:pointer;margin:0;width:100%;height:100%;}
+.tt-klim .tt-k-pick label{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:var(--tt-ivory-2);border:1px solid var(--tt-border-md);border-radius:3px;
+  font-size:11px;font-weight:500;color:var(--tt-text-3);
+  cursor:pointer;transition:all .2s var(--tt-ease);user-select:none;
+}
+.tt-klim .tt-k-pick label:hover{border-color:var(--tt-sienna-lt);color:var(--tt-sienna);background:var(--tt-ivory-3);}
+.tt-klim .tt-k-pick input:checked + label{
+  background:var(--tt-sienna);border-color:var(--tt-sienna);color:#fff;
+  box-shadow:0 2px 8px rgba(160,82,45,.25);
+}
+
+/* legenda onder matrix */
+.tt-klim .tt-k-leg{display:flex;flex-wrap:wrap;gap:14px 20px;margin-top:18px;padding-top:16px;border-top:1px solid var(--tt-border);font-size:11px;color:var(--tt-text-3);}
+.tt-klim .tt-k-leg-item{display:flex;align-items:center;gap:7px;}
+.tt-klim .tt-k-leg-sw{width:14px;height:14px;border-radius:3px;flex-shrink:0;}
+.tt-klim .tt-k-leg-sw.ideal{background:var(--tt-ideal);}
+.tt-klim .tt-k-leg-sw.ok   {background:var(--tt-ok);}
+.tt-klim .tt-k-leg-sw.bad  {background:var(--tt-bad);}
+.tt-klim .tt-k-leg-sw.cold {background:var(--tt-cold);}
+
+/* ---- DETAIL-PANEL ---- */
+.tt-klim .tt-k-panel{
+  background:var(--tt-ivory);border:1px solid var(--tt-border-md);border-radius:var(--tt-radius);
+  padding:28px 28px 26px;position:relative;overflow:hidden;
+  box-shadow:0 2px 22px rgba(90,40,10,.06);
+  min-height:380px;
+}
+.tt-klim .tt-k-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--tt-sienna-lt) 40%,var(--tt-gold) 60%,transparent);opacity:.55;}
+
+.tt-klim .tt-k-detail{display:none;}
+.tt-klim .tt-k-detail.active{display:block;}
+
+.tt-klim .tt-k-d-eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--tt-sienna);font-weight:500;margin-bottom:6px;}
+.tt-klim .tt-k-d-month{font-family:var(--tt-pf);font-size:28px;font-weight:400;color:var(--tt-text);line-height:1.1;margin:0 0 6px;}
+.tt-klim .tt-k-d-month em{font-style:italic;color:var(--tt-sienna-mid);}
+.tt-klim .tt-k-d-tag{display:inline-block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;padding:5px 10px;border-radius:3px;margin-bottom:18px;}
+.tt-klim .tt-k-d-tag.ideal{background:rgba(110,154,115,.18);color:#3f6644;}
+.tt-klim .tt-k-d-tag.ok   {background:rgba(184,153,106,.22);color:#7a5c2f;}
+.tt-klim .tt-k-d-tag.bad  {background:rgba(196,122,90,.20);color:#8a3a1a;}
+
+/* metrics rij */
+.tt-klim .tt-k-d-metrics{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:14px 0 18px;padding:14px 0;border-top:1px solid var(--tt-border);border-bottom:1px solid var(--tt-border);}
+.tt-klim .tt-k-d-metric{text-align:center;}
+.tt-klim .tt-k-d-metric .ic{width:22px;height:22px;color:var(--tt-sienna);margin:0 auto 5px;display:block;}
+.tt-klim .tt-k-d-metric .val{font-family:var(--tt-pf);font-size:16px;font-weight:500;color:var(--tt-text);line-height:1.1;}
+.tt-klim .tt-k-d-metric .lbl{font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--tt-text-4);margin-top:2px;}
+
+.tt-klim .tt-k-d-vibe{font-family:var(--tt-pf);font-style:italic;font-size:15px;color:var(--tt-text-2);line-height:1.55;margin:0 0 16px;}
+.tt-klim .tt-k-d-vibe span{color:var(--tt-sienna-mid);}
+
+/* per-regio advies-rij */
+.tt-klim .tt-k-d-rec{display:flex;flex-direction:column;gap:10px;}
+.tt-klim .tt-k-d-rec-row{display:flex;align-items:flex-start;gap:11px;font-size:12.5px;line-height:1.5;}
+.tt-klim .tt-k-d-rec-dot{
+  width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:5px;
+}
+.tt-klim .tt-k-d-rec-dot.ideal{background:var(--tt-ideal);}
+.tt-klim .tt-k-d-rec-dot.ok   {background:var(--tt-ok);}
+.tt-klim .tt-k-d-rec-dot.bad  {background:var(--tt-bad);}
+.tt-klim .tt-k-d-rec-dot.cold {background:var(--tt-cold);}
+.tt-klim .tt-k-d-rec-txt{color:var(--tt-text-2);}
+.tt-klim .tt-k-d-rec-txt strong{font-weight:500;color:var(--tt-text);display:block;font-size:11.5px;}
+
+/* CTA onderaan */
+.tt-klim .tt-k-d-cta{margin-top:22px;padding-top:18px;border-top:1px solid var(--tt-border);text-align:center;}
+.tt-klim .tt-k-d-cta-text{font-size:12px;color:var(--tt-text-3);margin-bottom:12px;font-weight:300;}
+.tt-klim .tt-k-d-cta-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--tt-dm);font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--tt-sienna);border:none;padding:11px 22px;border-radius:var(--tt-radius);cursor:pointer;text-decoration:none;transition:background .25s var(--tt-ease);}
+.tt-klim .tt-k-d-cta-btn:hover{background:var(--tt-text-2);}
+.tt-klim .tt-k-d-cta-btn svg{width:12px;height:12px;}
+
+/* ---- RESPONSIVE ---- */
+@media(max-width:880px){
+  .tt-klim .tt-k-wrap{grid-template-columns:1fr;gap:18px;}
+  .tt-klim .tt-k-tbl,.tt-klim .tt-k-monthrow,.tt-klim .tt-k-pickrow{grid-template-columns:78px repeat(12,1fr);gap:3px;}
+  .tt-klim .tt-k-tbl-region{font-size:10.5px;}
+  .tt-klim .tt-k-tbl-region svg{display:none;}
+  .tt-klim .tt-k-monthlbl{font-size:9px;}
+}
+@media(max-width:560px){
+  .tt-klim{padding:48px 12px 56px;}
+  .tt-klim .tt-k-cal,.tt-klim .tt-k-panel{padding:22px 18px 20px;}
+  .tt-klim .tt-k-tbl,.tt-klim .tt-k-monthrow,.tt-klim .tt-k-pickrow{grid-template-columns:62px repeat(12,1fr);gap:2px;}
+  .tt-klim .tt-k-tbl-region{font-size:9.5px;}
+  .tt-klim .tt-k-monthlbl{font-size:8.5px;letter-spacing:0;}
+  .tt-klim .tt-k-pick label{font-size:9px;}
+  .tt-klim .tt-k-d-month{font-size:24px;}
+  .tt-klim .tt-k-d-metrics{gap:6px;}
+  .tt-klim .tt-k-d-metric .val{font-size:14px;}
+  .tt-klim .tt-k-leg{font-size:10.5px;gap:10px 14px;}
+}
+</style>
+
+<!-- HEADER -->
+<div class="tt-k-header">
+  <div class="tt-k-eyebrow">Klimaat &amp; beste reistijd</div>
+  <h2 class="tt-k-h2">Wanneer is Marokko<em> op zijn mooist?</em></h2>
+  <p class="tt-k-sub">Marokko reist het hele jaar door &mdash; maar wat ideaal is, hangt af van wáár u heen wilt. Bekijk per maand en regio in &eacute;&eacute;n oogopslag wanneer de omstandigheden in uw voordeel werken.</p>
+</div>
+
+<div class="tt-k-wrap">
+
+  <!-- KALENDER-MATRIX -->
+  <div class="tt-k-cal">
+    <h3 class="tt-k-cal-title">Reisklimaat per <em>regio &amp; maand</em></h3>
+    <p class="tt-k-cal-hint">Tik op een maand onderaan voor details.</p>
+
+    <!-- MATRIX -->
+    <div class="tt-k-tbl">
+      <!-- header rij (leeg eerste cel) -->
+      <div class="tt-k-tbl-h region">&nbsp;</div>
+      <div class="tt-k-tbl-h">J</div><div class="tt-k-tbl-h">F</div><div class="tt-k-tbl-h">M</div><div class="tt-k-tbl-h">A</div><div class="tt-k-tbl-h">M</div><div class="tt-k-tbl-h">J</div><div class="tt-k-tbl-h">J</div><div class="tt-k-tbl-h">A</div><div class="tt-k-tbl-h">S</div><div class="tt-k-tbl-h">O</div><div class="tt-k-tbl-h">N</div><div class="tt-k-tbl-h">D</div>
+
+      <!-- Steden (Marrakech/Fez) -->
+      <div class="tt-k-tbl-region">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-4 7 4v13M9 21v-5h6v5"/></svg>
+        Steden
+      </div>
+      <div class="tt-k-cell cold"></div><div class="tt-k-cell ok"></div><div class="tt-k-cell ideal"></div><div class="tt-k-cell ideal"></div><div class="tt-k-cell ideal"></div><div class="tt-k-cell ok"></div><div class="tt-k-cell bad"></div><div class="tt-k-cell bad"></div><div class="tt-k-cell ideal"></div><div class="tt-k-cell ideal"></div><div class="tt-k-cell ideal"></div><div class="tt-k-cell ok"></div>
+
+      <!-- Sahara -->
+      <div class="tt-k-tbl-region">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>
+        Sahara
+      </div>
+      <div class="tt-k-cell cold"></div><div class="tt-k-cell ok"></div><div class="tt-k-cell ideal"></div><div class="tt-k-cell ideal"></div><div class="tt-k-cell ok"></div><div class="tt-k-cell bad"></div><div class="tt-k-cell bad"></div><div class="tt-k-cell bad"></div><div class="tt-k-cell ok"></div><div class="tt-k-cell ideal"></div><div class="tt-k-cell ideal"></div><div class="tt-k-cell cold"></div>
+
+      <!-- Atlas -->
+      <div class="tt-k-tbl-region">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18l5-8 4 5 3-4 6 7z"/></svg>
+        Atlas
+      </div>
+      <div class="tt-k-cell bad"></div><div class="tt-k-cell bad"></div><div class="tt-k-cell cold"></div><div class="tt-k-cell ok"></div><div class="tt-k-cell ideal"></div><div class="tt-k-cell ideal"></div><div class="tt-k-cell ideal"></div><div class="tt-k-cell ideal"></div><div class="tt-k-cell ideal"></div><div class="tt-k-cell ok"></div><div class="tt-k-cell cold"></div><div class="tt-k-cell bad"></div>
+
+      <!-- Atlantische kust -->
+      <div class="tt-k-tbl-region">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0M2 18c2-2 4-2 6 0s4 2 6 0 4-2 6 0M2 10c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg>
+        Kust
+      </div>
+      <div class="tt-k-cell cold"></div><div class="tt-k-cell cold"></div><div class="tt-k-cell ok"></div><div class="tt-k-cell ok"></div><div class="tt-k-cell ideal"></div><div class="tt-k-cell ideal"></div><div class="tt-k-cell ideal"></div><div class="tt-k-cell ideal"></div><div class="tt-k-cell ideal"></div><div class="tt-k-cell ideal"></div><div class="tt-k-cell ok"></div><div class="tt-k-cell cold"></div>
+    </div>
+
+    <!-- maandlabels onder -->
+    <div class="tt-k-monthrow">
+      <div></div>
+      <div class="tt-k-monthlbl">jan</div><div class="tt-k-monthlbl">feb</div><div class="tt-k-monthlbl">mrt</div><div class="tt-k-monthlbl">apr</div><div class="tt-k-monthlbl">mei</div><div class="tt-k-monthlbl">jun</div><div class="tt-k-monthlbl">jul</div><div class="tt-k-monthlbl">aug</div><div class="tt-k-monthlbl">sep</div><div class="tt-k-monthlbl">okt</div><div class="tt-k-monthlbl">nov</div><div class="tt-k-monthlbl">dec</div>
+    </div>
+
+    <!-- maand-picker (radio inputs voor :checked-CSS) -->
+    <div class="tt-k-pickrow">
+      <div class="lbl">Bekijk &rarr;</div>
+      <div class="tt-k-pick"><input type="radio" name="ttMonth" id="ttM01"><label for="ttM01">01</label></div>
+      <div class="tt-k-pick"><input type="radio" name="ttMonth" id="ttM02"><label for="ttM02">02</label></div>
+      <div class="tt-k-pick"><input type="radio" name="ttMonth" id="ttM03"><label for="ttM03">03</label></div>
+      <div class="tt-k-pick"><input type="radio" name="ttMonth" id="ttM04" checked><label for="ttM04">04</label></div>
+      <div class="tt-k-pick"><input type="radio" name="ttMonth" id="ttM05"><label for="ttM05">05</label></div>
+      <div class="tt-k-pick"><input type="radio" name="ttMonth" id="ttM06"><label for="ttM06">06</label></div>
+      <div class="tt-k-pick"><input type="radio" name="ttMonth" id="ttM07"><label for="ttM07">07</label></div>
+      <div class="tt-k-pick"><input type="radio" name="ttMonth" id="ttM08"><label for="ttM08">08</label></div>
+      <div class="tt-k-pick"><input type="radio" name="ttMonth" id="ttM09"><label for="ttM09">09</label></div>
+      <div class="tt-k-pick"><input type="radio" name="ttMonth" id="ttM10"><label for="ttM10">10</label></div>
+      <div class="tt-k-pick"><input type="radio" name="ttMonth" id="ttM11"><label for="ttM11">11</label></div>
+      <div class="tt-k-pick"><input type="radio" name="ttMonth" id="ttM12"><label for="ttM12">12</label></div>
+    </div>
+
+    <!-- legenda -->
+    <div class="tt-k-leg">
+      <div class="tt-k-leg-item"><span class="tt-k-leg-sw ideal"></span>Ideaal</div>
+      <div class="tt-k-leg-item"><span class="tt-k-leg-sw ok"></span>Redelijk</div>
+      <div class="tt-k-leg-item"><span class="tt-k-leg-sw cold"></span>Koud (vooral 's nachts)</div>
+      <div class="tt-k-leg-item"><span class="tt-k-leg-sw bad"></span>Af te raden</div>
+    </div>
+  </div>
+
+  <!-- DETAIL-PANEL — alle 12 maanden, getoond op basis van :checked radio -->
+  <div class="tt-k-panel">
+
+    <!-- Januari -->
+    <div class="tt-k-detail" data-m="01">
+      <div class="tt-k-d-eyebrow">In januari</div>
+      <h4 class="tt-k-d-month">Januari <em>in Marokko</em></h4>
+      <span class="tt-k-d-tag ok">Buiten hoogseizoen &middot; rustig</span>
+      <div class="tt-k-d-metrics">
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3a2 2 0 0 0-4 0v11.76a4 4 0 1 0 4 0z"/></svg>
+          <div class="val">19&deg; / 6&deg;</div><div class="lbl">Marrakech</div>
+        </div>
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16.2A4.5 4.5 0 0 0 17.5 8h-1.8A7 7 0 1 0 4 14.9"/><path d="M8 19l2 2 4-4"/></svg>
+          <div class="val">~5 dagen</div><div class="lbl">Regen</div>
+        </div>
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+          <div class="val">7 uur</div><div class="lbl">Zon/dag</div>
+        </div>
+      </div>
+      <p class="tt-k-d-vibe">Heldere winterzon, <span>besneeuwde Atlas-toppen</span> op de achtergrond &mdash; en 's avonds de open haard in uw riad.</p>
+      <div class="tt-k-d-rec">
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot cold"></span><div class="tt-k-d-rec-txt"><strong>Steden</strong>Aangename dagen om de souks te verkennen, maar de nachten zijn fris. Een riad met verwarming is een must.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot cold"></span><div class="tt-k-d-rec-txt"><strong>Sahara</strong>Mild overdag, ijskoud 's nachts (rond 0&deg;C). Mooi sterrenrijk seizoen &mdash; mits goed ingepakt.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot bad"></span><div class="tt-k-d-rec-txt"><strong>Atlas</strong>Pas voor wintersporters; veel passen besneeuwd of gesloten.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot cold"></span><div class="tt-k-d-rec-txt"><strong>Kust</strong>Zacht maar te koel voor zwemmen. Wel mooi voor lange wandelingen langs Essaouira.</div></div>
+      </div>
+    </div>
+
+    <!-- Februari -->
+    <div class="tt-k-detail" data-m="02">
+      <div class="tt-k-d-eyebrow">In februari</div>
+      <h4 class="tt-k-d-month">Februari <em>in Marokko</em></h4>
+      <span class="tt-k-d-tag ok">Onderschatte tip &middot; mooi licht</span>
+      <div class="tt-k-d-metrics">
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3a2 2 0 0 0-4 0v11.76a4 4 0 1 0 4 0z"/></svg>
+          <div class="val">21&deg; / 8&deg;</div><div class="lbl">Marrakech</div>
+        </div>
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16.2A4.5 4.5 0 0 0 17.5 8h-1.8A7 7 0 1 0 4 14.9"/><path d="M8 19l2 2 4-4"/></svg>
+          <div class="val">~6 dagen</div><div class="lbl">Regen</div>
+        </div>
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+          <div class="val">8 uur</div><div class="lbl">Zon/dag</div>
+        </div>
+      </div>
+      <p class="tt-k-d-vibe">Eerste tekenen van lente, <span>amandelbloesem</span> in de Atlas, en in de Sahara de mooiste fotografie-omstandigheden van het jaar.</p>
+      <div class="tt-k-d-rec">
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ok"></span><div class="tt-k-d-rec-txt"><strong>Steden</strong>Prettige temperaturen, weinig drukte, scherpe prijzen.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ok"></span><div class="tt-k-d-rec-txt"><strong>Sahara</strong>Mooie omstandigheden overdag, nachten nog koud. Veel minder bezoekers dan in voorjaar.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot bad"></span><div class="tt-k-d-rec-txt"><strong>Atlas</strong>Hoogteroutes nog grotendeels gesloten; lage Atlas wel toegankelijk.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot cold"></span><div class="tt-k-d-rec-txt"><strong>Kust</strong>Aangenaam zonnig overdag, frisse wind. Niet voor het strand, w&eacute;l voor cultuur.</div></div>
+      </div>
+    </div>
+
+    <!-- Maart -->
+    <div class="tt-k-detail" data-m="03">
+      <div class="tt-k-d-eyebrow">In maart</div>
+      <h4 class="tt-k-d-month">Maart <em>in Marokko</em></h4>
+      <span class="tt-k-d-tag ideal">Topseizoen &middot; aanrader</span>
+      <div class="tt-k-d-metrics">
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3a2 2 0 0 0-4 0v11.76a4 4 0 1 0 4 0z"/></svg>
+          <div class="val">23&deg; / 11&deg;</div><div class="lbl">Marrakech</div>
+        </div>
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16.2A4.5 4.5 0 0 0 17.5 8h-1.8A7 7 0 1 0 4 14.9"/><path d="M8 19l2 2 4-4"/></svg>
+          <div class="val">~7 dagen</div><div class="lbl">Regen</div>
+        </div>
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+          <div class="val">9 uur</div><div class="lbl">Zon/dag</div>
+        </div>
+      </div>
+      <p class="tt-k-d-vibe">Het ideale voorjaar: <span>warme dagen, milde avonden</span>, bloeiende oases en de woestijn op zijn aangenaamst.</p>
+      <div class="tt-k-d-rec">
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ideal"></span><div class="tt-k-d-rec-txt"><strong>Steden</strong>Een van de beste maanden voor Marrakech en Fez. Reken op af en toe een korte bui.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ideal"></span><div class="tt-k-d-rec-txt"><strong>Sahara</strong>Perfect: dagen 25&ndash;28&deg;C, nachten al een stuk milder. Beste maand voor woestijnkampen.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot cold"></span><div class="tt-k-d-rec-txt"><strong>Atlas</strong>Lage Atlas begint te openen; hoge passen kunnen nog sneeuw hebben.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ok"></span><div class="tt-k-d-rec-txt"><strong>Kust</strong>Zonnig en aangenaam voor wandelen, nog koel voor zwemmen.</div></div>
+      </div>
+    </div>
+
+    <!-- April -->
+    <div class="tt-k-detail active" data-m="04">
+      <div class="tt-k-d-eyebrow">In april</div>
+      <h4 class="tt-k-d-month">April <em>in Marokko</em></h4>
+      <span class="tt-k-d-tag ideal">Topseizoen &middot; populair</span>
+      <div class="tt-k-d-metrics">
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3a2 2 0 0 0-4 0v11.76a4 4 0 1 0 4 0z"/></svg>
+          <div class="val">26&deg; / 13&deg;</div><div class="lbl">Marrakech</div>
+        </div>
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16.2A4.5 4.5 0 0 0 17.5 8h-1.8A7 7 0 1 0 4 14.9"/><path d="M8 19l2 2 4-4"/></svg>
+          <div class="val">~5 dagen</div><div class="lbl">Regen</div>
+        </div>
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+          <div class="val">10 uur</div><div class="lbl">Zon/dag</div>
+        </div>
+      </div>
+      <p class="tt-k-d-vibe">De klassieker. <span>Lange, zonnige dagen</span>, bloeiende tuinen, en alles &mdash; van stad tot woestijn &mdash; werkt mee.</p>
+      <div class="tt-k-d-rec">
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ideal"></span><div class="tt-k-d-rec-txt"><strong>Steden</strong>Wellicht de allermooiste maand. Boek tijdig: april is populair bij internationale reizigers.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ideal"></span><div class="tt-k-d-rec-txt"><strong>Sahara</strong>Uitstekende voorwaarden voor woestijnkampen; einde maand kan zandstormen hebben.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ok"></span><div class="tt-k-d-rec-txt"><strong>Atlas</strong>Eerste wandelingen worden mogelijk in de lagere dalen.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ok"></span><div class="tt-k-d-rec-txt"><strong>Kust</strong>Aangenaam, wel nog frisse wind &mdash; ideaal voor cultuur, surf en lange terrasdiners.</div></div>
+      </div>
+    </div>
+
+    <!-- Mei -->
+    <div class="tt-k-detail" data-m="05">
+      <div class="tt-k-d-eyebrow">In mei</div>
+      <h4 class="tt-k-d-month">Mei <em>in Marokko</em></h4>
+      <span class="tt-k-d-tag ideal">Topseizoen</span>
+      <div class="tt-k-d-metrics">
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3a2 2 0 0 0-4 0v11.76a4 4 0 1 0 4 0z"/></svg>
+          <div class="val">29&deg; / 16&deg;</div><div class="lbl">Marrakech</div>
+        </div>
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16.2A4.5 4.5 0 0 0 17.5 8h-1.8A7 7 0 1 0 4 14.9"/><path d="M8 19l2 2 4-4"/></svg>
+          <div class="val">~3 dagen</div><div class="lbl">Regen</div>
+        </div>
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+          <div class="val">11 uur</div><div class="lbl">Zon/dag</div>
+        </div>
+      </div>
+      <p class="tt-k-d-vibe">Warm, droog en helder. <span>De Atlas opent</span>; de woestijn nog niet te heet; de kust komt tot leven.</p>
+      <div class="tt-k-d-rec">
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ideal"></span><div class="tt-k-d-rec-txt"><strong>Steden</strong>Lekker warm, occasionele hete dagen mogelijk. Kies een riad met patio en schaduw.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ok"></span><div class="tt-k-d-rec-txt"><strong>Sahara</strong>Nog goed te doen, maar planning vroege ochtend / late namiddag.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ideal"></span><div class="tt-k-d-rec-txt"><strong>Atlas</strong>Start van het trektijd-seizoen. Wilde bloemen langs de paden.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ideal"></span><div class="tt-k-d-rec-txt"><strong>Kust</strong>Heerlijk seizoen voor Essaouira en de noordkust. Zee nog fris.</div></div>
+      </div>
+    </div>
+
+    <!-- Juni -->
+    <div class="tt-k-detail" data-m="06">
+      <div class="tt-k-d-eyebrow">In juni</div>
+      <h4 class="tt-k-d-month">Juni <em>in Marokko</em></h4>
+      <span class="tt-k-d-tag ok">Wisselend per regio</span>
+      <div class="tt-k-d-metrics">
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3a2 2 0 0 0-4 0v11.76a4 4 0 1 0 4 0z"/></svg>
+          <div class="val">33&deg; / 20&deg;</div><div class="lbl">Marrakech</div>
+        </div>
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16.2A4.5 4.5 0 0 0 17.5 8h-1.8A7 7 0 1 0 4 14.9"/><path d="M8 19l2 2 4-4"/></svg>
+          <div class="val">~1 dag</div><div class="lbl">Regen</div>
+        </div>
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+          <div class="val">11 uur</div><div class="lbl">Zon/dag</div>
+        </div>
+      </div>
+      <p class="tt-k-d-vibe">Het kantelpunt. <span>Steden worden warm</span>, maar Atlas en kust beleven hun gouden tijd.</p>
+      <div class="tt-k-d-rec">
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ok"></span><div class="tt-k-d-rec-txt"><strong>Steden</strong>Heet overdag, plan rond de middag binnen of bij het zwembad.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot bad"></span><div class="tt-k-d-rec-txt"><strong>Sahara</strong>Te heet: dagen vaak boven 40&deg;C. Veel kampen sluiten dicht.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ideal"></span><div class="tt-k-d-rec-txt"><strong>Atlas</strong>Topmaand voor wandelen &mdash; helder weer, alles open, bloeiende valleien.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ideal"></span><div class="tt-k-d-rec-txt"><strong>Kust</strong>Heerlijk: 22&ndash;26&deg;C, oceaanwind, rustiger dan juli/augustus.</div></div>
+      </div>
+    </div>
+
+    <!-- Juli -->
+    <div class="tt-k-detail" data-m="07">
+      <div class="tt-k-d-eyebrow">In juli</div>
+      <h4 class="tt-k-d-month">Juli <em>in Marokko</em></h4>
+      <span class="tt-k-d-tag bad">Vermijd het binnenland</span>
+      <div class="tt-k-d-metrics">
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3a2 2 0 0 0-4 0v11.76a4 4 0 1 0 4 0z"/></svg>
+          <div class="val">38&deg; / 22&deg;</div><div class="lbl">Marrakech</div>
+        </div>
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16.2A4.5 4.5 0 0 0 17.5 8h-1.8A7 7 0 1 0 4 14.9"/><path d="M8 19l2 2 4-4"/></svg>
+          <div class="val">~0 dagen</div><div class="lbl">Regen</div>
+        </div>
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+          <div class="val">12 uur</div><div class="lbl">Zon/dag</div>
+        </div>
+      </div>
+      <p class="tt-k-d-vibe">Hoogzomer. <span>Binnenland gloeit</span>, maar de kust ademt opgelucht: hier ligt de zomerse magie.</p>
+      <div class="tt-k-d-rec">
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot bad"></span><div class="tt-k-d-rec-txt"><strong>Steden</strong>Te heet voor zinvolle stedentrips &mdash; tenzij u alleen 's avonds buiten bent.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot bad"></span><div class="tt-k-d-rec-txt"><strong>Sahara</strong>Extreem: tot 45&deg;C en hoger. Kampen veelal gesloten.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ideal"></span><div class="tt-k-d-rec-txt"><strong>Atlas</strong>Idem juni &mdash; perfect bergweer, koele nachten op hoogte.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ideal"></span><div class="tt-k-d-rec-txt"><strong>Kust</strong>Ideaal: 25&deg;C, oceaanbries, festivals in Essaouira.</div></div>
+      </div>
+    </div>
+
+    <!-- Augustus -->
+    <div class="tt-k-detail" data-m="08">
+      <div class="tt-k-d-eyebrow">In augustus</div>
+      <h4 class="tt-k-d-month">Augustus <em>in Marokko</em></h4>
+      <span class="tt-k-d-tag bad">Vermijd het binnenland</span>
+      <div class="tt-k-d-metrics">
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3a2 2 0 0 0-4 0v11.76a4 4 0 1 0 4 0z"/></svg>
+          <div class="val">38&deg; / 22&deg;</div><div class="lbl">Marrakech</div>
+        </div>
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16.2A4.5 4.5 0 0 0 17.5 8h-1.8A7 7 0 1 0 4 14.9"/><path d="M8 19l2 2 4-4"/></svg>
+          <div class="val">~0 dagen</div><div class="lbl">Regen</div>
+        </div>
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+          <div class="val">11 uur</div><div class="lbl">Zon/dag</div>
+        </div>
+      </div>
+      <p class="tt-k-d-vibe">Vergelijkbaar met juli. <span>Vlucht naar de kust of de bergen</span> &mdash; daar zit het seizoen op zijn best.</p>
+      <div class="tt-k-d-rec">
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot bad"></span><div class="tt-k-d-rec-txt"><strong>Steden</strong>Drukker dan in juli; toch te heet voor langere stadsbezoeken.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot bad"></span><div class="tt-k-d-rec-txt"><strong>Sahara</strong>Idem juli &mdash; vermijd, of plan uitsluitend nachtelijke activiteiten.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ideal"></span><div class="tt-k-d-rec-txt"><strong>Atlas</strong>Perfecte trektijd, in de hoogte aangenaam koel.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ideal"></span><div class="tt-k-d-rec-txt"><strong>Kust</strong>Hoogseizoen Essaouira/Agadir &mdash; boek vroeg.</div></div>
+      </div>
+    </div>
+
+    <!-- September -->
+    <div class="tt-k-detail" data-m="09">
+      <div class="tt-k-d-eyebrow">In september</div>
+      <h4 class="tt-k-d-month">September <em>in Marokko</em></h4>
+      <span class="tt-k-d-tag ideal">Topseizoen begint</span>
+      <div class="tt-k-d-metrics">
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3a2 2 0 0 0-4 0v11.76a4 4 0 1 0 4 0z"/></svg>
+          <div class="val">33&deg; / 19&deg;</div><div class="lbl">Marrakech</div>
+        </div>
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16.2A4.5 4.5 0 0 0 17.5 8h-1.8A7 7 0 1 0 4 14.9"/><path d="M8 19l2 2 4-4"/></svg>
+          <div class="val">~2 dagen</div><div class="lbl">Regen</div>
+        </div>
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+          <div class="val">10 uur</div><div class="lbl">Zon/dag</div>
+        </div>
+      </div>
+      <p class="tt-k-d-vibe">Hitte ebt weg. <span>Najaarslicht</span>, dichtere kleuren, en alle regio's komen samen op één lijn.</p>
+      <div class="tt-k-d-rec">
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ideal"></span><div class="tt-k-d-rec-txt"><strong>Steden</strong>Begin maand kan nog warm, eind maand prachtig. Souks bruisen weer.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ok"></span><div class="tt-k-d-rec-txt"><strong>Sahara</strong>Begin nog heet, eind september al goed te doen.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ideal"></span><div class="tt-k-d-rec-txt"><strong>Atlas</strong>Stabiel weer, lange dagen, kleurrijke vallei-bossen.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ideal"></span><div class="tt-k-d-rec-txt"><strong>Kust</strong>Zee nog warm, drukte verdwijnt.</div></div>
+      </div>
+    </div>
+
+    <!-- Oktober -->
+    <div class="tt-k-detail" data-m="10">
+      <div class="tt-k-d-eyebrow">In oktober</div>
+      <h4 class="tt-k-d-month">Oktober <em>in Marokko</em></h4>
+      <span class="tt-k-d-tag ideal">De allerbeste maand</span>
+      <div class="tt-k-d-metrics">
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3a2 2 0 0 0-4 0v11.76a4 4 0 1 0 4 0z"/></svg>
+          <div class="val">28&deg; / 15&deg;</div><div class="lbl">Marrakech</div>
+        </div>
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16.2A4.5 4.5 0 0 0 17.5 8h-1.8A7 7 0 1 0 4 14.9"/><path d="M8 19l2 2 4-4"/></svg>
+          <div class="val">~5 dagen</div><div class="lbl">Regen</div>
+        </div>
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+          <div class="val">9 uur</div><div class="lbl">Zon/dag</div>
+        </div>
+      </div>
+      <p class="tt-k-d-vibe">Veel kenners noemen oktober <span>de mooiste maand</span> voor heel Marokko. Heet is verdwenen, koud ligt nog ver weg.</p>
+      <div class="tt-k-d-rec">
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ideal"></span><div class="tt-k-d-rec-txt"><strong>Steden</strong>Aangename warmte, milde avonden, levendige bazaars.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ideal"></span><div class="tt-k-d-rec-txt"><strong>Sahara</strong>Wellicht de beste woestijnmaand: warme dagen, milde nachten, kraakhelder.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ok"></span><div class="tt-k-d-rec-txt"><strong>Atlas</strong>Helder weer, koudere nachten op hoogte; lagere routes nog ideaal.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ideal"></span><div class="tt-k-d-rec-txt"><strong>Kust</strong>Goed warm, rustig en betaalbaar.</div></div>
+      </div>
+    </div>
+
+    <!-- November -->
+    <div class="tt-k-detail" data-m="11">
+      <div class="tt-k-d-eyebrow">In november</div>
+      <h4 class="tt-k-d-month">November <em>in Marokko</em></h4>
+      <span class="tt-k-d-tag ideal">Stille topper</span>
+      <div class="tt-k-d-metrics">
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3a2 2 0 0 0-4 0v11.76a4 4 0 1 0 4 0z"/></svg>
+          <div class="val">23&deg; / 10&deg;</div><div class="lbl">Marrakech</div>
+        </div>
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16.2A4.5 4.5 0 0 0 17.5 8h-1.8A7 7 0 1 0 4 14.9"/><path d="M8 19l2 2 4-4"/></svg>
+          <div class="val">~6 dagen</div><div class="lbl">Regen</div>
+        </div>
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+          <div class="val">7 uur</div><div class="lbl">Zon/dag</div>
+        </div>
+      </div>
+      <p class="tt-k-d-vibe">Onderschat. <span>Najaarslicht over de medina</span>, milde Sahara-dagen, en aantrekkelijke tarieven.</p>
+      <div class="tt-k-d-rec">
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ideal"></span><div class="tt-k-d-rec-txt"><strong>Steden</strong>Heerlijk reisweer, weinig drukte, mooie prijzen.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ideal"></span><div class="tt-k-d-rec-txt"><strong>Sahara</strong>Top: warme middagen, frisse nachten met dekenwarmte in het kamp.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot cold"></span><div class="tt-k-d-rec-txt"><strong>Atlas</strong>Hoge passen sluiten richting eind maand; lagere routes nog prima.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ok"></span><div class="tt-k-d-rec-txt"><strong>Kust</strong>Zonnig, frisser, prettig voor lange strandwandelingen.</div></div>
+      </div>
+    </div>
+
+    <!-- December -->
+    <div class="tt-k-detail" data-m="12">
+      <div class="tt-k-d-eyebrow">In december</div>
+      <h4 class="tt-k-d-month">December <em>in Marokko</em></h4>
+      <span class="tt-k-d-tag ok">Zachte winterzon</span>
+      <div class="tt-k-d-metrics">
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3a2 2 0 0 0-4 0v11.76a4 4 0 1 0 4 0z"/></svg>
+          <div class="val">20&deg; / 7&deg;</div><div class="lbl">Marrakech</div>
+        </div>
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16.2A4.5 4.5 0 0 0 17.5 8h-1.8A7 7 0 1 0 4 14.9"/><path d="M8 19l2 2 4-4"/></svg>
+          <div class="val">~6 dagen</div><div class="lbl">Regen</div>
+        </div>
+        <div class="tt-k-d-metric">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+          <div class="val">7 uur</div><div class="lbl">Zon/dag</div>
+        </div>
+      </div>
+      <p class="tt-k-d-vibe">Heldere winterdagen, <span>besneeuwde Atlas in de verte</span>. Populair rond de feestdagen &mdash; boek tijdig.</p>
+      <div class="tt-k-d-rec">
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot ok"></span><div class="tt-k-d-rec-txt"><strong>Steden</strong>Aangenaam overdag, koud 's nachts. Riads met haard zijn het waard.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot cold"></span><div class="tt-k-d-rec-txt"><strong>Sahara</strong>Helderste sterrenhemel van het jaar, maar nachten kunnen vriezen.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot bad"></span><div class="tt-k-d-rec-txt"><strong>Atlas</strong>Wintersport-territorium; veel passen gesloten.</div></div>
+        <div class="tt-k-d-rec-row"><span class="tt-k-d-rec-dot cold"></span><div class="tt-k-d-rec-txt"><strong>Kust</strong>Mild, regelmatig zonnig, te koud voor zwemmen.</div></div>
+      </div>
+    </div>
+
+    <!-- CTA onderaan paneel -->
+    <div class="tt-k-d-cta">
+      <p class="tt-k-d-cta-text">Wilt u dat wij de ideale maand voor &uacute;w reis bepalen?</p>
+      <a class="tt-k-d-cta-btn" href="#ttMarForm">
+        Stel uw Marokkoreis samen
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     :CHECKED-LOGICA — pure CSS toont alleen het detail-paneel
+     dat overeenkomt met de gekozen maand-radio.
+============================================================ -->
+<style>
+.tt-klim .tt-k-detail{display:none;}
+.tt-klim:has(#ttM01:checked) .tt-k-detail[data-m="01"],
+.tt-klim:has(#ttM02:checked) .tt-k-detail[data-m="02"],
+.tt-klim:has(#ttM03:checked) .tt-k-detail[data-m="03"],
+.tt-klim:has(#ttM04:checked) .tt-k-detail[data-m="04"],
+.tt-klim:has(#ttM05:checked) .tt-k-detail[data-m="05"],
+.tt-klim:has(#ttM06:checked) .tt-k-detail[data-m="06"],
+.tt-klim:has(#ttM07:checked) .tt-k-detail[data-m="07"],
+.tt-klim:has(#ttM08:checked) .tt-k-detail[data-m="08"],
+.tt-klim:has(#ttM09:checked) .tt-k-detail[data-m="09"],
+.tt-klim:has(#ttM10:checked) .tt-k-detail[data-m="10"],
+.tt-klim:has(#ttM11:checked) .tt-k-detail[data-m="11"],
+.tt-klim:has(#ttM12:checked) .tt-k-detail[data-m="12"]{display:block;}
+/* fallback voor browsers zonder :has() — toont april (default checked) */
+.tt-klim .tt-k-detail.active{display:block;}
+.tt-klim:has(input[type=radio]:checked) .tt-k-detail.active{display:none;}
+.tt-klim:has(#ttM04:checked) .tt-k-detail[data-m="04"]{display:block;}
+</style>
+</section>

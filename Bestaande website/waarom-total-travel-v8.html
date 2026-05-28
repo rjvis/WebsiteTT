@@ -1,0 +1,276 @@
+<!-- ============================================================
+     TOTAL TRAVEL — "WAAROM TOTAL TRAVEL?" v8
+     Continue cascade-loop met synchroon einde.
+     Mobiel: 2 naast elkaar, 2 daaronder (2x2 grid).
+
+     • Header en CTA zijn statisch.
+     • Vier USP-kaarten animeren: golf-in van links → rechts,
+       rust, synchroon uit, herhalen.
+     • Pure CSS, geen JavaScript.
+============================================================ -->
+
+<section class="tt-waarom" id="ttWaarom">
+<style>
+.tt-waarom{
+  --tt-sienna:#a0522d;--tt-sienna-mid:#a0522d;--tt-sienna-lt:#d9956a;
+  --tt-gold:#b8996a;--tt-gold-lt:#cdb48e;
+  --tt-ivory:#f8f3eb;--tt-ivory-2:#f2ead8;--tt-ivory-3:#ebe0ca;
+  --tt-text:#2c1f0e;--tt-text-2:#5a3e28;--tt-text-3:#8a6d52;--tt-text-4:#b09070;
+  --tt-border:rgba(160,82,45,0.14);--tt-border-md:rgba(160,82,45,0.25);--tt-border-str:rgba(160,82,45,0.40);
+  --tt-radius:4px;
+  --tt-dm:'DM Sans',sans-serif;--tt-pf:'Playfair Display',Georgia,serif;
+  --tt-ease:cubic-bezier(.4,0,.2,1);
+
+  /* CYCLUS-TIMING */
+  --tt-w-loop: 8s;      /* totale tijd van één cyclus inclusief rust */
+  --tt-w-step: .4s;     /* tijd tussen kaart-starts in de golf      */
+  --tt-w-fade: .9s;     /* duur van de synchrone uit-fade           */
+
+  font-family:var(--tt-dm);font-size:15px;line-height:1.6;color:var(--tt-text);
+  display:block;background:transparent;padding:64px 16px 72px;position:relative;
+}
+.tt-waarom *,.tt-waarom *::before,.tt-waarom *::after{box-sizing:border-box;}
+
+/* ---- HEADER (STATISCH) ---- */
+.tt-waarom .tt-w-header{text-align:center;max-width:640px;margin:0 auto 56px;}
+.tt-waarom .tt-w-eyebrow{font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--tt-sienna);margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:12px;}
+.tt-waarom .tt-w-eyebrow::before,.tt-waarom .tt-w-eyebrow::after{content:'';width:28px;height:1px;background:var(--tt-sienna-lt);opacity:.6;}
+.tt-waarom .tt-w-h2{font-family:var(--tt-pf);font-size:clamp(28px,4.4vw,44px);font-weight:400;line-height:1.15;color:var(--tt-text);margin:0 0 16px;}
+.tt-waarom .tt-w-h2 em{font-style:italic;color:var(--tt-sienna-mid);}
+.tt-waarom .tt-w-sub{font-size:15px;color:var(--tt-text-3);line-height:1.75;font-weight:300;margin:0;max-width:540px;margin-inline:auto;}
+
+/* ---- GRID ---- */
+.tt-waarom .tt-w-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;max-width:1120px;margin:0 auto;}
+
+/* ---- CARD ---- */
+.tt-waarom .tt-w-card{
+  position:relative;background:var(--tt-ivory);
+  border:1px solid var(--tt-border-md);border-radius:var(--tt-radius);
+  box-shadow:0 2px 22px rgba(90,40,10,.07);
+  padding:34px 24px 32px;
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  overflow:hidden;
+  transition:transform .4s var(--tt-ease),box-shadow .4s var(--tt-ease),border-color .4s var(--tt-ease);
+}
+.tt-waarom .tt-w-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--tt-sienna-lt) 40%,var(--tt-gold) 60%,transparent);opacity:.55;}
+.tt-waarom .tt-w-card:hover{transform:translateY(-5px);box-shadow:0 12px 32px rgba(90,40,10,.13);border-color:var(--tt-border-str);}
+
+/* icoon binnen de kaart */
+.tt-waarom .tt-w-icon{
+  width:62px;height:62px;border-radius:50%;
+  background:var(--tt-sienna);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 18px;flex-shrink:0;
+  box-shadow:0 6px 16px rgba(160,82,45,.25);
+  transition:transform .5s var(--tt-ease),background .35s var(--tt-ease);
+}
+.tt-waarom .tt-w-icon svg{width:28px;height:28px;}
+.tt-waarom .tt-w-card:hover .tt-w-icon{transform:scale(1.08) rotate(-3deg);background:var(--tt-text-2);}
+
+.tt-waarom .tt-w-idx{font-family:var(--tt-pf);font-size:12px;font-style:italic;color:var(--tt-text-4);margin-bottom:10px;letter-spacing:.04em;}
+.tt-waarom .tt-w-title{font-family:var(--tt-pf);font-size:20px;font-weight:400;line-height:1.3;color:var(--tt-text);margin:0 0 14px;min-height:50px;}
+.tt-waarom .tt-w-title em{font-style:italic;color:var(--tt-sienna-mid);}
+.tt-waarom .tt-w-rule{width:34px;height:1px;background:var(--tt-sienna-lt);opacity:.7;margin:0 auto 16px;transition:width .5s var(--tt-ease);}
+.tt-waarom .tt-w-card:hover .tt-w-rule{width:52px;}
+.tt-waarom .tt-w-body{font-size:13.5px;line-height:1.7;color:var(--tt-text-2);font-weight:300;margin:0;}
+
+/* ---- FOOTER / CTA (STATISCH) ---- */
+.tt-waarom .tt-w-foot{text-align:center;margin:56px auto 0;max-width:640px;}
+.tt-waarom .tt-w-foot-text{font-family:var(--tt-pf);font-style:italic;font-size:clamp(18px,2.5vw,23px);font-weight:400;line-height:1.5;color:var(--tt-text-2);margin:0 0 26px;}
+.tt-waarom .tt-w-foot-text span{color:var(--tt-sienna-mid);}
+.tt-waarom .tt-w-cta{display:inline-flex;align-items:center;gap:9px;font-family:var(--tt-dm);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--tt-sienna);border:none;padding:14px 32px;border-radius:var(--tt-radius);cursor:pointer;text-decoration:none;transition:background .25s var(--tt-ease),transform .25s var(--tt-ease);}
+.tt-waarom .tt-w-cta:hover{background:var(--tt-text-2);transform:translateY(-1px);}
+.tt-waarom .tt-w-cta svg{width:13px;height:13px;transition:transform .25s var(--tt-ease);}
+.tt-waarom .tt-w-cta:hover svg{transform:translateX(3px);}
+
+/* ============================================================
+   CASCADE-LOOP ANIMATIES — alleen op de 4 kaarten.
+
+   Truc voor "allemaal tegelijk uit":
+   We gebruiken 1 master-cyclus van --tt-w-loop seconden.
+   Elke kaart krijgt een EIGEN keyframe-set waarin de fade-in
+   op een ander tijdpunt valt, maar de fade-uit voor alle vier
+   op exact hetzelfde percentage (90% → 100%) gebeurt.
+   Daardoor verschijnen ze gestaggerd, maar verdwijnen ze samen.
+   ============================================================ */
+@media (prefers-reduced-motion: no-preference){
+  .tt-waarom .tt-w-card{
+    animation-duration: var(--tt-w-loop);
+    animation-timing-function: var(--tt-ease);
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+  }
+  .tt-waarom .tt-w-card:nth-child(1){animation-name: ttCard1;}
+  .tt-waarom .tt-w-card:nth-child(2){animation-name: ttCard2;}
+  .tt-waarom .tt-w-card:nth-child(3){animation-name: ttCard3;}
+  .tt-waarom .tt-w-card:nth-child(4){animation-name: ttCard4;}
+
+  /* icoon doet mee met de pop in de fase waarin zijn kaart verschijnt */
+  .tt-waarom .tt-w-card .tt-w-icon{
+    animation-duration: var(--tt-w-loop);
+    animation-timing-function: var(--tt-ease);
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+  }
+  .tt-waarom .tt-w-card:nth-child(1) .tt-w-icon{animation-name: ttIcon1;}
+  .tt-waarom .tt-w-card:nth-child(2) .tt-w-icon{animation-name: ttIcon2;}
+  .tt-waarom .tt-w-card:nth-child(3) .tt-w-icon{animation-name: ttIcon3;}
+  .tt-waarom .tt-w-card:nth-child(4) .tt-w-icon{animation-name: ttIcon4;}
+}
+
+/* ----------- KEYFRAMES PER KAART -----------
+   Cyclus van 100%. Bij --tt-w-loop=8s en --tt-w-step=0.4s:
+     kaart 1: in op 0%   (start direct)
+     kaart 2: in op 5%   (= 0.4s / 8s)
+     kaart 3: in op 10%  (= 0.8s)
+     kaart 4: in op 15%  (= 1.2s)
+   Allemaal uit: 90% → 100%  (synchroon, duurt 0.8s)
+*/
+@keyframes ttCard1{
+  0%   {opacity:0; transform:translateY(34px);}
+  5%   {opacity:1;}
+  9%   {opacity:1; transform:translateY(0);}
+  90%  {opacity:1; transform:translateY(0);}
+  100% {opacity:0; transform:translateY(0);}
+}
+@keyframes ttCard2{
+  0%, 5%   {opacity:0; transform:translateY(34px);}
+  10%      {opacity:1;}
+  14%      {opacity:1; transform:translateY(0);}
+  90%      {opacity:1; transform:translateY(0);}
+  100%     {opacity:0; transform:translateY(0);}
+}
+@keyframes ttCard3{
+  0%, 10%  {opacity:0; transform:translateY(34px);}
+  15%      {opacity:1;}
+  19%      {opacity:1; transform:translateY(0);}
+  90%      {opacity:1; transform:translateY(0);}
+  100%     {opacity:0; transform:translateY(0);}
+}
+@keyframes ttCard4{
+  0%, 15%  {opacity:0; transform:translateY(34px);}
+  20%      {opacity:1;}
+  24%      {opacity:1; transform:translateY(0);}
+  90%      {opacity:1; transform:translateY(0);}
+  100%     {opacity:0; transform:translateY(0);}
+}
+
+/* Iconen synchroon mee — kleine pop tijdens binnenkomst,
+   blijven staan, doen niets bij de gezamenlijke uit-fade
+   (de kaart zelf faded). */
+@keyframes ttIcon1{
+  0%   {opacity:0; transform:scale(.5) rotate(-12deg);}
+  5%   {opacity:1; transform:scale(1.15) rotate(4deg);}
+  9%   {opacity:1; transform:scale(1) rotate(0);}
+  90%, 100% {opacity:1; transform:scale(1) rotate(0);}
+}
+@keyframes ttIcon2{
+  0%, 5%   {opacity:0; transform:scale(.5) rotate(-12deg);}
+  10%      {opacity:1; transform:scale(1.15) rotate(4deg);}
+  14%      {opacity:1; transform:scale(1) rotate(0);}
+  90%, 100% {opacity:1; transform:scale(1) rotate(0);}
+}
+@keyframes ttIcon3{
+  0%, 10%  {opacity:0; transform:scale(.5) rotate(-12deg);}
+  15%      {opacity:1; transform:scale(1.15) rotate(4deg);}
+  19%      {opacity:1; transform:scale(1) rotate(0);}
+  90%, 100% {opacity:1; transform:scale(1) rotate(0);}
+}
+@keyframes ttIcon4{
+  0%, 15%  {opacity:0; transform:scale(.5) rotate(-12deg);}
+  20%      {opacity:1; transform:scale(1.15) rotate(4deg);}
+  24%      {opacity:1; transform:scale(1) rotate(0);}
+  90%, 100% {opacity:1; transform:scale(1) rotate(0);}
+}
+
+/* ---- RESPONSIVE ---- */
+@media(max-width:980px){
+  .tt-waarom .tt-w-grid{grid-template-columns:repeat(2,1fr);gap:18px;}
+}
+@media(max-width:560px){
+  .tt-waarom{padding:48px 14px 56px;}
+  .tt-waarom .tt-w-header{margin-bottom:38px;}
+  /* 2 naast elkaar, 2 eronder */
+  .tt-waarom .tt-w-grid{grid-template-columns:repeat(2,1fr);gap:14px;max-width:520px;}
+  .tt-waarom .tt-w-card{padding:28px 18px 26px;}
+  .tt-waarom .tt-w-icon{width:54px;height:54px;margin-bottom:16px;}
+  .tt-waarom .tt-w-icon svg{width:24px;height:24px;}
+  .tt-waarom .tt-w-title{font-size:18px;line-height:1.25;min-height:0;margin:0 0 12px;}
+  .tt-waarom .tt-w-body{font-size:12.5px;line-height:1.6;}
+  .tt-waarom .tt-w-foot{margin-top:38px;}
+}
+</style>
+
+<!-- HEADER (STATISCH — animeert NIET) -->
+<div class="tt-w-header">
+  <div class="tt-w-eyebrow">Onze belofte</div>
+  <h2 class="tt-w-h2">Waarom reizen met <em>Total&nbsp;Travel</em></h2>
+  <p class="tt-w-sub">Geen standaardpakketten, maar een reis die volledig om u draait. Ontdek wat ons al ruim 25&nbsp;jaar onderscheidt.</p>
+</div>
+
+<!-- GRID — animeert -->
+<div class="tt-w-grid">
+
+  <!-- PIJLER 1 -->
+  <div class="tt-w-card">
+    <div class="tt-w-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+      </svg>
+    </div>
+    <div class="tt-w-idx">01</div>
+    <h3 class="tt-w-title">Persoonlijk <em>contact</em></h3>
+    <div class="tt-w-rule"></div>
+    <p class="tt-w-body">E&eacute;n vaste reisspecialist die u kent en bereikbaar is &mdash; van het eerste idee tot uw thuiskomst.</p>
+  </div>
+
+  <!-- PIJLER 2 -->
+  <div class="tt-w-card">
+    <div class="tt-w-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9.2"/><polygon points="15.5 8.5 10.8 10.8 8.5 15.5 13.2 13.2"/>
+      </svg>
+    </div>
+    <div class="tt-w-idx">02</div>
+    <h3 class="tt-w-title">Reizen op <em>maat</em></h3>
+    <div class="tt-w-rule"></div>
+    <p class="tt-w-body">Elke reis ontstaat vanaf een leeg blad &mdash; afgestemd op uw wensen, ritme en reisdromen.</p>
+  </div>
+
+  <!-- PIJLER 3 -->
+  <div class="tt-w-card">
+    <div class="tt-w-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 21.5s7-5.6 7-11.5a7 7 0 0 0-14 0c0 5.9 7 11.5 7 11.5z"/><circle cx="12" cy="10" r="2.6"/>
+      </svg>
+    </div>
+    <div class="tt-w-idx">03</div>
+    <h3 class="tt-w-title">Unieke <em>bestemmingen</em></h3>
+    <div class="tt-w-rule"></div>
+    <p class="tt-w-body">Van wereldberoemde klassiekers tot onontdekte parels die u zelf niet zo snel zou vinden.</p>
+  </div>
+
+  <!-- PIJLER 4 -->
+  <div class="tt-w-card">
+    <div class="tt-w-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 15.5l-4.2 2.4 1-4.8L5 9.8l4.9-.5L12 4.9l2.1 4.4 4.9.5-3.8 3.3 1 4.8z"/>
+      </svg>
+    </div>
+    <div class="tt-w-idx">04</div>
+    <h3 class="tt-w-title">Ruim 25 jaar <em>ervaring</em></h3>
+    <div class="tt-w-rule"></div>
+    <p class="tt-w-body">Meer dan een kwart eeuw expertise in luxe, volledig verzorgde maatwerkreizen.</p>
+  </div>
+
+</div>
+
+<!-- FOOTER / CTA (STATISCH — animeert NIET) -->
+<div class="tt-w-foot">
+  <p class="tt-w-foot-text">&ldquo;Uw reis verdient <span>persoonlijke aandacht</span> &mdash; geen draaiboek.&rdquo;</p>
+  <a class="tt-w-cta" href="#contact">
+    Plan een vrijblijvend gesprek
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  </a>
+</div>
+</section>
