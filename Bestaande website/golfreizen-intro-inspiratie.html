@@ -1,0 +1,271 @@
+<!-- ============================================================
+     TOTAL TRAVEL — GOLFREIZEN: INTRO + INSPIRATIE (voorbeeldreizen)
+     Plak dit hele blok in de gewenste pagina.
+
+     • Twee secties: .tt-golf-intro (introblok) en
+       .tt-golf-insp (inspiratie / 3 voorbeeldreizen).
+     • Volledig scoped, zelfde huisstijl als de formulieren:
+       Playfair Display + DM Sans, sienna/ivoor, gradient-streep,
+       hoekornamenten, ivoor-kaarten met border + schaduw.
+     • Geen JS / geen scroll-animatie: werkt betrouwbaar in page
+       builders zoals Elementor. Hover-effecten blijven (pure CSS).
+     • Reisinhoud = plausibele voorbeelden; vervang teksten,
+       prijzen en de afbeelding-URLs door eigen content.
+     • CTA-knoppen verwijzen naar href="#ttGolf" (het anker op
+       het golf-aanvraagformulier).
+============================================================ -->
+
+<!-- ======================= INTRO ======================= -->
+<section class="tt-golf-intro" id="ttGolfIntro">
+<style>
+.tt-golf-intro,.tt-golf-insp{
+  --tt-sienna:#a0522d;--tt-sienna-mid:#a0522d;--tt-sienna-lt:#d9956a;
+  --tt-gold:#b8996a;--tt-gold-lt:#cdb48e;
+  --tt-ivory:#f8f3eb;--tt-ivory-2:#f2ead8;--tt-ivory-3:#ebe0ca;--tt-ivory-4:#e0d2b8;
+  --tt-cream:#faf7f2;
+  --tt-text:#2c1f0e;--tt-text-2:#5a3e28;--tt-text-3:#8a6d52;--tt-text-4:#b09070;
+  --tt-border:rgba(160,82,45,0.14);--tt-border-md:rgba(160,82,45,0.25);--tt-border-str:rgba(160,82,45,0.40);
+  --tt-radius:4px;
+  --tt-dm:'DM Sans',sans-serif;--tt-pf:'Playfair Display',Georgia,serif;
+  --tt-ease:cubic-bezier(.4,0,.2,1);
+  font-family:var(--tt-dm);font-size:15px;line-height:1.6;color:var(--tt-text);
+  display:block;background:transparent;
+}
+.tt-golf-intro *,.tt-golf-intro *::before,.tt-golf-intro *::after,
+.tt-golf-insp *,.tt-golf-insp *::before,.tt-golf-insp *::after{box-sizing:border-box;}
+
+.tt-golf-intro{padding:64px 16px 40px;}
+.tt-golf-intro .tt-i-wrap{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;gap:54px;align-items:center;}
+
+/* TEKSTKOLOM */
+.tt-golf-intro .tt-i-eyebrow{font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--tt-sienna);margin-bottom:18px;display:flex;align-items:center;gap:12px;}
+.tt-golf-intro .tt-i-eyebrow::before{content:'';width:28px;height:1px;background:var(--tt-sienna-lt);opacity:.6;}
+.tt-golf-intro .tt-i-h1{font-family:var(--tt-pf);font-size:clamp(32px,4.8vw,50px);font-weight:400;line-height:1.1;color:var(--tt-text);margin:0 0 22px;}
+.tt-golf-intro .tt-i-h1 em{font-style:italic;color:var(--tt-sienna-mid);}
+.tt-golf-intro .tt-i-lead{font-size:16px;line-height:1.8;color:var(--tt-text-2);font-weight:300;margin:0 0 18px;}
+.tt-golf-intro .tt-i-body{font-size:14.5px;line-height:1.8;color:var(--tt-text-3);font-weight:300;margin:0 0 28px;}
+
+/* highlights */
+.tt-golf-intro .tt-i-highs{display:grid;grid-template-columns:1fr 1fr;gap:16px 22px;margin:0 0 32px;}
+.tt-golf-intro .tt-i-high{display:flex;align-items:flex-start;gap:12px;}
+.tt-golf-intro .tt-i-hicon{width:38px;height:38px;border-radius:50%;background:rgba(160,82,45,.09);border:1px solid var(--tt-sienna-lt);display:flex;align-items:center;justify-content:center;color:var(--tt-sienna);flex-shrink:0;}
+.tt-golf-intro .tt-i-hicon svg{width:19px;height:19px;}
+.tt-golf-intro .tt-i-htxt b{display:block;font-family:var(--tt-pf);font-size:15px;font-weight:500;color:var(--tt-text);margin-bottom:2px;}
+.tt-golf-intro .tt-i-htxt span{font-size:12.5px;line-height:1.55;color:var(--tt-text-3);font-weight:300;}
+
+.tt-golf-intro .tt-i-cta{display:inline-flex;align-items:center;gap:9px;font-family:var(--tt-dm);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--tt-sienna);border:none;padding:14px 32px;border-radius:var(--tt-radius);cursor:pointer;text-decoration:none;transition:background .25s var(--tt-ease),transform .25s var(--tt-ease);}
+.tt-golf-intro .tt-i-cta:hover{background:var(--tt-text-2);transform:translateY(-1px);}
+.tt-golf-intro .tt-i-cta svg{width:13px;height:13px;transition:transform .25s var(--tt-ease);}
+.tt-golf-intro .tt-i-cta:hover svg{transform:translateX(3px);}
+
+/* BEELDKOLOM */
+.tt-golf-intro .tt-i-media{position:relative;}
+.tt-golf-intro .tt-i-imgwrap{position:relative;border:1px solid var(--tt-border-md);border-radius:var(--tt-radius);overflow:hidden;box-shadow:0 8px 34px rgba(90,40,10,.14);aspect-ratio:4/5;background:var(--tt-ivory-3);}
+.tt-golf-intro .tt-i-imgwrap::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;z-index:2;background:linear-gradient(90deg,transparent,var(--tt-sienna-lt) 40%,var(--tt-gold) 60%,transparent);opacity:.7;}
+.tt-golf-intro .tt-i-imgwrap img{width:100%;height:100%;object-fit:cover;display:block;}
+/* sfeer-badge overlay */
+.tt-golf-intro .tt-i-badge{position:absolute;left:-18px;bottom:30px;background:var(--tt-ivory);border:1px solid var(--tt-border-md);border-radius:var(--tt-radius);padding:16px 22px;box-shadow:0 6px 22px rgba(90,40,10,.12);max-width:220px;}
+.tt-golf-intro .tt-i-badge .n{font-family:var(--tt-pf);font-size:30px;font-weight:500;color:var(--tt-sienna-mid);line-height:1;margin-bottom:5px;}
+.tt-golf-intro .tt-i-badge .l{font-size:11.5px;line-height:1.5;color:var(--tt-text-3);font-weight:300;}
+.tt-golf-intro .tt-i-corner{position:absolute;opacity:.3;pointer-events:none;z-index:3;}
+.tt-golf-intro .tt-i-corner.tr{top:12px;right:12px;}
+.tt-golf-intro .tt-i-corner svg{width:30px;height:30px;}
+
+@media(max-width:880px){
+  .tt-golf-intro{padding:48px 16px 28px;}
+  .tt-golf-intro .tt-i-wrap{grid-template-columns:1fr;gap:38px;}
+  .tt-golf-intro .tt-i-media{max-width:460px;margin:0 auto;width:100%;}
+  .tt-golf-intro .tt-i-imgwrap{aspect-ratio:16/11;}
+}
+@media(max-width:560px){
+  .tt-golf-intro .tt-i-highs{grid-template-columns:1fr;gap:13px;}
+  .tt-golf-intro .tt-i-badge{left:0;bottom:-16px;padding:13px 18px;max-width:190px;}
+  .tt-golf-intro .tt-i-badge .n{font-size:25px;}
+}
+</style>
+
+<div class="tt-i-wrap">
+  <!-- TEKST -->
+  <div class="tt-i-text">
+    <div class="tt-i-eyebrow">Golfreizen op maat</div>
+    <h1 class="tt-i-h1">Golfreizen <em>naar de mooiste banen</em> ter wereld</h1>
+    <p class="tt-i-lead">Van zonovergoten fairways aan de Algarve tot de ruige links langs de Ierse Atlantische kust &mdash; wij stellen uw golfreis tot in de puntjes voor u samen.</p>
+    <p class="tt-i-body">Tee-times op gerenommeerde championship-banen, comfortabele on-course verblijven, vervoer en greenfees: alles geregeld, zodat u zich op uw spel kunt richten. Of u nu met vrienden, uw partner of een hele flight reist &mdash; wij stemmen elke baan, elk hotel en elk detail af op het niveau en de wensen van uw gezelschap.</p>
+
+    <div class="tt-i-highs">
+      <div class="tt-i-high">
+        <div class="tt-i-hicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 18V5l9-2v13"/><circle cx="9" cy="19" r="2.5"/></svg></div>
+        <div class="tt-i-htxt"><b>Championship-banen</b><span>Speel op iconische, wereldberoemde golfbanen.</span></div>
+      </div>
+      <div class="tt-i-high">
+        <div class="tt-i-hicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-4 7 4v13M9 21v-5h6v5"/></svg></div>
+        <div class="tt-i-htxt"><b>On-course verblijf</b><span>Slaap aan de baan, met de eerste tee binnen handbereik.</span></div>
+      </div>
+      <div class="tt-i-high">
+        <div class="tt-i-hicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20" transform="rotate(0 12 12)"/><circle cx="12" cy="12" r="9.2"/></svg></div>
+        <div class="tt-i-htxt"><b>Greenfees &amp; tee-times</b><span>Vooraf geboekt &mdash; geen gedoe ter plaatse.</span></div>
+      </div>
+      <div class="tt-i-high">
+        <div class="tt-i-hicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V5a2 2 0 0 1 2-2h7l5 5v13"/><path d="M14 3v6h5M8 13h8M8 17h8"/></svg></div>
+        <div class="tt-i-htxt"><b>Volledig verzorgd</b><span>Vluchten, transfers en flightindeling: wij regelen het.</span></div>
+      </div>
+    </div>
+
+    <a class="tt-i-cta" href="#ttGolf">
+      Stel uw golfreis samen
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+
+  <!-- BEELD -->
+  <div class="tt-i-media">
+    <div class="tt-i-imgwrap">
+      <div class="tt-i-corner tr"><svg viewBox="0 0 36 36" fill="none"><path d="M0 0L36 0L36 36" stroke="#fff" stroke-width="1.4"/></svg></div>
+      <!-- VERVANG DOOR EIGEN FOTO (golfbaan / fairway) -->
+      <img src="https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&w=1000&q=80" alt="Golfbaan bij zonsondergang" loading="lazy">
+    </div>
+    <div class="tt-i-badge">
+      <div class="n">25+</div>
+      <div class="l">jaar ervaring met het samenstellen van golfreizen op maat</div>
+    </div>
+  </div>
+</div>
+</section>
+
+
+<!-- ===================== INSPIRATIE ===================== -->
+<section class="tt-golf-insp" id="ttGolfInsp" style="scroll-margin-top:100px;">
+<style>
+.tt-golf-insp{padding:48px 16px 64px;}
+.tt-golf-insp .tt-n-header{text-align:center;max-width:640px;margin:0 auto 46px;}
+.tt-golf-insp .tt-n-eyebrow{font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--tt-sienna);margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:12px;}
+.tt-golf-insp .tt-n-eyebrow::before,.tt-golf-insp .tt-n-eyebrow::after{content:'';width:28px;height:1px;background:var(--tt-sienna-lt);opacity:.6;}
+.tt-golf-insp .tt-n-h2{font-family:var(--tt-pf);font-size:clamp(28px,4.4vw,44px);font-weight:400;line-height:1.15;color:var(--tt-text);margin:0 0 16px;}
+.tt-golf-insp .tt-n-h2 em{font-style:italic;color:var(--tt-sienna-mid);}
+.tt-golf-insp .tt-n-sub{font-size:15px;color:var(--tt-text-3);line-height:1.75;font-weight:300;margin:0;}
+
+.tt-golf-insp .tt-n-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1120px;margin:0 auto;}
+
+.tt-golf-insp .tt-n-card{background:var(--tt-ivory);border:1px solid var(--tt-border-md);border-radius:var(--tt-radius);overflow:hidden;display:flex;flex-direction:column;box-shadow:0 2px 24px rgba(90,40,10,.06);transition:transform .4s var(--tt-ease),box-shadow .4s var(--tt-ease),border-color .4s var(--tt-ease);}
+.tt-golf-insp .tt-n-card:hover{transform:translateY(-5px);box-shadow:0 12px 34px rgba(90,40,10,.13);border-color:var(--tt-border-str);}
+
+.tt-golf-insp .tt-n-imgwrap{position:relative;aspect-ratio:3/2;overflow:hidden;background:var(--tt-ivory-3);}
+.tt-golf-insp .tt-n-imgwrap img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s var(--tt-ease);}
+.tt-golf-insp .tt-n-card:hover .tt-n-imgwrap img{transform:scale(1.05);}
+.tt-golf-insp .tt-n-imgwrap::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(44,31,14,0) 55%,rgba(44,31,14,.32));}
+.tt-golf-insp .tt-n-tag{position:absolute;top:14px;left:14px;z-index:2;background:rgba(248,243,235,.94);border:1px solid var(--tt-border-md);color:var(--tt-sienna);font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;border-radius:var(--tt-radius);}
+.tt-golf-insp .tt-n-dur{position:absolute;bottom:13px;right:14px;z-index:2;color:#fff;font-size:12px;font-weight:400;letter-spacing:.04em;display:flex;align-items:center;gap:6px;}
+.tt-golf-insp .tt-n-dur svg{width:14px;height:14px;}
+
+.tt-golf-insp .tt-n-body{padding:24px 24px 26px;display:flex;flex-direction:column;flex:1;}
+.tt-golf-insp .tt-n-route{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--tt-text-4);font-weight:400;margin-bottom:9px;}
+.tt-golf-insp .tt-n-title{font-family:var(--tt-pf);font-size:21px;font-weight:400;line-height:1.25;color:var(--tt-text);margin:0 0 12px;}
+.tt-golf-insp .tt-n-title em{font-style:italic;color:var(--tt-sienna-mid);}
+.tt-golf-insp .tt-n-rule{width:34px;height:1px;background:var(--tt-sienna-lt);opacity:.8;margin-bottom:14px;}
+.tt-golf-insp .tt-n-desc{font-size:13.5px;line-height:1.7;color:var(--tt-text-2);font-weight:300;margin:0 0 20px;flex:1;}
+
+.tt-golf-insp .tt-n-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;padding-top:18px;border-top:1px solid var(--tt-border);}
+.tt-golf-insp .tt-n-price .p-lbl{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--tt-text-4);font-weight:400;display:block;margin-bottom:2px;}
+.tt-golf-insp .tt-n-price .p-val{font-family:var(--tt-pf);font-size:20px;font-weight:500;color:var(--tt-text);}
+.tt-golf-insp .tt-n-price .p-val small{font-size:12px;font-weight:400;color:var(--tt-text-3);font-family:var(--tt-dm);}
+.tt-golf-insp .tt-n-link{font-family:var(--tt-dm);font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--tt-sienna);text-decoration:none;display:inline-flex;align-items:center;gap:7px;padding:9px 0;white-space:nowrap;transition:gap .25s var(--tt-ease),color .2s;}
+.tt-golf-insp .tt-n-link svg{width:13px;height:13px;transition:transform .25s var(--tt-ease);}
+.tt-golf-insp .tt-n-link:hover{color:var(--tt-text-2);}
+.tt-golf-insp .tt-n-link:hover svg{transform:translateX(3px);}
+
+/* onderregel */
+.tt-golf-insp .tt-n-foot-note{text-align:center;max-width:620px;margin:42px auto 0;}
+.tt-golf-insp .tt-n-foot-note p{font-family:var(--tt-pf);font-style:italic;font-size:clamp(16px,2.3vw,20px);color:var(--tt-text-2);line-height:1.5;margin:0 0 22px;}
+.tt-golf-insp .tt-n-foot-note p span{color:var(--tt-sienna-mid);}
+.tt-golf-insp .tt-n-cta{display:inline-flex;align-items:center;gap:9px;font-family:var(--tt-dm);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--tt-sienna);border:none;padding:14px 32px;border-radius:var(--tt-radius);cursor:pointer;text-decoration:none;transition:background .25s var(--tt-ease),transform .25s var(--tt-ease);}
+.tt-golf-insp .tt-n-cta:hover{background:var(--tt-text-2);transform:translateY(-1px);}
+.tt-golf-insp .tt-n-cta svg{width:13px;height:13px;transition:transform .25s var(--tt-ease);}
+.tt-golf-insp .tt-n-cta:hover svg{transform:translateX(3px);}
+
+@media(max-width:880px){
+  .tt-golf-insp .tt-n-grid{grid-template-columns:1fr;max-width:480px;}
+}
+@media(max-width:560px){
+  .tt-golf-insp{padding:36px 12px 52px;}
+  .tt-golf-insp .tt-n-header{margin-bottom:32px;}
+}
+</style>
+
+<div class="tt-n-header">
+  <div class="tt-n-eyebrow">Ter inspiratie</div>
+  <h2 class="tt-n-h2">Voorbeeld<em>golfreizen</em></h2>
+  <p class="tt-n-sub">Drie routes als startpunt voor uw eigen golfreis. Elk voorbeeld passen wij volledig aan op het niveau van uw flight, uw wensen en uw budget.</p>
+</div>
+
+<div class="tt-n-grid">
+
+  <!-- REIS 1 — PORTUGAL -->
+  <div class="tt-n-card">
+    <div class="tt-n-imgwrap">
+      <span class="tt-n-tag">Portugal &middot; Algarve</span>
+      <span class="tt-n-dur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>7 dagen</span>
+      <!-- VERVANG DOOR EIGEN FOTO -->
+      <img src="https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&w=900&q=80" alt="Golfbaan aan de Algarve" loading="lazy">
+    </div>
+    <div class="tt-n-body">
+      <div class="tt-n-route">Vilamoura &middot; Quinta do Lago &middot; Monte Rei</div>
+      <h3 class="tt-n-title">De <em>Algarve</em> in topvorm</h3>
+      <div class="tt-n-rule"></div>
+      <p class="tt-n-desc">Zon, comfort en wereldklasse golf. Speel de befaamde Old Course van Vilamoura, de drie banen van Quinta do Lago en de Jack Nicklaus-parel Monte Rei, met een verblijf in een vijfsterren-resort aan zee.</p>
+      <div class="tt-n-foot">
+        <div class="tt-n-price"><span class="p-lbl">Vanaf</span><span class="p-val">&euro; 1.495 <small>p.p.</small></span></div>
+        <a class="tt-n-link" href="#ttGolf">Aanvragen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- REIS 2 — MAROKKO -->
+  <div class="tt-n-card">
+    <div class="tt-n-imgwrap">
+      <span class="tt-n-tag">Marokko &middot; Marrakech</span>
+      <span class="tt-n-dur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>6 dagen</span>
+      <!-- VERVANG DOOR EIGEN FOTO -->
+      <img src="https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?auto=format&fit=crop&w=900&q=80" alt="Golfbaan bij Marrakech" loading="lazy">
+    </div>
+    <div class="tt-n-body">
+      <div class="tt-n-route">Marrakech &middot; Amelkis &middot; Royal Golf</div>
+      <h3 class="tt-n-title">Golf onder de <em>Atlas-toppen</em></h3>
+      <div class="tt-n-rule"></div>
+      <p class="tt-n-desc">Speel op weelderige fairways met de besneeuwde Atlas als decor. Overdag golf op de mooiste banen rond Marrakech, &rsquo;s avonds de souks, een hammam en verfijnde Marokkaanse keuken vanuit een sfeervolle riad of golfresort.</p>
+      <div class="tt-n-foot">
+        <div class="tt-n-price"><span class="p-lbl">Vanaf</span><span class="p-val">&euro; 1.275 <small>p.p.</small></span></div>
+        <a class="tt-n-link" href="#ttGolf">Aanvragen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- REIS 3 — IERLAND -->
+  <div class="tt-n-card">
+    <div class="tt-n-imgwrap">
+      <span class="tt-n-tag">Ierland &middot; Links</span>
+      <span class="tt-n-dur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>8 dagen</span>
+      <!-- VERVANG DOOR EIGEN FOTO -->
+      <img src="https://images.unsplash.com/photo-1592919505780-303950717480?auto=format&fit=crop&w=900&q=80" alt="Links golfbaan in Ierland" loading="lazy">
+    </div>
+    <div class="tt-n-body">
+      <div class="tt-n-route">Ballybunion &middot; Lahinch &middot; Old Head</div>
+      <h3 class="tt-n-title">Ierse <em>links</em> langs de Atlantische kust</h3>
+      <div class="tt-n-rule"></div>
+      <p class="tt-n-desc">Voor de echte liefhebber: ruige duinen, zeewind en legendarische links. Een rondreis langs Ierlands beroemdste banen &mdash; van Ballybunion tot het spectaculaire Old Head op een klif boven de oceaan &mdash; met overnachtingen in karaktervolle hotels.</p>
+      <div class="tt-n-foot">
+        <div class="tt-n-price"><span class="p-lbl">Vanaf</span><span class="p-val">&euro; 2.450 <small>p.p.</small></span></div>
+        <a class="tt-n-link" href="#ttGolf">Aanvragen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="tt-n-foot-note">
+  <p>Een andere bestemming of baan in gedachten? <span>Wij stellen uw golfreis volledig op maat samen.</span></p>
+  <a class="tt-n-cta" href="#ttGolf">
+    Vraag uw golfreis op maat aan
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  </a>
+</div>
+</section>
