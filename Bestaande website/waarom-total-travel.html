@@ -1,5 +1,5 @@
 <!-- ============================================================
-     TOTAL TRAVEL — "WAAROM TOTAL TRAVEL?" v8
+     TOTAL TRAVEL — "WAAROM TOTAL TRAVEL?" v9
      Continue cascade-loop met synchroon einde.
      Mobiel: 2 naast elkaar, 2 daaronder (2x2 grid).
 
@@ -7,6 +7,19 @@
      • Vier USP-kaarten animeren: golf-in van links → rechts,
        rust, synchroon uit, herhalen.
      • Pure CSS, geen JavaScript.
+
+     ── CTA-LINK AANPASSEN ──────────────────────────────────────
+     De knop "Plan vrijblijvend een afspraak →" verwijst standaard
+     naar #contact (een anker op dezelfde pagina). Wilt u hem naar
+     een andere bestemming laten linken? Zoek onderaan in dit blok
+     naar:
+            href="#contact"
+     en vervang dat door:
+       • een anker op dezelfde pagina:  href="#mijn-anker"
+       • een andere pagina op uw site:  href="/contact"
+       • een externe pagina:            href="https://..."
+       • een telefoonnummer:            href="tel:+31881234567"
+       • een e-mailadres:               href="mailto:info@totaltravel.nl"
 ============================================================ -->
 
 <section class="tt-waarom" id="ttWaarom">
@@ -268,8 +281,9 @@
 <!-- FOOTER / CTA (STATISCH — animeert NIET) -->
 <div class="tt-w-foot">
   <p class="tt-w-foot-text">&ldquo;Uw reis verdient <span>persoonlijke aandacht</span> &mdash; geen draaiboek.&rdquo;</p>
-  <a class="tt-w-cta" href="#contact">
-    Plan een vrijblijvend gesprek
+  <!-- CTA-knop: pas hieronder de href="..." aan om de link te wijzigen -->
+  <a class="tt-w-cta" href="https://bookings.cloud.microsoft/book/TotalTravelafspraak@totaltravel.nl/?ismsaljsauthenabled=true">
+    Plan vrijblijvend een afspraak
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
   </a>
 </div>
